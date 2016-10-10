@@ -39,13 +39,16 @@ namespace QToolbar
       {
          if (!string.IsNullOrWhiteSpace(folder))
          {
-            List<string> dirs = new List<string>(Directory.EnumerateDirectories(folder));
-            dirs = dirs.OrderByDescending(s => s).ToList<string>();
-            foreach (string dir in dirs)
+            if (Directory.Exists(folder))
             {
-               BarButtonItem menuItem = new BarButtonItem(barManager1, Path.GetFileName(dir));
-               menuItem.ItemClick += handler;               
-               menu.AddItem(menuItem);               
+               List<string> dirs = new List<string>(Directory.EnumerateDirectories(folder));
+               dirs = dirs.OrderByDescending(s => s).ToList<string>();
+               foreach (string dir in dirs)
+               {
+                  BarButtonItem menuItem = new BarButtonItem(barManager1, Path.GetFileName(dir));
+                  menuItem.ItemClick += handler;
+                  menu.AddItem(menuItem);
+               }
             }
          }
       }
@@ -138,32 +141,39 @@ namespace QToolbar
          string sqlFolder = Options.SQLFolder;
          if (!string.IsNullOrEmpty(sqlFolder))
          {
-            List<string> dirs = Directory.GetDirectories(sqlFolder).ToList<string>();
-            dirs.Sort();
-            AddChildrenSQL(sqlFolder, mnuSQL);
+            if (Directory.Exists(sqlFolder))
+            {
+               List<string> dirs = Directory.GetDirectories(sqlFolder).ToList<string>();
+               dirs.Sort();
+               AddChildrenSQL(sqlFolder, mnuSQL);
+            }
          }
       }
 
       private void AddChildrenSQL(string sqlFolder, BarSubItem menuItem)
       {
          // add folders         
-         List<string> dirs = Directory.GetDirectories(sqlFolder).ToList<string>();
-         dirs.Sort();
-         foreach (string dir in dirs)
+         if (Directory.Exists(sqlFolder))
          {
-            BarSubItem subMenuItem = new BarSubItem(barManager1, Path.GetFileName(dir),0);
-            menuItem.AddItem(subMenuItem);
-            AddChildrenSQL(dir, subMenuItem);
-         }
-         // add files
-         List<string> files = Directory.GetFiles(sqlFolder).ToList<string>();
-         files.Sort();
-         foreach (string file in files)
-         {
-            BarButtonItem item = new BarButtonItem(barManager1, Path.GetFileName(file),1);
-            item.Tag = file;
-            item.ItemClick += SQLMenuItem_ItemClick;
-            menuItem.AddItem(item);            
+            List<string> dirs = Directory.GetDirectories(sqlFolder).ToList<string>();
+            dirs.Sort();
+            foreach (string dir in dirs)
+            {
+               BarSubItem subMenuItem = new BarSubItem(barManager1, Path.GetFileName(dir), 0);
+               menuItem.AddItem(subMenuItem);
+               AddChildrenSQL(dir, subMenuItem);
+            }
+
+            // add files
+            List<string> files = Directory.GetFiles(sqlFolder).ToList<string>();
+            files.Sort();
+            foreach (string file in files)
+            {
+               BarButtonItem item = new BarButtonItem(barManager1, Path.GetFileName(file), 1);
+               item.Tag = file;
+               item.ItemClick += SQLMenuItem_ItemClick;
+               menuItem.AddItem(item);
+            }
          }
       }
 
