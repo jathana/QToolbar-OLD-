@@ -59,11 +59,13 @@
          this.mnuFolders = new DevExpress.XtraBars.BarSubItem();
          this.mnuDatabaseScripter = new DevExpress.XtraBars.BarSubItem();
          this.mnuFieldsExplorer = new DevExpress.XtraBars.BarSubItem();
+         this.btnClearMetadata = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.grpApplications = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpFiles = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpSQL = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpTools = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+         this.mnuEnvironmentsConfiguration = new DevExpress.XtraBars.BarSubItem();
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -86,14 +88,14 @@
          this.barDockControlTop.CausesValidation = false;
          this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
          this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-         this.barDockControlTop.Size = new System.Drawing.Size(691, 0);
+         this.barDockControlTop.Size = new System.Drawing.Size(866, 0);
          // 
          // barDockControlBottom
          // 
          this.barDockControlBottom.CausesValidation = false;
          this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
          this.barDockControlBottom.Location = new System.Drawing.Point(0, 94);
-         this.barDockControlBottom.Size = new System.Drawing.Size(691, 0);
+         this.barDockControlBottom.Size = new System.Drawing.Size(866, 0);
          // 
          // barDockControlLeft
          // 
@@ -106,7 +108,7 @@
          // 
          this.barDockControlRight.CausesValidation = false;
          this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-         this.barDockControlRight.Location = new System.Drawing.Point(691, 0);
+         this.barDockControlRight.Location = new System.Drawing.Point(866, 0);
          this.barDockControlRight.Size = new System.Drawing.Size(0, 94);
          // 
          // imageCollection1
@@ -126,6 +128,7 @@
          // 
          // ribbonControl1
          // 
+         this.ribbonControl1.AllowMinimizeRibbon = false;
          this.ribbonControl1.ExpandCollapseItem.Id = 0;
          this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
@@ -139,14 +142,16 @@
             this.mnuExecutorConfiguration,
             this.mnuFolders,
             this.mnuDatabaseScripter,
-            this.mnuFieldsExplorer});
+            this.mnuFieldsExplorer,
+            this.btnClearMetadata,
+            this.mnuEnvironmentsConfiguration});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 23;
+         this.ribbonControl1.MaxItemId = 26;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
          this.ribbonControl1.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
-         this.ribbonControl1.Size = new System.Drawing.Size(691, 95);
+         this.ribbonControl1.Size = new System.Drawing.Size(866, 95);
          this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
          // 
          // mnuDesigners
@@ -250,6 +255,15 @@
          this.mnuFieldsExplorer.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("mnuFieldsExplorer.LargeGlyph")));
          this.mnuFieldsExplorer.Name = "mnuFieldsExplorer";
          // 
+         // btnClearMetadata
+         // 
+         this.btnClearMetadata.Caption = "Clear Metadata";
+         this.btnClearMetadata.Glyph = ((System.Drawing.Image)(resources.GetObject("btnClearMetadata.Glyph")));
+         this.btnClearMetadata.Id = 24;
+         this.btnClearMetadata.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnClearMetadata.LargeGlyph")));
+         this.btnClearMetadata.Name = "btnClearMetadata";
+         this.btnClearMetadata.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnClearMetadata_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -273,7 +287,9 @@
          // 
          // grpFiles
          // 
+         this.grpFiles.ItemLinks.Add(this.btnClearMetadata);
          this.grpFiles.ItemLinks.Add(this.mnuQCSAdminCFs);
+         this.grpFiles.ItemLinks.Add(this.mnuEnvironmentsConfiguration);
          this.grpFiles.ItemLinks.Add(this.mnuFolders);
          this.grpFiles.Name = "grpFiles";
          this.grpFiles.Text = "Files - Folders";
@@ -291,11 +307,19 @@
          this.grpTools.Name = "grpTools";
          this.grpTools.Text = "Tools";
          // 
+         // mnuEnvironmentsConfiguration
+         // 
+         this.mnuEnvironmentsConfiguration.Caption = "Environments Configuration";
+         this.mnuEnvironmentsConfiguration.Glyph = ((System.Drawing.Image)(resources.GetObject("mnuEnvironmentsConfiguration.Glyph")));
+         this.mnuEnvironmentsConfiguration.Id = 25;
+         this.mnuEnvironmentsConfiguration.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("mnuEnvironmentsConfiguration.LargeGlyph")));
+         this.mnuEnvironmentsConfiguration.Name = "mnuEnvironmentsConfiguration";
+         // 
          // Frm_Main
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.ClientSize = new System.Drawing.Size(691, 94);
+         this.ClientSize = new System.Drawing.Size(866, 94);
          this.Controls.Add(this.ribbonControl1);
          this.Controls.Add(this.barDockControlLeft);
          this.Controls.Add(this.barDockControlRight);
@@ -303,8 +327,8 @@
          this.Controls.Add(this.barDockControlTop);
          this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
          this.MaximizeBox = false;
-         this.MaximumSize = new System.Drawing.Size(736, 132);
-         this.MinimumSize = new System.Drawing.Size(704, 82);
+         this.MaximumSize = new System.Drawing.Size(882, 132);
+         this.MinimumSize = new System.Drawing.Size(853, 82);
          this.Name = "Frm_Main";
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.Text = "QToolbar";
@@ -344,5 +368,7 @@
       private DevExpress.XtraBars.BarSubItem mnuFolders;
       private DevExpress.XtraBars.BarSubItem mnuDatabaseScripter;
       private DevExpress.XtraBars.BarSubItem mnuFieldsExplorer;
+      private DevExpress.XtraBars.BarButtonItem btnClearMetadata;
+      private DevExpress.XtraBars.BarSubItem mnuEnvironmentsConfiguration;
    }
 }

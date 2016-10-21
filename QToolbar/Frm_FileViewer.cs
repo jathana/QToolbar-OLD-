@@ -23,10 +23,11 @@ namespace QToolbar
       public void ViewFile(string file)
       {
          
-         Text = file;
-         Show();
          if(File.Exists(file))
          {
+            Text = file;
+            Show();
+
             try
             {
                memContent.Text = File.ReadAllText(file);
@@ -35,6 +36,10 @@ namespace QToolbar
             {
                XtraMessageBox.Show(string.Format("Cannot open file:", ex.Message));
             }
+         }
+         else
+         {
+            throw new Exception("File not found");
          }
 
       }

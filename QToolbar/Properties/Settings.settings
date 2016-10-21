@@ -8,5 +8,38 @@
     <Setting Name="WindowSize" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">606, 132</Value>
     </Setting>
+    <Setting Name="TestingFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">X:\Testing</Value>
+    </Setting>
+    <Setting Name="DesignersFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">X:\Toolkit Applications\Designers</Value>
+    </Setting>
+    <Setting Name="QCSAdminFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">X:\Testing\QCS Admin</Value>
+    </Setting>
+    <Setting Name="QCSAgentFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">X:\Testing\QCS Agent</Value>
+    </Setting>
+    <Setting Name="SQLFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">E:\My\Database Scripts</Value>
+    </Setting>
+    <Setting Name="ExecutorConfiguratorFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">X:\Toolkit Applications\ExecutorConfiguration</Value>
+    </Setting>
+    <Setting Name="DatabaseScripterFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">X:\Toolkit Applications\Script Database</Value>
+    </Setting>
+    <Setting Name="FieldsExplorerFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">X:\Toolkit Applications\Field Explorer</Value>
+    </Setting>
+    <Setting Name="Folders" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;c:\&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="EnvironmentsConfigurationFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">X:\Toolkit Applications\Internal Deployment Tool\Configuration</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

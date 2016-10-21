@@ -46,5 +46,127 @@ namespace QToolbar.Properties {
                 this["WindowSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("X:\\Testing")]
+        public string TestingFolder {
+            get {
+                return ((string)(this["TestingFolder"]));
+            }
+            set {
+                this["TestingFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("X:\\Toolkit Applications\\Designers")]
+        public string DesignersFolder {
+            get {
+                return ((string)(this["DesignersFolder"]));
+            }
+            set {
+                this["DesignersFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("X:\\Testing\\QCS Admin")]
+        public string QCSAdminFolder {
+            get {
+                return ((string)(this["QCSAdminFolder"]));
+            }
+            set {
+                this["QCSAdminFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("X:\\Testing\\QCS Agent")]
+        public string QCSAgentFolder {
+            get {
+                return ((string)(this["QCSAgentFolder"]));
+            }
+            set {
+                this["QCSAgentFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("E:\\My\\Database Scripts")]
+        public string SQLFolder {
+            get {
+                return ((string)(this["SQLFolder"]));
+            }
+            set {
+                this["SQLFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("X:\\Toolkit Applications\\ExecutorConfiguration")]
+        public string ExecutorConfiguratorFolder {
+            get {
+                return ((string)(this["ExecutorConfiguratorFolder"]));
+            }
+            set {
+                this["ExecutorConfiguratorFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("X:\\Toolkit Applications\\Script Database")]
+        public string DatabaseScripterFolder {
+            get {
+                return ((string)(this["DatabaseScripterFolder"]));
+            }
+            set {
+                this["DatabaseScripterFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("X:\\Toolkit Applications\\Field Explorer")]
+        public string FieldsExplorerFolder {
+            get {
+                return ((string)(this["FieldsExplorerFolder"]));
+            }
+            set {
+                this["FieldsExplorerFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>c:\\</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection Folders {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["Folders"]));
+            }
+            set {
+                this["Folders"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("X:\\Toolkit Applications\\Internal Deployment Tool\\Configuration")]
+        public string EnvironmentsConfigurationFolder {
+            get {
+                return ((string)(this["EnvironmentsConfigurationFolder"]));
+            }
+            set {
+                this["EnvironmentsConfigurationFolder"] = value;
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -27,60 +28,78 @@ namespace QToolbar
       {
          get
          {
-            return GetStringSetting(TESTING_FOLDER_SETTING);
+            return Properties.Settings.Default.TestingFolder;
          }
       }
       public static string DesignersFolder
       {
          get
          {
-            return GetStringSetting(DESIGNERS_FOLDER_SETTING);
+            return Properties.Settings.Default.DesignersFolder;
          }
       }
       public static string QCSAdminFolder
       {
          get
          {
-            return GetStringSetting(QCSADMIN_FOLDER_SETTING);            
+            return Properties.Settings.Default.QCSAdminFolder;
          }
       }
       public static string QCSAgentFolder
       {
          get
          {
-            return GetStringSetting(QCSAGENT_FOLDER_SETTING);
+            return Properties.Settings.Default.QCSAgentFolder;
          }
       }
       public static string SQLFolder
       {
          get
          {
-            return GetStringSetting(SQL_FOLDER_SETTING);
+            return Properties.Settings.Default.SQLFolder;
          }
       }
       public static string ExecutorConfiguratorFolder
       {
          get
          {
-            return GetStringSetting(EXECUTOR_CONFIGURATOR_FOLDER_SETTING);
+            return Properties.Settings.Default.ExecutorConfiguratorFolder;
          }
       }
       public static string DatabaseScripterFolder
       {
          get
          {
-            return GetStringSetting(DATABASE_SCRIPTER_FOLDER_SETTING);
+            return Properties.Settings.Default.DatabaseScripterFolder;
          }
       }
       public static string FieldsExplorerFolder
       {
          get
          {
-            return GetStringSetting(FIELDS_EXPLORER_FOLDER_SETTING);
+            return Properties.Settings.Default.FieldsExplorerFolder;
+         }
+      }
+
+      public static string EnvironmentsConfigurationFolder
+      {
+         get
+         {
+            return Properties.Settings.Default.EnvironmentsConfigurationFolder;
+         }
+      }
+
+      public static StringCollection Folders
+      {
+         get
+         {
+            return (StringCollection)Properties.Settings.Default.Folders;
          }
       }
 
       #region helpers
+
+
       public static string GetStringSetting(string settingKey)
       {
          string retval = "";

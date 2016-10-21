@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using System.Configuration;
 using System.IO;
+using System.Collections.Specialized;
 
 namespace QToolbar
 {
@@ -33,52 +34,56 @@ namespace QToolbar
 
       private void btnOK_Click(object sender, EventArgs e)
       {
-         SaveSetting(Options.TESTING_FOLDER_SETTING, txtTestingFolder.Text);
-         SaveSetting(Options.DESIGNERS_FOLDER_SETTING, txtDesignersFolder.Text);
-         SaveSetting(Options.QCSADMIN_FOLDER_SETTING, txtQCSAdminFolder.Text);
-         SaveSetting(Options.QCSAGENT_FOLDER_SETTING, txtQCSAgentFolder.Text);
-         SaveSetting(Options.SQL_FOLDER_SETTING, txtSQLFolder.Text);
-         SaveSetting(Options.EXECUTOR_CONFIGURATOR_FOLDER_SETTING, txtExecutorConfigurationFolder.Text);
-         SaveSetting(Options.DATABASE_SCRIPTER_FOLDER_SETTING, txtDatabaseScripterFolder.Text);
-         SaveSetting(Options.FIELDS_EXPLORER_FOLDER_SETTING, txtFieldsExplorerFolder.Text);
+         Properties.Settings.Default.TestingFolder =  txtTestingFolder.Text;
+         Properties.Settings.Default.DesignersFolder = txtDesignersFolder.Text;
+         Properties.Settings.Default.QCSAdminFolder = txtQCSAdminFolder.Text;
+         Properties.Settings.Default.QCSAgentFolder = txtQCSAgentFolder.Text;
+         Properties.Settings.Default.SQLFolder = txtSQLFolder.Text;
+         Properties.Settings.Default.ExecutorConfiguratorFolder = txtExecutorConfigurationFolder.Text;
+         Properties.Settings.Default.DatabaseScripterFolder = txtDatabaseScripterFolder.Text;
+         Properties.Settings.Default.FieldsExplorerFolder = txtFieldsExplorerFolder.Text;
+         Properties.Settings.Default.EnvironmentsConfigurationFolder = txtEnvironmentsConfiguration.Text;
+         // save folders
+         SaveFolders();
+
+         Properties.Settings.Default.Save();
       }
-      
-      private void SaveSetting(string key, string value)
+
+      private void Frm_Options_Load(object sender, EventArgs e)
       {
-         Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
-         if (config.AppSettings.Settings.AllKeys.Contains(key))
+
+         txtTestingFolder.Text = Properties.Settings.Default.TestingFolder;
+         txtDesignersFolder.Text = Properties.Settings.Default.DesignersFolder;
+         txtQCSAdminFolder.Text = Properties.Settings.Default.QCSAdminFolder;
+         txtQCSAgentFolder.Text = Properties.Settings.Default.QCSAgentFolder;
+         txtSQLFolder.Text = Properties.Settings.Default.SQLFolder;
+         txtExecutorConfigurationFolder.Text = Properties.Settings.Default.ExecutorConfiguratorFolder;
+         txtDatabaseScripterFolder.Text= Properties.Settings.Default.DatabaseScripterFolder;
+         txtFieldsExplorerFolder.Text = Properties.Settings.Default.FieldsExplorerFolder;
+         txtEnvironmentsConfiguration.Text = Properties.Settings.Default.EnvironmentsConfigurationFolder;
+         LoadFolders();
+      }
+
+      private void LoadFolders()
+      {
+         StringCollection col = (StringCollection)Properties.Settings.Default.Folders;
+         StringBuilder builder = new StringBuilder();
+         bool first = true;
+         foreach (string s in col)
          {
-            config.AppSettings.Settings[key].Value = value;
+            if(!first) builder.Append("\r\n");
+            builder.Append(s);
+            if (first) first = false;
          }
-         else
-         {
-            config.AppSettings.Settings.Add(key, value);
-         }         
-         config.Save(ConfigurationSaveMode.Modified);
+         memFolders.Text = builder.ToString();
       }
 
-      //private string ReadStringSetting(string key)
-      //{
-      //   string retval = ""; 
-      //   Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
-      //   if (config.AppSettings.Settings.AllKeys.Contains(key))
-      //   {
-      //      retval = config.AppSettings.Settings[key].Value;
-      //   }
-      //   return retval;
-      //}
-
-   private void Frm_Options_Load(object sender, EventArgs e)
+      private void SaveFolders()
       {
-
-         txtTestingFolder.Text = Options.GetStringSetting(Options.TESTING_FOLDER_SETTING);
-         txtDesignersFolder.Text = Options.GetStringSetting(Options.DESIGNERS_FOLDER_SETTING);
-         txtQCSAdminFolder.Text = Options.GetStringSetting(Options.QCSADMIN_FOLDER_SETTING);
-         txtQCSAgentFolder.Text = Options.GetStringSetting(Options.QCSAGENT_FOLDER_SETTING);
-         txtSQLFolder.Text = Options.GetStringSetting(Options.SQL_FOLDER_SETTING);
-         txtExecutorConfigurationFolder.Text = Options.GetStringSetting(Options.EXECUTOR_CONFIGURATOR_FOLDER_SETTING);
-         txtDatabaseScripterFolder.Text= Options.GetStringSetting(Options.DATABASE_SCRIPTER_FOLDER_SETTING);
-         txtFieldsExplorerFolder.Text = Options.GetStringSetting(Options.FIELDS_EXPLORER_FOLDER_SETTING);
+         string[] folders = memFolders.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+         StringCollection  col = new StringCollection();
+         col.AddRange(folders);
+         Properties.Settings.Default.Folders = col;
       }
 
       private void txtExecutorConfigurationFolder_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
@@ -139,6 +144,14 @@ namespace QToolbar
          if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
          {
             txtFieldsExplorerFolder.Text = folderBrowserDialog1.SelectedPath;
+         }
+      }
+
+      private void txtEnvironmentsConfiguration_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+      {
+         if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+         {
+            txtEnvironmentsConfiguration.Text = folderBrowserDialog1.SelectedPath;
          }
       }
    }
