@@ -53,7 +53,7 @@ namespace QToolbar
          }
          else
          {
-            throw new Exception("File not found");
+            XtraMessageBox.Show("File not found");
          }
       }
         private void InitStylesPriority()

@@ -1,4 +1,5 @@
 ﻿using Microsoft.SqlServer.Management.SqlParser.Parser;
+using QToolbar.Options;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace QToolbar
 {
@@ -20,6 +22,8 @@ namespace QToolbar
       private string _CheckoutName = "";
       private string _CheckoutPath = "";
       private bool _Errors = false;
+
+      private DataTable _Table = new DataTable();
 
       public Frm_NextBuildChecker()
       {
@@ -32,9 +36,18 @@ namespace QToolbar
          _Errors = false;
          _CheckoutName = checkoutName;
          _CheckoutPath = checkoutPath;
+         _Table.Columns.Add("File", typeof(string));
+         _Table.Columns.Add("Message", typeof(string));
+         _Table.Columns.Add("Tag", typeof(string));
+         _Table.Columns.Add("Result", typeof(string));
+
          Text = string.Format("{0} - {1}", _CheckoutName, _CheckoutPath);
          Show();
          Run();
+         gridView1.OptionsBehavior.Editable = false;
+         //gridView1.DoubleClick += gridView1_DoubleClick;
+         gridResults.DataSource = _Table;
+
       }
 
       private void Run()
@@ -45,33 +58,44 @@ namespace QToolbar
             string[] files = Directory.GetFiles(_CheckoutPath, "*.*", SearchOption.AllDirectories);
             string content = "";
             string lowerContent = "";
+            bool fileOk = true;
             foreach (string file in files)
             {
+               fileOk = true;
                StreamReader rdr = new StreamReader(file, true);
                content = rdr.ReadToEnd();
                lowerContent = content.ToLower();
 
                // check unicode
-               CheckUnicode(rdr, file);
+               fileOk = fileOk && CheckUnicode(file);
 
                // create ddl
-               ParseForCreateObjects(lowerContent, file);
+               fileOk = fileOk && ParseForCreateObjects(lowerContent, file);
 
                // parse sql file
-               ParseSqlFile(content, file);
+               fileOk = fileOk && ParseSqlFile(content, file);
+
+               if (fileOk) Inform(file, "File passed all checks!","", CheckResult.OK);
 
                rdr.Close();
                rdr.Dispose();
             }
+
+            // EOD Metadata files 
+            fileOk = fileOk && CheckForEODMetadataFiles();
+
+            // configuration files
+            CheckConfigurationFiles();
+
          }
          else
          {
-            lstResults.Items.Add("Next Build folder does not exist.");
+            Inform("Next Build folder does not exist.", CheckResult.Error);
             _Errors = true;
          }
-         if(!_Errors)
+         if(!_Errors && _Table.Rows.Count==0)
          {
-            lstResults.Items.Add("Everything ok!");
+            Inform("Everything ok!",CheckResult.OK);
          }
       }
 
@@ -82,29 +106,106 @@ namespace QToolbar
       }
 
      
-
-      private void CheckUnicode(StreamReader rdr,string file)
+      /// <summary>
+      /// Checks validity of xml configuration files 
+      /// </summary>
+      /// <returns></returns>
+      private bool CheckConfigurationFiles()
       {
+         bool retval = true;
+         XmlDocument xml = new XmlDocument();
 
-         if (rdr.CurrentEncoding.BodyName != "utf-8" && rdr.CurrentEncoding.BodyName != "utf-16")
+         string conf = Path.Combine(OptionsInstance.EnvironmentsConfigurationFolder, _CheckoutName, "Configuration.xml");
+         string envs = Path.Combine(OptionsInstance.EnvironmentsConfigurationFolder, _CheckoutName, "EnvironmentsConfiguration.xml");
+         if(File.Exists(conf))
          {
-            Inform(file, "not in unicode","");
-            _Errors = true;
+            try
+            {
+               xml.Load(conf);               
+               Inform(string.Format("Configuration file ok!! \"{0}\"", conf), CheckResult.OK);
+            }
+            catch(Exception ex)
+            {
+               Inform(string.Format("Configuration file \"{0}\": {1}", conf, ex.Message), CheckResult.Error);
+            }
          }
+         else
+         {
+            Inform(string.Format("Configuration file not found \"{0}\"", conf), CheckResult.Error);
+            _Errors = true;
+            retval = false;
+         }
+         if (File.Exists(envs))
+         {
+            try
+            {
+               xml.Load(envs);
+               Inform(string.Format("Environments Configuration file ok!! \"{0}\"", envs), CheckResult.OK);
+            }
+            catch (Exception ex)
+            {
+               Inform(string.Format("Environments Configuration file \"{0}\": {1}", envs, ex.Message), CheckResult.Error);
+            }
+         }
+         else
+         {
+            Inform(string.Format("Configuration file not found \"{0}\"", envs), CheckResult.Error);
+            _Errors = true;
+            retval = false;
+         }
+
+         return retval;
+      }
+
+      private bool CheckUnicode(string file)
+      {
+         bool retval = true;
+
+         using (StreamReader sr = new StreamReader(file,  Encoding.ASCII,  true))
+         {
+            sr.Peek();
+            if (sr.CurrentEncoding.BodyName != "utf-8" && sr.CurrentEncoding.BodyName != "utf-16")
+            {
+               Inform(file, "not in unicode", "", CheckResult.Error);
+               _Errors = true;
+               retval = false;
+            }
+         }
+         return retval;
       }
 
 
-      private void ParseForCreateObjects(string content, string file)
+      private bool CheckForEODMetadataFiles()
       {
+         bool retval = true;
+         if (Directory.Exists(_CheckoutPath))
+         {
+            if (File.Exists(Path.Combine(_CheckoutPath, "5102.2. EODMonitorMetadata.sql")) &&
+                File.Exists(Path.Combine(_CheckoutPath, "5102.2. FullEODMonitorMetadata.sql")))
+            {
+               Inform("Found both \"5102.2.EODMonitorMetadata.sql\" and \"5102.2.FullEODMonitorMetadata.sql\". Please keep only the \"5102.2.FullEODMonitorMetadata.sql\"", CheckResult.Error);
+               _Errors = true;
+               retval = false;
+            }
+
+         }
+         return retval;
+      }
+
+      private bool ParseForCreateObjects(string content, string file)
+      {
+         bool retval = true;
          if (Path.GetExtension(file).ToLower().Equals(".sql"))
          {
-            CheckForDDL(file, content, "create\\s+", "CAUTION!! CREATE ddl in sql file.", "create");
-            CheckForDDL(file, content, "alter\\s+", "CAUTION!!  ALTER ddl in sql file.", "alter");
+            retval = retval && CheckForDDL(file, content, "create\\s+", "CAUTION!! CREATE ddl in sql file.", "create");
+            retval = retval && CheckForDDL(file, content, "alter\\s+", "CAUTION!!  ALTER ddl in sql file.", "alter");
          }
+         return retval;
       }
 
-      private void ParseSqlFile(string content, string file)
+      private bool ParseSqlFile(string content, string file)
       {
+         bool retval = true;
          if (Path.GetExtension(file).ToLower().Equals(".sql") || Path.GetExtension(file).ToLower().Equals(".bd"))
          {
             ParseResult result = Parser.Parse(content);            
@@ -112,34 +213,53 @@ namespace QToolbar
             {
                foreach(var error in result.Errors)
                {
-                  Inform(file, error.Message, "");
+                  Inform(file, error.Message, "",CheckResult.Error);
                   _Errors = true;
                }
+               retval = false;
             }
          }
+         return retval;
       }
 
-      private void Inform(string file, string message, string tag)
+      private void Inform(string file, string message, string tag, CheckResult result)
       {
          if (!string.IsNullOrEmpty(file))
          {
             string msg = string.Format("{0} :: {1}", message, Path.GetFileName(file));
-            lstResults.Items.Add(new NextBuildFile(file, msg, tag));
+            DataRow row=_Table.NewRow();
+            row["File"] = file;
+            row["Message"] = message;
+            row["Tag"] = tag;
+            row["Result"] = result.ToString();
+            _Table.Rows.Add(row);
             WriteLog(msg);
          }
       }
 
-
-      private void CheckForDDL(string file, string content, string pattern, string message, string tag)
+      private void Inform(string message, CheckResult result)
       {
-         
+         DataRow row = _Table.NewRow();
+         row["File"] = "";
+         row["Message"] = message;
+         row["Tag"] = "";
+         row["Result"] = result.ToString();
+         _Table.Rows.Add(row);
+         WriteLog(message);
+      }
+
+      private bool CheckForDDL(string file, string content, string pattern, string message, string tag)
+      {
+         bool retval = true;
          Regex reg = new Regex(pattern);
          Match createProc = reg.Match(content);
          if (createProc.Success)
          {
-            Inform(file, message, tag);
+            Inform(file, message, tag, CheckResult.Warning);
             _Errors = true;
+            retval = false;
          }
+         return retval;
       }
 
       private void WriteLog(string log)
@@ -148,7 +268,7 @@ namespace QToolbar
       }
       private void Init()
       {
-         lstResults.Items.Clear();
+         _Table.Rows.Clear();
          if(File.Exists(LOG_FILE))
          {
             File.Delete(LOG_FILE);
@@ -156,15 +276,19 @@ namespace QToolbar
       }
       #endregion
 
-      private void lstResults_DoubleClick(object sender, EventArgs e)
+      private void gridView1_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
       {
-         Frm_FileViewer f = new Frm_FileViewer();
-         object selected = lstResults.SelectedItem;
-         if (selected is NextBuildFile)
-         {
-            NextBuildFile bf = ((NextBuildFile)selected);
+      }
 
-            f.ViewFile(bf.File);
+      private void gridView1_DoubleClick(object sender, EventArgs e)
+      {
+         string file = gridView1.GetFocusedDataRow()["File"].ToString();
+         if (!string.IsNullOrEmpty(file) && File.Exists(file))
+         {
+            PowerfulSample f1 = new PowerfulSample();
+            f1.Size = new Size(800, 800);
+
+            f1.ViewFile(file, FastColoredTextBoxNS.Language.SQL);
          }
       }
    }

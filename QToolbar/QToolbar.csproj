@@ -99,6 +99,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckResult.cs" />
     <Compile Include="Frm_NextBuildChecker.cs">
       <SubType>Form</SubType>
     </Compile>
