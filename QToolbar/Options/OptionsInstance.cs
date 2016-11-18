@@ -10,19 +10,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace QToolbar
+namespace QToolbar.Options
 {
-   public static class Options
+   public static class OptionsInstance
    {
-      public const string TESTING_FOLDER_SETTING = "TestingFolder";
-      public const string DESIGNERS_FOLDER_SETTING = "DesignersFolder";
-      public const string QCSADMIN_FOLDER_SETTING = "QCSAdminFolder";
-      public const string QCSAGENT_FOLDER_SETTING = "QCSAgentFolder";
-      public const string SQL_FOLDER_SETTING = "SQLFolder";
-      public const string EXECUTOR_CONFIGURATOR_FOLDER_SETTING = "ExecutorConfiguratorFolder";
-      public const string DATABASE_SCRIPTER_FOLDER_SETTING = "DatabaseScripterFolder";
-      public const string FIELDS_EXPLORER_FOLDER_SETTING = "FieldsExplorerFolder";
-
 
       public static string TestingFolder
       {
@@ -97,30 +88,22 @@ namespace QToolbar
          }
       }
 
-      #region helpers
-
-
-      public static string GetStringSetting(string settingKey)
+      public static string ConnectionStrings
       {
-         string retval = "";
-         Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
-         if (config.AppSettings.Settings.AllKeys.Contains(settingKey))
+         get
          {
-            retval = config.AppSettings.Settings[settingKey].Value;
+            return Properties.Settings.Default.Checkouts;
          }
-         return retval;
       }
 
-      public static bool GetBoolSetting(string settingKey)
+      public static Checkouts Checkouts
       {
-         bool retval = false;
-         Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
-         if (config.AppSettings.Settings.AllKeys.Contains(settingKey))
+         get
          {
-            bool.TryParse(config.AppSettings.Settings[settingKey].Value, out retval);
+            return new Checkouts(Properties.Settings.Default.Checkouts);
          }
-         return retval;
       }
-      #endregion
+
+
    }
 }

@@ -14,6 +14,7 @@ using System.Collections;
 using DevExpress.XtraBars.Ribbon.ViewInfo;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using QToolbar.Options;
 
 namespace QToolbar
 {
@@ -30,7 +31,7 @@ namespace QToolbar
       private void btnOptions_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
       {
          Frm_Options f = new Frm_Options();
-         if(f.ShowDialog() == DialogResult.OK)
+         if (f.ShowDialog() == DialogResult.OK)
          {
             btnRefresh_ItemClick(null, null);
          }
@@ -76,6 +77,7 @@ namespace QToolbar
          mnuDatabaseScripter.ClearLinks();
          mnuFieldsExplorer.ClearLinks();
          mnuEnvironmentsConfiguration.ClearLinks();
+         mnuNextBuild.ClearLinks();
 
 
       }
@@ -85,35 +87,37 @@ namespace QToolbar
          Task.Run(() =>
          {
             // init designers menu
-            CreateDirMenuItems(Options.DesignersFolder, mnuDesigners, DesignerMenuItem_ItemClick);
+            CreateDirMenuItems(OptionsInstance.DesignersFolder, mnuDesigners, DesignerMenuItem_ItemClick);
 
             // init QCSAdmin CFs
-            CreateDirMenuItems(Options.QCSAdminFolder, mnuQCSAdminCFs, QCSAdminCFMenuItem_ItemClick);
+            CreateDirMenuItems(OptionsInstance.QCSAdminFolder, mnuQCSAdminCFs, QCSAdminCFMenuItem_ItemClick);
 
             // init QCS Admin menu         
-            CreateDirMenuItems(Options.QCSAdminFolder, mnuQCSAdmin, QCSAdminMenuItem_ItemClick);
+            CreateDirMenuItems(OptionsInstance.QCSAdminFolder, mnuQCSAdmin, QCSAdminMenuItem_ItemClick);
 
             // init QCS Agent menu  
-            CreateDirMenuItems(Options.QCSAgentFolder, mnuQCSAgent, QCSAgentMenuItem_ItemClick);
+            CreateDirMenuItems(OptionsInstance.QCSAgentFolder, mnuQCSAgent, QCSAgentMenuItem_ItemClick);
 
             // init Executor Configurator menu  
-            CreateDirMenuItems(Options.ExecutorConfiguratorFolder, mnuExecutorConfiguration, ExecutorConfiguration_ItemClick);
+            CreateDirMenuItems(OptionsInstance.ExecutorConfiguratorFolder, mnuExecutorConfiguration, ExecutorConfiguration_ItemClick);
 
             // init Database scripter menu  
-            CreateDirMenuItems(Options.DatabaseScripterFolder, mnuDatabaseScripter, DatabaseScripter_ItemClick);
+            CreateDirMenuItems(OptionsInstance.DatabaseScripterFolder, mnuDatabaseScripter, DatabaseScripter_ItemClick);
 
             // init Fields Explorer menu  
-            CreateDirMenuItems(Options.FieldsExplorerFolder, mnuFieldsExplorer, FieldsExplorer_ItemClick);
+            CreateDirMenuItems(OptionsInstance.FieldsExplorerFolder, mnuFieldsExplorer, FieldsExplorer_ItemClick);
 
             // init sql menu
             CreateSQLMenu();
 
             // create folders menu
             CreateFoldersMenu();
-            
-            // Environments Configuration
-            CreateDirMenuItems(Options.EnvironmentsConfigurationFolder, mnuEnvironmentsConfiguration, EnvironmentsConfiguration_ItemClick);
 
+            // Environments Configuration
+            CreateDirMenuItems(OptionsInstance.EnvironmentsConfigurationFolder, mnuEnvironmentsConfiguration, EnvironmentsConfiguration_ItemClick);
+
+            // Create Next Build menu items
+            CreateNextBuildMenu();
          });
       }
 
@@ -140,6 +144,45 @@ namespace QToolbar
          }
       }
 
+      #region NextBuild
+      private void CreateNextBuildMenu()
+      {
+         // load custom folders
+         try
+         {
+            foreach (DataRow row in OptionsInstance.Checkouts.Data.Rows)
+            {
+               AddNextBuildItem(row);
+            }
+         }
+         catch (Exception ex)
+         {
+            XtraMessageBox.Show("Failed to retrieve folders settings");
+         }
+      }
+
+      private void AddNextBuildItem(DataRow row)
+      {
+         BarButtonItem nextBuildItem = new BarButtonItem(barManager1, row["Name"].ToString(), 0);
+         nextBuildItem.ItemClick += NextBuild_ItemClick;
+         nextBuildItem.Tag = row;
+         mnuNextBuild.AddItem(nextBuildItem);
+      }
+
+      private void NextBuild_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         try
+         {
+            DataRow row = (DataRow)e.Item.Tag;
+            Frm_NextBuildChecker f = new Frm_NextBuildChecker();
+            f.Show(row["Name"].ToString(), Path.Combine(row["Path"].ToString(), "Builds\\Next Build"));
+         }
+         catch (Exception ex)
+         {
+            XtraMessageBox.Show(ex.Message);
+         }
+      }
+      #endregion
       private void CreateFoldersMenu()
       {
          // load standard folders
@@ -152,7 +195,7 @@ namespace QToolbar
          // load custom folders
          try
          {
-            foreach (string folder in Options.Folders)
+            foreach (string folder in OptionsInstance.Folders)
             {
                AddFolderItem(folder);
             }
@@ -165,7 +208,7 @@ namespace QToolbar
 
       private void CreateSQLMenu()
       {
-         string sqlFolder = Options.SQLFolder;
+         string sqlFolder = OptionsInstance.SQLFolder;
          if (!string.IsNullOrEmpty(sqlFolder))
          {
             if (Directory.Exists(sqlFolder))
@@ -236,7 +279,7 @@ namespace QToolbar
       {
          try
          {
-            string qcsadmin = Path.Combine(Options.QCSAdminFolder, e.Item.Caption, "QCS.Client.application");
+            string qcsadmin = Path.Combine(OptionsInstance.QCSAdminFolder, e.Item.Caption, "QCS.Client.application");
             System.Diagnostics.Process.Start(qcsadmin);
          }
          catch (Exception ex)
@@ -251,7 +294,7 @@ namespace QToolbar
       {
          try
          {
-            string qcsadmin = Path.Combine(Options.QCSAgentFolder, e.Item.Caption, "CollectionAgentSystem.Client.application");
+            string qcsadmin = Path.Combine(OptionsInstance.QCSAgentFolder, e.Item.Caption, "CollectionAgentSystem.Client.application");
             System.Diagnostics.Process.Start(qcsadmin);
          }
          catch (Exception ex)
@@ -265,7 +308,7 @@ namespace QToolbar
 
          try
          {
-            string designer = Path.Combine(Options.DesignersFolder, e.Item.Caption, "SCToolkit.Designers.Client.application");
+            string designer = Path.Combine(OptionsInstance.DesignersFolder, e.Item.Caption, "SCToolkit.Designers.Client.application");
             System.Diagnostics.Process.Start(designer);
          }
          catch (Exception ex)
@@ -276,7 +319,7 @@ namespace QToolbar
 
       private void QCSAdminCFMenuItem_ItemClick(object sender, ItemClickEventArgs e)
       {
-         string qcsAdminCFDir = Path.Combine(Options.QCSAdminFolder, e.Item.Caption, "Application Files");
+         string qcsAdminCFDir = Path.Combine(OptionsInstance.QCSAdminFolder, e.Item.Caption, "Application Files");
          // find the newest dir
          if (Directory.Exists(qcsAdminCFDir))
          {
@@ -322,7 +365,7 @@ namespace QToolbar
 
       private void EnvironmentsConfiguration_ItemClick(object sender, ItemClickEventArgs e)
       {
-         string EnvDir = Path.Combine(Options.EnvironmentsConfigurationFolder, e.Item.Caption);         
+         string EnvDir = Path.Combine(OptionsInstance.EnvironmentsConfigurationFolder, e.Item.Caption);
          if (Directory.Exists(EnvDir))
          {
             string file = Path.Combine(EnvDir, "EnvironmentsConfiguration.xml");
@@ -333,7 +376,7 @@ namespace QToolbar
                PowerfulSample f = new PowerfulSample();
                f.Size = new Size(1200, 800);
                f.ViewFile(file, FastColoredTextBoxNS.Language.XML);
-               
+
             }
             catch (Exception ex)
             {
@@ -374,7 +417,7 @@ namespace QToolbar
       {
          try
          {
-            string app = Path.Combine(Options.ExecutorConfiguratorFolder, e.Item.Caption, "QC.ExecutorConfigurator.application");
+            string app = Path.Combine(OptionsInstance.ExecutorConfiguratorFolder, e.Item.Caption, "QC.ExecutorConfigurator.application");
             System.Diagnostics.Process.Start(app);
          }
          catch (Exception ex)
@@ -387,7 +430,7 @@ namespace QToolbar
       {
          try
          {
-            string app = Path.Combine(Options.DatabaseScripterFolder, e.Item.Caption, "QCSScript.application");
+            string app = Path.Combine(OptionsInstance.DatabaseScripterFolder, e.Item.Caption, "QCSScript.application");
             System.Diagnostics.Process.Start(app);
          }
          catch (Exception ex)
@@ -400,7 +443,7 @@ namespace QToolbar
       {
          try
          {
-            string app = Path.Combine(Options.FieldsExplorerFolder, e.Item.Caption, "SCToolkit.Utilities.FieldExplorer.application");
+            string app = Path.Combine(OptionsInstance.FieldsExplorerFolder, e.Item.Caption, "SCToolkit.Utilities.FieldExplorer.application");
             System.Diagnostics.Process.Start(app);
          }
          catch (Exception ex)
@@ -434,54 +477,70 @@ namespace QToolbar
 
       private void btnClearMetadata_ItemClick(object sender, ItemClickEventArgs e)
       {
-         if (!string.IsNullOrWhiteSpace(Options.QCSAdminFolder))
+         if (!string.IsNullOrWhiteSpace(OptionsInstance.QCSAdminFolder))
          {
-            if (Directory.Exists(Options.QCSAdminFolder))
+            if (Directory.Exists(OptionsInstance.QCSAdminFolder))
             {
-                            
-               try
+
+
+               List<string> dirs = new List<string>(Directory.EnumerateDirectories(OptionsInstance.QCSAdminFolder));
+               dirs = dirs.OrderByDescending(s => s).ToList<string>();
+               Regex reg = new Regex("^(?<version>[0-9]+[.][0-9]+)");
+               List<string> deletions = new List<string>();
+               string newItem = "";
+               foreach (string dir in dirs)
                {
-                  List<string> dirs = new List<string>(Directory.EnumerateDirectories(Options.QCSAdminFolder));
-                  dirs = dirs.OrderByDescending(s => s).ToList<string>();
-                  Regex reg = new Regex("^(?<version>[0-9]+[.][0-9]+)");
-                  List<string> deletions = new List<string>();
-                  string newItem = "";
-                  foreach (string dir in dirs)
+                  Match match = reg.Match(Path.GetFileName(dir));
+                  if (match.Success)
                   {
-                     Match match = reg.Match(Path.GetFileName(dir));
-                     if(match.Success)
+                     newItem = string.Format("del %temp%\\{0}*", match.Groups["version"]);
+                     if (!deletions.Contains(newItem))
                      {
-                        newItem = string.Format("del %temp%\\{0}*", match.Groups["version"]);
-                        if (!deletions.Contains(newItem))
-                        {
-                           deletions.Add(newItem);
-                        }
+                        deletions.Add(newItem);
                      }
                   }
+               }
 
-                  // create batch content
-                  StringBuilder builder = new StringBuilder();
-                  builder.AppendLine("del %temp%\\current*");
-                  foreach (var del in deletions)
+               // create batch content
+               StringBuilder builder = new StringBuilder();
+
+               builder.AppendLine("del %temp%\\current*");
+               foreach (var del in deletions)
+               {
+                  builder.AppendLine(del);
+               }
+               builder.AppendLine("del %userprofile%\\documents\\*.metadata");
+               builder.AppendLine("del %userprofile%\\documents\\*.localization.dat");
+               builder.AppendLine("del %TEMP%\\*.metadata");
+               builder.AppendLine("del %TEMP%\\*localization.dat");
+               builder.AppendLine("taskkill /IM iisexpress.exe");
+
+
+               string FILE_NAME = Path.Combine(Path.GetTempPath(), "clear_metadata.bat");
+               FileStream fs = null;
+               try
+               {
+                  fs = new FileStream(FILE_NAME, FileMode.Create);
+                  using (StreamWriter writer = new StreamWriter(fs))
                   {
-                     builder.AppendLine(del);
+                     writer.Write(builder.ToString());
+                     writer.Close();
                   }
-                  builder.AppendLine("del %userprofile%\\documents\\*.metadata");
-                  builder.AppendLine("del %userprofile%\\documents\\*.localization.dat");
-                  builder.AppendLine("del %TEMP%\\*.metadata");
-                  builder.AppendLine("del %TEMP%\\*localization.dat");
-                  builder.AppendLine("taskkill /IM iisexpress.exe");
-
-                  string FILE_NAME = "clear_metadata.bat";
-                  StreamWriter writer = new StreamWriter(FILE_NAME);
-                  writer.Write(builder.ToString());
-                  writer.Close();
                   Process.Start(FILE_NAME);
                }
                catch (Exception ex)
                {
                   XtraMessageBox.Show(string.Format("Failed to clear metadata {0}", ex.Message));
                }
+               finally
+               {
+                  if (fs != null)
+                     fs.Dispose();
+               }
+            }
+            else
+            {
+               XtraMessageBox.Show(string.Format("QVS Admin Folder \"{0}\" not found.", OptionsInstance.QCSAdminFolder));
             }
          }
       }

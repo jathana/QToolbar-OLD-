@@ -168,5 +168,17 @@ namespace QToolbar.Properties {
                 this["EnvironmentsConfigurationFolder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Checkouts {
+            get {
+                return ((string)(this["Checkouts"]));
+            }
+            set {
+                this["Checkouts"] = value;
+            }
+        }
     }
 }

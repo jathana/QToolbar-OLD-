@@ -41,5 +41,8 @@
     <Setting Name="EnvironmentsConfigurationFolder" Type="System.String" Scope="User">
       <Value Profile="(Default)">X:\Toolkit Applications\Internal Deployment Tool\Configuration</Value>
     </Setting>
+    <Setting Name="Checkouts" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

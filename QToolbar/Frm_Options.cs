@@ -11,6 +11,11 @@ using DevExpress.XtraEditors;
 using System.Configuration;
 using System.IO;
 using System.Collections.Specialized;
+using System.Collections;
+using System.Xml;
+using QToolbar.Options;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Views.Grid;
 
 namespace QToolbar
 {
@@ -46,6 +51,8 @@ namespace QToolbar
          // save folders
          SaveFolders();
 
+         SaveCheckouts();
+
          Properties.Settings.Default.Save();
       }
 
@@ -61,8 +68,24 @@ namespace QToolbar
          txtDatabaseScripterFolder.Text= Properties.Settings.Default.DatabaseScripterFolder;
          txtFieldsExplorerFolder.Text = Properties.Settings.Default.FieldsExplorerFolder;
          txtEnvironmentsConfiguration.Text = Properties.Settings.Default.EnvironmentsConfigurationFolder;
+         
          LoadFolders();
+         LoadCheckouts();
       }
+
+
+      private void LoadCheckouts()
+      {
+         Checkouts checkouts = new Checkouts(Properties.Settings.Default.Checkouts);
+         gridCheckouts.DataSource = checkouts.Data;
+      }
+
+      private void SaveCheckouts()
+      {
+         Checkouts checkouts = new Checkouts((DataTable)gridCheckouts.DataSource);
+         Properties.Settings.Default.Checkouts = checkouts.ToXml();
+      }
+
 
       private void LoadFolders()
       {
@@ -152,6 +175,17 @@ namespace QToolbar
          if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
          {
             txtEnvironmentsConfiguration.Text = folderBrowserDialog1.SelectedPath;
+         }
+      }
+
+      private void gridCheckouts_ProcessGridKey(object sender, KeyEventArgs e)
+      {
+         var grid = sender as GridControl;
+         var view = grid.FocusedView as GridView;
+         if (e.KeyData == Keys.Delete)
+         {
+            view.DeleteSelectedRows();
+            e.Handled = true;
          }
       }
    }
