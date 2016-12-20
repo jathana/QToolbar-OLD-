@@ -180,13 +180,23 @@ namespace QToolbar
 
       private void gridCheckouts_ProcessGridKey(object sender, KeyEventArgs e)
       {
-         var grid = sender as GridControl;
-         var view = grid.FocusedView as GridView;
-         if (e.KeyData == Keys.Delete)
+         //var grid = sender as GridControl;
+         //var view = grid.FocusedView as GridView;
+         //if (e.KeyData == Keys.Delete)
+         //{
+         //   view.DeleteSelectedRows();
+         //   e.Handled = true;
+         //}
+
+         if (e.KeyCode == Keys.Delete && e.Modifiers == Keys.Control)
          {
-            view.DeleteSelectedRows();
-            e.Handled = true;
+            if (MessageBox.Show("Delete row?", "Confirmation", MessageBoxButtons.YesNo) !=
+              DialogResult.Yes)
+               return;
+            GridView view = sender as GridView;
+            view.DeleteRow(view.FocusedRowHandle);
          }
+
       }
    }
 }

@@ -65,6 +65,8 @@ namespace QToolbar
                StreamReader rdr = new StreamReader(file, true);
                content = rdr.ReadToEnd();
                lowerContent = content.ToLower();
+               rdr.Close();
+               rdr.Dispose();
 
                // check unicode
                fileOk = fileOk && CheckUnicode(file);
@@ -77,8 +79,6 @@ namespace QToolbar
 
                if (fileOk) Inform(file, "File passed all checks!","", CheckResult.OK);
 
-               rdr.Close();
-               rdr.Dispose();
             }
 
             // EOD Metadata files 
@@ -100,6 +100,17 @@ namespace QToolbar
       }
 
       #region logic
+
+
+      private bool CheckForGOStatement(string content, string file)
+      {
+         bool retval = true;
+         Regex reg = new Regex(@"\s+go\S+");
+
+         
+         return retval;
+      }
+
       private bool NextBuildFolderExists()
       {
          return !string.IsNullOrEmpty(_CheckoutPath) && Directory.Exists(_CheckoutPath);
@@ -161,16 +172,46 @@ namespace QToolbar
       {
          bool retval = true;
 
-         using (StreamReader sr = new StreamReader(file,  Encoding.ASCII,  true))
+         //using (StreamReader sr = new StreamReader(file,  Encoding.ASCII,  true))
+         //{
+         //   sr.Peek();
+         //   if (sr.CurrentEncoding.BodyName != "utf-8" && sr.CurrentEncoding.BodyName != "utf-16")
+         //   {
+         //      Inform(file, "not in unicode", "", CheckResult.Error);
+         //      _Errors = true;
+         //      retval = false;
+         //   }
+         //}
+
+         //Encoding encoding = TextFileEncodingDetector.DetectTextFileEncoding(file);
+         //if (encoding.BodyName != "utf-8" && encoding.BodyName != "utf-16")
+         //{
+         //   Inform(file, "not in unicode", "", CheckResult.Error);
+         //   _Errors = true;
+         //   retval = false;
+         //}
+
+         //TextEncodingDetect detector = new TextEncodingDetect();
+         //TextEncodingDetect.Encoding encoding = detector.DetectEncoding(file);
+         //if(encoding==TextEncodingDetect.Encoding.Ansi || 
+         //   encoding == TextEncodingDetect.Encoding.Ascii || 
+         //   encoding == TextEncodingDetect.Encoding.None)
+         //{ 
+         //   Inform(file, "not in unicode", "", CheckResult.Error);
+         //   _Errors = true;
+         //   retval = false;
+         //}
+
+         
+         Encoding encoding = Utils.GetEncoding(file);
+         if (encoding.BodyName != "utf-8" && encoding.BodyName != "utf-16")
          {
-            sr.Peek();
-            if (sr.CurrentEncoding.BodyName != "utf-8" && sr.CurrentEncoding.BodyName != "utf-16")
-            {
-               Inform(file, "not in unicode", "", CheckResult.Error);
-               _Errors = true;
-               retval = false;
-            }
+            Inform(file, "not in unicode", "", CheckResult.Error);
+            _Errors = true;
+            retval = false;
          }
+
+
          return retval;
       }
 
@@ -208,12 +249,21 @@ namespace QToolbar
          bool retval = true;
          if (Path.GetExtension(file).ToLower().Equals(".sql") || Path.GetExtension(file).ToLower().Equals(".bd"))
          {
-            ParseResult result = Parser.Parse(content);            
+            ParseOptions options = new ParseOptions();
+            // sql 2008 combatibility
+            options.CompatibilityLevel = Microsoft.SqlServer.Management.SqlParser.Common.DatabaseCompatibilityLevel.Version100;
+            options.TransactSqlVersion = Microsoft.SqlServer.Management.SqlParser.Common.TransactSqlVersion.Version105;
+
+            ParseResult result = Parser.Parse(content, options);            
             if(result.Errors.Count() >0)
             {
+               string msg = "";
                foreach(var error in result.Errors)
                {
-                  Inform(file, error.Message, "",CheckResult.Error);
+                  msg = string.Format("{0} (Start line:{1}, col:{2}, End line:{3}, col:{4})", error.Message,
+                        error.Start.LineNumber, error.Start.ColumnNumber,
+                        error.End.LineNumber, error.End.ColumnNumber);
+                  Inform(file, msg, "", CheckResult.Error);
                   _Errors = true;
                }
                retval = false;

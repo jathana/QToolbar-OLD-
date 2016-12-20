@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\q-wks-jathan\Shared\QToolbar\</InstallUrl>
-    <ApplicationRevision>27</ApplicationRevision>
+    <ApplicationRevision>28</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -144,6 +144,8 @@
     <Compile Include="Options\SerializableTable.cs" />
     <Compile Include="StickyWindow.cs" />
     <Compile Include="Options\OptionsInstance.cs" />
+    <Compile Include="TextEncodingDetect.cs" />
+    <Compile Include="TextFileEncodingDetector.cs" />
     <Compile Include="Utils.cs" />
     <EmbeddedResource Include="Frm_NextBuildChecker.resx">
       <DependentUpon>Frm_NextBuildChecker.cs</DependentUpon>
