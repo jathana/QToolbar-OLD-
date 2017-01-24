@@ -33,9 +33,17 @@ namespace QToolbar
 
       public void Show(string checkoutName, string checkoutPath)
       {
-         _Errors = false;
+        
          _CheckoutName = checkoutName;
          _CheckoutPath = checkoutPath;
+         _Errors = false;
+         Check();
+
+      }
+
+      private void Check()
+      {
+         _Errors = false;
          _Table.Columns.Add("File", typeof(string));
          _Table.Columns.Add("Message", typeof(string));
          _Table.Columns.Add("Tag", typeof(string));
@@ -45,7 +53,6 @@ namespace QToolbar
          Show();
          Run();
          gridView1.OptionsBehavior.Editable = false;
-         //gridView1.DoubleClick += gridView1_DoubleClick;
          gridResults.DataSource = _Table;
 
       }
@@ -340,6 +347,11 @@ namespace QToolbar
 
             f1.ViewFile(file, FastColoredTextBoxNS.Language.SQL);
          }
+      }
+
+      private void btnCheck_Click(object sender, EventArgs e)
+      {
+         Check();
       }
    }
 }
