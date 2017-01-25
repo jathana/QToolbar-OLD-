@@ -68,7 +68,7 @@
          this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
          this.layoutControl1.Location = new System.Drawing.Point(0, 0);
          this.layoutControl1.Name = "layoutControl1";
-         this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1040, 189, 250, 350);
+         this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(2308, 203, 424, 592);
          this.layoutControl1.Root = this.layoutControlGroup1;
          this.layoutControl1.Size = new System.Drawing.Size(1030, 468);
          this.layoutControl1.TabIndex = 0;
@@ -185,8 +185,11 @@
          // 
          this.layoutControlItem3.Control = this.btnClose;
          this.layoutControlItem3.Location = new System.Drawing.Point(930, 422);
+         this.layoutControlItem3.MaxSize = new System.Drawing.Size(80, 26);
+         this.layoutControlItem3.MinSize = new System.Drawing.Size(80, 26);
          this.layoutControlItem3.Name = "layoutControlItem3";
          this.layoutControlItem3.Size = new System.Drawing.Size(80, 26);
+         this.layoutControlItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
          this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem3.TextVisible = false;
          // 
@@ -212,8 +215,11 @@
          // 
          this.layoutControlItem4.Control = this.btnCheck;
          this.layoutControlItem4.Location = new System.Drawing.Point(840, 422);
+         this.layoutControlItem4.MaxSize = new System.Drawing.Size(80, 26);
+         this.layoutControlItem4.MinSize = new System.Drawing.Size(80, 26);
          this.layoutControlItem4.Name = "layoutControlItem4";
          this.layoutControlItem4.Size = new System.Drawing.Size(80, 26);
+         this.layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
          this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem4.TextVisible = false;
          // 
@@ -221,8 +227,11 @@
          // 
          this.emptySpaceItem2.AllowHotTrack = false;
          this.emptySpaceItem2.Location = new System.Drawing.Point(920, 422);
+         this.emptySpaceItem2.MaxSize = new System.Drawing.Size(10, 26);
+         this.emptySpaceItem2.MinSize = new System.Drawing.Size(10, 26);
          this.emptySpaceItem2.Name = "emptySpaceItem2";
          this.emptySpaceItem2.Size = new System.Drawing.Size(10, 26);
+         this.emptySpaceItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
          this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
          // 
          // Frm_NextBuildChecker

@@ -21,6 +21,7 @@ namespace QToolbar
 
       private string _CheckoutName = "";
       private string _CheckoutPath = "";
+      private string _NextBuildPath = "";
       private bool _Errors = false;
 
       private DataTable _Table = new DataTable();
@@ -36,6 +37,8 @@ namespace QToolbar
         
          _CheckoutName = checkoutName;
          _CheckoutPath = checkoutPath;
+         _NextBuildPath = Path.Combine(checkoutPath, @"Builds\Next Build");
+
          _Errors = false;
          Check();
 
@@ -44,12 +47,13 @@ namespace QToolbar
       private void Check()
       {
          _Errors = false;
+         _Table.Columns.Clear();
          _Table.Columns.Add("File", typeof(string));
          _Table.Columns.Add("Message", typeof(string));
          _Table.Columns.Add("Tag", typeof(string));
          _Table.Columns.Add("Result", typeof(string));
 
-         Text = string.Format("{0} - {1}", _CheckoutName, _CheckoutPath);
+         Text = string.Format("{0} - {1}", _CheckoutName, _NextBuildPath);
          Show();
          Run();
          gridView1.OptionsBehavior.Editable = false;
@@ -62,7 +66,7 @@ namespace QToolbar
          if(NextBuildFolderExists())
          {
             Init();
-            string[] files = Directory.GetFiles(_CheckoutPath, "*.*", SearchOption.AllDirectories);
+            string[] files = Directory.GetFiles(_NextBuildPath, "*.*", SearchOption.AllDirectories);
             string content = "";
             string lowerContent = "";
             bool fileOk = true;
@@ -89,11 +93,13 @@ namespace QToolbar
             }
 
             // EOD Metadata files 
-            fileOk = fileOk && CheckForEODMetadataFiles();
+            CheckForEODMetadataFiles();
 
             // configuration files
             CheckConfigurationFiles();
 
+            // check qbc_admin.cf
+            CheckQBCAdminCF();
          }
          else
          {
@@ -120,7 +126,7 @@ namespace QToolbar
 
       private bool NextBuildFolderExists()
       {
-         return !string.IsNullOrEmpty(_CheckoutPath) && Directory.Exists(_CheckoutPath);
+         return !string.IsNullOrEmpty(_NextBuildPath) && Directory.Exists(_NextBuildPath);
       }
 
      
@@ -178,37 +184,6 @@ namespace QToolbar
       private bool CheckUnicode(string file)
       {
          bool retval = true;
-
-         //using (StreamReader sr = new StreamReader(file,  Encoding.ASCII,  true))
-         //{
-         //   sr.Peek();
-         //   if (sr.CurrentEncoding.BodyName != "utf-8" && sr.CurrentEncoding.BodyName != "utf-16")
-         //   {
-         //      Inform(file, "not in unicode", "", CheckResult.Error);
-         //      _Errors = true;
-         //      retval = false;
-         //   }
-         //}
-
-         //Encoding encoding = TextFileEncodingDetector.DetectTextFileEncoding(file);
-         //if (encoding.BodyName != "utf-8" && encoding.BodyName != "utf-16")
-         //{
-         //   Inform(file, "not in unicode", "", CheckResult.Error);
-         //   _Errors = true;
-         //   retval = false;
-         //}
-
-         //TextEncodingDetect detector = new TextEncodingDetect();
-         //TextEncodingDetect.Encoding encoding = detector.DetectEncoding(file);
-         //if(encoding==TextEncodingDetect.Encoding.Ansi || 
-         //   encoding == TextEncodingDetect.Encoding.Ascii || 
-         //   encoding == TextEncodingDetect.Encoding.None)
-         //{ 
-         //   Inform(file, "not in unicode", "", CheckResult.Error);
-         //   _Errors = true;
-         //   retval = false;
-         //}
-
          
          Encoding encoding = Utils.GetEncoding(file);
          if (encoding.BodyName != "utf-8" && encoding.BodyName != "utf-16")
@@ -226,10 +201,10 @@ namespace QToolbar
       private bool CheckForEODMetadataFiles()
       {
          bool retval = true;
-         if (Directory.Exists(_CheckoutPath))
+         if (Directory.Exists(_NextBuildPath))
          {
-            if (File.Exists(Path.Combine(_CheckoutPath, "5102.2. EODMonitorMetadata.sql")) &&
-                File.Exists(Path.Combine(_CheckoutPath, "5102.2. FullEODMonitorMetadata.sql")))
+            if (File.Exists(Path.Combine(_NextBuildPath, "5102.2. EODMonitorMetadata.sql")) &&
+                File.Exists(Path.Combine(_NextBuildPath, "5102.2. FullEODMonitorMetadata.sql")))
             {
                Inform("Found both \"5102.2.EODMonitorMetadata.sql\" and \"5102.2.FullEODMonitorMetadata.sql\". Please keep only the \"5102.2.FullEODMonitorMetadata.sql\"", CheckResult.Error);
                _Errors = true;
@@ -319,6 +294,40 @@ namespace QToolbar
          return retval;
       }
 
+      private bool CheckQBCAdminCF()
+      {
+         bool retval = true;
+         string path = Path.Combine(_CheckoutPath, @"VS Projects\QCS\QCSClient\QBC_Admin.cf");
+         string content = File.ReadAllText(path);
+
+         // check application code
+         Regex reg = new Regex(@"ApplicationCode\s*=\s*(?<Num>[0-9])");
+         Match match = reg.Match(content);
+         string appCode = match.Groups["Num"].Value;
+         if (match.Success && appCode!="8")
+         {
+            Inform(path, $"ApplicationCode is {appCode}", "cf error", CheckResult.Error);
+            _Errors = true;
+            retval = false;
+         }
+
+         // check 
+         string[] lit = new string[] { "ApplicationServiceAssembly", "ApplicationServiceType", "ToolkitWSURL", "ApplicationWSURL" };
+         foreach (string s in lit)
+         {
+            match = Regex.Match(content, $@"[#]\s*{s}");
+            if (match.Success)
+            {
+               Inform(path, $"Found comment in cf \"{s}\"!", "cf error", CheckResult.Error);
+               _Errors = true;
+               retval = false;
+            }
+         }
+         return retval;
+      }
+
+
+
       private void WriteLog(string log)
       {
          File.AppendAllText(LOG_FILE, log + "\r\n");
@@ -351,7 +360,19 @@ namespace QToolbar
 
       private void btnCheck_Click(object sender, EventArgs e)
       {
-         Check();
+         try
+         {
+            Cursor.Current = Cursors.WaitCursor;
+            Check();
+         }
+         catch(Exception ex)
+         {
+
+         }
+         finally
+         {
+            Cursor.Current = Cursors.Default;
+         }
       }
    }
 }

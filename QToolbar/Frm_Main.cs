@@ -175,7 +175,7 @@ namespace QToolbar
          {
             DataRow row = (DataRow)e.Item.Tag;
             Frm_NextBuildChecker f = new Frm_NextBuildChecker();
-            f.Show(row["Name"].ToString(), Path.Combine(row["Path"].ToString(), "Builds\\Next Build"));
+            f.Show(row["Name"].ToString(), row["Path"].ToString());
          }
          catch (Exception ex)
          {
@@ -324,19 +324,16 @@ namespace QToolbar
          if (Directory.Exists(qcsAdminCFDir))
          {
             string[] subdirs = Directory.GetDirectories(qcsAdminCFDir);
-            int maxRelease = -1;
             string destDir = "";
+            Version maxVersion = new Version(0,0,0,0);
             foreach (string dir in subdirs)
             {
-               string[] splitted = dir.Split('_');
-               int release = -1;
-               if (splitted.Length == 5 && int.TryParse(splitted[3], out release))
+               Version curVersion = Utils.GetVersion(dir, "_", 1);
+               
+               if (curVersion != null && maxVersion < curVersion)
                {
-                  if (release > maxRelease)
-                  {
-                     maxRelease = release;
+                     maxVersion = curVersion;
                      destDir = dir;
-                  }
                }
                else
                {

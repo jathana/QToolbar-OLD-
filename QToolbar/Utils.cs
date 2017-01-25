@@ -13,7 +13,35 @@ namespace QToolbar
 {
    public static class Utils
    {
-      
+
+      /// <summary>
+      /// constructs a version object from string. 
+      /// </summary>
+      /// <param name="versionStr"></param>
+      /// <param name="delimiter"></param>
+      /// <param name="start">How many delimiters should be skipped to get version major.</param>
+      /// <returns></returns>
+      public static Version GetVersion(string versionStr, string delimiter, int start)
+      {
+         Version retval = null;
+
+         if (!string.IsNullOrEmpty(versionStr))
+         {
+            string[] splitted = versionStr.Split(new string[] { delimiter }, StringSplitOptions.None);
+            if(splitted.Length==5)
+            {
+               StringBuilder b = new StringBuilder(splitted[start]); 
+               for(int i = start+1; i < start + 4; i++)
+               {
+                  b.Append(".");
+                  b.Append(splitted[i]);
+               }
+               retval = new Version(b.ToString());
+            }
+         }
+         return retval;
+      }
+
       public static Dictionary<string,string> GetSectionItems(string section)
       {
 
