@@ -220,8 +220,8 @@ namespace QToolbar
          bool retval = true;
          if (Path.GetExtension(file).ToLower().Equals(".sql"))
          {
-            retval = retval && CheckForDDL(file, content, "create\\s+", "CAUTION!! CREATE ddl in sql file.", "create");
-            retval = retval && CheckForDDL(file, content, "alter\\s+", "CAUTION!!  ALTER ddl in sql file.", "alter");
+            retval = retval && CheckForDDL(file, content, "\\s+create\\s+", "CAUTION!! \"CREATE\" in sql file.", "create");
+            retval = retval && CheckForDDL(file, content, "\\s+alter\\s+", "CAUTION!!  \"ALTER\"  in sql file.", "alter");
          }
          return retval;
       }
