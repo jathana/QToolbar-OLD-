@@ -16,7 +16,6 @@ namespace QToolbar
    public partial class Frm_InternalBuilds : DevExpress.XtraEditors.XtraForm
    {
       private string _InternalBuildPath = "";
-      private string _InternalBuildName = "";
 
       public Frm_InternalBuilds()
       {
@@ -57,6 +56,17 @@ namespace QToolbar
          {
             XtraMessageBox.Show($"Folder {_InternalBuildPath} does not exist!");
          }
+      }
+
+      private void ShowInfo()
+      {
+         txtVersion.Text = Path.GetFileName(_InternalBuildPath);
+         txtStarTeamLabel.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+      }
+
+      private void Frm_InternalBuilds_Load(object sender, EventArgs e)
+      {
+         ShowInfo();
       }
    }
 }
