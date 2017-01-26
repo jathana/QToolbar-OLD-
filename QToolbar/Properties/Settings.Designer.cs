@@ -180,5 +180,17 @@ namespace QToolbar.Properties {
                 this["Checkouts"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\Q-SRV-INTTFSB\\InternalBuilds")]
+        public string InternalBuildsFolder {
+            get {
+                return ((string)(this["InternalBuildsFolder"]));
+            }
+            set {
+                this["InternalBuildsFolder"] = value;
+            }
+        }
     }
 }

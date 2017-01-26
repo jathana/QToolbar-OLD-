@@ -96,6 +96,14 @@ namespace QToolbar.Options
          }
       }
 
+      public static string InternalBuildsFolder
+      {
+         get
+         {
+            return Properties.Settings.Default.InternalBuildsFolder;
+         }
+      }
+
       public static Checkouts Checkouts
       {
          get

@@ -29,6 +29,7 @@
       private void InitializeComponent()
       {
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+         this.txtInternalBuildsFolder = new DevExpress.XtraEditors.ButtonEdit();
          this.txtEnvironmentsConfiguration = new DevExpress.XtraEditors.ButtonEdit();
          this.memFolders = new DevExpress.XtraEditors.MemoEdit();
          this.txtFieldsExplorerFolder = new DevExpress.XtraEditors.ButtonEdit();
@@ -57,6 +58,7 @@
          this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
+         this.layoutControlItem14 = new DevExpress.XtraLayout.LayoutControlItem();
          this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
          this.layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
          this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
@@ -74,6 +76,7 @@
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.txtInternalBuildsFolder.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtEnvironmentsConfiguration.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.memFolders.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtFieldsExplorerFolder.Properties)).BeginInit();
@@ -102,6 +105,7 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).BeginInit();
          this.layoutControl2.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
@@ -120,6 +124,7 @@
          // 
          // layoutControl1
          // 
+         this.layoutControl1.Controls.Add(this.txtInternalBuildsFolder);
          this.layoutControl1.Controls.Add(this.txtEnvironmentsConfiguration);
          this.layoutControl1.Controls.Add(this.memFolders);
          this.layoutControl1.Controls.Add(this.txtFieldsExplorerFolder);
@@ -133,11 +138,22 @@
          this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
          this.layoutControl1.Location = new System.Drawing.Point(0, 0);
          this.layoutControl1.Name = "layoutControl1";
-         this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(857, 404, 422, 555);
+         this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1204, 383, 422, 555);
          this.layoutControl1.Root = this.layoutControlGroup1;
          this.layoutControl1.Size = new System.Drawing.Size(801, 453);
          this.layoutControl1.TabIndex = 1;
          this.layoutControl1.Text = "layoutControl1";
+         // 
+         // txtInternalBuildsFolder
+         // 
+         this.txtInternalBuildsFolder.Location = new System.Drawing.Point(159, 272);
+         this.txtInternalBuildsFolder.Name = "txtInternalBuildsFolder";
+         this.txtInternalBuildsFolder.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+         this.txtInternalBuildsFolder.Size = new System.Drawing.Size(630, 20);
+         this.txtInternalBuildsFolder.StyleController = this.layoutControl1;
+         this.txtInternalBuildsFolder.TabIndex = 17;
+         this.txtInternalBuildsFolder.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.txtInternalBuildsFolder_ButtonClick);
          // 
          // txtEnvironmentsConfiguration
          // 
@@ -152,9 +168,9 @@
          // 
          // memFolders
          // 
-         this.memFolders.Location = new System.Drawing.Point(159, 272);
+         this.memFolders.Location = new System.Drawing.Point(159, 296);
          this.memFolders.Name = "memFolders";
-         this.memFolders.Size = new System.Drawing.Size(630, 167);
+         this.memFolders.Size = new System.Drawing.Size(630, 143);
          this.memFolders.StyleController = this.layoutControl1;
          this.memFolders.TabIndex = 15;
          // 
@@ -267,7 +283,8 @@
             this.layoutControlItem7,
             this.layoutControlItem10,
             this.layoutControlItem11,
-            this.layoutControlItem12});
+            this.layoutControlItem12,
+            this.layoutControlItem14});
          this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
          this.layoutControlGroup1.Name = "Root";
          this.layoutControlGroup1.Size = new System.Drawing.Size(801, 453);
@@ -388,7 +405,7 @@
          // simpleSeparator3
          // 
          this.simpleSeparator3.AllowHotTrack = false;
-         this.simpleSeparator3.Location = new System.Drawing.Point(0, 408);
+         this.simpleSeparator3.Location = new System.Drawing.Point(0, 431);
          this.simpleSeparator3.Name = "simpleSeparator3";
          this.simpleSeparator3.Size = new System.Drawing.Size(781, 2);
          // 
@@ -413,9 +430,9 @@
          // layoutControlItem11
          // 
          this.layoutControlItem11.Control = this.memFolders;
-         this.layoutControlItem11.Location = new System.Drawing.Point(0, 260);
+         this.layoutControlItem11.Location = new System.Drawing.Point(0, 284);
          this.layoutControlItem11.Name = "layoutControlItem11";
-         this.layoutControlItem11.Size = new System.Drawing.Size(781, 171);
+         this.layoutControlItem11.Size = new System.Drawing.Size(781, 147);
          this.layoutControlItem11.Text = "My Folders";
          this.layoutControlItem11.TextSize = new System.Drawing.Size(144, 13);
          // 
@@ -427,6 +444,15 @@
          this.layoutControlItem12.Size = new System.Drawing.Size(781, 24);
          this.layoutControlItem12.Text = "Environments Configuration";
          this.layoutControlItem12.TextSize = new System.Drawing.Size(144, 13);
+         // 
+         // layoutControlItem14
+         // 
+         this.layoutControlItem14.Control = this.txtInternalBuildsFolder;
+         this.layoutControlItem14.Location = new System.Drawing.Point(0, 260);
+         this.layoutControlItem14.Name = "layoutControlItem14";
+         this.layoutControlItem14.Size = new System.Drawing.Size(781, 24);
+         this.layoutControlItem14.Text = "Internal Builds Folder";
+         this.layoutControlItem14.TextSize = new System.Drawing.Size(144, 13);
          // 
          // btnCancel
          // 
@@ -446,7 +472,7 @@
          this.layoutControl2.Dock = System.Windows.Forms.DockStyle.Fill;
          this.layoutControl2.Location = new System.Drawing.Point(0, 0);
          this.layoutControl2.Name = "layoutControl2";
-         this.layoutControl2.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1131, 293, 314, 532);
+         this.layoutControl2.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1362, 248, 314, 532);
          this.layoutControl2.Root = this.layoutControlGroup2;
          this.layoutControl2.Size = new System.Drawing.Size(831, 531);
          this.layoutControl2.TabIndex = 2;
@@ -585,6 +611,7 @@
          this.Load += new System.EventHandler(this.Frm_Options_Load);
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
          this.layoutControl1.ResumeLayout(false);
+         ((System.ComponentModel.ISupportInitialize)(this.txtInternalBuildsFolder.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtEnvironmentsConfiguration.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.memFolders.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtFieldsExplorerFolder.Properties)).EndInit();
@@ -613,6 +640,7 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).EndInit();
          this.layoutControl2.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
@@ -676,5 +704,7 @@
       private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem4;
       private DevExpress.XtraGrid.GridControl gridCheckouts;
       private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+      private DevExpress.XtraEditors.ButtonEdit txtInternalBuildsFolder;
+      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem14;
    }
 }

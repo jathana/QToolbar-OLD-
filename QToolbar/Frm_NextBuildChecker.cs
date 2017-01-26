@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -31,22 +32,8 @@ namespace QToolbar
          InitializeComponent();
       }
 
-
-      public void Show(string checkoutName, string checkoutPath)
+      private void InitUI()
       {
-        
-         _CheckoutName = checkoutName;
-         _CheckoutPath = checkoutPath;
-         _NextBuildPath = Path.Combine(checkoutPath, @"Builds\Next Build");
-
-         _Errors = false;
-         Check();
-
-      }
-
-      private void Check()
-      {
-         _Errors = false;
          _Table.Columns.Clear();
          _Table.Columns.Add("File", typeof(string));
          _Table.Columns.Add("Message", typeof(string));
@@ -54,18 +41,26 @@ namespace QToolbar
          _Table.Columns.Add("Result", typeof(string));
 
          Text = string.Format("{0} - {1}", _CheckoutName, _NextBuildPath);
-         Show();
-         Run();
          gridView1.OptionsBehavior.Editable = false;
-         gridResults.DataSource = _Table;
-
       }
 
-      private void Run()
+      public void Show(string checkoutName, string checkoutPath)
       {
-         if(NextBuildFolderExists())
+        
+         _CheckoutName = checkoutName;
+         _CheckoutPath = checkoutPath;
+         _NextBuildPath = Path.Combine(checkoutPath, @"Builds\Next Build");
+        
+         Show();
+      }
+
+      private void OnCheck()
+      {
+         InitState();
+
+         if (NextBuildFolderExists())
          {
-            Init();
+            
             string[] files = Directory.GetFiles(_NextBuildPath, "*.*", SearchOption.AllDirectories);
             string content = "";
             string lowerContent = "";
@@ -146,11 +141,11 @@ namespace QToolbar
             try
             {
                xml.Load(conf);               
-               Inform(string.Format("Configuration file ok!! \"{0}\"", conf), CheckResult.OK);
+               Inform(conf, string.Format("Configuration file ok!! \"{0}\"", conf),"", CheckResult.OK);
             }
             catch(Exception ex)
             {
-               Inform(string.Format("Configuration file \"{0}\": {1}", conf, ex.Message), CheckResult.Error);
+               Inform(conf, string.Format("Configuration file \"{0}\": {1}", conf, ex.Message), "", CheckResult.Error);
             }
          }
          else
@@ -164,11 +159,11 @@ namespace QToolbar
             try
             {
                xml.Load(envs);
-               Inform(string.Format("Environments Configuration file ok!! \"{0}\"", envs), CheckResult.OK);
+               Inform(envs, string.Format("Environments Configuration file ok!! \"{0}\"", envs), "", CheckResult.OK);
             }
             catch (Exception ex)
             {
-               Inform(string.Format("Environments Configuration file \"{0}\": {1}", envs, ex.Message), CheckResult.Error);
+               Inform(envs, string.Format("Environments Configuration file \"{0}\": {1}", envs, ex.Message), "", CheckResult.Error);
             }
          }
          else
@@ -192,8 +187,6 @@ namespace QToolbar
             _Errors = true;
             retval = false;
          }
-
-
          return retval;
       }
 
@@ -210,7 +203,6 @@ namespace QToolbar
                _Errors = true;
                retval = false;
             }
-
          }
          return retval;
       }
@@ -332,8 +324,9 @@ namespace QToolbar
       {
          File.AppendAllText(LOG_FILE, log + "\r\n");
       }
-      private void Init()
+      private void InitState()
       {
+         _Errors = false;
          _Table.Rows.Clear();
          if(File.Exists(LOG_FILE))
          {
@@ -341,6 +334,25 @@ namespace QToolbar
          }
       }
       #endregion
+
+
+      private void BeforeCheck()
+      {
+         Cursor.Current = Cursors.WaitCursor;
+         gridResults.DataSource = null;
+      }
+
+
+      private void CheckAsync()
+      {
+         backgroundWorker1.RunWorkerAsync();
+      }
+
+      private void AfterCheck()
+      {
+         gridResults.DataSource = _Table;
+         Cursor.Current = Cursors.Default;
+      }
 
       private void gridView1_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
       {
@@ -358,21 +370,56 @@ namespace QToolbar
          }
       }
 
-      private void btnCheck_Click(object sender, EventArgs e)
+      private void RunAsync()
       {
          try
          {
-            Cursor.Current = Cursors.WaitCursor;
-            Check();
+            BeforeCheck();
+            CheckAsync();
          }
-         catch(Exception ex)
+         catch (Exception ex)
          {
 
          }
          finally
          {
-            Cursor.Current = Cursors.Default;
+
          }
+      }
+
+      private void btnCheck_Click(object sender, EventArgs e)
+      {
+          RunAsync();
+      }
+
+      private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+      {
+         OnCheck();
+      }
+
+      private void Frm_NextBuildChecker_Load(object sender, EventArgs e)
+      {
+         InitUI();
+
+         RunAsync();
+      }
+
+      private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+      {
+         AfterCheck();
+      }
+
+      private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+      {
+
+      }
+
+      private void btnConnectorWarninsLogs_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      {
+         string folder = Uri.EscapeDataString(@"\\Q-SRV-INTTFSB\InternalBuilds\7.2.8.1");
+         string file = "ConnectorWarningsLog.txt size:> 0 MB";
+         string uri = "search:query=" + file + "&crumb=location:" + folder;
+         Process.Start(new ProcessStartInfo(uri));
       }
    }
 }

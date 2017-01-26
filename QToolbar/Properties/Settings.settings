@@ -44,5 +44,8 @@
     <Setting Name="Checkouts" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="InternalBuildsFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\Q-SRV-INTTFSB\InternalBuilds</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

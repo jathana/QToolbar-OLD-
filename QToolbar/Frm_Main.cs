@@ -78,6 +78,7 @@ namespace QToolbar
          mnuFieldsExplorer.ClearLinks();
          mnuEnvironmentsConfiguration.ClearLinks();
          mnuNextBuild.ClearLinks();
+         mnuInternalBuilds.ClearLinks();
 
 
       }
@@ -118,6 +119,10 @@ namespace QToolbar
 
             // Create Next Build menu items
             CreateNextBuildMenu();
+
+            // Create Internal Builds menu
+            CreateDirMenuItems(OptionsInstance.InternalBuildsFolder, mnuInternalBuilds, InternalBuilds_ItemClick);
+
          });
       }
 
@@ -182,16 +187,32 @@ namespace QToolbar
             XtraMessageBox.Show(ex.Message);
          }
       }
+
+      private void AddInternalBuildsItem(DataRow row)
+      {
+         BarButtonItem internalBuildItem = new BarButtonItem(barManager1, row["Name"].ToString(), 0);
+         internalBuildItem.ItemClick += InternalBuilds_ItemClick;
+         internalBuildItem.Tag = row;
+         mnuInternalBuilds.AddItem(internalBuildItem);
+      }
+
+      private void InternalBuilds_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         try
+         {
+            string path = Path.Combine(OptionsInstance.InternalBuildsFolder, e.Item.Caption);
+            Frm_InternalBuilds f = new Frm_InternalBuilds();
+            f.Show(path);
+         }
+         catch (Exception ex)
+         {
+            XtraMessageBox.Show(ex.Message);
+         }
+      }
+
       #endregion
       private void CreateFoldersMenu()
       {
-         // load standard folders
-         //AddFolderItem(Utils.DesignersFolder);
-         //AddFolderItem(Utils.QCSAdminFolder);
-         //AddFolderItem(Utils.QCSAgentFolder);
-         //AddFolderItem(Utils.ExecutorConfiguratorFolder);
-         //AddFolderItem(Utils.TestingFolder);
-
          // load custom folders
          try
          {

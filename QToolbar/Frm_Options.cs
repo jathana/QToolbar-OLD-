@@ -48,6 +48,7 @@ namespace QToolbar
          Properties.Settings.Default.DatabaseScripterFolder = txtDatabaseScripterFolder.Text;
          Properties.Settings.Default.FieldsExplorerFolder = txtFieldsExplorerFolder.Text;
          Properties.Settings.Default.EnvironmentsConfigurationFolder = txtEnvironmentsConfiguration.Text;
+         Properties.Settings.Default.InternalBuildsFolder = txtInternalBuildsFolder.Text;
          // save folders
          SaveFolders();
 
@@ -68,6 +69,7 @@ namespace QToolbar
          txtDatabaseScripterFolder.Text= Properties.Settings.Default.DatabaseScripterFolder;
          txtFieldsExplorerFolder.Text = Properties.Settings.Default.FieldsExplorerFolder;
          txtEnvironmentsConfiguration.Text = Properties.Settings.Default.EnvironmentsConfigurationFolder;
+         txtInternalBuildsFolder.Text = Properties.Settings.Default.InternalBuildsFolder;
          
          LoadFolders();
          LoadCheckouts();
@@ -180,14 +182,6 @@ namespace QToolbar
 
       private void gridCheckouts_ProcessGridKey(object sender, KeyEventArgs e)
       {
-         //var grid = sender as GridControl;
-         //var view = grid.FocusedView as GridView;
-         //if (e.KeyData == Keys.Delete)
-         //{
-         //   view.DeleteSelectedRows();
-         //   e.Handled = true;
-         //}
-
          if (e.KeyCode == Keys.Delete && e.Modifiers == Keys.Control)
          {
             if (MessageBox.Show("Delete row?", "Confirmation", MessageBoxButtons.YesNo) !=
@@ -196,7 +190,14 @@ namespace QToolbar
             GridView view = sender as GridView;
             view.DeleteRow(view.FocusedRowHandle);
          }
+      }
 
+      private void txtInternalBuildsFolder_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+      {
+         if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+         {
+            txtInternalBuildsFolder.Text = folderBrowserDialog1.SelectedPath;
+         }
       }
    }
 }

@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\q-wks-jathan\Shared\QToolbar\</InstallUrl>
-    <ApplicationRevision>28</ApplicationRevision>
+    <ApplicationRevision>31</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -84,8 +84,10 @@
       <HintPath>C:\Windows\assembly\GAC_MSIL\Microsoft.SqlServer.Management.SqlParser\13.0.0.0__89845dcd8080cc91\Microsoft.SqlServer.Management.SqlParser.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -100,6 +102,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckResult.cs" />
+    <Compile Include="Frm_InternalBuilds.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_InternalBuilds.Designer.cs">
+      <DependentUpon>Frm_InternalBuilds.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frm_NextBuildChecker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +155,9 @@
     <Compile Include="TextEncodingDetect.cs" />
     <Compile Include="TextFileEncodingDetector.cs" />
     <Compile Include="Utils.cs" />
+    <EmbeddedResource Include="Frm_InternalBuilds.resx">
+      <DependentUpon>Frm_InternalBuilds.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Frm_NextBuildChecker.resx">
       <DependentUpon>Frm_NextBuildChecker.cs</DependentUpon>
     </EmbeddedResource>
