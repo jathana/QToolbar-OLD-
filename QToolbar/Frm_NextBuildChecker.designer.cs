@@ -28,9 +28,8 @@
       /// </summary>
       private void InitializeComponent()
       {
+         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_NextBuildChecker));
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-         this.btnCheck = new DevExpress.XtraEditors.SimpleButton();
-         this.btnClose = new DevExpress.XtraEditors.SimpleButton();
          this.gridResults = new DevExpress.XtraGrid.GridControl();
          this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
          this.colMessage = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -41,12 +40,12 @@
          this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
          this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
-         this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
          this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+         this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
+         this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+         this.grpActions = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+         this.btnCheckBuild = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.gridResults)).BeginInit();
@@ -54,52 +53,28 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
          this.SuspendLayout();
          // 
          // layoutControl1
          // 
-         this.layoutControl1.Controls.Add(this.btnCheck);
-         this.layoutControl1.Controls.Add(this.btnClose);
          this.layoutControl1.Controls.Add(this.gridResults);
          this.layoutControl1.Controls.Add(this.labelControl1);
          this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.layoutControl1.Location = new System.Drawing.Point(0, 0);
+         this.layoutControl1.Location = new System.Drawing.Point(0, 95);
          this.layoutControl1.Name = "layoutControl1";
          this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(2308, 203, 424, 592);
          this.layoutControl1.Root = this.layoutControlGroup1;
-         this.layoutControl1.Size = new System.Drawing.Size(999, 461);
+         this.layoutControl1.Size = new System.Drawing.Size(999, 366);
          this.layoutControl1.TabIndex = 0;
          this.layoutControl1.Text = "layoutControl1";
-         // 
-         // btnCheck
-         // 
-         this.btnCheck.Location = new System.Drawing.Point(821, 427);
-         this.btnCheck.Name = "btnCheck";
-         this.btnCheck.Size = new System.Drawing.Size(76, 22);
-         this.btnCheck.StyleController = this.layoutControl1;
-         this.btnCheck.TabIndex = 2;
-         this.btnCheck.Text = "Check";
-         this.btnCheck.Click += new System.EventHandler(this.btnCheck_Click);
-         // 
-         // btnClose
-         // 
-         this.btnClose.Location = new System.Drawing.Point(911, 427);
-         this.btnClose.Name = "btnClose";
-         this.btnClose.Size = new System.Drawing.Size(76, 22);
-         this.btnClose.StyleController = this.layoutControl1;
-         this.btnClose.TabIndex = 3;
-         this.btnClose.Text = "Close";
          // 
          // gridResults
          // 
          this.gridResults.Location = new System.Drawing.Point(12, 29);
          this.gridResults.MainView = this.gridView1;
          this.gridResults.Name = "gridResults";
-         this.gridResults.Size = new System.Drawing.Size(975, 394);
+         this.gridResults.Size = new System.Drawing.Size(975, 325);
          this.gridResults.TabIndex = 0;
          this.gridResults.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -164,14 +139,10 @@
          this.layoutControlGroup1.GroupBordersVisible = false;
          this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem1,
-            this.layoutControlItem2,
-            this.layoutControlItem3,
-            this.emptySpaceItem1,
-            this.layoutControlItem4,
-            this.emptySpaceItem2});
+            this.layoutControlItem2});
          this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
          this.layoutControlGroup1.Name = "Root";
-         this.layoutControlGroup1.Size = new System.Drawing.Size(999, 461);
+         this.layoutControlGroup1.Size = new System.Drawing.Size(999, 366);
          this.layoutControlGroup1.TextVisible = false;
          // 
          // layoutControlItem1
@@ -188,52 +159,9 @@
          this.layoutControlItem2.Control = this.gridResults;
          this.layoutControlItem2.Location = new System.Drawing.Point(0, 17);
          this.layoutControlItem2.Name = "layoutControlItem2";
-         this.layoutControlItem2.Size = new System.Drawing.Size(979, 398);
+         this.layoutControlItem2.Size = new System.Drawing.Size(979, 329);
          this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem2.TextVisible = false;
-         // 
-         // layoutControlItem3
-         // 
-         this.layoutControlItem3.Control = this.btnClose;
-         this.layoutControlItem3.Location = new System.Drawing.Point(899, 415);
-         this.layoutControlItem3.MaxSize = new System.Drawing.Size(80, 26);
-         this.layoutControlItem3.MinSize = new System.Drawing.Size(80, 26);
-         this.layoutControlItem3.Name = "layoutControlItem3";
-         this.layoutControlItem3.Size = new System.Drawing.Size(80, 26);
-         this.layoutControlItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-         this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
-         this.layoutControlItem3.TextVisible = false;
-         // 
-         // emptySpaceItem1
-         // 
-         this.emptySpaceItem1.AllowHotTrack = false;
-         this.emptySpaceItem1.Location = new System.Drawing.Point(0, 415);
-         this.emptySpaceItem1.Name = "emptySpaceItem1";
-         this.emptySpaceItem1.Size = new System.Drawing.Size(809, 26);
-         this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
-         // 
-         // layoutControlItem4
-         // 
-         this.layoutControlItem4.Control = this.btnCheck;
-         this.layoutControlItem4.Location = new System.Drawing.Point(809, 415);
-         this.layoutControlItem4.MaxSize = new System.Drawing.Size(80, 26);
-         this.layoutControlItem4.MinSize = new System.Drawing.Size(80, 26);
-         this.layoutControlItem4.Name = "layoutControlItem4";
-         this.layoutControlItem4.Size = new System.Drawing.Size(80, 26);
-         this.layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-         this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
-         this.layoutControlItem4.TextVisible = false;
-         // 
-         // emptySpaceItem2
-         // 
-         this.emptySpaceItem2.AllowHotTrack = false;
-         this.emptySpaceItem2.Location = new System.Drawing.Point(889, 415);
-         this.emptySpaceItem2.MaxSize = new System.Drawing.Size(10, 26);
-         this.emptySpaceItem2.MinSize = new System.Drawing.Size(10, 26);
-         this.emptySpaceItem2.Name = "emptySpaceItem2";
-         this.emptySpaceItem2.Size = new System.Drawing.Size(10, 26);
-         this.emptySpaceItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-         this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
          // 
          // backgroundWorker1
          // 
@@ -241,12 +169,51 @@
          this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
          this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
          // 
+         // ribbonControl1
+         // 
+         this.ribbonControl1.AllowMinimizeRibbon = false;
+         this.ribbonControl1.ExpandCollapseItem.Id = 0;
+         this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.ribbonControl1.ExpandCollapseItem,
+            this.btnCheckBuild});
+         this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
+         this.ribbonControl1.MaxItemId = 2;
+         this.ribbonControl1.Name = "ribbonControl1";
+         this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
+            this.ribbonPage1});
+         this.ribbonControl1.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
+         this.ribbonControl1.Size = new System.Drawing.Size(999, 95);
+         this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
+         // 
+         // ribbonPage1
+         // 
+         this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.grpActions});
+         this.ribbonPage1.Name = "ribbonPage1";
+         this.ribbonPage1.Text = "ribbonPage1";
+         // 
+         // grpActions
+         // 
+         this.grpActions.ItemLinks.Add(this.btnCheckBuild);
+         this.grpActions.Name = "grpActions";
+         this.grpActions.Text = "Actions";
+         // 
+         // btnCheckBuild
+         // 
+         this.btnCheckBuild.Caption = "Check Build";
+         this.btnCheckBuild.Glyph = ((System.Drawing.Image)(resources.GetObject("btnCheckBuild.Glyph")));
+         this.btnCheckBuild.Id = 1;
+         this.btnCheckBuild.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnCheckBuild.LargeGlyph")));
+         this.btnCheckBuild.Name = "btnCheckBuild";
+         this.btnCheckBuild.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCheckBuild_ItemClick);
+         // 
          // Frm_NextBuildChecker
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(999, 461);
          this.Controls.Add(this.layoutControl1);
+         this.Controls.Add(this.ribbonControl1);
          this.Name = "Frm_NextBuildChecker";
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.Text = "Next Build Checker";
@@ -258,11 +225,9 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
          this.ResumeLayout(false);
+         this.PerformLayout();
 
       }
 
@@ -280,13 +245,11 @@
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
       private DevExpress.XtraGrid.Columns.GridColumn colTag;
       private DevExpress.XtraGrid.Columns.GridColumn colResult;
-      private DevExpress.XtraEditors.SimpleButton btnCheck;
-      private DevExpress.XtraEditors.SimpleButton btnClose;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
-      private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
-      private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem2;
       private System.ComponentModel.BackgroundWorker backgroundWorker1;
+      private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
+      private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
+      private DevExpress.XtraBars.Ribbon.RibbonPageGroup grpActions;
+      private DevExpress.XtraBars.BarButtonItem btnCheckBuild;
    }
 }
 

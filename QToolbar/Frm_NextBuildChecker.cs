@@ -421,5 +421,10 @@ namespace QToolbar
          string uri = "search:query=" + file + "&crumb=location:" + folder;
          Process.Start(new ProcessStartInfo(uri));
       }
+
+      private void btnCheckBuild_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      {
+         RunAsync();
+      }
    }
 }
