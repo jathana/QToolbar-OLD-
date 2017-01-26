@@ -33,6 +33,7 @@
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.grpInfo = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.btnConnectorWarningsLog = new DevExpress.XtraBars.BarButtonItem();
+         this.btnBrowseInternalBuildFolder = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
          this.SuspendLayout();
          // 
@@ -42,9 +43,10 @@
          this.ribbonControl1.ExpandCollapseItem.Id = 0;
          this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
-            this.btnConnectorWarningsLog});
+            this.btnConnectorWarningsLog,
+            this.btnBrowseInternalBuildFolder});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 2;
+         this.ribbonControl1.MaxItemId = 3;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -62,6 +64,7 @@
          // grpInfo
          // 
          this.grpInfo.ItemLinks.Add(this.btnConnectorWarningsLog);
+         this.grpInfo.ItemLinks.Add(this.btnBrowseInternalBuildFolder);
          this.grpInfo.Name = "grpInfo";
          this.grpInfo.Text = "Info";
          // 
@@ -73,6 +76,15 @@
          this.btnConnectorWarningsLog.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnConnectorWarningsLog.LargeGlyph")));
          this.btnConnectorWarningsLog.Name = "btnConnectorWarningsLog";
          this.btnConnectorWarningsLog.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnConnectorWarningsLog_ItemClick_1);
+         // 
+         // btnBrowseInternalBuildFolder
+         // 
+         this.btnBrowseInternalBuildFolder.Caption = "Browse";
+         this.btnBrowseInternalBuildFolder.Glyph = ((System.Drawing.Image)(resources.GetObject("btnBrowseInternalBuildFolder.Glyph")));
+         this.btnBrowseInternalBuildFolder.Id = 2;
+         this.btnBrowseInternalBuildFolder.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnBrowseInternalBuildFolder.LargeGlyph")));
+         this.btnBrowseInternalBuildFolder.Name = "btnBrowseInternalBuildFolder";
+         this.btnBrowseInternalBuildFolder.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnBrowseInternalBuildFolder_ItemClick);
          // 
          // Frm_InternalBuilds
          // 
@@ -94,5 +106,6 @@
       private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup grpInfo;
       private DevExpress.XtraBars.BarButtonItem btnConnectorWarningsLog;
+      private DevExpress.XtraBars.BarButtonItem btnBrowseInternalBuildFolder;
    }
 }

@@ -46,5 +46,17 @@ namespace QToolbar
             XtraMessageBox.Show($"Folder {_InternalBuildPath} does not exist!");
          }
       }
+
+      private void btnBrowseInternalBuildFolder_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      {
+         if (!string.IsNullOrEmpty(_InternalBuildPath) && Directory.Exists(_InternalBuildPath))
+         {
+            Process.Start(_InternalBuildPath);
+         }
+         else
+         {
+            XtraMessageBox.Show($"Folder {_InternalBuildPath} does not exist!");
+         }
+      }
    }
 }

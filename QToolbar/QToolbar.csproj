@@ -203,6 +203,7 @@
   <ItemGroup>
     <Content Include="Analyze.ico" />
     <Content Include="DXWindowIcon.ico" />
+    <None Include="QToobar.docx" />
     <None Include="QToolbar_TemporaryKey.pfx" />
     <None Include="Resources\activity_48.ico" />
   </ItemGroup>
