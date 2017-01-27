@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace QToolbar.Options
 {
-   public class Checkouts : SerializableTable
+   public class ShellCommands : SerializableTable
    {
-      private string[] columns = new string[] { "Name", "Path" };
-      private Type[] types = new Type[] { typeof(string), typeof(string) };
+      private string[] columns = new string[] { "Name", "Command", "Arguments" };
+      private Type[] types = new Type[] { typeof(string), typeof(string), typeof(string) };
 
-      public Checkouts()
+      public ShellCommands()
       {
          Init(columns, types, columns[0]);
       }
 
-      public Checkouts(DataTable table) : base(table)
+      public ShellCommands(DataTable table) : base(table)
       {
          SortExpression = columns[0];
       }
 
-      public Checkouts(string xml) 
+      public ShellCommands(string xml) 
       {
          Init(columns, types, columns[0]);
          LoadXml(xml);

@@ -192,5 +192,17 @@ namespace QToolbar.Properties {
                 this["InternalBuildsFolder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ShellCommands {
+            get {
+                return ((string)(this["ShellCommands"]));
+            }
+            set {
+                this["ShellCommands"] = value;
+            }
+        }
     }
 }

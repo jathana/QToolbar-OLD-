@@ -66,6 +66,9 @@
          this.tabCheckouts = new DevExpress.XtraTab.XtraTabPage();
          this.gridCheckouts = new DevExpress.XtraGrid.GridControl();
          this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+         this.tabShellCommands = new DevExpress.XtraTab.XtraTabPage();
+         this.grdShellCommands = new DevExpress.XtraGrid.GridControl();
+         this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
          this.btnOK = new DevExpress.XtraEditors.SimpleButton();
          this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
          this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -114,6 +117,9 @@
          this.tabCheckouts.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.gridCheckouts)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+         this.tabShellCommands.SuspendLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.grdShellCommands)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
@@ -472,7 +478,7 @@
          this.layoutControl2.Dock = System.Windows.Forms.DockStyle.Fill;
          this.layoutControl2.Location = new System.Drawing.Point(0, 0);
          this.layoutControl2.Name = "layoutControl2";
-         this.layoutControl2.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1362, 248, 314, 532);
+         this.layoutControl2.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1397, 215, 314, 532);
          this.layoutControl2.Root = this.layoutControlGroup2;
          this.layoutControl2.Size = new System.Drawing.Size(831, 531);
          this.layoutControl2.TabIndex = 2;
@@ -487,7 +493,8 @@
          this.xtraTabControl1.TabIndex = 4;
          this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.tabGeneral,
-            this.tabCheckouts});
+            this.tabCheckouts,
+            this.tabShellCommands});
          // 
          // tabGeneral
          // 
@@ -513,7 +520,7 @@
          this.gridCheckouts.TabIndex = 0;
          this.gridCheckouts.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
-         this.gridCheckouts.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gridCheckouts_ProcessGridKey);
+         this.gridCheckouts.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.Grid_ProcessGridKey);
          // 
          // gridView1
          // 
@@ -523,6 +530,34 @@
          this.gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
          this.gridView1.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.Inplace;
          this.gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+         // 
+         // tabShellCommands
+         // 
+         this.tabShellCommands.Controls.Add(this.grdShellCommands);
+         this.tabShellCommands.Name = "tabShellCommands";
+         this.tabShellCommands.Size = new System.Drawing.Size(801, 453);
+         this.tabShellCommands.Text = "Shell Commands";
+         // 
+         // grdShellCommands
+         // 
+         this.grdShellCommands.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.grdShellCommands.Location = new System.Drawing.Point(0, 0);
+         this.grdShellCommands.MainView = this.gridView2;
+         this.grdShellCommands.Name = "grdShellCommands";
+         this.grdShellCommands.Size = new System.Drawing.Size(801, 453);
+         this.grdShellCommands.TabIndex = 1;
+         this.grdShellCommands.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView2});
+         this.grdShellCommands.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.Grid_ProcessGridKey);
+         // 
+         // gridView2
+         // 
+         this.gridView2.GridControl = this.grdShellCommands;
+         this.gridView2.Name = "gridView2";
+         this.gridView2.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+         this.gridView2.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
+         this.gridView2.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.Inplace;
+         this.gridView2.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
          // 
          // btnOK
          // 
@@ -563,8 +598,11 @@
          // 
          this.layoutControlItem3.Control = this.btnOK;
          this.layoutControlItem3.Location = new System.Drawing.Point(719, 485);
+         this.layoutControlItem3.MaxSize = new System.Drawing.Size(92, 26);
+         this.layoutControlItem3.MinSize = new System.Drawing.Size(92, 26);
          this.layoutControlItem3.Name = "layoutControlItem3";
          this.layoutControlItem3.Size = new System.Drawing.Size(92, 26);
+         this.layoutControlItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
          this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem3.TextVisible = false;
          // 
@@ -572,8 +610,8 @@
          // 
          this.layoutControlItem4.Control = this.btnCancel;
          this.layoutControlItem4.Location = new System.Drawing.Point(614, 485);
-         this.layoutControlItem4.MaxSize = new System.Drawing.Size(0, 26);
-         this.layoutControlItem4.MinSize = new System.Drawing.Size(45, 26);
+         this.layoutControlItem4.MaxSize = new System.Drawing.Size(95, 26);
+         this.layoutControlItem4.MinSize = new System.Drawing.Size(95, 26);
          this.layoutControlItem4.Name = "layoutControlItem4";
          this.layoutControlItem4.Size = new System.Drawing.Size(95, 26);
          this.layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
@@ -584,8 +622,11 @@
          // 
          this.emptySpaceItem3.AllowHotTrack = false;
          this.emptySpaceItem3.Location = new System.Drawing.Point(709, 485);
+         this.emptySpaceItem3.MaxSize = new System.Drawing.Size(10, 26);
+         this.emptySpaceItem3.MinSize = new System.Drawing.Size(10, 26);
          this.emptySpaceItem3.Name = "emptySpaceItem3";
          this.emptySpaceItem3.Size = new System.Drawing.Size(10, 26);
+         this.emptySpaceItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
          this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
          // 
          // emptySpaceItem4
@@ -602,7 +643,6 @@
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(831, 531);
          this.Controls.Add(this.layoutControl2);
-         this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
          this.MaximizeBox = false;
          this.Name = "Frm_Options";
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -649,6 +689,9 @@
          this.tabCheckouts.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.gridCheckouts)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+         this.tabShellCommands.ResumeLayout(false);
+         ((System.ComponentModel.ISupportInitialize)(this.grdShellCommands)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
@@ -706,5 +749,8 @@
       private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
       private DevExpress.XtraEditors.ButtonEdit txtInternalBuildsFolder;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem14;
+      private DevExpress.XtraTab.XtraTabPage tabShellCommands;
+      private DevExpress.XtraGrid.GridControl grdShellCommands;
+      private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
    }
 }

@@ -54,6 +54,8 @@ namespace QToolbar
 
          SaveCheckouts();
 
+         SaveShellCommands();
+
          Properties.Settings.Default.Save();
       }
 
@@ -73,6 +75,7 @@ namespace QToolbar
          
          LoadFolders();
          LoadCheckouts();
+         LoadShellCommands();
       }
 
 
@@ -84,8 +87,20 @@ namespace QToolbar
 
       private void SaveCheckouts()
       {
-         Checkouts checkouts = new Checkouts((DataTable)gridCheckouts.DataSource);
+         Checkouts checkouts = new Checkouts((DataTable)gridCheckouts.DataSource);         
          Properties.Settings.Default.Checkouts = checkouts.ToXml();
+      }
+
+      private void LoadShellCommands()
+      {
+         ShellCommands shellCommands = new ShellCommands(Properties.Settings.Default.ShellCommands);
+         grdShellCommands.DataSource = shellCommands.Data;
+      }
+
+      private void SaveShellCommands()
+      {
+         ShellCommands shellCommands = new ShellCommands((DataTable)grdShellCommands.DataSource);
+         Properties.Settings.Default.ShellCommands = shellCommands.ToXml();
       }
 
 
@@ -180,14 +195,14 @@ namespace QToolbar
          }
       }
 
-      private void gridCheckouts_ProcessGridKey(object sender, KeyEventArgs e)
+      private void Grid_ProcessGridKey(object sender, KeyEventArgs e)
       {
          if (e.KeyCode == Keys.Delete && e.Modifiers == Keys.Control)
          {
             if (MessageBox.Show("Delete row?", "Confirmation", MessageBoxButtons.YesNo) !=
               DialogResult.Yes)
                return;
-            GridView view = sender as GridView;
+            GridView view = ((GridControl)sender).DefaultView as GridView;
             view.DeleteRow(view.FocusedRowHandle);
          }
       }
@@ -199,5 +214,6 @@ namespace QToolbar
             txtInternalBuildsFolder.Text = folderBrowserDialog1.SelectedPath;
          }
       }
+
    }
 }

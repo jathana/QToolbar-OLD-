@@ -79,12 +79,13 @@ namespace QToolbar
          mnuEnvironmentsConfiguration.ClearLinks();
          mnuNextBuild.ClearLinks();
          mnuInternalBuilds.ClearLinks();
-
+         mnuShellCommands.ClearLinks();
 
       }
 
       private void InitUI()
       {
+
          Task.Run(() =>
          {
             // init designers menu
@@ -123,6 +124,9 @@ namespace QToolbar
             // Create Internal Builds menu
             CreateDirMenuItems(OptionsInstance.InternalBuildsFolder, mnuInternalBuilds, InternalBuilds_ItemClick);
 
+            // Create shell commands menu
+            CreateShellCommandsMenu();
+
          });
       }
 
@@ -148,6 +152,23 @@ namespace QToolbar
             XtraMessageBox.Show(ex.Message);
          }
       }
+
+      private void CreateShellCommandsMenu()
+      {
+         // load shell commands
+         try
+         {
+            foreach (DataRow row in OptionsInstance.ShellCommands.Data.Rows)
+            {
+               AddShellCommandsItem(row);
+            }
+         }
+         catch (Exception ex)
+         {
+            XtraMessageBox.Show("Failed to retrieve shell commands");
+         }
+      }
+
 
       #region NextBuild
       private void CreateNextBuildMenu()
@@ -210,7 +231,39 @@ namespace QToolbar
          }
       }
 
+
+
       #endregion
+
+
+      private void AddShellCommandsItem(DataRow row)
+      {
+         BarButtonItem shellCommandItem = new BarButtonItem(barManager1, row["Name"].ToString(), 2);
+         shellCommandItem.ItemClick += ShellCommand_ItemClick;
+         shellCommandItem.Tag = row;
+         mnuShellCommands.AddItem(shellCommandItem);
+      }
+
+      private void ShellCommand_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         try
+         {
+            DataRow row = (DataRow)e.Item.Tag;
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            process.StartInfo.FileName = row["Command"].ToString();
+            process.StartInfo.Arguments= row["Arguments"].ToString();
+            process.StartInfo.UseShellExecute = true;
+
+
+            process.Start();
+         }
+         catch (Exception ex)
+         {
+            XtraMessageBox.Show(ex.Message);
+         }
+      }
+
       private void CreateFoldersMenu()
       {
          // load custom folders
@@ -351,10 +404,14 @@ namespace QToolbar
             {
                Version curVersion = Utils.GetVersion(dir, "_", 1);
                
-               if (curVersion != null && maxVersion < curVersion)
+               if (curVersion != null )
                {
+
+                  if (maxVersion < curVersion)
+                  {
                      maxVersion = curVersion;
                      destDir = dir;
+                  }
                }
                else
                {

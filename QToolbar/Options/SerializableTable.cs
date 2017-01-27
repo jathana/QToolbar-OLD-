@@ -11,6 +11,7 @@ namespace QToolbar.Options
    public class SerializableTable
    {
       private DataTable _Data = new DataTable("table");
+      private string _SortExpression = "";
 
       public DataTable Data
       {
@@ -25,23 +26,37 @@ namespace QToolbar.Options
          }
       }
 
+      public string SortExpression
+      {
+         get
+         {
+            return _SortExpression;
+         }
+
+         set
+         {
+            _SortExpression = value;
+         }
+      }
+
       public SerializableTable()
       {
 
       }
-      protected void Init(string[] columnNames, Type[] columnTypes)
+      protected virtual void Init(string[] columnNames, Type[] columnTypes, string sortExpression)
       {
-
+         SortExpression = sortExpression;
          for (int i = 0; i < columnNames.Length; i++)
          {
             Data.Columns.Add(columnNames[i], columnTypes[i]);
          }
+         
       }
 
       public SerializableTable(string[] columnNames, Type[] columnTypes)
       {
 
-         Init(columnNames, columnTypes);
+         Init(columnNames, columnTypes, "");
       }
 
       public SerializableTable(DataTable table)
@@ -64,6 +79,7 @@ namespace QToolbar.Options
          string retval = "";
          using (var stream = new MemoryStream())
          {
+            Resort();
             Data.WriteXml(stream);
             stream.Position = 0;
             var sr = new StreamReader(stream);
@@ -72,6 +88,15 @@ namespace QToolbar.Options
          return retval;
       }
 
+
+      private void Resort()
+      {
+         if (!string.IsNullOrEmpty(SortExpression))
+         {
+            Data.DefaultView.Sort = SortExpression;
+            Data = Data.DefaultView.ToTable();
+         }
+      }
 
    }
 }

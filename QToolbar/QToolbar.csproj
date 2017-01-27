@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\q-wks-jathan\Shared\QToolbar\</InstallUrl>
-    <ApplicationRevision>32</ApplicationRevision>
+    <ApplicationRevision>37</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -139,6 +139,7 @@
       <DependentUpon>Frm_RichFileViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="NextBuildFile.cs" />
+    <Compile Include="Options\ShellCommands.cs" />
     <Compile Include="PowerfulSample.cs">
       <SubType>Form</SubType>
     </Compile>

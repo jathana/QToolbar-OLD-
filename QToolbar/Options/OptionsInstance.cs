@@ -112,6 +112,14 @@ namespace QToolbar.Options
          }
       }
 
+      public static ShellCommands ShellCommands
+      {
+         get
+         {
+            return new ShellCommands(Properties.Settings.Default.ShellCommands);
+         }
+      }
+
 
    }
 }

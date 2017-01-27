@@ -47,5 +47,8 @@
     <Setting Name="InternalBuildsFolder" Type="System.String" Scope="User">
       <Value Profile="(Default)">\\Q-SRV-INTTFSB\InternalBuilds</Value>
     </Setting>
+    <Setting Name="ShellCommands" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
