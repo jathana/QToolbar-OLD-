@@ -122,7 +122,7 @@ namespace QToolbar
             CreateNextBuildMenu();
 
             // Create Internal Builds menu
-            CreateDirMenuItems(OptionsInstance.InternalBuildsFolder, mnuInternalBuilds, InternalBuilds_ItemClick);
+            CreateInternalBuildsMenu();
 
             // Create shell commands menu
             CreateShellCommandsMenu();
@@ -221,7 +221,7 @@ namespace QToolbar
       {
          try
          {
-            string path = Path.Combine(OptionsInstance.InternalBuildsFolder, e.Item.Caption);
+            string path = e.Item.Tag.ToString(); //  Path.Combine(OptionsInstance.InternalBuildsFolder, e.Item.Caption);
             Frm_InternalBuilds f = new Frm_InternalBuilds();
             f.Show(path);
          }
@@ -277,6 +277,69 @@ namespace QToolbar
          catch (Exception ex)
          {
             XtraMessageBox.Show("Failed to retrieve folders settings");
+         }
+      }
+
+
+      private void CreateInternalBuildsMenu()
+      {
+         string sqlFolder = OptionsInstance.InternalBuildsFolder;
+         if (!string.IsNullOrEmpty(sqlFolder))
+         {
+            if (Directory.Exists(sqlFolder))
+            {
+               try
+               {
+                  List<string> dirs = Directory.GetDirectories(sqlFolder).ToList<string>();
+                  dirs.Sort();
+                  // add major.minor menus
+                  SortedList<string, List<string>> builds = new SortedList<string, List<string>>();
+                  foreach(string dir in dirs)
+                  {
+                     string[] majorArr = dir.Split('.');
+                     if(majorArr.Length>1)
+                     {
+                        string major = $"{majorArr[0]}.{majorArr[1]}";
+                        if (builds.ContainsKey(major))
+                        {
+                           // update
+                           builds[major].Add(dir);
+                        }
+                        else
+                        {
+                           builds.Add(major, new List<string>() { major });
+                        }
+                     }
+                  }
+                  // sort lists
+                  foreach(var item in builds)
+                  {
+                     item.Value.Sort();
+                  }
+                  // add items
+                  foreach (var item in builds)
+                  {
+                     // add major
+                     BarSubItem menuItem = new BarSubItem(barManager1, Path.GetFileName(item.Key), 0);
+                     mnuInternalBuilds.AddItem(menuItem);
+
+                     // add release folders
+                     List<string> files = Directory.GetFiles(sqlFolder).ToList<string>();
+                     files.Sort();
+                     foreach (string dir in item.Value)
+                     {
+                        BarButtonItem subMenuItem = new BarButtonItem(barManager1, Path.GetFileName(dir), 1);
+                        subMenuItem.Tag = dir;
+                        subMenuItem.ItemClick += InternalBuilds_ItemClick;
+                        menuItem.AddItem(subMenuItem);
+                     }
+                  }
+               }
+               catch (Exception ex)
+               {
+                  XtraMessageBox.Show(string.Format("Failed to get subfolders of sqlfolder {0}", sqlFolder));
+               }
+            }
          }
       }
 

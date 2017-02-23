@@ -30,6 +30,16 @@
       {
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_NextBuildChecker));
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+         this.grdAnalyticsResults = new DevExpress.XtraGrid.GridControl();
+         this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+         this.colAnalyticsMessage = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colAnalyticsResult = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colAnalyticsFile = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colAnalyticsTag = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
+         this.btnCheckBuild = new DevExpress.XtraBars.BarButtonItem();
+         this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+         this.grpActions = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.gridResults = new DevExpress.XtraGrid.GridControl();
          this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
          this.colMessage = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -40,24 +50,25 @@
          this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
          this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+         this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
          this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-         this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
-         this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-         this.grpActions = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-         this.btnCheckBuild = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.grdAnalyticsResults)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridResults)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
          this.SuspendLayout();
          // 
          // layoutControl1
          // 
+         this.layoutControl1.Controls.Add(this.grdAnalyticsResults);
          this.layoutControl1.Controls.Add(this.gridResults);
          this.layoutControl1.Controls.Add(this.labelControl1);
          this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -65,16 +76,110 @@
          this.layoutControl1.Name = "layoutControl1";
          this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(2308, 203, 424, 592);
          this.layoutControl1.Root = this.layoutControlGroup1;
-         this.layoutControl1.Size = new System.Drawing.Size(999, 366);
+         this.layoutControl1.Size = new System.Drawing.Size(999, 482);
          this.layoutControl1.TabIndex = 0;
          this.layoutControl1.Text = "layoutControl1";
          // 
+         // grdAnalyticsResults
+         // 
+         this.grdAnalyticsResults.Location = new System.Drawing.Point(12, 324);
+         this.grdAnalyticsResults.MainView = this.gridView2;
+         this.grdAnalyticsResults.MenuManager = this.ribbonControl1;
+         this.grdAnalyticsResults.Name = "grdAnalyticsResults";
+         this.grdAnalyticsResults.Size = new System.Drawing.Size(975, 146);
+         this.grdAnalyticsResults.TabIndex = 4;
+         this.grdAnalyticsResults.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView2});
+         // 
+         // gridView2
+         // 
+         this.gridView2.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colAnalyticsMessage,
+            this.colAnalyticsResult,
+            this.colAnalyticsFile,
+            this.colAnalyticsTag});
+         this.gridView2.GridControl = this.grdAnalyticsResults;
+         this.gridView2.Name = "gridView2";
+         this.gridView2.DoubleClick += new System.EventHandler(this.gridView2_DoubleClick);
+         // 
+         // colAnalyticsMessage
+         // 
+         this.colAnalyticsMessage.Caption = "Message";
+         this.colAnalyticsMessage.FieldName = "Message";
+         this.colAnalyticsMessage.Name = "colAnalyticsMessage";
+         this.colAnalyticsMessage.Visible = true;
+         this.colAnalyticsMessage.VisibleIndex = 0;
+         this.colAnalyticsMessage.Width = 555;
+         // 
+         // colAnalyticsResult
+         // 
+         this.colAnalyticsResult.Caption = "Result";
+         this.colAnalyticsResult.FieldName = "Result";
+         this.colAnalyticsResult.Name = "colAnalyticsResult";
+         this.colAnalyticsResult.Visible = true;
+         this.colAnalyticsResult.VisibleIndex = 1;
+         this.colAnalyticsResult.Width = 62;
+         // 
+         // colAnalyticsFile
+         // 
+         this.colAnalyticsFile.Caption = "File";
+         this.colAnalyticsFile.FieldName = "File";
+         this.colAnalyticsFile.Name = "colAnalyticsFile";
+         this.colAnalyticsFile.Visible = true;
+         this.colAnalyticsFile.VisibleIndex = 2;
+         this.colAnalyticsFile.Width = 371;
+         // 
+         // colAnalyticsTag
+         // 
+         this.colAnalyticsTag.Caption = "Tag";
+         this.colAnalyticsTag.FieldName = "Tag";
+         this.colAnalyticsTag.Name = "colAnalyticsTag";
+         // 
+         // ribbonControl1
+         // 
+         this.ribbonControl1.AllowMinimizeRibbon = false;
+         this.ribbonControl1.ExpandCollapseItem.Id = 0;
+         this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.ribbonControl1.ExpandCollapseItem,
+            this.btnCheckBuild});
+         this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
+         this.ribbonControl1.MaxItemId = 2;
+         this.ribbonControl1.Name = "ribbonControl1";
+         this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
+            this.ribbonPage1});
+         this.ribbonControl1.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
+         this.ribbonControl1.Size = new System.Drawing.Size(999, 95);
+         this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
+         // 
+         // btnCheckBuild
+         // 
+         this.btnCheckBuild.Caption = "Check Build";
+         this.btnCheckBuild.Glyph = ((System.Drawing.Image)(resources.GetObject("btnCheckBuild.Glyph")));
+         this.btnCheckBuild.Id = 1;
+         this.btnCheckBuild.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnCheckBuild.LargeGlyph")));
+         this.btnCheckBuild.Name = "btnCheckBuild";
+         this.btnCheckBuild.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCheckBuild_ItemClick);
+         // 
+         // ribbonPage1
+         // 
+         this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.grpActions});
+         this.ribbonPage1.Name = "ribbonPage1";
+         this.ribbonPage1.Text = "ribbonPage1";
+         // 
+         // grpActions
+         // 
+         this.grpActions.ItemLinks.Add(this.btnCheckBuild);
+         this.grpActions.Name = "grpActions";
+         this.grpActions.Text = "Actions";
+         // 
          // gridResults
          // 
-         this.gridResults.Location = new System.Drawing.Point(12, 29);
+         this.gridResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+         this.gridResults.Location = new System.Drawing.Point(12, 50);
          this.gridResults.MainView = this.gridView1;
          this.gridResults.Name = "gridResults";
-         this.gridResults.Size = new System.Drawing.Size(975, 325);
+         this.gridResults.Size = new System.Drawing.Size(975, 254);
          this.gridResults.TabIndex = 0;
          this.gridResults.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -126,9 +231,10 @@
          // 
          // labelControl1
          // 
+         this.labelControl1.Appearance.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold);
          this.labelControl1.Location = new System.Drawing.Point(12, 12);
          this.labelControl1.Name = "labelControl1";
-         this.labelControl1.Size = new System.Drawing.Size(207, 13);
+         this.labelControl1.Size = new System.Drawing.Size(312, 18);
          this.labelControl1.StyleController = this.layoutControl1;
          this.labelControl1.TabIndex = 1;
          this.labelControl1.Text = "Ensure that you have the latest checkout!!";
@@ -139,10 +245,11 @@
          this.layoutControlGroup1.GroupBordersVisible = false;
          this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem1,
-            this.layoutControlItem2});
+            this.layoutControlItem2,
+            this.layoutControlItem3});
          this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
          this.layoutControlGroup1.Name = "Root";
-         this.layoutControlGroup1.Size = new System.Drawing.Size(999, 366);
+         this.layoutControlGroup1.Size = new System.Drawing.Size(999, 482);
          this.layoutControlGroup1.TextVisible = false;
          // 
          // layoutControlItem1
@@ -150,18 +257,29 @@
          this.layoutControlItem1.Control = this.labelControl1;
          this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
          this.layoutControlItem1.Name = "layoutControlItem1";
-         this.layoutControlItem1.Size = new System.Drawing.Size(979, 17);
+         this.layoutControlItem1.Size = new System.Drawing.Size(979, 22);
          this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem1.TextVisible = false;
          // 
          // layoutControlItem2
          // 
          this.layoutControlItem2.Control = this.gridResults;
-         this.layoutControlItem2.Location = new System.Drawing.Point(0, 17);
+         this.layoutControlItem2.Location = new System.Drawing.Point(0, 22);
          this.layoutControlItem2.Name = "layoutControlItem2";
-         this.layoutControlItem2.Size = new System.Drawing.Size(979, 329);
-         this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
-         this.layoutControlItem2.TextVisible = false;
+         this.layoutControlItem2.Size = new System.Drawing.Size(979, 274);
+         this.layoutControlItem2.Text = "Builds\\Next Build";
+         this.layoutControlItem2.TextLocation = DevExpress.Utils.Locations.Top;
+         this.layoutControlItem2.TextSize = new System.Drawing.Size(122, 13);
+         // 
+         // layoutControlItem3
+         // 
+         this.layoutControlItem3.Control = this.grdAnalyticsResults;
+         this.layoutControlItem3.Location = new System.Drawing.Point(0, 296);
+         this.layoutControlItem3.Name = "layoutControlItem3";
+         this.layoutControlItem3.Size = new System.Drawing.Size(979, 166);
+         this.layoutControlItem3.Text = "AnalyticsBuilds\\Next Build";
+         this.layoutControlItem3.TextLocation = DevExpress.Utils.Locations.Top;
+         this.layoutControlItem3.TextSize = new System.Drawing.Size(122, 13);
          // 
          // backgroundWorker1
          // 
@@ -169,49 +287,11 @@
          this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
          this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
          // 
-         // ribbonControl1
-         // 
-         this.ribbonControl1.AllowMinimizeRibbon = false;
-         this.ribbonControl1.ExpandCollapseItem.Id = 0;
-         this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.ribbonControl1.ExpandCollapseItem,
-            this.btnCheckBuild});
-         this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 2;
-         this.ribbonControl1.Name = "ribbonControl1";
-         this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
-            this.ribbonPage1});
-         this.ribbonControl1.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
-         this.ribbonControl1.Size = new System.Drawing.Size(999, 95);
-         this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
-         // 
-         // ribbonPage1
-         // 
-         this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.grpActions});
-         this.ribbonPage1.Name = "ribbonPage1";
-         this.ribbonPage1.Text = "ribbonPage1";
-         // 
-         // grpActions
-         // 
-         this.grpActions.ItemLinks.Add(this.btnCheckBuild);
-         this.grpActions.Name = "grpActions";
-         this.grpActions.Text = "Actions";
-         // 
-         // btnCheckBuild
-         // 
-         this.btnCheckBuild.Caption = "Check Build";
-         this.btnCheckBuild.Glyph = ((System.Drawing.Image)(resources.GetObject("btnCheckBuild.Glyph")));
-         this.btnCheckBuild.Id = 1;
-         this.btnCheckBuild.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnCheckBuild.LargeGlyph")));
-         this.btnCheckBuild.Name = "btnCheckBuild";
-         this.btnCheckBuild.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCheckBuild_ItemClick);
-         // 
          // Frm_NextBuildChecker
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.ClientSize = new System.Drawing.Size(999, 461);
+         this.ClientSize = new System.Drawing.Size(999, 577);
          this.Controls.Add(this.layoutControl1);
          this.Controls.Add(this.ribbonControl1);
          this.Name = "Frm_NextBuildChecker";
@@ -220,12 +300,15 @@
          this.Load += new System.EventHandler(this.Frm_NextBuildChecker_Load);
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
          this.layoutControl1.ResumeLayout(false);
+         ((System.ComponentModel.ISupportInitialize)(this.grdAnalyticsResults)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridResults)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -250,6 +333,13 @@
       private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup grpActions;
       private DevExpress.XtraBars.BarButtonItem btnCheckBuild;
+      private DevExpress.XtraGrid.GridControl grdAnalyticsResults;
+      private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
+      private DevExpress.XtraGrid.Columns.GridColumn colAnalyticsMessage;
+      private DevExpress.XtraGrid.Columns.GridColumn colAnalyticsResult;
+      private DevExpress.XtraGrid.Columns.GridColumn colAnalyticsFile;
+      private DevExpress.XtraGrid.Columns.GridColumn colAnalyticsTag;
+      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
    }
 }
 

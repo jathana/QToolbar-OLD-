@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\q-wks-jathan\Shared\QToolbar\</InstallUrl>
-    <ApplicationRevision>37</ApplicationRevision>
+    <ApplicationRevision>42</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -101,6 +101,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builds\AnalyticsBuildChecker.cs" />
+    <Compile Include="Builds\BuildChecker.cs" />
+    <Compile Include="Builds\BuildCheckerBase.cs" />
     <Compile Include="CheckResult.cs" />
     <Compile Include="Frm_InternalBuilds.cs">
       <SubType>Form</SubType>
