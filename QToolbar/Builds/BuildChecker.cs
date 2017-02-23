@@ -47,9 +47,7 @@ namespace QToolbar.Builds
                // parse sql file
                fileOk = ParseSqlFile(content, file) && fileOk;
 
-
                if (fileOk) Inform(file, "File passed all checks!", "", CheckResult.OK);
-
             }
 
             // EOD Metadata files 

@@ -46,13 +46,16 @@ namespace QToolbar.Builds
                fileOk = ParseSqlFile(content, file) && fileOk;
 
                if (fileOk) Inform(file, "File passed all checks!", "", CheckResult.OK);
-
             }
          }
          else
          {
             Inform("Next Build folder does not exist.", CheckResult.Error);
             _Errors = true;
+         }
+         if (!_Errors && _Table.Rows.Count == 0)
+         {
+            Inform("Everything ok!", CheckResult.OK);
          }
          if (!_Errors && _Table.Rows.Count == 0)
          {

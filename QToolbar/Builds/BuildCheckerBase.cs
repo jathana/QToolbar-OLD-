@@ -179,18 +179,27 @@ namespace QToolbar.Builds
          return retval;
       }
 
-      protected bool CheckToken(Tokens token, string file)
+      protected bool CheckToken(Tokens inputToken, string file)
       {
+
+         Dictionary<string, List<Tokens>> checkTokens = new Dictionary<string, List<Tokens>>();
+         checkTokens.Add(".sql", new List<Tokens>() { Tokens.TOKEN_USEDB, Tokens.TOKEN_ALTER, Tokens.TOKEN_CREATE});
+         checkTokens.Add(".bd", new List<Tokens>() { Tokens.TOKEN_USEDB});
          bool retval = true;
-         if (token == Tokens.TOKEN_USEDB || token == Tokens.TOKEN_ALTER || token== Tokens.TOKEN_CREATE)
+
+         string fileExt = Path.GetExtension(file).ToLower();
+         if (checkTokens.ContainsKey(fileExt))
          {
-            string msg = $"Found \"{token.ToString()}\"";
-            Inform(file, msg, "", CheckResult.Warning);
-            _Errors = true;
-            retval = false;
+            List<Tokens> tokens = checkTokens[fileExt];
+            if(tokens.Contains(inputToken))
+            { 
+                  string msg = $"Found \"{inputToken.ToString()}\"";
+                  Inform(file, msg, "", CheckResult.Warning);
+                  _Errors = true;
+                  retval = false;
+            }
          }
          return retval;
-
       }
 
       protected bool ScanSqlFile(string content, string file)
