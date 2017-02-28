@@ -100,6 +100,8 @@
             this.colAnalyticsTag});
          this.gridView2.GridControl = this.grdAnalyticsResults;
          this.gridView2.Name = "gridView2";
+         this.gridView2.OptionsView.EnableAppearanceEvenRow = true;
+         this.gridView2.OptionsView.EnableAppearanceOddRow = true;
          this.gridView2.DoubleClick += new System.EventHandler(this.gridView2_DoubleClick);
          // 
          // colAnalyticsMessage
@@ -193,6 +195,8 @@
             this.colTag});
          this.gridView1.GridControl = this.gridResults;
          this.gridView1.Name = "gridView1";
+         this.gridView1.OptionsView.EnableAppearanceEvenRow = true;
+         this.gridView1.OptionsView.EnableAppearanceOddRow = true;
          this.gridView1.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gridView1_FocusedRowChanged);
          this.gridView1.DoubleClick += new System.EventHandler(this.gridView1_DoubleClick);
          // 
