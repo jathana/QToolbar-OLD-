@@ -14,6 +14,29 @@ namespace QToolbar
    public static class Utils
    {
 
+      public static string ReadFile(string file)
+      {
+         string retVal = "";
+         if (File.Exists(file))
+         {
+
+            try
+            {
+               retVal = File.ReadAllText(file);
+            }
+            catch (Exception ex)
+            {
+               throw new Exception($"Cannot open file \"{file}\" ({ex.Message}).",ex);
+            }
+         }
+         else
+         {
+            throw new Exception($"File not found \"{file}\".");
+         }
+         return retVal;
+      }
+
+
       /// <summary>
       /// constructs a version object from string. 
       /// </summary>

@@ -59,7 +59,7 @@ namespace QToolbar
                }
                catch (Exception ex)
                {
-                  XtraMessageBox.Show(string.Format("Failed to retrieve subfloders of  {0}", folder));
+                  XtraMessageBox.Show(string.Format("Failed to retrieve subfolders of  {0}", folder));
                }
             }
          }
@@ -266,18 +266,25 @@ namespace QToolbar
 
       private void CreateFoldersMenu()
       {
-         // load custom folders
+         
          try
          {
+            // load custom folders
             foreach (string folder in OptionsInstance.Folders)
             {
                AddFolderItem(folder);
             }
+            // load folders declared in system
+
          }
          catch (Exception ex)
          {
             XtraMessageBox.Show("Failed to retrieve folders settings");
          }
+
+         
+
+
       }
 
 
@@ -469,7 +476,6 @@ namespace QToolbar
                
                if (curVersion != null )
                {
-
                   if (maxVersion < curVersion)
                   {
                      maxVersion = curVersion;
@@ -647,12 +653,16 @@ namespace QToolbar
                {
                   builder.AppendLine(del);
                }
+               builder.AppendLine("echo \"Deleting Local Metadata\"");
                builder.AppendLine("del %userprofile%\\documents\\*.metadata");
                builder.AppendLine("del %userprofile%\\documents\\*.localization.dat");
                builder.AppendLine("del %TEMP%\\*.metadata");
                builder.AppendLine("del %TEMP%\\*localization.dat");
                builder.AppendLine("taskkill /IM iisexpress.exe");
-
+               builder.AppendLine("echo \"Deleting Silverlight Metadata\"");
+               builder.AppendLine("del /S %userprofile%\\AppData\\LocalLow\\Microsoft\\Silverlight\\*24_*");
+               builder.AppendLine("del /S %userprofile%\\AppData\\Local\\Temp\\*pr_*");
+               builder.AppendLine("del /Q %temp%\\*.*");
 
                string FILE_NAME = Path.Combine(Path.GetTempPath(), "clear_metadata.bat");
                FileStream fs = null;
@@ -681,6 +691,12 @@ namespace QToolbar
                XtraMessageBox.Show(string.Format("QVS Admin Folder \"{0}\" not found.", OptionsInstance.QCSAdminFolder));
             }
          }
+      }
+
+      private void btnSQL_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         Frm_SQLQueries f = new Frm_SQLQueries();
+         f.Show();
       }
    }
 }

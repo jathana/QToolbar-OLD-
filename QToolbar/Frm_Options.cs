@@ -56,6 +56,9 @@ namespace QToolbar
 
          SaveShellCommands();
 
+         // save databases
+         SaveDatabases();
+
          Properties.Settings.Default.Save();
       }
 
@@ -76,6 +79,7 @@ namespace QToolbar
          LoadFolders();
          LoadCheckouts();
          LoadShellCommands();
+         LoadDatabases();
       }
 
 
@@ -97,12 +101,23 @@ namespace QToolbar
          grdShellCommands.DataSource = shellCommands.Data;
       }
 
+      private void LoadDatabases()
+      {
+         Databases databases = new Databases(Properties.Settings.Default.Databases);
+         gridDatabases.DataSource = databases.Data;
+      }
+
       private void SaveShellCommands()
       {
          ShellCommands shellCommands = new ShellCommands((DataTable)grdShellCommands.DataSource);
          Properties.Settings.Default.ShellCommands = shellCommands.ToXml();
       }
 
+      private void SaveDatabases()
+      {
+         Databases databases = new Databases((DataTable)gridDatabases.DataSource);
+         Properties.Settings.Default.Databases = databases.ToXml();
+      }
 
       private void LoadFolders()
       {

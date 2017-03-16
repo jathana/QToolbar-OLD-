@@ -88,14 +88,6 @@ namespace QToolbar.Options
          }
       }
 
-      public static string ConnectionStrings
-      {
-         get
-         {
-            return Properties.Settings.Default.Checkouts;
-         }
-      }
-
       public static string InternalBuildsFolder
       {
          get
@@ -120,6 +112,21 @@ namespace QToolbar.Options
          }
       }
 
+      public static Databases Databases
+      {
+         get
+         {
+            return new Databases(Properties.Settings.Default.Databases);
+         }
+      }
+
+      public static SQLQueries SQLQueries
+      {
+         get
+         {
+            return new SQLQueries(Properties.Settings.Default.SQLQueries);
+         }
+      }
 
    }
 }

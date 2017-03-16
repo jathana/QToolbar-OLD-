@@ -61,7 +61,7 @@
          this.layoutControlItem14 = new DevExpress.XtraLayout.LayoutControlItem();
          this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
          this.layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
-         this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
+         this.tabOptions = new DevExpress.XtraTab.XtraTabControl();
          this.tabGeneral = new DevExpress.XtraTab.XtraTabPage();
          this.tabCheckouts = new DevExpress.XtraTab.XtraTabPage();
          this.gridCheckouts = new DevExpress.XtraGrid.GridControl();
@@ -69,6 +69,9 @@
          this.tabShellCommands = new DevExpress.XtraTab.XtraTabPage();
          this.grdShellCommands = new DevExpress.XtraGrid.GridControl();
          this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+         this.tabDatabases = new DevExpress.XtraTab.XtraTabPage();
+         this.gridDatabases = new DevExpress.XtraGrid.GridControl();
+         this.gridView3 = new DevExpress.XtraGrid.Views.Grid.GridView();
          this.btnOK = new DevExpress.XtraEditors.SimpleButton();
          this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
          this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -77,6 +80,9 @@
          this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
          this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+         this.tabSQLQueries = new DevExpress.XtraTab.XtraTabPage();
+         this.gridSQLQueries = new DevExpress.XtraGrid.GridControl();
+         this.gridView4 = new DevExpress.XtraGrid.Views.Grid.GridView();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.txtInternalBuildsFolder.Properties)).BeginInit();
@@ -111,8 +117,8 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).BeginInit();
          this.layoutControl2.SuspendLayout();
-         ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
-         this.xtraTabControl1.SuspendLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.tabOptions)).BeginInit();
+         this.tabOptions.SuspendLayout();
          this.tabGeneral.SuspendLayout();
          this.tabCheckouts.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.gridCheckouts)).BeginInit();
@@ -120,12 +126,18 @@
          this.tabShellCommands.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.grdShellCommands)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
+         this.tabDatabases.SuspendLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.gridDatabases)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.gridView3)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
+         this.tabSQLQueries.SuspendLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.gridSQLQueries)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.gridView4)).BeginInit();
          this.SuspendLayout();
          // 
          // layoutControl1
@@ -472,7 +484,7 @@
          // 
          // layoutControl2
          // 
-         this.layoutControl2.Controls.Add(this.xtraTabControl1);
+         this.layoutControl2.Controls.Add(this.tabOptions);
          this.layoutControl2.Controls.Add(this.btnCancel);
          this.layoutControl2.Controls.Add(this.btnOK);
          this.layoutControl2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -484,17 +496,19 @@
          this.layoutControl2.TabIndex = 2;
          this.layoutControl2.Text = "layoutControl2";
          // 
-         // xtraTabControl1
+         // tabOptions
          // 
-         this.xtraTabControl1.Location = new System.Drawing.Point(12, 12);
-         this.xtraTabControl1.Name = "xtraTabControl1";
-         this.xtraTabControl1.SelectedTabPage = this.tabGeneral;
-         this.xtraTabControl1.Size = new System.Drawing.Size(807, 481);
-         this.xtraTabControl1.TabIndex = 4;
-         this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
+         this.tabOptions.Location = new System.Drawing.Point(12, 12);
+         this.tabOptions.Name = "tabOptions";
+         this.tabOptions.SelectedTabPage = this.tabGeneral;
+         this.tabOptions.Size = new System.Drawing.Size(807, 481);
+         this.tabOptions.TabIndex = 4;
+         this.tabOptions.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.tabGeneral,
             this.tabCheckouts,
-            this.tabShellCommands});
+            this.tabShellCommands,
+            this.tabDatabases,
+            this.tabSQLQueries});
          // 
          // tabGeneral
          // 
@@ -559,6 +573,33 @@
          this.gridView2.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.Inplace;
          this.gridView2.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
          // 
+         // tabDatabases
+         // 
+         this.tabDatabases.Controls.Add(this.gridDatabases);
+         this.tabDatabases.Name = "tabDatabases";
+         this.tabDatabases.Size = new System.Drawing.Size(801, 453);
+         this.tabDatabases.Text = "Databases";
+         // 
+         // gridDatabases
+         // 
+         this.gridDatabases.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.gridDatabases.Location = new System.Drawing.Point(0, 0);
+         this.gridDatabases.MainView = this.gridView3;
+         this.gridDatabases.Name = "gridDatabases";
+         this.gridDatabases.Size = new System.Drawing.Size(801, 453);
+         this.gridDatabases.TabIndex = 0;
+         this.gridDatabases.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView3});
+         // 
+         // gridView3
+         // 
+         this.gridView3.GridControl = this.gridDatabases;
+         this.gridView3.Name = "gridView3";
+         this.gridView3.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+         this.gridView3.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
+         this.gridView3.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.Inplace;
+         this.gridView3.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+         // 
          // btnOK
          // 
          this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -587,7 +628,7 @@
          // 
          // layoutControlItem13
          // 
-         this.layoutControlItem13.Control = this.xtraTabControl1;
+         this.layoutControlItem13.Control = this.tabOptions;
          this.layoutControlItem13.Location = new System.Drawing.Point(0, 0);
          this.layoutControlItem13.Name = "layoutControlItem13";
          this.layoutControlItem13.Size = new System.Drawing.Size(811, 485);
@@ -637,6 +678,33 @@
          this.emptySpaceItem4.Size = new System.Drawing.Size(614, 26);
          this.emptySpaceItem4.TextSize = new System.Drawing.Size(0, 0);
          // 
+         // tabSQLQueries
+         // 
+         this.tabSQLQueries.Controls.Add(this.gridSQLQueries);
+         this.tabSQLQueries.Name = "tabSQLQueries";
+         this.tabSQLQueries.Size = new System.Drawing.Size(801, 453);
+         this.tabSQLQueries.Text = "SQL Queries";
+         // 
+         // gridSQLQueries
+         // 
+         this.gridSQLQueries.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.gridSQLQueries.Location = new System.Drawing.Point(0, 0);
+         this.gridSQLQueries.MainView = this.gridView4;
+         this.gridSQLQueries.Name = "gridSQLQueries";
+         this.gridSQLQueries.Size = new System.Drawing.Size(801, 453);
+         this.gridSQLQueries.TabIndex = 0;
+         this.gridSQLQueries.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView4});
+         // 
+         // gridView4
+         // 
+         this.gridView4.GridControl = this.gridSQLQueries;
+         this.gridView4.Name = "gridView4";
+         this.gridView4.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+         this.gridView4.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
+         this.gridView4.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.Inplace;
+         this.gridView4.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+         // 
          // Frm_Options
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -683,8 +751,8 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).EndInit();
          this.layoutControl2.ResumeLayout(false);
-         ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
-         this.xtraTabControl1.ResumeLayout(false);
+         ((System.ComponentModel.ISupportInitialize)(this.tabOptions)).EndInit();
+         this.tabOptions.ResumeLayout(false);
          this.tabGeneral.ResumeLayout(false);
          this.tabCheckouts.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.gridCheckouts)).EndInit();
@@ -692,12 +760,18 @@
          this.tabShellCommands.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.grdShellCommands)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
+         this.tabDatabases.ResumeLayout(false);
+         ((System.ComponentModel.ISupportInitialize)(this.gridDatabases)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.gridView3)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
+         this.tabSQLQueries.ResumeLayout(false);
+         ((System.ComponentModel.ISupportInitialize)(this.gridSQLQueries)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.gridView4)).EndInit();
          this.ResumeLayout(false);
 
       }
@@ -736,7 +810,7 @@
       private DevExpress.XtraEditors.ButtonEdit txtEnvironmentsConfiguration;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem12;
       private DevExpress.XtraLayout.LayoutControl layoutControl2;
-      private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
+      private DevExpress.XtraTab.XtraTabControl tabOptions;
       private DevExpress.XtraTab.XtraTabPage tabGeneral;
       private DevExpress.XtraTab.XtraTabPage tabCheckouts;
       private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup2;
@@ -752,5 +826,11 @@
       private DevExpress.XtraTab.XtraTabPage tabShellCommands;
       private DevExpress.XtraGrid.GridControl grdShellCommands;
       private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
+      private DevExpress.XtraTab.XtraTabPage tabDatabases;
+      private DevExpress.XtraGrid.GridControl gridDatabases;
+      private DevExpress.XtraGrid.Views.Grid.GridView gridView3;
+      private DevExpress.XtraTab.XtraTabPage tabSQLQueries;
+      private DevExpress.XtraGrid.GridControl gridSQLQueries;
+      private DevExpress.XtraGrid.Views.Grid.GridView gridView4;
    }
 }

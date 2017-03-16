@@ -204,5 +204,29 @@ namespace QToolbar.Properties {
                 this["ShellCommands"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Databases {
+            get {
+                return ((string)(this["Databases"]));
+            }
+            set {
+                this["Databases"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SQLQueries {
+            get {
+                return ((string)(this["SQLQueries"]));
+            }
+            set {
+                this["SQLQueries"] = value;
+            }
+        }
     }
 }
