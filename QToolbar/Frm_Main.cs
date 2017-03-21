@@ -71,7 +71,7 @@ namespace QToolbar
          mnuQCSAdminCFs.ClearLinks();
          mnuQCSAdmin.ClearLinks();
          mnuQCSAgent.ClearLinks();
-         mnuSQL.ClearLinks();
+         mnuLegalLinks.ClearLinks();
          mnuExecutorConfiguration.ClearLinks();
          mnuFolders.ClearLinks();
          mnuDatabaseScripter.ClearLinks();
@@ -110,7 +110,7 @@ namespace QToolbar
             CreateDirMenuItems(OptionsInstance.FieldsExplorerFolder, mnuFieldsExplorer, FieldsExplorer_ItemClick);
 
             // init sql menu
-            CreateSQLMenu();
+            CreateLegalLinksMenu();
 
             // create folders menu
             CreateFoldersMenu();
@@ -244,6 +244,17 @@ namespace QToolbar
          mnuShellCommands.AddItem(shellCommandItem);
       }
 
+      private void AddLegalLinksItem(DataRow row)
+      {
+         BarButtonItem legalLinkItem = new BarButtonItem(barManager1, row["Name"].ToString(), 3);
+         // legal links are shell commands
+         legalLinkItem.ItemClick += ShellCommand_ItemClick; 
+         legalLinkItem.Tag = row;
+         mnuLegalLinks.AddItem(legalLinkItem);
+      }
+
+
+
       private void ShellCommand_ItemClick(object sender, ItemClickEventArgs e)
       {
          try
@@ -350,24 +361,19 @@ namespace QToolbar
          }
       }
 
-      private void CreateSQLMenu()
+      private void CreateLegalLinksMenu()
       {
-         string sqlFolder = OptionsInstance.SQLFolder;
-         if (!string.IsNullOrEmpty(sqlFolder))
+         // load legal links
+         try
          {
-            if (Directory.Exists(sqlFolder))
+            foreach (DataRow row in OptionsInstance.LegalLinks.Data.Rows)
             {
-               try
-               {
-                  List<string> dirs = Directory.GetDirectories(sqlFolder).ToList<string>();
-                  dirs.Sort();
-                  AddChildrenSQL(sqlFolder, mnuSQL);
-               }
-               catch (Exception ex)
-               {
-                  XtraMessageBox.Show(string.Format("Failed to get subfolders of sqlfolder {0}", sqlFolder));
-               }
+               AddLegalLinksItem(row);
             }
+         }
+         catch (Exception ex)
+         {
+            XtraMessageBox.Show("Failed to retrieve legal links");
          }
       }
 
@@ -554,7 +560,15 @@ namespace QToolbar
       private void btnRefresh_ItemClick(object sender, ItemClickEventArgs e)
       {
          ClearUI();
+         ClearAppInstance();
          InitUI();
+
+      }
+
+
+      private void ClearAppInstance()
+      {
+         AppInstance.CFDatabasesTree = null;
       }
 
       private void ExecutorConfiguration_ItemClick(object sender, ItemClickEventArgs e)

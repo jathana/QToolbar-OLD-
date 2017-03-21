@@ -207,19 +207,53 @@ namespace QToolbar.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Databases {
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<DocumentElement>
+  <table>
+    <Name>v.6.11</Name>
+    <Command>http://q-srv-w2k12r2:8804/QCLegalApplicationApp/</Command>
+  </table>
+  <table>
+    <Name>v.7.2</Name>
+    <Command>http://q-srv-w2k12r2:8807/QCLegalApplicationApp/</Command>
+  </table>
+  <table>
+    <Name>v.7.3</Name>
+    <Command>http://q-srv-w2k12r2:8800/QCLegalApplicationApp/</Command>
+  </table>
+</DocumentElement>")]
+        public string LegalLinks {
             get {
-                return ((string)(this["Databases"]));
+                return ((string)(this["LegalLinks"]));
             }
             set {
-                this["Databases"] = value;
+                this["LegalLinks"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<DocumentElement>
+  <table>
+    <Name>Flag 'ENABLE_EOD_MONITOR_AND_ALERTS'</Name>
+    <SQL>SELECT * FROM AT_SYSTEM_PARAMS WHERE SPRA_TYPE='ENABLE_EOD_MONITOR_AND_ALERTS'</SQL>
+    <RunImmediate>true</RunImmediate>
+  </table>
+  <table>
+    <Name>Get Database Versions</Name>
+    <SQL>SELECT * FROM TLK_DATABASE_VERSIONS ORDER BY 1 DESC</SQL>
+    <RunImmediate>true</RunImmediate>
+  </table>
+  <table>
+    <Name>Get Enterprises</Name>
+    <SQL>select * from enterprises</SQL>
+    <RunImmediate>true</RunImmediate>
+  </table>
+  <table>
+    <Name>Get Installations</Name>
+    <SQL>SELECT * FROM AT_INSTALLATIONS</SQL>
+    <RunImmediate>true</RunImmediate>
+  </table>
+</DocumentElement>")]
         public string SQLQueries {
             get {
                 return ((string)(this["SQLQueries"]));

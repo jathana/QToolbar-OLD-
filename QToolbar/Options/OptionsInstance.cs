@@ -112,19 +112,19 @@ namespace QToolbar.Options
          }
       }
 
-      public static Databases Databases
-      {
-         get
-         {
-            return new Databases(Properties.Settings.Default.Databases);
-         }
-      }
-
       public static SQLQueries SQLQueries
       {
          get
          {
             return new SQLQueries(Properties.Settings.Default.SQLQueries);
+         }
+      }
+
+      public static ShellCommands LegalLinks
+      {
+         get
+         {
+            return new ShellCommands(Properties.Settings.Default.LegalLinks);
          }
       }
 

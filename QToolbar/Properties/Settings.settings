@@ -50,11 +50,45 @@
     <Setting Name="ShellCommands" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="Databases" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="LegalLinks" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&lt;DocumentElement&gt;
+  &lt;table&gt;
+    &lt;Name&gt;v.6.11&lt;/Name&gt;
+    &lt;Command&gt;http://q-srv-w2k12r2:8804/QCLegalApplicationApp/&lt;/Command&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;Name&gt;v.7.2&lt;/Name&gt;
+    &lt;Command&gt;http://q-srv-w2k12r2:8807/QCLegalApplicationApp/&lt;/Command&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;Name&gt;v.7.3&lt;/Name&gt;
+    &lt;Command&gt;http://q-srv-w2k12r2:8800/QCLegalApplicationApp/&lt;/Command&gt;
+  &lt;/table&gt;
+&lt;/DocumentElement&gt;</Value>
     </Setting>
     <Setting Name="SQLQueries" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">&lt;DocumentElement&gt;
+  &lt;table&gt;
+    &lt;Name&gt;Flag 'ENABLE_EOD_MONITOR_AND_ALERTS'&lt;/Name&gt;
+    &lt;SQL&gt;SELECT * FROM AT_SYSTEM_PARAMS WHERE SPRA_TYPE='ENABLE_EOD_MONITOR_AND_ALERTS'&lt;/SQL&gt;
+    &lt;RunImmediate&gt;true&lt;/RunImmediate&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;Name&gt;Get Database Versions&lt;/Name&gt;
+    &lt;SQL&gt;SELECT * FROM TLK_DATABASE_VERSIONS ORDER BY 1 DESC&lt;/SQL&gt;
+    &lt;RunImmediate&gt;true&lt;/RunImmediate&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;Name&gt;Get Enterprises&lt;/Name&gt;
+    &lt;SQL&gt;select * from enterprises&lt;/SQL&gt;
+    &lt;RunImmediate&gt;true&lt;/RunImmediate&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;Name&gt;Get Installations&lt;/Name&gt;
+    &lt;SQL&gt;SELECT * FROM AT_INSTALLATIONS&lt;/SQL&gt;
+    &lt;RunImmediate&gt;true&lt;/RunImmediate&gt;
+  &lt;/table&gt;
+&lt;/DocumentElement&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

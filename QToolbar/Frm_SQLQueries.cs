@@ -11,6 +11,8 @@ using DevExpress.XtraEditors;
 using System.IO;
 using QToolbar.Options;
 using DevExpress.XtraTreeList.Nodes;
+using DevExpress.XtraTreeList.Menu;
+using DevExpress.XtraBars.Docking2010.Views;
 
 namespace QToolbar
 {
@@ -25,19 +27,36 @@ namespace QToolbar
 
          backgroundWorker1.WorkerSupportsCancellation = true;
          backgroundWorker1.WorkerReportsProgress = true;
+         treeDatabases.OptionsBehavior.Editable = false;
+         treeDatabases.OptionsClipboard.AllowCopy = DevExpress.Utils.DefaultBoolean.True;
+         treeDatabases.OptionsView.EnableAppearanceEvenRow = true;
+         treeDatabases.OptionsView.EnableAppearanceOddRow = true;         
+
+         //treeDatabases.OptionsView.ShowColumns = false;
       }
 
 
       private void LoadDatabases()
       {
-         treeDatabases.ClearNodes();
-         // get all databases from cf
-         backgroundWorker1.RunWorkerAsync();
+         if (AppInstance.CFDatabasesTree == null)
+         {
+            btnAdd.Enabled = false;
+            treeDatabases.ClearNodes();
+            treeDatabases.Cursor = Cursors.WaitCursor;
+            // get all databases from cf
+            backgroundWorker1.RunWorkerAsync();
+         }
+         else
+         {
+            PopulateDBTree(AppInstance.CFDatabasesTree);
+         }
       }
 
       private void Frm_SQLQueries_Load(object sender, EventArgs e)
       {
+                  
          LoadDatabases();
+         
       }
 
       private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -56,18 +75,32 @@ namespace QToolbar
                   foreach (string dir in dirs)
                   {
                      TreeNode<ConnectionInfo> verNode = new TreeNode<ConnectionInfo>();
-                     verNode.Data.Version = dir;
-                     verNode.Data.VersionNode = true;
+                     verNode.Data.CFPath = dir;
+                     verNode.Data.InfoType = InfoType.Version;
                      verNode.Parent = tree;
                      tree.AddChild(verNode);
                      // parse cf and get dbs
                      List<ConnectionInfo> dbs = GetCFDBs(Path.GetFileName(dir));
-                     foreach(ConnectionInfo item in dbs)
+
+                     var servers=dbs.GroupBy(i => i.Server).ToList();
+                     foreach (var server in servers)
                      {
-                        TreeNode<ConnectionInfo> child = new TreeNode<ConnectionInfo>();
-                        child.Data = item;
-                        child.Parent = verNode;
-                        verNode.AddChild(child);
+                                               
+                        List<ConnectionInfo> serverItems = server.ToList<ConnectionInfo>();
+                        TreeNode<ConnectionInfo> serverNode = new TreeNode<ConnectionInfo>();
+                        serverNode.Data.Server = server.Key;
+                        serverNode.Parent = verNode;
+                        serverNode.Data.InfoType = InfoType.Server;
+                        verNode.AddChild(serverNode);
+
+                        foreach (ConnectionInfo item in serverItems)
+                        {
+                           TreeNode<ConnectionInfo> child = new TreeNode<ConnectionInfo>();
+                           child.Data = item;
+                           child.Data.InfoType = InfoType.Database;
+                           child.Parent = serverNode;
+                           serverNode.AddChild(child);
+                        }
                      }
                   }
                   e.Result = tree;
@@ -111,7 +144,7 @@ namespace QToolbar
             }
             string file = Path.Combine(destDir, "QBC_Admin.cf.deploy");
             IniFile cfFile = new IniFile(file, "#");
-            Dictionary<string,string> servers=cfFile.GetSectionPairs("[servers]");
+            Dictionary<string, string> servers = cfFile.GetSectionPairs("[servers]");
             Dictionary<string, string> dbnames = cfFile.GetSectionPairs("[databasename]");
             if (servers.Count != dbnames.Count)
             {
@@ -119,17 +152,16 @@ namespace QToolbar
             }
             else
             {
-               foreach(KeyValuePair<string,string> server in servers)
+               foreach (KeyValuePair<string, string> server in servers)
                {
                   ConnectionInfo info = new ConnectionInfo()
                   {
                      Environment = server.Key,
                      Server = server.Value,
                      Database = dbnames[server.Key],
-                     Version = destDir
+                     CFPath = destDir
                   };
                   retVal.Add(info);
-
                }
             }
          }
@@ -142,17 +174,23 @@ namespace QToolbar
       {
          treeDatabases.ClearNodes();
 
-         PopulateDBTree((TreeNode<ConnectionInfo>)e.Result);
+         TreeNode<ConnectionInfo> tree = (TreeNode<ConnectionInfo>)e.Result;
+         PopulateDBTree(tree);
+         AppInstance.CFDatabasesTree = tree;
+         btnAdd.Enabled = true;
+         treeDatabases.Cursor = Cursors.Default;
       }
 
       private void PopulateDBTree(TreeNode<ConnectionInfo> tree)
       {
          treeDatabases.DataSource = tree;
+         treeDatabases.ExpandAll();
+         treeDatabases.BestFitColumns();
       }
 
       private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
       {
-         
+
       }
 
       private void treeDatabases_VirtualTreeGetChildNodes(object sender, DevExpress.XtraTreeList.VirtualTreeGetChildNodesInfo e)
@@ -165,18 +203,117 @@ namespace QToolbar
 
       private void treeDatabases_VirtualTreeGetCellValue(object sender, DevExpress.XtraTreeList.VirtualTreeGetCellValueInfo e)
       {
-         if (e.Column.Caption == "Version")
+         TreeNode<ConnectionInfo> node = (TreeNode<ConnectionInfo>)e.Node;
+
+         if (e.Column.Caption == "Name")
          {
-            TreeNode<ConnectionInfo> node = (TreeNode<ConnectionInfo>)e.Node;
-            if (node.Data.VersionNode)
+            if (node.Data.InfoType == InfoType.Database)
             {
-               e.CellData = Path.GetFileName(((TreeNode<ConnectionInfo>)e.Node).Data.Version);
+               e.CellData = node.Data.Database;
             }
-            else
+            else if (node.Data.InfoType == InfoType.Server)
             {
-               e.CellData = $"{node.Data.Environment} => [{node.Data.Server}].[{node.Data.Database}]";
+               e.CellData = ((TreeNode<ConnectionInfo>)e.Node).Data.Server;
+            }
+            else if (node.Data.InfoType == InfoType.Version)
+            {
+               e.CellData = ((TreeNode<ConnectionInfo>)e.Node).Data.Version;
             }
          }
+         else if (e.Column.Caption == "Server")
+         {
+            if (node.Data.InfoType == InfoType.Server)
+            {
+               e.CellData = node.Data.Server;
+            }
+         }
+         else if (e.Column.Caption == "Database")
+         {
+            if (node.Data.InfoType == InfoType.Database)
+            {
+               e.CellData = node.Data.Database;
+            }
+
+         }
+
+      }
+
+      private void treeDatabases_PopupMenuShowing(object sender, DevExpress.XtraTreeList.PopupMenuShowingEventArgs e)
+      {
+         if (e.Menu is TreeListNodeMenu)
+         {
+
+            treeDatabases.FocusedNode = ((TreeListNodeMenu)e.Menu).Node;
+            TreeNode<ConnectionInfo> obj = (TreeNode<ConnectionInfo>)treeDatabases.GetDataRecordByNode(treeDatabases.FocusedNode);
+            if (obj.Data.InfoType == InfoType.Database)
+            {
+               foreach (DataRow query in OptionsInstance.SQLQueries.Data.Rows)
+               {
+                  DevExpress.Utils.Menu.DXMenuItem mnuItem = new DevExpress.Utils.Menu.DXMenuItem(query["Name"].ToString(), query_ItemClick);
+                  mnuItem.Tag = query;
+
+                  e.Menu.Items.Add(mnuItem);
+               }
+            }
+         }
+      }
+
+      private void query_ItemClick(object sender, EventArgs e)
+      {         
+          
+         StringBuilder builder = new StringBuilder();
+         DevExpress.Utils.Menu.DXMenuItem mnuItem = (DevExpress.Utils.Menu.DXMenuItem)sender;
+         uc_SQL ctr = new uc_SQL();
+
+         TreeNode<ConnectionInfo> obj = (TreeNode<ConnectionInfo>)treeDatabases.GetDataRecordByNode(treeDatabases.FocusedNode);
+         ConnectionInfo data = obj.Data;
+         DataRow query = (DataRow)mnuItem.Tag;
+         // sql text
+         builder.AppendLine($"--       Query : {mnuItem.Caption}");
+         builder.AppendLine($"--      Server : {data.Server}");
+         builder.AppendLine($"--    Database : {data.Database}");
+         builder.AppendLine($"--     Version : {data.Version}");
+         builder.AppendLine($"-- Environment : {data.Environment}");
+         builder.AppendLine();
+         builder.AppendLine(query["SQL"].ToString());
+         // sql control
+         ctr.Query = builder.ToString();
+         ctr.Server = data.Server;
+         ctr.Database = data.Database;
+         ctr.QueryName = mnuItem.Caption;
+         ctr.Initialize();
+         if ((bool)query["RunImmediate"])
+         {
+            ctr.Run();
+         }
+         // tab 
+         DevExpress.XtraBars.Docking2010.Views.Tabbed.Document doc=  (DevExpress.XtraBars.Docking2010.Views.Tabbed.Document)documentManager1.View.AddDocument(ctr);
+         tabbedView1.Controller.Select(doc);
+         doc.Caption = ctr.Database;
+         
+
+      }
+
+      private void treeDatabases_GetStateImage(object sender, DevExpress.XtraTreeList.GetStateImageEventArgs e)
+      {
+         TreeNode<ConnectionInfo> obj = (TreeNode<ConnectionInfo>)treeDatabases.GetDataRecordByNode(e.Node);
+         ConnectionInfo data = obj.Data;
+         switch(data.InfoType)
+         {
+            case InfoType.Database: e.NodeImageIndex = imageCollection1.Images.Keys.IndexOf("db");break;
+            case InfoType.Server: e.NodeImageIndex = imageCollection1.Images.Keys.IndexOf("server"); break;
+            case InfoType.Version: e.NodeImageIndex = imageCollection1.Images.Keys.IndexOf("env"); break;
+
+         }
+         //if (Convert.ToBoolean(e.Node["Check"]))
+         //   e.NodeImageIndex = 0;
+         //else
+         //   e.NodeImageIndex = 1;
+      }
+
+      private void btnAdd_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      {
+         LoadDatabases();
       }
    }
 }

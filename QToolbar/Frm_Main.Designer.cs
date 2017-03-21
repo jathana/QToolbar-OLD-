@@ -30,16 +30,16 @@
       {
          this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_Main));
-         DevExpress.Utils.SuperToolTip superToolTip6 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem6 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip7 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem7 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip8 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem8 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip9 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem9 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip10 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem10 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
          this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
          this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
@@ -53,7 +53,7 @@
          this.mnuQCSAdminCFs = new DevExpress.XtraBars.BarSubItem();
          this.mnuQCSAdmin = new DevExpress.XtraBars.BarSubItem();
          this.mnuQCSAgent = new DevExpress.XtraBars.BarSubItem();
-         this.mnuSQL = new DevExpress.XtraBars.BarSubItem();
+         this.mnuLegalLinks = new DevExpress.XtraBars.BarSubItem();
          this.btnRefresh = new DevExpress.XtraBars.BarButtonItem();
          this.mnuExecutorConfiguration = new DevExpress.XtraBars.BarSubItem();
          this.mnuFolders = new DevExpress.XtraBars.BarSubItem();
@@ -64,13 +64,13 @@
          this.mnuNextBuild = new DevExpress.XtraBars.BarSubItem();
          this.mnuInternalBuilds = new DevExpress.XtraBars.BarSubItem();
          this.mnuShellCommands = new DevExpress.XtraBars.BarSubItem();
+         this.btnSQL = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.grpApplications = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpBuilds = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpFiles = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpSQL = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpTools = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-         this.btnSQL = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -93,6 +93,7 @@
          this.barDockControlTop.CausesValidation = false;
          this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
          this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
+         this.barDockControlTop.Manager = this.barManager1;
          this.barDockControlTop.Size = new System.Drawing.Size(1114, 0);
          // 
          // barDockControlBottom
@@ -100,6 +101,7 @@
          this.barDockControlBottom.CausesValidation = false;
          this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
          this.barDockControlBottom.Location = new System.Drawing.Point(0, 94);
+         this.barDockControlBottom.Manager = this.barManager1;
          this.barDockControlBottom.Size = new System.Drawing.Size(1114, 0);
          // 
          // barDockControlLeft
@@ -107,6 +109,7 @@
          this.barDockControlLeft.CausesValidation = false;
          this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
          this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
+         this.barDockControlLeft.Manager = this.barManager1;
          this.barDockControlLeft.Size = new System.Drawing.Size(0, 94);
          // 
          // barDockControlRight
@@ -114,6 +117,7 @@
          this.barDockControlRight.CausesValidation = false;
          this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
          this.barDockControlRight.Location = new System.Drawing.Point(1114, 0);
+         this.barDockControlRight.Manager = this.barManager1;
          this.barDockControlRight.Size = new System.Drawing.Size(0, 94);
          // 
          // imageCollection1
@@ -125,6 +129,8 @@
          this.imageCollection1.Images.SetKeyName(1, "textbox_16x16.png");
          this.imageCollection1.InsertGalleryImage("drilldown_16x16.png", "images/chart/drilldown_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/chart/drilldown_16x16.png"), 2);
          this.imageCollection1.Images.SetKeyName(2, "drilldown_16x16.png");
+         this.imageCollection1.InsertGalleryImage("math&trig_16x16.png", "images/function%20library/math&trig_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/function%20library/math&trig_16x16.png"), 3);
+         this.imageCollection1.Images.SetKeyName(3, "math&trig_16x16.png");
          // 
          // btnOptions
          // 
@@ -144,7 +150,7 @@
             this.mnuQCSAdminCFs,
             this.mnuQCSAdmin,
             this.mnuQCSAgent,
-            this.mnuSQL,
+            this.mnuLegalLinks,
             this.btnRefresh,
             this.mnuExecutorConfiguration,
             this.mnuFolders,
@@ -168,71 +174,71 @@
          // mnuDesigners
          // 
          this.mnuDesigners.Caption = "Designers";
-         this.mnuDesigners.Glyph = ((System.Drawing.Image)(resources.GetObject("mnuDesigners.Glyph")));
          this.mnuDesigners.Id = 10;
-         this.mnuDesigners.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("mnuDesigners.LargeGlyph")));
+         this.mnuDesigners.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuDesigners.ImageOptions.Image")));
+         this.mnuDesigners.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuDesigners.ImageOptions.LargeImage")));
          this.mnuDesigners.Name = "mnuDesigners";
-         toolTipTitleItem6.Text = "Opens Designer";
-         superToolTip6.Items.Add(toolTipTitleItem6);
-         this.mnuDesigners.SuperTip = superToolTip6;
+         toolTipTitleItem1.Text = "Opens Designer";
+         superToolTip1.Items.Add(toolTipTitleItem1);
+         this.mnuDesigners.SuperTip = superToolTip1;
          // 
          // btnOptions2
          // 
          this.btnOptions2.Caption = "Options";
-         this.btnOptions2.Glyph = ((System.Drawing.Image)(resources.GetObject("btnOptions2.Glyph")));
          this.btnOptions2.Id = 11;
-         this.btnOptions2.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnOptions2.LargeGlyph")));
+         this.btnOptions2.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnOptions2.ImageOptions.Image")));
+         this.btnOptions2.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnOptions2.ImageOptions.LargeImage")));
          this.btnOptions2.Name = "btnOptions2";
-         toolTipTitleItem7.Text = "Opens options dialog";
-         superToolTip7.Items.Add(toolTipTitleItem7);
-         this.btnOptions2.SuperTip = superToolTip7;
+         toolTipTitleItem2.Text = "Opens options dialog";
+         superToolTip2.Items.Add(toolTipTitleItem2);
+         this.btnOptions2.SuperTip = superToolTip2;
          this.btnOptions2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnOptions2_ItemClick);
          // 
          // mnuQCSAdminCFs
          // 
          this.mnuQCSAdminCFs.Caption = "QCSAdmin CFs";
-         this.mnuQCSAdminCFs.Glyph = ((System.Drawing.Image)(resources.GetObject("mnuQCSAdminCFs.Glyph")));
          this.mnuQCSAdminCFs.Id = 11;
-         this.mnuQCSAdminCFs.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("mnuQCSAdminCFs.LargeGlyph")));
+         this.mnuQCSAdminCFs.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuQCSAdminCFs.ImageOptions.Image")));
+         this.mnuQCSAdminCFs.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuQCSAdminCFs.ImageOptions.LargeImage")));
          this.mnuQCSAdminCFs.Name = "mnuQCSAdminCFs";
-         toolTipTitleItem8.Text = "Opens the latest cf file of the selected version";
-         superToolTip8.Items.Add(toolTipTitleItem8);
-         this.mnuQCSAdminCFs.SuperTip = superToolTip8;
+         toolTipTitleItem3.Text = "Opens the latest cf file of the selected version";
+         superToolTip3.Items.Add(toolTipTitleItem3);
+         this.mnuQCSAdminCFs.SuperTip = superToolTip3;
          // 
          // mnuQCSAdmin
          // 
          this.mnuQCSAdmin.Caption = "QCS Admin";
          this.mnuQCSAdmin.Id = 14;
-         this.mnuQCSAdmin.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("mnuQCSAdmin.LargeGlyph")));
+         this.mnuQCSAdmin.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuQCSAdmin.ImageOptions.LargeImage")));
          this.mnuQCSAdmin.Name = "mnuQCSAdmin";
-         toolTipTitleItem9.Text = "Opens QCS Admin application";
-         superToolTip9.Items.Add(toolTipTitleItem9);
-         this.mnuQCSAdmin.SuperTip = superToolTip9;
+         toolTipTitleItem4.Text = "Opens QCS Admin application";
+         superToolTip4.Items.Add(toolTipTitleItem4);
+         this.mnuQCSAdmin.SuperTip = superToolTip4;
          // 
          // mnuQCSAgent
          // 
          this.mnuQCSAgent.Caption = "QCS Agent";
          this.mnuQCSAgent.Id = 15;
-         this.mnuQCSAgent.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("mnuQCSAgent.LargeGlyph")));
+         this.mnuQCSAgent.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuQCSAgent.ImageOptions.LargeImage")));
          this.mnuQCSAgent.Name = "mnuQCSAgent";
-         toolTipTitleItem10.Text = "Opens QCS Agent application";
-         superToolTip10.Items.Add(toolTipTitleItem10);
-         this.mnuQCSAgent.SuperTip = superToolTip10;
+         toolTipTitleItem5.Text = "Opens QCS Agent application";
+         superToolTip5.Items.Add(toolTipTitleItem5);
+         this.mnuQCSAgent.SuperTip = superToolTip5;
          // 
-         // mnuSQL
+         // mnuLegalLinks
          // 
-         this.mnuSQL.Caption = "SQL";
-         this.mnuSQL.Glyph = ((System.Drawing.Image)(resources.GetObject("mnuSQL.Glyph")));
-         this.mnuSQL.Id = 16;
-         this.mnuSQL.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("mnuSQL.LargeGlyph")));
-         this.mnuSQL.Name = "mnuSQL";
+         this.mnuLegalLinks.Caption = "Legal";
+         this.mnuLegalLinks.Id = 16;
+         this.mnuLegalLinks.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuLegalLinks.ImageOptions.Image")));
+         this.mnuLegalLinks.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuLegalLinks.ImageOptions.LargeImage")));
+         this.mnuLegalLinks.Name = "mnuLegalLinks";
          // 
          // btnRefresh
          // 
          this.btnRefresh.Caption = "Refresh";
-         this.btnRefresh.Glyph = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Glyph")));
          this.btnRefresh.Id = 17;
-         this.btnRefresh.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnRefresh.LargeGlyph")));
+         this.btnRefresh.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.ImageOptions.Image")));
+         this.btnRefresh.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRefresh.ImageOptions.LargeImage")));
          this.btnRefresh.Name = "btnRefresh";
          this.btnRefresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRefresh_ItemClick);
          // 
@@ -240,72 +246,81 @@
          // 
          this.mnuExecutorConfiguration.Caption = "Executor Configuration";
          this.mnuExecutorConfiguration.Id = 18;
-         this.mnuExecutorConfiguration.LargeGlyph = global::QToolbar.Properties.Resources.activity_48;
+         this.mnuExecutorConfiguration.ImageOptions.LargeImage = global::QToolbar.Properties.Resources.activity_48;
          this.mnuExecutorConfiguration.Name = "mnuExecutorConfiguration";
          // 
          // mnuFolders
          // 
          this.mnuFolders.Caption = "My Folders";
-         this.mnuFolders.Glyph = ((System.Drawing.Image)(resources.GetObject("mnuFolders.Glyph")));
          this.mnuFolders.Id = 19;
-         this.mnuFolders.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("mnuFolders.LargeGlyph")));
+         this.mnuFolders.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuFolders.ImageOptions.Image")));
+         this.mnuFolders.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuFolders.ImageOptions.LargeImage")));
          this.mnuFolders.Name = "mnuFolders";
          // 
          // mnuDatabaseScripter
          // 
          this.mnuDatabaseScripter.Caption = "Database Scripter";
-         this.mnuDatabaseScripter.Glyph = ((System.Drawing.Image)(resources.GetObject("mnuDatabaseScripter.Glyph")));
          this.mnuDatabaseScripter.Id = 21;
-         this.mnuDatabaseScripter.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("mnuDatabaseScripter.LargeGlyph")));
+         this.mnuDatabaseScripter.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuDatabaseScripter.ImageOptions.Image")));
+         this.mnuDatabaseScripter.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuDatabaseScripter.ImageOptions.LargeImage")));
          this.mnuDatabaseScripter.Name = "mnuDatabaseScripter";
          // 
          // mnuFieldsExplorer
          // 
          this.mnuFieldsExplorer.Caption = "Fields Explorer";
          this.mnuFieldsExplorer.Id = 22;
-         this.mnuFieldsExplorer.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("mnuFieldsExplorer.LargeGlyph")));
+         this.mnuFieldsExplorer.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuFieldsExplorer.ImageOptions.LargeImage")));
          this.mnuFieldsExplorer.Name = "mnuFieldsExplorer";
          // 
          // btnClearMetadata
          // 
          this.btnClearMetadata.Caption = "Clear Metadata";
-         this.btnClearMetadata.Glyph = ((System.Drawing.Image)(resources.GetObject("btnClearMetadata.Glyph")));
          this.btnClearMetadata.Id = 24;
-         this.btnClearMetadata.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnClearMetadata.LargeGlyph")));
+         this.btnClearMetadata.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnClearMetadata.ImageOptions.Image")));
+         this.btnClearMetadata.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnClearMetadata.ImageOptions.LargeImage")));
          this.btnClearMetadata.Name = "btnClearMetadata";
          this.btnClearMetadata.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnClearMetadata_ItemClick);
          // 
          // mnuEnvironmentsConfiguration
          // 
          this.mnuEnvironmentsConfiguration.Caption = "Environments Configuration";
-         this.mnuEnvironmentsConfiguration.Glyph = ((System.Drawing.Image)(resources.GetObject("mnuEnvironmentsConfiguration.Glyph")));
          this.mnuEnvironmentsConfiguration.Id = 25;
-         this.mnuEnvironmentsConfiguration.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("mnuEnvironmentsConfiguration.LargeGlyph")));
+         this.mnuEnvironmentsConfiguration.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuEnvironmentsConfiguration.ImageOptions.Image")));
+         this.mnuEnvironmentsConfiguration.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuEnvironmentsConfiguration.ImageOptions.LargeImage")));
          this.mnuEnvironmentsConfiguration.Name = "mnuEnvironmentsConfiguration";
          // 
          // mnuNextBuild
          // 
          this.mnuNextBuild.Caption = "Next Build";
-         this.mnuNextBuild.Glyph = ((System.Drawing.Image)(resources.GetObject("mnuNextBuild.Glyph")));
          this.mnuNextBuild.Id = 27;
-         this.mnuNextBuild.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("mnuNextBuild.LargeGlyph")));
+         this.mnuNextBuild.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuNextBuild.ImageOptions.Image")));
+         this.mnuNextBuild.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuNextBuild.ImageOptions.LargeImage")));
          this.mnuNextBuild.Name = "mnuNextBuild";
          // 
          // mnuInternalBuilds
          // 
          this.mnuInternalBuilds.Caption = "Internal Builds";
-         this.mnuInternalBuilds.Glyph = ((System.Drawing.Image)(resources.GetObject("mnuInternalBuilds.Glyph")));
          this.mnuInternalBuilds.Id = 28;
-         this.mnuInternalBuilds.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("mnuInternalBuilds.LargeGlyph")));
+         this.mnuInternalBuilds.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuInternalBuilds.ImageOptions.Image")));
+         this.mnuInternalBuilds.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuInternalBuilds.ImageOptions.LargeImage")));
          this.mnuInternalBuilds.Name = "mnuInternalBuilds";
          // 
          // mnuShellCommands
          // 
          this.mnuShellCommands.Caption = "Shell Commands";
-         this.mnuShellCommands.Glyph = ((System.Drawing.Image)(resources.GetObject("mnuShellCommands.Glyph")));
          this.mnuShellCommands.Id = 29;
-         this.mnuShellCommands.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("mnuShellCommands.LargeGlyph")));
+         this.mnuShellCommands.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuShellCommands.ImageOptions.Image")));
+         this.mnuShellCommands.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuShellCommands.ImageOptions.LargeImage")));
          this.mnuShellCommands.Name = "mnuShellCommands";
+         // 
+         // btnSQL
+         // 
+         this.btnSQL.Caption = "Run SQL";
+         this.btnSQL.Id = 30;
+         this.btnSQL.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSQL.ImageOptions.Image")));
+         this.btnSQL.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnSQL.ImageOptions.LargeImage")));
+         this.btnSQL.Name = "btnSQL";
+         this.btnSQL.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSQL_ItemClick);
          // 
          // ribbonPage1
          // 
@@ -326,6 +341,7 @@
          this.grpApplications.ItemLinks.Add(this.mnuExecutorConfiguration);
          this.grpApplications.ItemLinks.Add(this.mnuFieldsExplorer);
          this.grpApplications.ItemLinks.Add(this.mnuDatabaseScripter);
+         this.grpApplications.ItemLinks.Add(this.mnuLegalLinks);
          this.grpApplications.Name = "grpApplications";
          this.grpApplications.Text = "Applications";
          // 
@@ -348,7 +364,6 @@
          // 
          // grpSQL
          // 
-         this.grpSQL.ItemLinks.Add(this.mnuSQL);
          this.grpSQL.ItemLinks.Add(this.btnSQL);
          this.grpSQL.Name = "grpSQL";
          this.grpSQL.Text = "SQL";
@@ -359,15 +374,6 @@
          this.grpTools.ItemLinks.Add(this.btnOptions2);
          this.grpTools.Name = "grpTools";
          this.grpTools.Text = "Tools";
-         // 
-         // btnSQL
-         // 
-         this.btnSQL.Caption = "Run SQL";
-         this.btnSQL.Glyph = ((System.Drawing.Image)(resources.GetObject("btnSQL.Glyph")));
-         this.btnSQL.Id = 30;
-         this.btnSQL.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnSQL.LargeGlyph")));
-         this.btnSQL.Name = "btnSQL";
-         this.btnSQL.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSQL_ItemClick);
          // 
          // Frm_Main
          // 
@@ -414,7 +420,7 @@
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup grpFiles;
       private DevExpress.XtraBars.BarSubItem mnuQCSAdmin;
       private DevExpress.XtraBars.BarSubItem mnuQCSAgent;
-      private DevExpress.XtraBars.BarSubItem mnuSQL;
+      private DevExpress.XtraBars.BarSubItem mnuLegalLinks;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup grpSQL;
       private DevExpress.XtraBars.BarButtonItem btnRefresh;
       private DevExpress.XtraBars.BarSubItem mnuExecutorConfiguration;

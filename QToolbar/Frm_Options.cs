@@ -49,6 +49,7 @@ namespace QToolbar
          Properties.Settings.Default.FieldsExplorerFolder = txtFieldsExplorerFolder.Text;
          Properties.Settings.Default.EnvironmentsConfigurationFolder = txtEnvironmentsConfiguration.Text;
          Properties.Settings.Default.InternalBuildsFolder = txtInternalBuildsFolder.Text;
+
          // save folders
          SaveFolders();
 
@@ -57,7 +58,10 @@ namespace QToolbar
          SaveShellCommands();
 
          // save databases
-         SaveDatabases();
+         SaveLegalLinks();
+
+         // save sql queries
+         SaveSQLQueries();
 
          Properties.Settings.Default.Save();
       }
@@ -75,11 +79,12 @@ namespace QToolbar
          txtFieldsExplorerFolder.Text = Properties.Settings.Default.FieldsExplorerFolder;
          txtEnvironmentsConfiguration.Text = Properties.Settings.Default.EnvironmentsConfigurationFolder;
          txtInternalBuildsFolder.Text = Properties.Settings.Default.InternalBuildsFolder;
-         
+
          LoadFolders();
          LoadCheckouts();
          LoadShellCommands();
-         LoadDatabases();
+         LoadLegalLinks();
+         LoadSQLQueries();
       }
 
 
@@ -101,10 +106,16 @@ namespace QToolbar
          grdShellCommands.DataSource = shellCommands.Data;
       }
 
-      private void LoadDatabases()
+      private void LoadLegalLinks()
       {
-         Databases databases = new Databases(Properties.Settings.Default.Databases);
-         gridDatabases.DataSource = databases.Data;
+         ShellCommands legalLinks = new ShellCommands(Properties.Settings.Default.LegalLinks);
+         gridLegalLiks.DataSource = legalLinks.Data;
+      }
+
+      private void LoadSQLQueries()
+      {
+         SQLQueries sqlQueries = new SQLQueries(Properties.Settings.Default.SQLQueries);
+         gridSQLQueries.DataSource = sqlQueries.Data;
       }
 
       private void SaveShellCommands()
@@ -113,10 +124,16 @@ namespace QToolbar
          Properties.Settings.Default.ShellCommands = shellCommands.ToXml();
       }
 
-      private void SaveDatabases()
+      private void SaveLegalLinks()
       {
-         Databases databases = new Databases((DataTable)gridDatabases.DataSource);
-         Properties.Settings.Default.Databases = databases.ToXml();
+         ShellCommands legalLinks = new ShellCommands((DataTable)gridLegalLiks.DataSource);
+         Properties.Settings.Default.LegalLinks = legalLinks.ToXml();
+      }
+
+      private void SaveSQLQueries()
+      {
+         SQLQueries sqlQueries = new SQLQueries((DataTable)gridSQLQueries.DataSource);
+         Properties.Settings.Default.SQLQueries = sqlQueries.ToXml();
       }
 
       private void LoadFolders()

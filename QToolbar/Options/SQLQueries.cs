@@ -10,7 +10,7 @@ namespace QToolbar.Options
    public class SQLQueries : SerializableTable
    {
       private string[] columns = new string[] { "Name", "SQL", "RunImmediate" };
-      private Type[] types = new Type[] { typeof(string), typeof(string), typeof(string) };
+      private Type[] types = new Type[] { typeof(string), typeof(string), typeof(bool) };
 
       public SQLQueries()
       {

@@ -29,7 +29,6 @@ namespace QToolbar
         /// </summary>
         private void InitializeComponent()
         {
-         this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PowerfulSample));
          this.menuStrip1 = new System.Windows.Forms.MenuStrip();
          this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -463,14 +462,14 @@ namespace QToolbar
          this.fctb.Font = new System.Drawing.Font("Consolas", 9.75F);
          this.fctb.ImeMode = System.Windows.Forms.ImeMode.Off;
          this.fctb.IsReplaceMode = false;
-         this.fctb.Location = new System.Drawing.Point(0, 24);
+         this.fctb.Location = new System.Drawing.Point(0, 0);
          this.fctb.Name = "fctb";
          this.fctb.Paddings = new System.Windows.Forms.Padding(0);
          this.fctb.ReadOnly = true;
          this.fctb.ReservedCountOfLineNumberChars = 2;
          this.fctb.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
          this.fctb.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("fctb.ServiceColors")));
-         this.fctb.Size = new System.Drawing.Size(922, 311);
+         this.fctb.Size = new System.Drawing.Size(922, 335);
          this.fctb.TabIndex = 3;
          this.fctb.Text = resources.GetString("fctb.Text");
          this.fctb.Zoom = 100;
