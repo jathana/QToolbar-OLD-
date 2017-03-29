@@ -53,17 +53,18 @@ namespace QToolbar.Builds
             // EOD Metadata files 
             CheckForEODMetadataFiles(_NextBuildPath);
 
-            // configuration files
-            CheckConfigurationFiles();
-
-            // check qbc_admin.cf
-            CheckQBCAdminCF();
          }
          else
          {
             Inform("Next Build folder does not exist.", CheckResult.Error);
             _Errors = true;
          }
+         // configuration files
+         CheckConfigurationFiles();
+
+         // check qbc_admin.cf
+         CheckQBCAdminCF();
+
          if (!_Errors && _Table.Rows.Count == 0)
          {
             Inform("Everything ok!", CheckResult.OK);

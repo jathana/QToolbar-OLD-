@@ -121,4 +121,10 @@
   <data name="activity_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\activity_48.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="mnuQCSAdmin.ImageOptions.LargeImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\mnuQCSAdmin.ImageOptions.LargeImage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mnuQCSAgent.ImageOptions.LargeImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\mnuQCSAgent.ImageOptions.LargeImage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -83,6 +83,12 @@ namespace QToolbar
 
       }
 
+      private void SetRibbonImages()
+      {
+         
+      }
+
+
       private void InitUI()
       {
 
@@ -711,6 +717,11 @@ namespace QToolbar
       {
          Frm_SQLQueries f = new Frm_SQLQueries();
          f.Show();
+      }
+
+      private void Frm_Main_MouseDoubleClick(object sender, MouseEventArgs e)
+      {
+         ribbonControl1.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
       }
    }
 }

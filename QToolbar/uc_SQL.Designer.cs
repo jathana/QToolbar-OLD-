@@ -35,9 +35,7 @@
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
          this.progressPanel1 = new DevExpress.XtraWaitForm.ProgressPanel();
          this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
-         this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
-         this.gridResults = new DevExpress.XtraGrid.GridControl();
-         this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+         this.pageResults = new DevExpress.XtraTab.XtraTabPage();
          this.xtraTabPage2 = new DevExpress.XtraTab.XtraTabPage();
          this.memMessages = new DevExpress.XtraEditors.MemoEdit();
          this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -59,9 +57,6 @@
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
          this.xtraTabControl1.SuspendLayout();
-         this.xtraTabPage1.SuspendLayout();
-         ((System.ComponentModel.ISupportInitialize)(this.gridResults)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
          this.xtraTabPage2.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.memMessages.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
@@ -135,7 +130,7 @@
          this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
          this.layoutControl1.Location = new System.Drawing.Point(0, 0);
          this.layoutControl1.Name = "layoutControl1";
-         this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1394, 174, 450, 397);
+         this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1256, 174, 450, 397);
          this.layoutControl1.Root = this.layoutControlGroup1;
          this.layoutControl1.Size = new System.Drawing.Size(664, 357);
          this.layoutControl1.TabIndex = 1;
@@ -165,38 +160,19 @@
          this.xtraTabControl1.Location = new System.Drawing.Point(2, 2);
          this.xtraTabControl1.Margin = new System.Windows.Forms.Padding(0);
          this.xtraTabControl1.Name = "xtraTabControl1";
-         this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
+         this.xtraTabControl1.SelectedTabPage = this.pageResults;
          this.xtraTabControl1.Size = new System.Drawing.Size(660, 324);
          this.xtraTabControl1.TabIndex = 0;
          this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
-            this.xtraTabPage1,
+            this.pageResults,
             this.xtraTabPage2});
          // 
-         // xtraTabPage1
+         // pageResults
          // 
-         this.xtraTabPage1.Controls.Add(this.gridResults);
-         this.xtraTabPage1.Name = "xtraTabPage1";
-         this.xtraTabPage1.Size = new System.Drawing.Size(652, 294);
-         this.xtraTabPage1.Text = "Results";
-         // 
-         // gridResults
-         // 
-         this.gridResults.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.gridResults.Location = new System.Drawing.Point(0, 0);
-         this.gridResults.MainView = this.gridView1;
-         this.gridResults.Name = "gridResults";
-         this.gridResults.Size = new System.Drawing.Size(652, 294);
-         this.gridResults.TabIndex = 0;
-         this.gridResults.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView1});
-         // 
-         // gridView1
-         // 
-         this.gridView1.GridControl = this.gridResults;
-         this.gridView1.Name = "gridView1";
-         this.gridView1.OptionsBehavior.Editable = false;
-         this.gridView1.OptionsView.ColumnAutoWidth = false;
-         this.gridView1.OptionsView.ShowGroupPanel = false;
+         this.pageResults.Name = "pageResults";
+         this.pageResults.Size = new System.Drawing.Size(652, 294);
+         this.pageResults.Text = "Results";
+         this.pageResults.SizeChanged += new System.EventHandler(this.pageResults_SizeChanged);
          // 
          // xtraTabPage2
          // 
@@ -251,7 +227,8 @@
          // 
          this.layProgress.Control = this.progressPanel1;
          this.layProgress.Location = new System.Drawing.Point(0, 0);
-         this.layProgress.MinSize = new System.Drawing.Size(54, 20);
+         this.layProgress.MaxSize = new System.Drawing.Size(0, 23);
+         this.layProgress.MinSize = new System.Drawing.Size(54, 23);
          this.layProgress.Name = "layProgress";
          this.layProgress.Size = new System.Drawing.Size(658, 23);
          this.layProgress.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
@@ -351,9 +328,6 @@
          this.layoutControl1.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
          this.xtraTabControl1.ResumeLayout(false);
-         this.xtraTabPage1.ResumeLayout(false);
-         ((System.ComponentModel.ISupportInitialize)(this.gridResults)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
          this.xtraTabPage2.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.memMessages.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
@@ -371,9 +345,7 @@
       private DevExpress.XtraEditors.SplitContainerControl splitContainerControl1;
       private FastColoredTextBoxNS.FastColoredTextBox txtSQL;
       private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
-      private DevExpress.XtraTab.XtraTabPage xtraTabPage1;
-      private DevExpress.XtraGrid.GridControl gridResults;
-      private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+      private DevExpress.XtraTab.XtraTabPage pageResults;
       private DevExpress.XtraTab.XtraTabPage xtraTabPage2;
       private System.ComponentModel.BackgroundWorker backgroundWorker1;
       private DevExpress.XtraLayout.LayoutControl layoutControl1;

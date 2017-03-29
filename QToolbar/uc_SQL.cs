@@ -9,12 +9,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using System.Data.SqlClient;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Views.Grid;
 
 namespace QToolbar
 {
    public partial class uc_SQL : DevExpress.XtraEditors.XtraUserControl
    {
+
+      private List<GridControl> _Grids;
+      private List<SplitterControl> _Splitters;
       private StringBuilder _Messages;
+
       public string QueryName { get; set; }
       public string Server { get; set; }
       public string Database { get; set; }
@@ -34,7 +40,8 @@ namespace QToolbar
          backgroundWorker1.WorkerSupportsCancellation = true;
          backgroundWorker1.WorkerReportsProgress = true;
          _Messages = new StringBuilder();
-         
+         _Grids = new List<GridControl>();
+         _Splitters = new List<SplitterControl>();
       }
 
       public void Initialize()
@@ -50,7 +57,8 @@ namespace QToolbar
             progressPanel1.Description = $"Executing {QueryName}...";
             //progressPanel1.Visible = true;
             lgrProgress.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
-
+            ClearGrids();
+            ClearSplitters();
             backgroundWorker1.RunWorkerAsync();
          }
          catch(Exception ex)
@@ -88,9 +96,9 @@ namespace QToolbar
       private void Con_InfoMessage(object sender, SqlInfoMessageEventArgs e)
       {
          _Messages.AppendLine(e.Message);
-
       }
 
+      
       private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
       {
          if (e.Result != null)
@@ -98,13 +106,7 @@ namespace QToolbar
             if (e.Result is DataSet)
             {
                DataSet ds = (DataSet)e.Result;
-               if (ds.Tables.Count > 0)
-               {
-                  // splitting is needed
-
-                  gridResults.DataSource = ds.Tables[0];
-                  gridView1.BestFitColumns();
-               }
+               LayoutGrids(ds);
             }
             else if (e.Result is Exception)
             {
@@ -117,14 +119,7 @@ namespace QToolbar
          memMessages.Text = _Messages.ToString();
          btnRun.Enabled = true;
       }
-
-
-      private void AddGrid()
-      {
-         SplitterControl splitter = new SplitterControl();
-         this.xtraTabPage1.Controls.Add(splitter);
-         splitter.Dock = DockStyle.Top;
-      }
+      
 
       private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
       {
@@ -135,6 +130,101 @@ namespace QToolbar
       {
          Run();
          
+      }
+
+      private void ClearGrids()
+      {
+         for(int i=0;i<_Grids.Count;i++)
+         {
+            pageResults.Controls.Remove(_Grids[i]);
+            _Grids[i] = null;
+         }
+         _Grids.Clear();
+      }
+
+      private void ClearSplitters()
+      {
+         for (int i = 0; i < _Splitters.Count; i++)
+         {
+            pageResults.Controls.Remove(_Splitters[i]);
+            _Splitters[i] = null;
+         }
+         _Splitters.Clear();
+      }
+
+      private void LayoutGrids(DataSet ds)
+      {
+         if(ds!=null)
+         {
+            if(ds.Tables.Count > 0)
+            {
+               // find layout info
+               int gridHeight = (int)pageResults.Height / ds.Tables.Count;
+               for (int i=0; i < ds.Tables.Count; i++)
+               {
+                  // add grid
+                  GridControl grid = CreateGrid();
+                  _Grids.Add(grid);
+                  pageResults.Controls.Add(grid);
+                  grid.Top = gridHeight * i;
+                  grid.Height = gridHeight;
+                  grid.Dock = i == 0 ? grid.Dock = DockStyle.Fill : grid.Dock = DockStyle.Top;
+                  
+                  grid.DataSource = ds.Tables[ds.Tables.Count - 1 - i];
+                  ((GridView)grid.DefaultView).BestFitColumns();
+
+                  // add splitter
+                  if (i < ds.Tables.Count - 1)
+                  {
+                     SplitterControl splitter = new SplitterControl();
+                     pageResults.Controls.Add(splitter);
+                     splitter.Dock = DockStyle.Top;
+                     _Splitters.Add(splitter);
+                  }
+
+               }
+            }
+         }
+      }
+
+      private void ResizeGrids()
+      {
+         if (_Grids.Count > 0)
+         {
+            // find layout info
+            int gridHeight = (int)pageResults.Height / _Grids.Count;
+            for (int i = 0; i < _Grids.Count; i++)
+            {
+               // resize grid
+               GridControl grid = _Grids[i];
+               grid.Height = gridHeight;
+            }
+         }
+      }
+
+      private GridControl CreateGrid()
+      {
+         GridControl retVal = new GridControl();
+         GridView gridView = new GridView();
+         retVal.MainView = gridView;
+         retVal.Name = "retVal";
+         retVal.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {gridView});
+         
+         // 
+         // gridView1
+         // 
+         gridView.GridControl = retVal;
+         gridView.Name = "gridView1";
+         gridView.OptionsBehavior.Editable = false;
+         gridView.OptionsView.ColumnAutoWidth = false;
+         gridView.OptionsView.ShowGroupPanel = false;
+
+         return retVal;
+      }
+
+      private void pageResults_SizeChanged(object sender, EventArgs e)
+      {
+         ResizeGrids();
       }
    }
 }

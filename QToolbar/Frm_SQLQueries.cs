@@ -282,7 +282,8 @@ namespace QToolbar
          ctr.Database = data.Database;
          ctr.QueryName = mnuItem.Caption;
          ctr.Initialize();
-         if ((bool)query["RunImmediate"])
+
+         if ( query["RunImmediate"] != DBNull.Value && Convert.ToBoolean(query["RunImmediate"])==true)
          {
             ctr.Run();
          }
@@ -305,10 +306,6 @@ namespace QToolbar
             case InfoType.Version: e.NodeImageIndex = imageCollection1.Images.Keys.IndexOf("env"); break;
 
          }
-         //if (Convert.ToBoolean(e.Node["Check"]))
-         //   e.NodeImageIndex = 0;
-         //else
-         //   e.NodeImageIndex = 1;
       }
 
       private void btnAdd_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

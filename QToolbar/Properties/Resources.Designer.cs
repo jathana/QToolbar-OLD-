@@ -69,5 +69,25 @@ namespace QToolbar.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mnuQCSAdmin_ImageOptions_LargeImage {
+            get {
+                object obj = ResourceManager.GetObject("mnuQCSAdmin.ImageOptions.LargeImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mnuQCSAgent_ImageOptions_LargeImage {
+            get {
+                object obj = ResourceManager.GetObject("mnuQCSAgent.ImageOptions.LargeImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

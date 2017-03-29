@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\q-wks-jathan\Shared\QToolbar\</InstallUrl>
-    <ApplicationRevision>53</ApplicationRevision>
+    <ApplicationRevision>56</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -231,6 +231,8 @@
   <ItemGroup>
     <Content Include="Analyze.ico" />
     <Content Include="DXWindowIcon.ico" />
+    <None Include="Images\mnuQCSAgent.ImageOptions.LargeImage.png" />
+    <None Include="Images\mnuQCSAdmin.ImageOptions.LargeImage.png" />
     <None Include="QToobar.docx" />
     <None Include="QToolbar_TemporaryKey.pfx" />
     <None Include="Resources\activity_48.ico" />
