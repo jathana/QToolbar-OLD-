@@ -14,6 +14,7 @@ using DevExpress.XtraTreeList.Nodes;
 using DevExpress.XtraTreeList.Menu;
 using DevExpress.XtraBars.Docking2010.Views;
 using DevExpress.XtraTreeList;
+using System.Threading;
 
 namespace QToolbar
 {
@@ -46,6 +47,7 @@ namespace QToolbar
             btnAdd.Enabled = false;
             treeDatabases.ClearNodes();
             treeDatabases.Cursor = Cursors.WaitCursor;
+            EnableUI(false);
             // get all databases from cf
             backgroundWorker1.RunWorkerAsync();
          }
@@ -172,6 +174,10 @@ namespace QToolbar
       }
 
 
+      private void EnableUI(bool enable)
+      {
+         txtFilter.Enabled = enable;
+      }
 
       private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
       {
@@ -180,16 +186,8 @@ namespace QToolbar
          TreeNode<ConnectionInfo> tree = (TreeNode<ConnectionInfo>)e.Result;
          PopulateDBTree(tree);
          AppInstance.CFDatabasesTree = tree;
-         btnAdd.Enabled = true;
-
-         FilterCondition filter = new FilterCondition()
-         {
-            Column = treeDatabases.Columns["Name"],
-            Condition = FilterConditionEnum.Like,
-            Value1 = "%GRBN%"
-         };
-         treeDatabases.OptionsBehavior.EnableFiltering = true;
-         treeDatabases.FilterConditions.Add(filter);
+         btnAdd.Enabled = true;         
+         EnableUI(true);
          treeDatabases.Cursor = Cursors.Default;
       }
 
@@ -198,6 +196,7 @@ namespace QToolbar
          treeDatabases.DataSource = tree;
          treeDatabases.ExpandAll();
          treeDatabases.BestFitColumns();
+         
       }
 
       private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
