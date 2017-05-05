@@ -13,6 +13,7 @@ using QToolbar.Options;
 using DevExpress.XtraTreeList.Nodes;
 using DevExpress.XtraTreeList.Menu;
 using DevExpress.XtraBars.Docking2010.Views;
+using DevExpress.XtraTreeList;
 
 namespace QToolbar
 {
@@ -30,9 +31,11 @@ namespace QToolbar
          treeDatabases.OptionsBehavior.Editable = false;
          treeDatabases.OptionsClipboard.AllowCopy = DevExpress.Utils.DefaultBoolean.True;
          treeDatabases.OptionsView.EnableAppearanceEvenRow = true;
-         treeDatabases.OptionsView.EnableAppearanceOddRow = true;         
+         treeDatabases.OptionsView.EnableAppearanceOddRow = true;
 
          //treeDatabases.OptionsView.ShowColumns = false;
+         
+         
       }
 
 
@@ -178,6 +181,15 @@ namespace QToolbar
          PopulateDBTree(tree);
          AppInstance.CFDatabasesTree = tree;
          btnAdd.Enabled = true;
+
+         FilterCondition filter = new FilterCondition()
+         {
+            Column = treeDatabases.Columns["Name"],
+            Condition = FilterConditionEnum.Like,
+            Value1 = "%GRBN%"
+         };
+         treeDatabases.OptionsBehavior.EnableFiltering = true;
+         treeDatabases.FilterConditions.Add(filter);
          treeDatabases.Cursor = Cursors.Default;
       }
 
@@ -311,6 +323,21 @@ namespace QToolbar
       private void btnAdd_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
       {
          LoadDatabases();
+      }
+
+      private void treeDatabases_FilterNode(object sender, FilterNodeEventArgs e)
+      {
+
+         if (txtFilter.EditValue  != null && !string.IsNullOrEmpty(txtFilter.EditValue.ToString()))
+         {
+            e.Node.Visible = e.Node["Name"].ToString().ToLower().Contains(txtFilter.EditValue.ToString().ToLower());
+            e.Handled = true;
+         }
+      }
+
+      private void txtFilter_EditValueChanged(object sender, EventArgs e)
+      {
+         treeDatabases.FilterNodes();
       }
    }
 }

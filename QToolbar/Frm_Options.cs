@@ -80,6 +80,9 @@ namespace QToolbar
          txtEnvironmentsConfiguration.Text = Properties.Settings.Default.EnvironmentsConfigurationFolder;
          txtInternalBuildsFolder.Text = Properties.Settings.Default.InternalBuildsFolder;
 
+         // custom edit form for sql queries
+         gviewSQLQueries.OptionsEditForm.CustomEditFormLayout = new uc_SQLQueriesEdit();
+
          LoadFolders();
          LoadCheckouts();
          LoadShellCommands();
@@ -247,5 +250,14 @@ namespace QToolbar
          }
       }
 
+      private void gviewSQLQueries_ShowingPopupEditForm(object sender, ShowingPopupEditFormEventArgs e)
+      {
+         e.EditForm.StartPosition = FormStartPosition.CenterScreen;         
+      }
+
+      private void gviewSQLQueries_EditFormPrepared(object sender, EditFormPreparedEventArgs e)
+      {
+         e.Panel.Controls[0].Controls[0].Dock = DockStyle.Fill;
+      }
    }
 }

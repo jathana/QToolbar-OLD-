@@ -29,9 +29,9 @@
       private void InitializeComponent()
       {
          this.components = new System.ComponentModel.Container();
+         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_SQLQueries));
          DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
          DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
-         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_SQLQueries));
          this.dockManager1 = new DevExpress.XtraBars.Docking.DockManager(this.components);
          this.dockPanel2 = new DevExpress.XtraBars.Docking.DockPanel();
          this.dockPanel2_Container = new DevExpress.XtraBars.Docking.ControlContainer();
@@ -54,6 +54,11 @@
          this.documentManager1 = new DevExpress.XtraBars.Docking2010.DocumentManager(this.components);
          this.tabbedView1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(this.components);
          this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
+         this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+         this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+         this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+         this.txtFilter = new DevExpress.XtraEditors.TextEdit();
+         this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
          ((System.ComponentModel.ISupportInitialize)(this.dockManager1)).BeginInit();
          this.dockPanel2.SuspendLayout();
          this.dockPanel2_Container.SuspendLayout();
@@ -65,6 +70,12 @@
          ((System.ComponentModel.ISupportInitialize)(this.documentManager1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
+         this.layoutControl1.SuspendLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.txtFilter.Properties)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
          this.SuspendLayout();
          // 
          // dockManager1
@@ -205,7 +216,7 @@
          // 
          // dockPanel1_Container
          // 
-         this.dockPanel1_Container.Controls.Add(this.treeDatabases);
+         this.dockPanel1_Container.Controls.Add(this.layoutControl1);
          this.dockPanel1_Container.Location = new System.Drawing.Point(4, 23);
          this.dockPanel1_Container.Name = "dockPanel1_Container";
          this.dockPanel1_Container.Size = new System.Drawing.Size(336, 473);
@@ -217,18 +228,25 @@
             this.colName,
             this.colDatabase,
             this.colServer});
-         this.treeDatabases.Dock = System.Windows.Forms.DockStyle.Fill;
          this.treeDatabases.KeyFieldName = "Data.Version";
-         this.treeDatabases.Location = new System.Drawing.Point(0, 0);
+         this.treeDatabases.Location = new System.Drawing.Point(2, 26);
          this.treeDatabases.Name = "treeDatabases";
+         this.treeDatabases.OptionsBehavior.EnableFiltering = true;
+         this.treeDatabases.OptionsBehavior.ExpandNodesOnFiltering = true;
+         this.treeDatabases.OptionsBehavior.ExpandNodesOnIncrementalSearch = true;
+         this.treeDatabases.OptionsFilter.DefaultFilterEditorView = DevExpress.XtraEditors.FilterEditorViewMode.TextAndVisual;
+         this.treeDatabases.OptionsFilter.FilterMode = DevExpress.XtraTreeList.FilterMode.Extended;
+         this.treeDatabases.OptionsFilter.ShowAllValuesInFilterPopup = true;
+         this.treeDatabases.OptionsFind.FindMode = DevExpress.XtraTreeList.FindMode.Always;
          this.treeDatabases.ParentFieldName = "Parent.Version";
-         this.treeDatabases.Size = new System.Drawing.Size(336, 473);
+         this.treeDatabases.Size = new System.Drawing.Size(332, 445);
          this.treeDatabases.StateImageList = this.imageCollection1;
          this.treeDatabases.TabIndex = 0;
          this.treeDatabases.GetStateImage += new DevExpress.XtraTreeList.GetStateImageEventHandler(this.treeDatabases_GetStateImage);
          this.treeDatabases.PopupMenuShowing += new DevExpress.XtraTreeList.PopupMenuShowingEventHandler(this.treeDatabases_PopupMenuShowing);
          this.treeDatabases.VirtualTreeGetChildNodes += new DevExpress.XtraTreeList.VirtualTreeGetChildNodesEventHandler(this.treeDatabases_VirtualTreeGetChildNodes);
          this.treeDatabases.VirtualTreeGetCellValue += new DevExpress.XtraTreeList.VirtualTreeGetCellValueEventHandler(this.treeDatabases_VirtualTreeGetCellValue);
+         this.treeDatabases.FilterNode += new DevExpress.XtraTreeList.FilterNodeEventHandler(this.treeDatabases_FilterNode);
          // 
          // colName
          // 
@@ -284,6 +302,60 @@
          this.popupMenu1.Manager = this.barManager1;
          this.popupMenu1.Name = "popupMenu1";
          // 
+         // layoutControl1
+         // 
+         this.layoutControl1.Controls.Add(this.txtFilter);
+         this.layoutControl1.Controls.Add(this.treeDatabases);
+         this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.layoutControl1.Location = new System.Drawing.Point(0, 0);
+         this.layoutControl1.Margin = new System.Windows.Forms.Padding(0);
+         this.layoutControl1.Name = "layoutControl1";
+         this.layoutControl1.Root = this.layoutControlGroup1;
+         this.layoutControl1.Size = new System.Drawing.Size(336, 473);
+         this.layoutControl1.TabIndex = 1;
+         this.layoutControl1.Text = "layoutControl1";
+         // 
+         // layoutControlGroup1
+         // 
+         this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+         this.layoutControlGroup1.GroupBordersVisible = false;
+         this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItem1,
+            this.layoutControlItem2});
+         this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
+         this.layoutControlGroup1.Name = "layoutControlGroup1";
+         this.layoutControlGroup1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+         this.layoutControlGroup1.Size = new System.Drawing.Size(336, 473);
+         this.layoutControlGroup1.TextVisible = false;
+         // 
+         // layoutControlItem1
+         // 
+         this.layoutControlItem1.Control = this.treeDatabases;
+         this.layoutControlItem1.Location = new System.Drawing.Point(0, 24);
+         this.layoutControlItem1.Name = "layoutControlItem1";
+         this.layoutControlItem1.Size = new System.Drawing.Size(336, 449);
+         this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+         this.layoutControlItem1.TextVisible = false;
+         // 
+         // txtFilter
+         // 
+         this.txtFilter.Location = new System.Drawing.Point(34, 2);
+         this.txtFilter.MenuManager = this.barManager1;
+         this.txtFilter.Name = "txtFilter";
+         this.txtFilter.Size = new System.Drawing.Size(300, 20);
+         this.txtFilter.StyleController = this.layoutControl1;
+         this.txtFilter.TabIndex = 4;
+         this.txtFilter.EditValueChanged += new System.EventHandler(this.txtFilter_EditValueChanged);
+         // 
+         // layoutControlItem2
+         // 
+         this.layoutControlItem2.Control = this.txtFilter;
+         this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
+         this.layoutControlItem2.Name = "layoutControlItem2";
+         this.layoutControlItem2.Size = new System.Drawing.Size(336, 24);
+         this.layoutControlItem2.Text = "Filter:";
+         this.layoutControlItem2.TextSize = new System.Drawing.Size(28, 13);
+         // 
          // Frm_SQLQueries
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -308,6 +380,12 @@
          ((System.ComponentModel.ISupportInitialize)(this.documentManager1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
+         this.layoutControl1.ResumeLayout(false);
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.txtFilter.Properties)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -337,5 +415,10 @@
       private DevExpress.XtraBars.BarDockControl barDockControlBottom;
       private DevExpress.XtraBars.BarDockControl barDockControlRight;
       private DevExpress.XtraBars.BarButtonItem btnAdd;
+      private DevExpress.XtraLayout.LayoutControl layoutControl1;
+      private DevExpress.XtraEditors.TextEdit txtFilter;
+      private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
    }
 }

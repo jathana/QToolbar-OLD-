@@ -74,7 +74,11 @@
          this.gridView3 = new DevExpress.XtraGrid.Views.Grid.GridView();
          this.tabSQLQueries = new DevExpress.XtraTab.XtraTabPage();
          this.gridSQLQueries = new DevExpress.XtraGrid.GridControl();
-         this.gridView4 = new DevExpress.XtraGrid.Views.Grid.GridView();
+         this.gviewSQLQueries = new DevExpress.XtraGrid.Views.Grid.GridView();
+         this.colName = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colSQL = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.repositoryItemMemoEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemMemoEdit();
+         this.colRunImmediate = new DevExpress.XtraGrid.Columns.GridColumn();
          this.btnOK = new DevExpress.XtraEditors.SimpleButton();
          this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
          this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -131,7 +135,8 @@
          ((System.ComponentModel.ISupportInitialize)(this.gridView3)).BeginInit();
          this.tabSQLQueries.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.gridSQLQueries)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.gridView4)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.gviewSQLQueries)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoEdit1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
@@ -611,21 +616,58 @@
          // 
          this.gridSQLQueries.Dock = System.Windows.Forms.DockStyle.Fill;
          this.gridSQLQueries.Location = new System.Drawing.Point(0, 0);
-         this.gridSQLQueries.MainView = this.gridView4;
+         this.gridSQLQueries.MainView = this.gviewSQLQueries;
          this.gridSQLQueries.Name = "gridSQLQueries";
+         this.gridSQLQueries.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemMemoEdit1});
          this.gridSQLQueries.Size = new System.Drawing.Size(801, 453);
          this.gridSQLQueries.TabIndex = 0;
          this.gridSQLQueries.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView4});
+            this.gviewSQLQueries});
          // 
-         // gridView4
+         // gviewSQLQueries
          // 
-         this.gridView4.GridControl = this.gridSQLQueries;
-         this.gridView4.Name = "gridView4";
-         this.gridView4.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
-         this.gridView4.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
-         this.gridView4.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.Inplace;
-         this.gridView4.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+         this.gviewSQLQueries.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colName,
+            this.colSQL,
+            this.colRunImmediate});
+         this.gviewSQLQueries.GridControl = this.gridSQLQueries;
+         this.gviewSQLQueries.Name = "gviewSQLQueries";
+         this.gviewSQLQueries.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+         this.gviewSQLQueries.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
+         this.gviewSQLQueries.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.EditForm;
+         this.gviewSQLQueries.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+         this.gviewSQLQueries.EditFormPrepared += new DevExpress.XtraGrid.Views.Grid.EditFormPreparedEventHandler(this.gviewSQLQueries_EditFormPrepared);
+         this.gviewSQLQueries.ShowingPopupEditForm += new DevExpress.XtraGrid.Views.Grid.ShowingPopupEditFormEventHandler(this.gviewSQLQueries_ShowingPopupEditForm);
+         // 
+         // colName
+         // 
+         this.colName.Caption = "Name";
+         this.colName.FieldName = "Name";
+         this.colName.Name = "colName";
+         this.colName.Visible = true;
+         this.colName.VisibleIndex = 0;
+         // 
+         // colSQL
+         // 
+         this.colSQL.Caption = "SQL";
+         this.colSQL.ColumnEdit = this.repositoryItemMemoEdit1;
+         this.colSQL.FieldName = "SQL";
+         this.colSQL.Name = "colSQL";
+         this.colSQL.Visible = true;
+         this.colSQL.VisibleIndex = 1;
+         // 
+         // repositoryItemMemoEdit1
+         // 
+         this.repositoryItemMemoEdit1.Name = "repositoryItemMemoEdit1";
+         // 
+         // colRunImmediate
+         // 
+         this.colRunImmediate.Caption = "Run Immediate";
+         this.colRunImmediate.FieldName = "RunImmediate";
+         this.colRunImmediate.Name = "colRunImmediate";
+         this.colRunImmediate.Visible = true;
+         this.colRunImmediate.VisibleIndex = 2;
          // 
          // btnOK
          // 
@@ -765,7 +807,8 @@
          ((System.ComponentModel.ISupportInitialize)(this.gridView3)).EndInit();
          this.tabSQLQueries.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.gridSQLQueries)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.gridView4)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.gviewSQLQueries)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoEdit1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
@@ -831,6 +874,10 @@
       private DevExpress.XtraGrid.Views.Grid.GridView gridView3;
       private DevExpress.XtraTab.XtraTabPage tabSQLQueries;
       private DevExpress.XtraGrid.GridControl gridSQLQueries;
-      private DevExpress.XtraGrid.Views.Grid.GridView gridView4;
+      private DevExpress.XtraGrid.Views.Grid.GridView gviewSQLQueries;
+      private DevExpress.XtraGrid.Columns.GridColumn colName;
+      private DevExpress.XtraGrid.Columns.GridColumn colSQL;
+      private DevExpress.XtraGrid.Columns.GridColumn colRunImmediate;
+      private DevExpress.XtraEditors.Repository.RepositoryItemMemoEdit repositoryItemMemoEdit1;
    }
 }

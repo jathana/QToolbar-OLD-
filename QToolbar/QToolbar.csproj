@@ -84,11 +84,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\assembly\GAC_MSIL\Microsoft.SqlServer.Management.SqlParser\13.0.0.0__89845dcd8080cc91\Microsoft.SqlServer.Management.SqlParser.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -100,6 +102,8 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppInstance.cs" />
@@ -176,6 +180,12 @@
     <Compile Include="uc_SQL.Designer.cs">
       <DependentUpon>uc_SQL.cs</DependentUpon>
     </Compile>
+    <Compile Include="uc_SQLQueriesEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="uc_SQLQueriesEdit.Designer.cs">
+      <DependentUpon>uc_SQLQueriesEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils.cs" />
     <EmbeddedResource Include="Frm_InternalBuilds.resx">
       <DependentUpon>Frm_InternalBuilds.cs</DependentUpon>
@@ -211,6 +221,9 @@
     </Compile>
     <EmbeddedResource Include="uc_SQL.resx">
       <DependentUpon>uc_SQL.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="uc_SQLQueriesEdit.resx">
+      <DependentUpon>uc_SQLQueriesEdit.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

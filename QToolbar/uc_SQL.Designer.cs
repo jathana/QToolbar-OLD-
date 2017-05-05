@@ -1,4 +1,6 @@
-﻿namespace QToolbar
+﻿using DevExpress.Utils.Filtering;
+
+namespace QToolbar
 {
    partial class uc_SQL
    {
@@ -50,6 +52,7 @@
          this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+         this.filteringUIContext1 = new DevExpress.Utils.Filtering.FilteringUIContext(this.components);
          ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
          this.splitContainerControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.txtSQL)).BeginInit();
@@ -64,6 +67,7 @@
          ((System.ComponentModel.ISupportInitialize)(this.lgrProgress)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layProgress)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.filteringUIContext1)).BeginInit();
          this.SuspendLayout();
          // 
          // splitContainerControl1
@@ -335,6 +339,7 @@
          ((System.ComponentModel.ISupportInitialize)(this.lgrProgress)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layProgress)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.filteringUIContext1)).EndInit();
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -362,5 +367,6 @@
       private DevExpress.XtraBars.BarDockControl barDockControlBottom;
       private DevExpress.XtraBars.BarDockControl barDockControlLeft;
       private DevExpress.XtraBars.BarDockControl barDockControlRight;
+      private FilteringUIContext filteringUIContext1;
    }
 }
