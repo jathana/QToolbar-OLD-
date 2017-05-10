@@ -74,13 +74,13 @@ namespace QToolbar
          // 
          this.splitContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
          this.splitContainerControl1.Horizontal = false;
-         this.splitContainerControl1.Location = new System.Drawing.Point(0, 31);
+         this.splitContainerControl1.Location = new System.Drawing.Point(35, 0);
          this.splitContainerControl1.Name = "splitContainerControl1";
          this.splitContainerControl1.Panel1.Controls.Add(this.txtSQL);
          this.splitContainerControl1.Panel1.Text = "Panel1";
          this.splitContainerControl1.Panel2.Controls.Add(this.layoutControl1);
          this.splitContainerControl1.Panel2.Text = "Panel2";
-         this.splitContainerControl1.Size = new System.Drawing.Size(664, 516);
+         this.splitContainerControl1.Size = new System.Drawing.Size(629, 547);
          this.splitContainerControl1.SplitterPosition = 154;
          this.splitContainerControl1.TabIndex = 0;
          this.splitContainerControl1.Text = "splitContainerControl1";
@@ -123,7 +123,7 @@ namespace QToolbar
          this.txtSQL.RightBracket = ')';
          this.txtSQL.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
          this.txtSQL.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("txtSQL.ServiceColors")));
-         this.txtSQL.Size = new System.Drawing.Size(664, 154);
+         this.txtSQL.Size = new System.Drawing.Size(629, 154);
          this.txtSQL.TabIndex = 4;
          this.txtSQL.Zoom = 100;
          // 
@@ -136,7 +136,7 @@ namespace QToolbar
          this.layoutControl1.Name = "layoutControl1";
          this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1256, 174, 450, 397);
          this.layoutControl1.Root = this.layoutControlGroup1;
-         this.layoutControl1.Size = new System.Drawing.Size(664, 357);
+         this.layoutControl1.Size = new System.Drawing.Size(629, 388);
          this.layoutControl1.TabIndex = 1;
          this.layoutControl1.Text = "layoutControl1";
          // 
@@ -150,10 +150,10 @@ namespace QToolbar
          this.progressPanel1.Caption = "";
          this.progressPanel1.Description = "";
          this.progressPanel1.LineAnimationElementHeight = 6;
-         this.progressPanel1.Location = new System.Drawing.Point(5, 333);
+         this.progressPanel1.Location = new System.Drawing.Point(5, 364);
          this.progressPanel1.Name = "progressPanel1";
          this.progressPanel1.ShowCaption = false;
-         this.progressPanel1.Size = new System.Drawing.Size(654, 19);
+         this.progressPanel1.Size = new System.Drawing.Size(619, 19);
          this.progressPanel1.StyleController = this.layoutControl1;
          this.progressPanel1.TabIndex = 4;
          this.progressPanel1.Text = "progressPanel1";
@@ -165,7 +165,7 @@ namespace QToolbar
          this.xtraTabControl1.Margin = new System.Windows.Forms.Padding(0);
          this.xtraTabControl1.Name = "xtraTabControl1";
          this.xtraTabControl1.SelectedTabPage = this.pageResults;
-         this.xtraTabControl1.Size = new System.Drawing.Size(660, 324);
+         this.xtraTabControl1.Size = new System.Drawing.Size(625, 355);
          this.xtraTabControl1.TabIndex = 0;
          this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.pageResults,
@@ -174,7 +174,7 @@ namespace QToolbar
          // pageResults
          // 
          this.pageResults.Name = "pageResults";
-         this.pageResults.Size = new System.Drawing.Size(652, 294);
+         this.pageResults.Size = new System.Drawing.Size(617, 325);
          this.pageResults.Text = "Results";
          this.pageResults.SizeChanged += new System.EventHandler(this.pageResults_SizeChanged);
          // 
@@ -182,7 +182,7 @@ namespace QToolbar
          // 
          this.xtraTabPage2.Controls.Add(this.memMessages);
          this.xtraTabPage2.Name = "xtraTabPage2";
-         this.xtraTabPage2.Size = new System.Drawing.Size(652, 294);
+         this.xtraTabPage2.Size = new System.Drawing.Size(617, 325);
          this.xtraTabPage2.Text = "Messages";
          // 
          // memMessages
@@ -190,7 +190,7 @@ namespace QToolbar
          this.memMessages.Dock = System.Windows.Forms.DockStyle.Fill;
          this.memMessages.Location = new System.Drawing.Point(0, 0);
          this.memMessages.Name = "memMessages";
-         this.memMessages.Size = new System.Drawing.Size(652, 294);
+         this.memMessages.Size = new System.Drawing.Size(617, 325);
          this.memMessages.TabIndex = 0;
          // 
          // layoutControlGroup1
@@ -203,7 +203,7 @@ namespace QToolbar
          this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
          this.layoutControlGroup1.Name = "Root";
          this.layoutControlGroup1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-         this.layoutControlGroup1.Size = new System.Drawing.Size(664, 357);
+         this.layoutControlGroup1.Size = new System.Drawing.Size(629, 388);
          this.layoutControlGroup1.TextVisible = false;
          // 
          // layoutControlItem1
@@ -212,7 +212,7 @@ namespace QToolbar
          this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
          this.layoutControlItem1.MinSize = new System.Drawing.Size(104, 24);
          this.layoutControlItem1.Name = "layoutControlItem1";
-         this.layoutControlItem1.Size = new System.Drawing.Size(664, 328);
+         this.layoutControlItem1.Size = new System.Drawing.Size(629, 359);
          this.layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
          this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem1.TextVisible = false;
@@ -221,10 +221,10 @@ namespace QToolbar
          // 
          this.lgrProgress.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layProgress});
-         this.lgrProgress.Location = new System.Drawing.Point(0, 328);
+         this.lgrProgress.Location = new System.Drawing.Point(0, 359);
          this.lgrProgress.Name = "lgrProgress";
          this.lgrProgress.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-         this.lgrProgress.Size = new System.Drawing.Size(664, 29);
+         this.lgrProgress.Size = new System.Drawing.Size(629, 29);
          this.lgrProgress.TextVisible = false;
          // 
          // layProgress
@@ -234,7 +234,7 @@ namespace QToolbar
          this.layProgress.MaxSize = new System.Drawing.Size(0, 23);
          this.layProgress.MinSize = new System.Drawing.Size(54, 23);
          this.layProgress.Name = "layProgress";
-         this.layProgress.Size = new System.Drawing.Size(658, 23);
+         this.layProgress.Size = new System.Drawing.Size(623, 23);
          this.layProgress.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
          this.layProgress.TextSize = new System.Drawing.Size(0, 0);
          this.layProgress.TextVisible = false;
@@ -267,7 +267,7 @@ namespace QToolbar
          this.bar1.BarName = "Main";
          this.bar1.DockCol = 0;
          this.bar1.DockRow = 0;
-         this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
+         this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Left;
          this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.btnRun)});
          this.bar1.OptionsBar.AllowRename = true;
@@ -288,7 +288,7 @@ namespace QToolbar
          this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
          this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
          this.barDockControlTop.Manager = this.barManager1;
-         this.barDockControlTop.Size = new System.Drawing.Size(664, 31);
+         this.barDockControlTop.Size = new System.Drawing.Size(664, 0);
          // 
          // barDockControlBottom
          // 
@@ -302,17 +302,17 @@ namespace QToolbar
          // 
          this.barDockControlLeft.CausesValidation = false;
          this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-         this.barDockControlLeft.Location = new System.Drawing.Point(0, 31);
+         this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
          this.barDockControlLeft.Manager = this.barManager1;
-         this.barDockControlLeft.Size = new System.Drawing.Size(0, 516);
+         this.barDockControlLeft.Size = new System.Drawing.Size(35, 547);
          // 
          // barDockControlRight
          // 
          this.barDockControlRight.CausesValidation = false;
          this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-         this.barDockControlRight.Location = new System.Drawing.Point(664, 31);
+         this.barDockControlRight.Location = new System.Drawing.Point(664, 0);
          this.barDockControlRight.Manager = this.barManager1;
-         this.barDockControlRight.Size = new System.Drawing.Size(0, 516);
+         this.barDockControlRight.Size = new System.Drawing.Size(0, 547);
          // 
          // uc_SQL
          // 

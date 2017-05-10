@@ -42,19 +42,22 @@ namespace QToolbar
 
       private void LoadDatabases()
       {
-         if (AppInstance.CFDatabasesTree == null)
-         {
-            btnAdd.Enabled = false;
-            treeDatabases.ClearNodes();
-            treeDatabases.Cursor = Cursors.WaitCursor;
-            EnableUI(false);
-            // get all databases from cf
-            backgroundWorker1.RunWorkerAsync();
-         }
-         else
-         {
-            PopulateDBTree(AppInstance.CFDatabasesTree);
-         }
+            // if cache file is present load from cache
+            if (File.Exists(AppInstance.CFsTreeCacheFile))
+            {
+               TreeNodeSerializer<ConnectionInfo> ser = new TreeNodeSerializer<ConnectionInfo>();
+               TreeNode<ConnectionInfo> tree = ser.Deserialize(AppInstance.CFsTreeCacheFile);
+               PopulateDBTree(tree);
+            }
+            else
+            {
+               btnAdd.Enabled = false;
+               treeDatabases.ClearNodes();
+               treeDatabases.Cursor = Cursors.WaitCursor;
+               EnableUI(false);
+               // get all databases from cf
+               backgroundWorker1.RunWorkerAsync();
+            }
       }
 
       private void Frm_SQLQueries_Load(object sender, EventArgs e)
@@ -183,9 +186,12 @@ namespace QToolbar
       {
          treeDatabases.ClearNodes();
 
+          
          TreeNode<ConnectionInfo> tree = (TreeNode<ConnectionInfo>)e.Result;
          PopulateDBTree(tree);
-         AppInstance.CFDatabasesTree = tree;
+         //AppInstance.CFDatabasesTree = tree;
+         TreeNodeSerializer<ConnectionInfo> ser = new TreeNodeSerializer<ConnectionInfo>();
+         ser.Serialize(tree, AppInstance.CFsTreeCacheFile);
          btnAdd.Enabled = true;         
          EnableUI(true);
          treeDatabases.Cursor = Cursors.Default;
@@ -321,6 +327,7 @@ namespace QToolbar
 
       private void btnAdd_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
       {
+         File.Delete(AppInstance.CFsTreeCacheFile);
          LoadDatabases();
       }
 

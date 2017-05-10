@@ -107,7 +107,7 @@ namespace QToolbar
          string file = gridView1.GetFocusedDataRow()["File"].ToString();
          if (!string.IsNullOrEmpty(file) && File.Exists(file))
          {
-            PowerfulSample f1 = new PowerfulSample();
+            Frm_FileViewer f1 = new Frm_FileViewer();
             f1.Size = new Size(800, 800);
 
             f1.ViewFile(file, FastColoredTextBoxNS.Language.SQL);
@@ -177,7 +177,7 @@ namespace QToolbar
          string file = gridView2.GetFocusedDataRow()["File"].ToString();
          if (!string.IsNullOrEmpty(file) && File.Exists(file))
          {
-            PowerfulSample f1 = new PowerfulSample();
+            Frm_FileViewer f1 = new Frm_FileViewer();
             f1.Size = new Size(800, 800);
 
             f1.ViewFile(file, FastColoredTextBoxNS.Language.SQL);

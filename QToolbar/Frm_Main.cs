@@ -507,7 +507,7 @@ namespace QToolbar
                //Frm_FileViewer f = new Frm_FileViewer();
                //f.ViewFile(file);
 
-               PowerfulSample f = new PowerfulSample();
+               Frm_FileViewer f = new Frm_FileViewer();
                f.Size = new Size(800, 800);
 
                f.ViewFile(file, FastColoredTextBoxNS.Language.CSharp);
@@ -529,7 +529,7 @@ namespace QToolbar
             {
                //Frm_FileViewer f = new Frm_FileViewer();
                //f.ViewFile(file);
-               PowerfulSample f = new PowerfulSample();
+               Frm_FileViewer f = new Frm_FileViewer();
                f.Size = new Size(1200, 800);
                f.ViewFile(file, FastColoredTextBoxNS.Language.XML);
 
@@ -574,7 +574,7 @@ namespace QToolbar
 
       private void ClearAppInstance()
       {
-         AppInstance.CFDatabasesTree = null;
+         
       }
 
       private void ExecutorConfiguration_ItemClick(object sender, ItemClickEventArgs e)

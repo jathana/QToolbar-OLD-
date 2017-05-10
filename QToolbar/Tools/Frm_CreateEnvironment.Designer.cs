@@ -1,6 +1,6 @@
-﻿namespace QToolbar
+﻿namespace QToolbar.Tools
 {
-   partial class Frm_RichFileViewer
+   partial class Frm_CreateEnvironment
    {
       /// <summary>
       /// Required designer variable.
@@ -28,9 +28,17 @@
       /// </summary>
       private void InitializeComponent()
       {
-         this.components = new System.ComponentModel.Container();
+         this.SuspendLayout();
+         // 
+         // Frm_CreateEnvironment
+         // 
+         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.Text = "Frm_RichFileViewer";
+         this.ClientSize = new System.Drawing.Size(734, 530);
+         this.Name = "Frm_CreateEnvironment";
+         this.Text = "Frm_CreateEnvironment";
+         this.ResumeLayout(false);
+
       }
 
       #endregion

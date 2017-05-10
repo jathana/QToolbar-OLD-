@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 
-namespace QToolbar
+namespace QToolbar.Tools
 {
-   public partial class Frm_RichFileViewer : DevExpress.XtraEditors.XtraForm
+   public partial class Frm_CreateEnvironment : DevExpress.XtraEditors.XtraForm
    {
-      public Frm_RichFileViewer()
+      public Frm_CreateEnvironment()
       {
          InitializeComponent();
       }

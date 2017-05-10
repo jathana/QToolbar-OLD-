@@ -45,37 +45,37 @@
          this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
          this.dockPanel1 = new DevExpress.XtraBars.Docking.DockPanel();
          this.dockPanel1_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+         this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+         this.txtFilter = new DevExpress.XtraEditors.TextEdit();
          this.treeDatabases = new DevExpress.XtraTreeList.TreeList();
          this.colName = new DevExpress.XtraTreeList.Columns.TreeListColumn();
          this.colDatabase = new DevExpress.XtraTreeList.Columns.TreeListColumn();
          this.colServer = new DevExpress.XtraTreeList.Columns.TreeListColumn();
          this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
+         this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+         this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+         this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
          this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
          this.documentManager1 = new DevExpress.XtraBars.Docking2010.DocumentManager(this.components);
          this.tabbedView1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(this.components);
          this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
-         this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-         this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-         this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.txtFilter = new DevExpress.XtraEditors.TextEdit();
-         this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
          ((System.ComponentModel.ISupportInitialize)(this.dockManager1)).BeginInit();
          this.dockPanel2.SuspendLayout();
          this.dockPanel2_Container.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
          this.dockPanel1.SuspendLayout();
          this.dockPanel1_Container.SuspendLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
+         this.layoutControl1.SuspendLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.txtFilter.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.treeDatabases)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.documentManager1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
-         this.layoutControl1.SuspendLayout();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.txtFilter.Properties)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
          this.SuspendLayout();
          // 
          // dockManager1
@@ -222,6 +222,29 @@
          this.dockPanel1_Container.Size = new System.Drawing.Size(336, 473);
          this.dockPanel1_Container.TabIndex = 0;
          // 
+         // layoutControl1
+         // 
+         this.layoutControl1.Controls.Add(this.txtFilter);
+         this.layoutControl1.Controls.Add(this.treeDatabases);
+         this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.layoutControl1.Location = new System.Drawing.Point(0, 0);
+         this.layoutControl1.Margin = new System.Windows.Forms.Padding(0);
+         this.layoutControl1.Name = "layoutControl1";
+         this.layoutControl1.Root = this.layoutControlGroup1;
+         this.layoutControl1.Size = new System.Drawing.Size(336, 473);
+         this.layoutControl1.TabIndex = 1;
+         this.layoutControl1.Text = "layoutControl1";
+         // 
+         // txtFilter
+         // 
+         this.txtFilter.Location = new System.Drawing.Point(33, 2);
+         this.txtFilter.MenuManager = this.barManager1;
+         this.txtFilter.Name = "txtFilter";
+         this.txtFilter.Size = new System.Drawing.Size(301, 20);
+         this.txtFilter.StyleController = this.layoutControl1;
+         this.txtFilter.TabIndex = 4;
+         this.txtFilter.EditValueChanged += new System.EventHandler(this.txtFilter_EditValueChanged);
+         // 
          // treeDatabases
          // 
          this.treeDatabases.Columns.AddRange(new DevExpress.XtraTreeList.Columns.TreeListColumn[] {
@@ -279,6 +302,37 @@
          this.imageCollection1.InsertGalleryImage("env", "office2013/navigation/home_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("office2013/navigation/home_16x16.png"), 2);
          this.imageCollection1.Images.SetKeyName(2, "env");
          // 
+         // layoutControlGroup1
+         // 
+         this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+         this.layoutControlGroup1.GroupBordersVisible = false;
+         this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItem1,
+            this.layoutControlItem2});
+         this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
+         this.layoutControlGroup1.Name = "layoutControlGroup1";
+         this.layoutControlGroup1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+         this.layoutControlGroup1.Size = new System.Drawing.Size(336, 473);
+         this.layoutControlGroup1.TextVisible = false;
+         // 
+         // layoutControlItem1
+         // 
+         this.layoutControlItem1.Control = this.treeDatabases;
+         this.layoutControlItem1.Location = new System.Drawing.Point(0, 24);
+         this.layoutControlItem1.Name = "layoutControlItem1";
+         this.layoutControlItem1.Size = new System.Drawing.Size(336, 449);
+         this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+         this.layoutControlItem1.TextVisible = false;
+         // 
+         // layoutControlItem2
+         // 
+         this.layoutControlItem2.Control = this.txtFilter;
+         this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
+         this.layoutControlItem2.Name = "layoutControlItem2";
+         this.layoutControlItem2.Size = new System.Drawing.Size(336, 24);
+         this.layoutControlItem2.Text = "Filter:";
+         this.layoutControlItem2.TextSize = new System.Drawing.Size(28, 13);
+         // 
          // backgroundWorker1
          // 
          this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
@@ -302,60 +356,6 @@
          this.popupMenu1.Manager = this.barManager1;
          this.popupMenu1.Name = "popupMenu1";
          // 
-         // layoutControl1
-         // 
-         this.layoutControl1.Controls.Add(this.txtFilter);
-         this.layoutControl1.Controls.Add(this.treeDatabases);
-         this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.layoutControl1.Location = new System.Drawing.Point(0, 0);
-         this.layoutControl1.Margin = new System.Windows.Forms.Padding(0);
-         this.layoutControl1.Name = "layoutControl1";
-         this.layoutControl1.Root = this.layoutControlGroup1;
-         this.layoutControl1.Size = new System.Drawing.Size(336, 473);
-         this.layoutControl1.TabIndex = 1;
-         this.layoutControl1.Text = "layoutControl1";
-         // 
-         // layoutControlGroup1
-         // 
-         this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
-         this.layoutControlGroup1.GroupBordersVisible = false;
-         this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem1,
-            this.layoutControlItem2});
-         this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
-         this.layoutControlGroup1.Name = "layoutControlGroup1";
-         this.layoutControlGroup1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-         this.layoutControlGroup1.Size = new System.Drawing.Size(336, 473);
-         this.layoutControlGroup1.TextVisible = false;
-         // 
-         // layoutControlItem1
-         // 
-         this.layoutControlItem1.Control = this.treeDatabases;
-         this.layoutControlItem1.Location = new System.Drawing.Point(0, 24);
-         this.layoutControlItem1.Name = "layoutControlItem1";
-         this.layoutControlItem1.Size = new System.Drawing.Size(336, 449);
-         this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
-         this.layoutControlItem1.TextVisible = false;
-         // 
-         // txtFilter
-         // 
-         this.txtFilter.Location = new System.Drawing.Point(34, 2);
-         this.txtFilter.MenuManager = this.barManager1;
-         this.txtFilter.Name = "txtFilter";
-         this.txtFilter.Size = new System.Drawing.Size(300, 20);
-         this.txtFilter.StyleController = this.layoutControl1;
-         this.txtFilter.TabIndex = 4;
-         this.txtFilter.EditValueChanged += new System.EventHandler(this.txtFilter_EditValueChanged);
-         // 
-         // layoutControlItem2
-         // 
-         this.layoutControlItem2.Control = this.txtFilter;
-         this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
-         this.layoutControlItem2.Name = "layoutControlItem2";
-         this.layoutControlItem2.Size = new System.Drawing.Size(336, 24);
-         this.layoutControlItem2.Text = "Filter:";
-         this.layoutControlItem2.TextSize = new System.Drawing.Size(28, 13);
-         // 
          // Frm_SQLQueries
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -375,17 +375,17 @@
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
          this.dockPanel1.ResumeLayout(false);
          this.dockPanel1_Container.ResumeLayout(false);
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
+         this.layoutControl1.ResumeLayout(false);
+         ((System.ComponentModel.ISupportInitialize)(this.txtFilter.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.treeDatabases)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.documentManager1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
-         this.layoutControl1.ResumeLayout(false);
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.txtFilter.Properties)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
          this.ResumeLayout(false);
          this.PerformLayout();
 
