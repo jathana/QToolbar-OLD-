@@ -35,8 +35,8 @@
          this.chkRunImmediate = new DevExpress.XtraEditors.CheckEdit();
          this.txtName = new DevExpress.XtraEditors.TextEdit();
          this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-         this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+         this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
          this.RunImmediate = new DevExpress.XtraLayout.LayoutControlItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
@@ -44,8 +44,8 @@
          ((System.ComponentModel.ISupportInitialize)(this.chkRunImmediate.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.RunImmediate)).BeginInit();
          this.SuspendLayout();
          // 
@@ -79,7 +79,7 @@
         '\''};
          this.txtSQL.AutoIndentCharsPatterns = "";
          this.txtSQL.AutoIndentExistingLines = false;
-         this.txtSQL.AutoScrollMinSize = new System.Drawing.Size(32, 15);
+         this.txtSQL.AutoScrollMinSize = new System.Drawing.Size(2, 15);
          this.txtSQL.BackBrush = null;
          this.txtSQL.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.SetBoundFieldName(this.txtSQL, "SQL");
@@ -140,15 +140,6 @@
          this.layoutControlGroup1.Size = new System.Drawing.Size(736, 543);
          this.layoutControlGroup1.TextVisible = false;
          // 
-         // layoutControlItem1
-         // 
-         this.layoutControlItem1.Control = this.txtName;
-         this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
-         this.layoutControlItem1.Name = "layoutControlItem1";
-         this.layoutControlItem1.Size = new System.Drawing.Size(606, 24);
-         this.layoutControlItem1.Text = "Name";
-         this.layoutControlItem1.TextSize = new System.Drawing.Size(27, 13);
-         // 
          // layoutControlItem3
          // 
          this.layoutControlItem3.Control = this.txtSQL;
@@ -157,6 +148,15 @@
          this.layoutControlItem3.Size = new System.Drawing.Size(716, 499);
          this.layoutControlItem3.Text = "SQL";
          this.layoutControlItem3.TextSize = new System.Drawing.Size(27, 13);
+         // 
+         // layoutControlItem1
+         // 
+         this.layoutControlItem1.Control = this.txtName;
+         this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
+         this.layoutControlItem1.Name = "layoutControlItem1";
+         this.layoutControlItem1.Size = new System.Drawing.Size(606, 24);
+         this.layoutControlItem1.Text = "Name";
+         this.layoutControlItem1.TextSize = new System.Drawing.Size(27, 13);
          // 
          // RunImmediate
          // 
@@ -180,8 +180,8 @@
          ((System.ComponentModel.ISupportInitialize)(this.chkRunImmediate.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.RunImmediate)).EndInit();
          this.ResumeLayout(false);
 

@@ -13,6 +13,7 @@ namespace QToolbar
    {
       public void Serialize(TreeNode<T> tree, string saveFile)
       {
+         Utils.EnsureFolder(Path.GetDirectoryName(saveFile));
          File.WriteAllText(saveFile, tree.SaveState(), Encoding.UTF8);          
       }
 

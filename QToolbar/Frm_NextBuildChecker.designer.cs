@@ -156,9 +156,9 @@
          // btnCheckBuild
          // 
          this.btnCheckBuild.Caption = "Check Build";
-         this.btnCheckBuild.Glyph = ((System.Drawing.Image)(resources.GetObject("btnCheckBuild.Glyph")));
          this.btnCheckBuild.Id = 1;
-         this.btnCheckBuild.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnCheckBuild.LargeGlyph")));
+         this.btnCheckBuild.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnCheckBuild.ImageOptions.Image")));
+         this.btnCheckBuild.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnCheckBuild.ImageOptions.LargeImage")));
          this.btnCheckBuild.Name = "btnCheckBuild";
          this.btnCheckBuild.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCheckBuild_ItemClick);
          // 
@@ -236,6 +236,7 @@
          // labelControl1
          // 
          this.labelControl1.Appearance.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold);
+         this.labelControl1.Appearance.Options.UseFont = true;
          this.labelControl1.Location = new System.Drawing.Point(12, 12);
          this.labelControl1.Name = "labelControl1";
          this.labelControl1.Size = new System.Drawing.Size(312, 18);

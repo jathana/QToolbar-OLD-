@@ -17,5 +17,15 @@ namespace QToolbar.Tools
       {
          InitializeComponent();
       }
+
+      private void btnUpdateQCSolutionsCF_Click(object sender, EventArgs e)
+      {
+         QEnvironment env = new QEnvironment();
+         env.CheckoutPath = @"E:\Temp\TestCheckouts\7.2\VS Projects";
+
+         QEnvironmentCreator creator = new QEnvironmentCreator(env);
+         creator.UpdateQCSolutionsCFs(env.CheckoutPath, "ALBK_7_2_3", @"Q-SRV-DEVFPS\QBCAB", @"QBCollection_Plus_ALBK_7_2_3", "6702F80E8CD674F9E97BF27871005CE3");
+         creator.UpdateQCArchiveCF(env.CheckoutPath, "Data Archive ALBK 7.2", @"Q-SRV-DEVFPS\QBCAB", @"QC_Archive_ALBK_7_2", "6702F80E8CD674F9E97BF27871005CE3");
+      }
    }
 }

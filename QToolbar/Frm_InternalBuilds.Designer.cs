@@ -70,18 +70,18 @@
          // btnConnectorWarningsLog
          // 
          this.btnConnectorWarningsLog.Caption = "Connector Warnings Log";
-         this.btnConnectorWarningsLog.Glyph = ((System.Drawing.Image)(resources.GetObject("btnConnectorWarningsLog.Glyph")));
          this.btnConnectorWarningsLog.Id = 1;
-         this.btnConnectorWarningsLog.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnConnectorWarningsLog.LargeGlyph")));
+         this.btnConnectorWarningsLog.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnConnectorWarningsLog.ImageOptions.Image")));
+         this.btnConnectorWarningsLog.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnConnectorWarningsLog.ImageOptions.LargeImage")));
          this.btnConnectorWarningsLog.Name = "btnConnectorWarningsLog";
          this.btnConnectorWarningsLog.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnConnectorWarningsLog_ItemClick_1);
          // 
          // btnBrowseInternalBuildFolder
          // 
          this.btnBrowseInternalBuildFolder.Caption = "Browse";
-         this.btnBrowseInternalBuildFolder.Glyph = ((System.Drawing.Image)(resources.GetObject("btnBrowseInternalBuildFolder.Glyph")));
          this.btnBrowseInternalBuildFolder.Id = 2;
-         this.btnBrowseInternalBuildFolder.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnBrowseInternalBuildFolder.LargeGlyph")));
+         this.btnBrowseInternalBuildFolder.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnBrowseInternalBuildFolder.ImageOptions.Image")));
+         this.btnBrowseInternalBuildFolder.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnBrowseInternalBuildFolder.ImageOptions.LargeImage")));
          this.btnBrowseInternalBuildFolder.Name = "btnBrowseInternalBuildFolder";
          this.btnBrowseInternalBuildFolder.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnBrowseInternalBuildFolder_ItemClick);
          // 

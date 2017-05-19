@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace QToolbar
 {
@@ -11,22 +12,34 @@ namespace QToolbar
    {
 
 
-      public static string TmpDirectory
+      /// <summary>
+      /// Local directory to save app data.
+      /// </summary>
+      public static string UserAppDataPath
       {
          get
          {
-            return Path.Combine(Path.GetTempPath(), "QToolbar");
+
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), System.AppDomain.CurrentDomain.FriendlyName);
          }
       }
 
+      /// <summary>
+      /// Application Cache dir.
+      /// </summary>
       public static string CacheDirectory
       {
          get
          {
-            return Path.Combine(TmpDirectory, "Cache");
+            string dir= Path.Combine(UserAppDataPath, "Cache");
+            Utils.EnsureFolder(dir);
+            return dir;
          }
       }
 
+      /// <summary>
+      /// Cache file for cf admin files information.
+      /// </summary>
       public static string CFsTreeCacheFile
       {
          get

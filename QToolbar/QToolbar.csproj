@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\q-wks-jathan\Shared\QToolbar\</InstallUrl>
-    <ApplicationRevision>60</ApplicationRevision>
+    <ApplicationRevision>71</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -110,6 +110,13 @@
     <Compile Include="Builds\AnalyticsBuildChecker.cs" />
     <Compile Include="Builds\BuildChecker.cs" />
     <Compile Include="Builds\BuildCheckerBase.cs" />
+    <Compile Include="Buttons\ClearMetadataButton.cs" />
+    <Compile Include="Buttons\FoldersButton.cs" />
+    <Compile Include="Buttons\DesignersLocalButton.cs" />
+    <Compile Include="Buttons\ShellCommandsButton.cs" />
+    <Compile Include="Buttons\LegalLinksButton.cs" />
+    <Compile Include="Buttons\InternalBuildsButton.cs" />
+    <Compile Include="Buttons\NextBuildButton.cs" />
     <Compile Include="CheckResult.cs" />
     <Compile Include="ConnectionInfo.cs" />
     <Compile Include="Frm_InternalBuilds.cs">
@@ -142,7 +149,17 @@
     <Compile Include="Frm_SQLQueries.Designer.cs">
       <DependentUpon>Frm_SQLQueries.cs</DependentUpon>
     </Compile>
+    <Compile Include="Buttons\ButtonBase.cs" />
+    <Compile Include="Buttons\EnvironmentsConfigurationButton.cs" />
+    <Compile Include="Buttons\FieldsExplorerButton.cs" />
+    <Compile Include="Buttons\DatabaseScripterButton.cs" />
+    <Compile Include="Buttons\ExecutorConfiguratorButton.cs" />
+    <Compile Include="Buttons\QCSAgentButton.cs" />
+    <Compile Include="Buttons\QCSAdminButton.cs" />
+    <Compile Include="Buttons\QCSAdminCFsButton.cs" />
+    <Compile Include="Buttons\DesignersButton.cs" />
     <Compile Include="IniFile.cs" />
+    <Compile Include="IniFile2.cs" />
     <Compile Include="IState.cs" />
     <Compile Include="NextBuildFile.cs" />
     <Compile Include="Options\SQLQueries.cs" />
@@ -162,13 +179,15 @@
     <Compile Include="Options\OptionsInstance.cs" />
     <Compile Include="TextEncodingDetect.cs" />
     <Compile Include="TextFileEncodingDetector.cs" />
-    <Compile Include="Tools\CreateEnvironmentHelper.cs" />
     <Compile Include="Tools\Frm_CreateEnvironment.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Tools\Frm_CreateEnvironment.Designer.cs">
       <DependentUpon>Frm_CreateEnvironment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\QEnvironment.cs" />
+    <Compile Include="Tools\QEnvironmentCreator.cs" />
+    <Compile Include="Tools\QEnvironmentValidator.cs" />
     <Compile Include="TreeNode.cs" />
     <Compile Include="TreeNodeSerializer.cs" />
     <Compile Include="uc_SQL.cs">

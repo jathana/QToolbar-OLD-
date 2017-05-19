@@ -14,6 +14,24 @@ namespace QToolbar
    public static class Utils
    {
 
+
+      public static bool EnsureFolder(string dir)
+      {
+         bool retval = true;
+         try
+         {
+            if (!Directory.Exists(dir))
+            {
+               Directory.CreateDirectory(dir);
+            }
+         }
+         catch (Exception ex)
+         {
+            retval = false;
+         }
+         return retval;
+      }
+
       public static string ReadFile(string file)
       {
          string retVal = "";
@@ -113,6 +131,11 @@ namespace QToolbar
 
          return enc;
       }
-      
+
+      public static string GetConnectionString(string server, string database)
+      {
+            return $"Server={server};Database={database};Integrated Security=SSPI;";
+      }
+
    }
 }

@@ -30,7 +30,7 @@ namespace QToolbar
       {
          get
          {
-            return $"Server={Server};Database={Database};Integrated Security=SSPI;";
+            return Utils.GetConnectionString(Server, Database);
          }
       }
 
