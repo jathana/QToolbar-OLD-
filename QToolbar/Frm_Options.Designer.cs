@@ -84,7 +84,6 @@
          this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
          this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
@@ -141,7 +140,6 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
          this.SuspendLayout();
          // 
@@ -480,7 +478,7 @@
          // btnCancel
          // 
          this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-         this.btnCancel.Location = new System.Drawing.Point(626, 497);
+         this.btnCancel.Location = new System.Drawing.Point(728, 497);
          this.btnCancel.Name = "btnCancel";
          this.btnCancel.Size = new System.Drawing.Size(91, 22);
          this.btnCancel.StyleController = this.layoutControl2;
@@ -495,7 +493,7 @@
          this.layoutControl2.Dock = System.Windows.Forms.DockStyle.Fill;
          this.layoutControl2.Location = new System.Drawing.Point(0, 0);
          this.layoutControl2.Name = "layoutControl2";
-         this.layoutControl2.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1397, 215, 314, 532);
+         this.layoutControl2.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1166, 350, 434, 532);
          this.layoutControl2.Root = this.layoutControlGroup2;
          this.layoutControl2.Size = new System.Drawing.Size(831, 531);
          this.layoutControl2.TabIndex = 2;
@@ -672,7 +670,7 @@
          // btnOK
          // 
          this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-         this.btnOK.Location = new System.Drawing.Point(731, 497);
+         this.btnOK.Location = new System.Drawing.Point(636, 497);
          this.btnOK.Name = "btnOK";
          this.btnOK.Size = new System.Drawing.Size(88, 22);
          this.btnOK.StyleController = this.layoutControl2;
@@ -686,10 +684,9 @@
          this.layoutControlGroup2.GroupBordersVisible = false;
          this.layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem13,
-            this.layoutControlItem3,
             this.layoutControlItem4,
-            this.emptySpaceItem3,
-            this.emptySpaceItem4});
+            this.emptySpaceItem4,
+            this.layoutControlItem3});
          this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
          this.layoutControlGroup2.Name = "Root";
          this.layoutControlGroup2.Size = new System.Drawing.Size(831, 531);
@@ -707,7 +704,7 @@
          // layoutControlItem3
          // 
          this.layoutControlItem3.Control = this.btnOK;
-         this.layoutControlItem3.Location = new System.Drawing.Point(719, 485);
+         this.layoutControlItem3.Location = new System.Drawing.Point(624, 485);
          this.layoutControlItem3.MaxSize = new System.Drawing.Size(92, 26);
          this.layoutControlItem3.MinSize = new System.Drawing.Size(92, 26);
          this.layoutControlItem3.Name = "layoutControlItem3";
@@ -719,7 +716,7 @@
          // layoutControlItem4
          // 
          this.layoutControlItem4.Control = this.btnCancel;
-         this.layoutControlItem4.Location = new System.Drawing.Point(614, 485);
+         this.layoutControlItem4.Location = new System.Drawing.Point(716, 485);
          this.layoutControlItem4.MaxSize = new System.Drawing.Size(95, 26);
          this.layoutControlItem4.MinSize = new System.Drawing.Size(95, 26);
          this.layoutControlItem4.Name = "layoutControlItem4";
@@ -728,23 +725,12 @@
          this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem4.TextVisible = false;
          // 
-         // emptySpaceItem3
-         // 
-         this.emptySpaceItem3.AllowHotTrack = false;
-         this.emptySpaceItem3.Location = new System.Drawing.Point(709, 485);
-         this.emptySpaceItem3.MaxSize = new System.Drawing.Size(10, 26);
-         this.emptySpaceItem3.MinSize = new System.Drawing.Size(10, 26);
-         this.emptySpaceItem3.Name = "emptySpaceItem3";
-         this.emptySpaceItem3.Size = new System.Drawing.Size(10, 26);
-         this.emptySpaceItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-         this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
-         // 
          // emptySpaceItem4
          // 
          this.emptySpaceItem4.AllowHotTrack = false;
          this.emptySpaceItem4.Location = new System.Drawing.Point(0, 485);
          this.emptySpaceItem4.Name = "emptySpaceItem4";
-         this.emptySpaceItem4.Size = new System.Drawing.Size(614, 26);
+         this.emptySpaceItem4.Size = new System.Drawing.Size(624, 26);
          this.emptySpaceItem4.TextSize = new System.Drawing.Size(0, 0);
          // 
          // Frm_Options
@@ -813,7 +799,6 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
          this.ResumeLayout(false);
 
@@ -860,7 +845,6 @@
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem13;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
-      private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem3;
       private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem4;
       private DevExpress.XtraGrid.GridControl gridCheckouts;
       private DevExpress.XtraGrid.Views.Grid.GridView gridView1;

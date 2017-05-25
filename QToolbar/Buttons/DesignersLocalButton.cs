@@ -84,7 +84,7 @@ namespace QToolbar.Buttons
                   }
 
                   System.Diagnostics.Process process = new System.Diagnostics.Process();
-                  process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                  process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
                   process.StartInfo.FileName = FILE_NAME;
                   process.StartInfo.UseShellExecute = true;
                   process.Start();
@@ -109,5 +109,7 @@ namespace QToolbar.Buttons
             XtraMessageBox.Show(ex.Message);
          }
       }
+
+
    }
 }
