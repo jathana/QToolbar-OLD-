@@ -15,6 +15,7 @@ using DevExpress.XtraTreeList.Menu;
 using DevExpress.XtraBars.Docking2010.Views;
 using DevExpress.XtraTreeList;
 using System.Threading;
+using QToolbar.Tools;
 
 namespace QToolbar
 {
@@ -271,7 +272,16 @@ namespace QToolbar
 
                   e.Menu.Items.Add(mnuItem);
                }
+
+
+               // script criteria
+               DevExpress.Utils.Menu.DXMenuItem mnuItemScriptCriteria = new DevExpress.Utils.Menu.DXMenuItem("Script Criteria", scriptCriteria_ItemClick);
+               mnuItemScriptCriteria.Tag = obj.Data;
+               e.Menu.Items.Add(mnuItemScriptCriteria);
+
             }
+
+
          }
       }
 
@@ -310,6 +320,15 @@ namespace QToolbar
          doc.Caption = ctr.Database;
          
 
+      }
+
+
+      private void scriptCriteria_ItemClick(object sender, EventArgs e)
+      {
+         TreeNode<ConnectionInfo> obj = (TreeNode<ConnectionInfo>)treeDatabases.GetDataRecordByNode(treeDatabases.FocusedNode);
+         ConnectionInfo data = obj.Data;
+         Frm_ScriptCriteria f = new Frm_ScriptCriteria();
+         f.Show(data);
       }
 
       private void treeDatabases_GetStateImage(object sender, DevExpress.XtraTreeList.GetStateImageEventArgs e)

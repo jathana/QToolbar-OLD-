@@ -181,5 +181,11 @@ namespace QToolbar
          Frm_CreateEnvironment f = new Frm_CreateEnvironment();
          f.Show();
       }
+
+      private void btnCriteriaScripter_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         Frm_ScriptCriteria f = new Frm_ScriptCriteria();
+         f.Show();
+      }
    }
 }

@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\q-wks-jathan\Shared\QToolbar\</InstallUrl>
-    <ApplicationRevision>72</ApplicationRevision>
+    <ApplicationRevision>74</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -185,6 +185,12 @@
     <Compile Include="Tools\Frm_CreateEnvironment.Designer.cs">
       <DependentUpon>Frm_CreateEnvironment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\Frm_ScriptCriteria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\Frm_ScriptCriteria.Designer.cs">
+      <DependentUpon>Frm_ScriptCriteria.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\QEnvironment.cs" />
     <Compile Include="Tools\QEnvironmentCreator.cs" />
     <Compile Include="Tools\QEnvironmentValidator.cs" />
@@ -235,6 +241,9 @@
     </Compile>
     <EmbeddedResource Include="Tools\Frm_CreateEnvironment.resx">
       <DependentUpon>Frm_CreateEnvironment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\Frm_ScriptCriteria.resx">
+      <DependentUpon>Frm_ScriptCriteria.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="uc_SQL.resx">
       <DependentUpon>uc_SQL.cs</DependentUpon>

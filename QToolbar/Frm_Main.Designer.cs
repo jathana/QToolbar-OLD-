@@ -66,14 +66,13 @@
          this.mnuShellCommands = new DevExpress.XtraBars.BarSubItem();
          this.btnSQL = new DevExpress.XtraBars.BarButtonItem();
          this.mnuTools = new DevExpress.XtraBars.BarSubItem();
-         this.btnCreateNewEnvironment = new DevExpress.XtraBars.BarButtonItem();
+         this.mnuDesignersLocal = new DevExpress.XtraBars.BarSubItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.grpApplications = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpBuilds = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpFiles = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpSQL = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpTools = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-         this.mnuDesignersLocal = new DevExpress.XtraBars.BarSubItem();
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -170,10 +169,9 @@
             this.mnuShellCommands,
             this.btnSQL,
             this.mnuTools,
-            this.btnCreateNewEnvironment,
             this.mnuDesignersLocal});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 41;
+         this.ribbonControl1.MaxItemId = 42;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -342,16 +340,15 @@
          this.mnuTools.Id = 32;
          this.mnuTools.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuTools.ImageOptions.Image")));
          this.mnuTools.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuTools.ImageOptions.LargeImage")));
-         this.mnuTools.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnCreateNewEnvironment)});
          this.mnuTools.Name = "mnuTools";
          // 
-         // btnCreateNewEnvironment
+         // mnuDesignersLocal
          // 
-         this.btnCreateNewEnvironment.Caption = "btnCreateNewEnvironment";
-         this.btnCreateNewEnvironment.Id = 39;
-         this.btnCreateNewEnvironment.Name = "btnCreateNewEnvironment";
-         this.btnCreateNewEnvironment.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCreateNewEnvironment_ItemClick);
+         this.mnuDesignersLocal.Caption = "Designers (Local)";
+         this.mnuDesignersLocal.Id = 40;
+         this.mnuDesignersLocal.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuDesignersLocal.ImageOptions.Image")));
+         this.mnuDesignersLocal.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuDesignersLocal.ImageOptions.LargeImage")));
+         this.mnuDesignersLocal.Name = "mnuDesignersLocal";
          // 
          // ribbonPage1
          // 
@@ -408,14 +405,6 @@
          this.grpTools.ItemLinks.Add(this.btnOptions2);
          this.grpTools.Name = "grpTools";
          this.grpTools.Text = "Tools";
-         // 
-         // mnuDesignersLocal
-         // 
-         this.mnuDesignersLocal.Caption = "Designers (Local)";
-         this.mnuDesignersLocal.Id = 40;
-         this.mnuDesignersLocal.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuDesignersLocal.ImageOptions.Image")));
-         this.mnuDesignersLocal.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuDesignersLocal.ImageOptions.LargeImage")));
-         this.mnuDesignersLocal.Name = "mnuDesignersLocal";
          // 
          // Frm_Main
          // 
@@ -478,7 +467,6 @@
       private DevExpress.XtraBars.BarSubItem mnuShellCommands;
       private DevExpress.XtraBars.BarButtonItem btnSQL;
       private DevExpress.XtraBars.BarSubItem mnuTools;
-      private DevExpress.XtraBars.BarButtonItem btnCreateNewEnvironment;
       private DevExpress.XtraBars.BarSubItem mnuDesignersLocal;
    }
 }

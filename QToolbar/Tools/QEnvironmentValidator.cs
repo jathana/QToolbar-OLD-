@@ -24,7 +24,6 @@ namespace QToolbar.Tools
          AddMessage(retval, CheckServerAndDb(_Env.NightlyBuildDBServer, _Env.NightlyBuildDB));
 
 
-
          return retval;
       }
 
