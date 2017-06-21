@@ -31,7 +31,6 @@
          this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_ScriptCriteria));
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-         this.splitterControl1 = new DevExpress.XtraEditors.SplitterControl();
          this.cboInstallations = new DevExpress.XtraEditors.PopupContainerEdit();
          this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
          this.bar1 = new DevExpress.XtraBars.Bar();
@@ -48,14 +47,14 @@
          this.txtScriptDirectory = new DevExpress.XtraEditors.ButtonEdit();
          this.gridControl1 = new DevExpress.XtraGrid.GridControl();
          this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-         this.txtSQL = new FastColoredTextBoxNS.FastColoredTextBox();
          this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-         this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+         this.txtSQL = new FastColoredTextBoxNS.FastColoredTextBox();
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
          this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+         this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.cboInstallations.Properties)).BeginInit();
@@ -67,47 +66,39 @@
          ((System.ComponentModel.ISupportInitialize)(this.txtScriptDirectory.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.txtSQL)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.txtSQL)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
+         this.splitContainerControl1.SuspendLayout();
          this.SuspendLayout();
          // 
          // layoutControl1
          // 
-         this.layoutControl1.Controls.Add(this.splitterControl1);
          this.layoutControl1.Controls.Add(this.cboInstallations);
          this.layoutControl1.Controls.Add(this.txtScriptDirectory);
          this.layoutControl1.Controls.Add(this.gridControl1);
-         this.layoutControl1.Controls.Add(this.txtSQL);
          this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.layoutControl1.Location = new System.Drawing.Point(0, 29);
+         this.layoutControl1.Location = new System.Drawing.Point(0, 0);
+         this.layoutControl1.Margin = new System.Windows.Forms.Padding(0);
          this.layoutControl1.Name = "layoutControl1";
          this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1040, 197, 450, 400);
          this.layoutControl1.Root = this.layoutControlGroup1;
-         this.layoutControl1.Size = new System.Drawing.Size(880, 417);
+         this.layoutControl1.Size = new System.Drawing.Size(1049, 410);
          this.layoutControl1.TabIndex = 0;
          this.layoutControl1.Text = "layoutControl1";
          // 
-         // splitterControl1
-         // 
-         this.splitterControl1.Location = new System.Drawing.Point(115, 169);
-         this.splitterControl1.Name = "splitterControl1";
-         this.splitterControl1.Size = new System.Drawing.Size(5, 5);
-         this.splitterControl1.TabIndex = 5;
-         this.splitterControl1.TabStop = false;
-         // 
          // cboInstallations
          // 
-         this.cboInstallations.Location = new System.Drawing.Point(89, 361);
+         this.cboInstallations.Location = new System.Drawing.Point(79, 364);
          this.cboInstallations.MenuManager = this.barManager1;
          this.cboInstallations.Name = "cboInstallations";
          this.cboInstallations.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
          this.cboInstallations.Properties.PopupControl = this.popupContainerControl1;
-         this.cboInstallations.Size = new System.Drawing.Size(779, 20);
+         this.cboInstallations.Size = new System.Drawing.Size(968, 20);
          this.cboInstallations.StyleController = this.layoutControl1;
          this.cboInstallations.TabIndex = 3;
          // 
@@ -142,6 +133,8 @@
          // 
          this.btnRun.Caption = "Run";
          this.btnRun.Id = 0;
+         this.btnRun.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnRun.ImageOptions.Image")));
+         this.btnRun.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRun.ImageOptions.LargeImage")));
          this.btnRun.Name = "btnRun";
          this.btnRun.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRun_ItemClick);
          // 
@@ -149,6 +142,8 @@
          // 
          this.btnScript.Caption = "Script";
          this.btnScript.Id = 1;
+         this.btnScript.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnScript.ImageOptions.Image")));
+         this.btnScript.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnScript.ImageOptions.LargeImage")));
          this.btnScript.Name = "btnScript";
          this.btnScript.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnScript_ItemClick);
          // 
@@ -170,36 +165,36 @@
          this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
          this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
          this.barDockControlTop.Manager = this.barManager1;
-         this.barDockControlTop.Size = new System.Drawing.Size(880, 29);
+         this.barDockControlTop.Size = new System.Drawing.Size(1049, 31);
          // 
          // barDockControlBottom
          // 
          this.barDockControlBottom.CausesValidation = false;
          this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-         this.barDockControlBottom.Location = new System.Drawing.Point(0, 446);
+         this.barDockControlBottom.Location = new System.Drawing.Point(0, 546);
          this.barDockControlBottom.Manager = this.barManager1;
-         this.barDockControlBottom.Size = new System.Drawing.Size(880, 23);
+         this.barDockControlBottom.Size = new System.Drawing.Size(1049, 23);
          // 
          // barDockControlLeft
          // 
          this.barDockControlLeft.CausesValidation = false;
          this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-         this.barDockControlLeft.Location = new System.Drawing.Point(0, 29);
+         this.barDockControlLeft.Location = new System.Drawing.Point(0, 31);
          this.barDockControlLeft.Manager = this.barManager1;
-         this.barDockControlLeft.Size = new System.Drawing.Size(0, 417);
+         this.barDockControlLeft.Size = new System.Drawing.Size(0, 515);
          // 
          // barDockControlRight
          // 
          this.barDockControlRight.CausesValidation = false;
          this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-         this.barDockControlRight.Location = new System.Drawing.Point(880, 29);
+         this.barDockControlRight.Location = new System.Drawing.Point(1049, 31);
          this.barDockControlRight.Manager = this.barManager1;
-         this.barDockControlRight.Size = new System.Drawing.Size(0, 417);
+         this.barDockControlRight.Size = new System.Drawing.Size(0, 515);
          // 
          // popupContainerControl1
          // 
          this.popupContainerControl1.Controls.Add(this.grdInstallations);
-         this.popupContainerControl1.Location = new System.Drawing.Point(242, 12);
+         this.popupContainerControl1.Location = new System.Drawing.Point(232, 12);
          this.popupContainerControl1.Name = "popupContainerControl1";
          this.popupContainerControl1.Size = new System.Drawing.Size(526, 263);
          this.popupContainerControl1.TabIndex = 9;
@@ -225,21 +220,21 @@
          // 
          // txtScriptDirectory
          // 
-         this.txtScriptDirectory.Location = new System.Drawing.Point(89, 385);
+         this.txtScriptDirectory.Location = new System.Drawing.Point(79, 388);
          this.txtScriptDirectory.Name = "txtScriptDirectory";
          this.txtScriptDirectory.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
-         this.txtScriptDirectory.Size = new System.Drawing.Size(779, 20);
+         this.txtScriptDirectory.Size = new System.Drawing.Size(968, 20);
          this.txtScriptDirectory.StyleController = this.layoutControl1;
          this.txtScriptDirectory.TabIndex = 4;
          this.txtScriptDirectory.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.txtScriptDirectory_ButtonClick);
          // 
          // gridControl1
          // 
-         this.gridControl1.Location = new System.Drawing.Point(12, 176);
+         this.gridControl1.Location = new System.Drawing.Point(2, 2);
          this.gridControl1.MainView = this.gridView1;
          this.gridControl1.Name = "gridControl1";
-         this.gridControl1.Size = new System.Drawing.Size(856, 181);
+         this.gridControl1.Size = new System.Drawing.Size(1045, 358);
          this.gridControl1.TabIndex = 2;
          this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -250,6 +245,47 @@
          this.gridView1.Name = "gridView1";
          this.gridView1.OptionsSelection.MultiSelect = true;
          this.gridView1.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
+         // 
+         // layoutControlGroup1
+         // 
+         this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+         this.layoutControlGroup1.GroupBordersVisible = false;
+         this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItem2,
+            this.layoutControlItem3,
+            this.layoutControlItem4});
+         this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
+         this.layoutControlGroup1.Name = "Root";
+         this.layoutControlGroup1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+         this.layoutControlGroup1.Size = new System.Drawing.Size(1049, 410);
+         this.layoutControlGroup1.TextVisible = false;
+         // 
+         // layoutControlItem2
+         // 
+         this.layoutControlItem2.Control = this.gridControl1;
+         this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
+         this.layoutControlItem2.Name = "layoutControlItem2";
+         this.layoutControlItem2.Size = new System.Drawing.Size(1049, 362);
+         this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
+         this.layoutControlItem2.TextVisible = false;
+         // 
+         // layoutControlItem3
+         // 
+         this.layoutControlItem3.Control = this.txtScriptDirectory;
+         this.layoutControlItem3.Location = new System.Drawing.Point(0, 386);
+         this.layoutControlItem3.Name = "layoutControlItem3";
+         this.layoutControlItem3.Size = new System.Drawing.Size(1049, 24);
+         this.layoutControlItem3.Text = "Script Directory";
+         this.layoutControlItem3.TextSize = new System.Drawing.Size(74, 13);
+         // 
+         // layoutControlItem4
+         // 
+         this.layoutControlItem4.Control = this.cboInstallations;
+         this.layoutControlItem4.Location = new System.Drawing.Point(0, 362);
+         this.layoutControlItem4.Name = "layoutControlItem4";
+         this.layoutControlItem4.Size = new System.Drawing.Size(1049, 24);
+         this.layoutControlItem4.Text = "Installations";
+         this.layoutControlItem4.TextSize = new System.Drawing.Size(74, 13);
          // 
          // txtSQL
          // 
@@ -276,90 +312,57 @@
          this.txtSQL.DelayedEventsInterval = 200;
          this.txtSQL.DelayedTextChangedInterval = 500;
          this.txtSQL.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+         this.txtSQL.Dock = System.Windows.Forms.DockStyle.Fill;
          this.txtSQL.Font = new System.Drawing.Font("Consolas", 9.75F);
          this.txtSQL.ImeMode = System.Windows.Forms.ImeMode.Off;
          this.txtSQL.IsReplaceMode = false;
          this.txtSQL.Language = FastColoredTextBoxNS.Language.SQL;
          this.txtSQL.LeftBracket = '(';
-         this.txtSQL.Location = new System.Drawing.Point(12, 12);
+         this.txtSQL.Location = new System.Drawing.Point(0, 0);
          this.txtSQL.Name = "txtSQL";
          this.txtSQL.Paddings = new System.Windows.Forms.Padding(0);
          this.txtSQL.ReservedCountOfLineNumberChars = 2;
          this.txtSQL.RightBracket = ')';
          this.txtSQL.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
          this.txtSQL.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("txtSQL.ServiceColors")));
-         this.txtSQL.Size = new System.Drawing.Size(856, 160);
+         this.txtSQL.Size = new System.Drawing.Size(1049, 100);
          this.txtSQL.TabIndex = 0;
          this.txtSQL.Text = "SELECT CRI_UNIQUE_ID, CRI_DESC FROM AT_CRITERIA ORDER BY CRI_CREATED DESC";
          this.txtSQL.Zoom = 100;
-         // 
-         // layoutControlGroup1
-         // 
-         this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
-         this.layoutControlGroup1.GroupBordersVisible = false;
-         this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem1,
-            this.layoutControlItem2,
-            this.layoutControlItem3,
-            this.layoutControlItem4});
-         this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
-         this.layoutControlGroup1.Name = "Root";
-         this.layoutControlGroup1.Size = new System.Drawing.Size(880, 417);
-         this.layoutControlGroup1.TextVisible = false;
-         // 
-         // layoutControlItem1
-         // 
-         this.layoutControlItem1.Control = this.txtSQL;
-         this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
-         this.layoutControlItem1.Name = "layoutControlItem1";
-         this.layoutControlItem1.Size = new System.Drawing.Size(860, 164);
-         this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
-         this.layoutControlItem1.TextVisible = false;
-         // 
-         // layoutControlItem2
-         // 
-         this.layoutControlItem2.Control = this.gridControl1;
-         this.layoutControlItem2.Location = new System.Drawing.Point(0, 164);
-         this.layoutControlItem2.Name = "layoutControlItem2";
-         this.layoutControlItem2.Size = new System.Drawing.Size(860, 185);
-         this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
-         this.layoutControlItem2.TextVisible = false;
-         // 
-         // layoutControlItem3
-         // 
-         this.layoutControlItem3.Control = this.txtScriptDirectory;
-         this.layoutControlItem3.Location = new System.Drawing.Point(0, 373);
-         this.layoutControlItem3.Name = "layoutControlItem3";
-         this.layoutControlItem3.Size = new System.Drawing.Size(860, 24);
-         this.layoutControlItem3.Text = "Script Directory";
-         this.layoutControlItem3.TextSize = new System.Drawing.Size(74, 13);
-         // 
-         // layoutControlItem4
-         // 
-         this.layoutControlItem4.Control = this.cboInstallations;
-         this.layoutControlItem4.Location = new System.Drawing.Point(0, 349);
-         this.layoutControlItem4.Name = "layoutControlItem4";
-         this.layoutControlItem4.Size = new System.Drawing.Size(860, 24);
-         this.layoutControlItem4.Text = "Installations";
-         this.layoutControlItem4.TextSize = new System.Drawing.Size(74, 13);
          // 
          // backgroundWorker1
          // 
          this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
          this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
          // 
+         // splitContainerControl1
+         // 
+         this.splitContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.splitContainerControl1.Horizontal = false;
+         this.splitContainerControl1.Location = new System.Drawing.Point(0, 31);
+         this.splitContainerControl1.Margin = new System.Windows.Forms.Padding(0);
+         this.splitContainerControl1.Name = "splitContainerControl1";
+         this.splitContainerControl1.Panel1.Controls.Add(this.txtSQL);
+         this.splitContainerControl1.Panel1.Text = "Panel1";
+         this.splitContainerControl1.Panel2.Controls.Add(this.layoutControl1);
+         this.splitContainerControl1.Panel2.Text = "Panel2";
+         this.splitContainerControl1.Size = new System.Drawing.Size(1049, 515);
+         this.splitContainerControl1.TabIndex = 14;
+         this.splitContainerControl1.Text = "splitContainerControl1";
+         // 
          // Frm_ScriptCriteria
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.ClientSize = new System.Drawing.Size(880, 469);
+         this.ClientSize = new System.Drawing.Size(1049, 569);
+         this.Controls.Add(this.splitContainerControl1);
          this.Controls.Add(this.popupContainerControl1);
-         this.Controls.Add(this.layoutControl1);
          this.Controls.Add(this.barDockControlLeft);
          this.Controls.Add(this.barDockControlRight);
          this.Controls.Add(this.barDockControlBottom);
          this.Controls.Add(this.barDockControlTop);
          this.Name = "Frm_ScriptCriteria";
+         this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
          this.Text = "Script Criteria";
          this.Load += new System.EventHandler(this.Frm_ScriptCriteria_Load);
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
@@ -373,12 +376,13 @@
          ((System.ComponentModel.ISupportInitialize)(this.txtScriptDirectory.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.txtSQL)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.txtSQL)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).EndInit();
+         this.splitContainerControl1.ResumeLayout(false);
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -389,7 +393,6 @@
       private DevExpress.XtraLayout.LayoutControl layoutControl1;
       private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
       private FastColoredTextBoxNS.FastColoredTextBox txtSQL;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
       private DevExpress.XtraEditors.ButtonEdit txtScriptDirectory;
       private DevExpress.XtraGrid.GridControl gridControl1;
       private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
@@ -411,6 +414,6 @@
       private DevExpress.XtraGrid.Views.Grid.GridView gviewInstallations;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
       private DevExpress.XtraEditors.PopupContainerControl popupContainerControl1;
-      private DevExpress.XtraEditors.SplitterControl splitterControl1;
+      private DevExpress.XtraEditors.SplitContainerControl splitContainerControl1;
    }
 }

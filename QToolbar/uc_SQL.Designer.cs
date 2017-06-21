@@ -100,7 +100,7 @@ namespace QToolbar
         '\''};
          this.txtSQL.AutoIndentCharsPatterns = "";
          this.txtSQL.AutoIndentExistingLines = false;
-         this.txtSQL.AutoScrollMinSize = new System.Drawing.Size(2, 15);
+         this.txtSQL.AutoScrollMinSize = new System.Drawing.Size(32, 15);
          this.txtSQL.BackBrush = null;
          this.txtSQL.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.txtSQL.CharHeight = 15;

@@ -37,7 +37,7 @@ namespace QToolbar.Tools
 
       private void SetSQL()
       {
-         txtSQL.Text = "SELECT CRI_UNIQUE_ID, CRI_DESC FROM AT_CRITERIA ORDER BY CRI_CREATED DESC";
+         txtSQL.Text = "SELECT CRI_UNIQUE_ID, CRI_DESC FROM AT_CRITERIA WHERE CRI_USER_DEFINED_FLAG=0 ORDER BY CRI_CREATED DESC";
       }
 
       private void txtScriptDirectory_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)

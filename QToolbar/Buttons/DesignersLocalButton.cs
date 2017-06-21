@@ -72,7 +72,7 @@ namespace QToolbar.Buttons
                builder.AppendLine($"{checkoutDrive}");
                builder.AppendLine($"cd {designerPath}");
                builder.AppendLine($"SCToolkit.Designers.Client.exe");
-               string FILE_NAME = Path.Combine(AppInstance.CacheDirectory, "clear_metadata.bat");
+               string FILE_NAME = Path.Combine(AppInstance.CacheDirectory, "run_designer.bat");
                FileStream fs = null;
                try
                {
