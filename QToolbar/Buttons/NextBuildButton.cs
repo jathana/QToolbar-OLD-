@@ -12,7 +12,7 @@ namespace QToolbar.Buttons
 {
    public class NextBuildButton:ButtonBase
    {
-      public NextBuildButton(BarManager barManager, BarSubItem menu):base("",barManager, menu, NextBuild_ItemClick)
+      public NextBuildButton(BarManager barManager, BarSubItem menu):base("",barManager, menu, NextBuild_ItemClick, ShouldAddItem)
       {
       }
 

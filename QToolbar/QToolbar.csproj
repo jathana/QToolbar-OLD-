@@ -117,18 +117,18 @@
     <Compile Include="Buttons\LegalLinksButton.cs" />
     <Compile Include="Buttons\InternalBuildsButton.cs" />
     <Compile Include="Buttons\NextBuildButton.cs" />
-    <Compile Include="CheckResult.cs" />
+    <Compile Include="Builds\CheckResult.cs" />
     <Compile Include="ConnectionInfo.cs" />
-    <Compile Include="Frm_InternalBuilds.cs">
+    <Compile Include="Builds\Frm_InternalBuilds.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Frm_InternalBuilds.Designer.cs">
+    <Compile Include="Builds\Frm_InternalBuilds.Designer.cs">
       <DependentUpon>Frm_InternalBuilds.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frm_NextBuildChecker.cs">
+    <Compile Include="Builds\Frm_NextBuildChecker.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Frm_NextBuildChecker.designer.cs">
+    <Compile Include="Builds\Frm_NextBuildChecker.designer.cs">
       <DependentUpon>Frm_NextBuildChecker.cs</DependentUpon>
     </Compile>
     <Compile Include="Frm_Main.cs">
@@ -137,10 +137,10 @@
     <Compile Include="Frm_Main.Designer.cs">
       <DependentUpon>Frm_Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frm_Options.cs">
+    <Compile Include="Options\Frm_Options.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Frm_Options.Designer.cs">
+    <Compile Include="Options\Frm_Options.Designer.cs">
       <DependentUpon>Frm_Options.cs</DependentUpon>
     </Compile>
     <Compile Include="Frm_SQLQueries.cs">
@@ -161,7 +161,7 @@
     <Compile Include="IniFile.cs" />
     <Compile Include="IniFile2.cs" />
     <Compile Include="IState.cs" />
-    <Compile Include="NextBuildFile.cs" />
+    <Compile Include="Builds\NextBuildFile.cs" />
     <Compile Include="Options\SQLQueries.cs" />
     <Compile Include="Options\ShellCommands.cs" />
     <Compile Include="Frm_FileViewer.cs">
@@ -179,21 +179,21 @@
     <Compile Include="Options\OptionsInstance.cs" />
     <Compile Include="TextEncodingDetect.cs" />
     <Compile Include="TextFileEncodingDetector.cs" />
-    <Compile Include="Tools\Frm_CreateEnvironment.cs">
+    <Compile Include="Environments\Frm_CreateEnvironment.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tools\Frm_CreateEnvironment.Designer.cs">
+    <Compile Include="Environments\Frm_CreateEnvironment.Designer.cs">
       <DependentUpon>Frm_CreateEnvironment.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tools\Frm_ScriptCriteria.cs">
+    <Compile Include="Criteria\Frm_ScriptCriteria.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tools\Frm_ScriptCriteria.Designer.cs">
+    <Compile Include="Criteria\Frm_ScriptCriteria.Designer.cs">
       <DependentUpon>Frm_ScriptCriteria.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tools\QEnvironment.cs" />
-    <Compile Include="Tools\QEnvironmentCreator.cs" />
-    <Compile Include="Tools\QEnvironmentValidator.cs" />
+    <Compile Include="Environments\QEnvironment.cs" />
+    <Compile Include="Environments\QEnvironmentCreator.cs" />
+    <Compile Include="Environments\QEnvironmentValidator.cs" />
     <Compile Include="TreeNode.cs" />
     <Compile Include="TreeNodeSerializer.cs" />
     <Compile Include="uc_SQL.cs">
@@ -210,16 +210,16 @@
     </Compile>
     <Compile Include="Utils.cs" />
     <Compile Include="XmlNodeExtensions.cs" />
-    <EmbeddedResource Include="Frm_InternalBuilds.resx">
+    <EmbeddedResource Include="Builds\Frm_InternalBuilds.resx">
       <DependentUpon>Frm_InternalBuilds.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Frm_NextBuildChecker.resx">
+    <EmbeddedResource Include="Builds\Frm_NextBuildChecker.resx">
       <DependentUpon>Frm_NextBuildChecker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Main.resx">
       <DependentUpon>Frm_Main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Frm_Options.resx">
+    <EmbeddedResource Include="Options\Frm_Options.resx">
       <DependentUpon>Frm_Options.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_SQLQueries.resx">
@@ -239,10 +239,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Tools\Frm_CreateEnvironment.resx">
+    <EmbeddedResource Include="Environments\Frm_CreateEnvironment.resx">
       <DependentUpon>Frm_CreateEnvironment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tools\Frm_ScriptCriteria.resx">
+    <EmbeddedResource Include="Criteria\Frm_ScriptCriteria.resx">
       <DependentUpon>Frm_ScriptCriteria.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="uc_SQL.resx">

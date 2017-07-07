@@ -12,7 +12,7 @@ namespace QToolbar.Buttons
 {
    public class QCSAgentButton:ButtonBase
    {
-      public QCSAgentButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.QCSAgentFolder, barManager, menu, QCSAgentMenuItem_ItemClick)
+      public QCSAgentButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.QCSAgentFolder, barManager, menu, QCSAgentMenuItem_ItemClick, ShouldAddItem)
       {
 
          
@@ -28,13 +28,23 @@ namespace QToolbar.Buttons
       {
          try
          {
-            string qcsadmin = Path.Combine(OptionsInstance.QCSAgentFolder, e.Item.Caption, "CollectionAgentSystem.Client.application");
+            string qcsadmin = GetItemPath(e.Item.Caption);
             System.Diagnostics.Process.Start(qcsadmin);
          }
          catch (Exception ex)
          {
             XtraMessageBox.Show(ex.Message);
          }
+      }
+
+      private static new bool ShouldAddItem(BarItem item)
+      {
+         return File.Exists(GetItemPath(item.Caption));
+      }
+
+      private static string GetItemPath(string itemCaption)
+      {
+         return Path.Combine(OptionsInstance.QCSAgentFolder, itemCaption, "CollectionAgentSystem.Client.application");
       }
    }
 }

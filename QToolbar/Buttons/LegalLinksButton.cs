@@ -13,7 +13,7 @@ namespace QToolbar.Buttons
    public class LegalLinksButton:ButtonBase
    {
       
-      public LegalLinksButton(BarManager barManager, BarSubItem menu):base("",barManager,menu, LegalCommand_ItemClick)
+      public LegalLinksButton(BarManager barManager, BarSubItem menu):base("",barManager,menu, LegalCommand_ItemClick, ShouldAddItem)
       {
       }
 

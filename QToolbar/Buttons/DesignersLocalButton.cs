@@ -15,7 +15,7 @@ namespace QToolbar.Buttons
 {
    public class DesignersLocalButton : ButtonBase
    {
-      public DesignersLocalButton(BarManager barManager, BarSubItem menu):base("",barManager, menu, LocalDesigner_ItemClick)
+      public DesignersLocalButton(BarManager barManager, BarSubItem menu):base("",barManager, menu, LocalDesigner_ItemClick, ShouldAddItem)
       {
       }
 
@@ -42,7 +42,26 @@ namespace QToolbar.Buttons
          BarButtonItem nextBuildItem = new BarButtonItem(_BarManager, row["Name"].ToString(), 0);
          nextBuildItem.ItemClick += LocalDesigner_ItemClick;
          nextBuildItem.Tag = row;
-         _Menu.AddItem(nextBuildItem);
+         if (ShouldAddItem(nextBuildItem))
+         {
+            _Menu.AddItem(nextBuildItem);
+         }
+      }
+
+      private static new bool ShouldAddItem(BarItem item)
+      {
+
+         bool retVal = false;
+         DataRow row = (DataRow)item.Tag;
+         if (row != null)
+         {
+            string checkoutPath = row["Path"].ToString();
+            string checkoutDrive = Path.GetPathRoot(checkoutPath);
+            string designerPath = Path.Combine(checkoutPath, @"VS Projects\SCToolkitDesigners\SCToolkitDesignersClient\bin\Debug");
+            string designerFileName = Path.Combine(designerPath, "SCToolkit.Designers.Client.exe");
+            retVal = File.Exists(designerFileName);
+         }
+         return retVal;
       }
 
       private static void LocalDesigner_ItemClick(object sender, ItemClickEventArgs e)

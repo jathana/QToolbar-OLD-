@@ -13,7 +13,7 @@ namespace QToolbar.Buttons
 {
    public class QCSAdminCFsButton:ButtonBase
    {
-      public QCSAdminCFsButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.QCSAdminFolder, barManager, menu, QCSAdminCFMenuItem_ItemClick)
+      public QCSAdminCFsButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.QCSAdminFolder, barManager, menu, QCSAdminCFMenuItem_ItemClick, ShouldAddItem)
       {
       }
 

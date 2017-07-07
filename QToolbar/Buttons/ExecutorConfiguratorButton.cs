@@ -12,7 +12,7 @@ namespace QToolbar.Buttons
 {
    public class ExecutorConfiguratorButton : ButtonBase
    {
-      public ExecutorConfiguratorButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.ExecutorConfiguratorFolder, barManager, menu, ExecutorConfiguration_ItemClick)
+      public ExecutorConfiguratorButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.ExecutorConfiguratorFolder, barManager, menu, ExecutorConfiguration_ItemClick, ShouldAddItem)
       {
 
          
@@ -27,13 +27,23 @@ namespace QToolbar.Buttons
       {
          try
          {
-            string app = Path.Combine(OptionsInstance.ExecutorConfiguratorFolder, e.Item.Caption, "QC.ExecutorConfigurator.application");
+            string app = GetItemPath(e.Item.Caption);
             System.Diagnostics.Process.Start(app);
          }
          catch (Exception ex)
          {
             XtraMessageBox.Show(ex.Message);
          }
+      }
+
+      private static new bool ShouldAddItem(BarItem item)
+      {
+         return File.Exists(GetItemPath(item.Caption));
+      }
+
+      private static string GetItemPath(string itemCaption)
+      {
+         return Path.Combine(OptionsInstance.ExecutorConfiguratorFolder, itemCaption, "QC.ExecutorConfigurator.application");
       }
    }
 }

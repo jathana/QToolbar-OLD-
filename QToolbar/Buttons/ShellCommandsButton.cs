@@ -13,7 +13,7 @@ namespace QToolbar.Buttons
    public class ShellCommandsButton : ButtonBase
    {
       
-      public ShellCommandsButton(BarManager barManager, BarSubItem menu):base("",barManager,menu, ShellCommand_ItemClick)
+      public ShellCommandsButton(BarManager barManager, BarSubItem menu):base("",barManager,menu, ShellCommand_ItemClick, ShouldAddItem)
       {
       }
 

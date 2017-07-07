@@ -13,7 +13,7 @@ namespace QToolbar.Buttons
 {
    public class InternalBuildsButton:ButtonBase
    {
-      public InternalBuildsButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.InternalBuildsFolder, barManager, menu, InternalBuilds_ItemClick)
+      public InternalBuildsButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.InternalBuildsFolder, barManager, menu, InternalBuilds_ItemClick, ShouldAddItem)
       {
       }
 

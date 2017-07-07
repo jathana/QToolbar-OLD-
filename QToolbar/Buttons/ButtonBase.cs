@@ -9,20 +9,25 @@ using System.Threading.Tasks;
 
 namespace QToolbar.Buttons
 {
+   public delegate bool ShouldAddItem(BarItem item);
+
+
    public class ButtonBase
    {
       protected BarManager _BarManager;
       protected BarSubItem _Menu;
       protected ItemClickEventHandler _ItemClickHandler;
+      protected ShouldAddItem _ShouldAddHandler;
       protected string _Folder;
 
 
-      public ButtonBase(string folder, BarManager barManager, BarSubItem menu, ItemClickEventHandler handler)
+      public ButtonBase(string folder, BarManager barManager, BarSubItem menu, ItemClickEventHandler handler, ShouldAddItem shouldAddHandler)
       {
          _Menu = menu;
          _BarManager = barManager;
          _ItemClickHandler = handler;
          _Folder = folder;
+         _ShouldAddHandler = shouldAddHandler;
       }
 
       /// <summary>
@@ -48,9 +53,13 @@ namespace QToolbar.Buttons
                   dirs = dirs.OrderByDescending(s => s).ToList<string>();
                   foreach (string dir in dirs)
                   {
+                     
                      BarButtonItem menuItem = new BarButtonItem(_BarManager, Path.GetFileName(dir));
-                     menuItem.ItemClick += _ItemClickHandler;
-                     _Menu.AddItem(menuItem);
+                     if (_ShouldAddHandler(menuItem))
+                     {
+                        menuItem.ItemClick += _ItemClickHandler;
+                        _Menu.AddItem(menuItem);
+                     }
                   }
                }
                catch (Exception ex)
@@ -59,6 +68,11 @@ namespace QToolbar.Buttons
                }
             }
          }
+      }
+
+      protected static bool ShouldAddItem(BarItem item)
+      {
+         return true;
       }
    }
 }

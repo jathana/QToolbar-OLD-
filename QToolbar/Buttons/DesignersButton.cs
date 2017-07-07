@@ -13,7 +13,7 @@ namespace QToolbar.Buttons
 {
    public class DesignersButton: ButtonBase
    {
-      public DesignersButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.DesignersFolder, barManager, menu, DesignerMenuItem_ItemClick)
+      public DesignersButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.DesignersFolder, barManager, menu, DesignerMenuItem_ItemClick, ShouldAddItem)
       {
          
       }
@@ -28,7 +28,7 @@ namespace QToolbar.Buttons
          try
          {
             XtraMessageBox.Show($"Before use designer {e.Item.Caption} ensure that \"Relative Code Path\" & \"Proteus Relative Code Path\" are set correctly! \r\nTo configure click \"Qualco\" menu.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            string designer = Path.Combine(OptionsInstance.DesignersFolder, e.Item.Caption, "SCToolkit.Designers.Client.application");
+            string designer = GetItemPath(e.Item.Caption);
             System.Diagnostics.Process.Start(designer);
          }
          catch (Exception ex)
@@ -36,5 +36,17 @@ namespace QToolbar.Buttons
             XtraMessageBox.Show(ex.Message);
          }
       }
+
+      private static new bool ShouldAddItem(BarItem item)
+      {
+         return File.Exists(GetItemPath(item.Caption)); 
+      }
+
+      private static string GetItemPath(string itemCaption)
+      {
+         return Path.Combine(OptionsInstance.DesignersFolder, itemCaption, "SCToolkit.Designers.Client.application");
+      }
+
+
    }
 }

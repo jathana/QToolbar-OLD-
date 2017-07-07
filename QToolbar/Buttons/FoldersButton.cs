@@ -12,7 +12,7 @@ namespace QToolbar.Buttons
 {
    public class FoldersButton:ButtonBase
    {
-      public FoldersButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.InternalBuildsFolder, barManager, menu, FolderItem_ItemClick)
+      public FoldersButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.InternalBuildsFolder, barManager, menu, FolderItem_ItemClick, ShouldAddItem)
       {
       }
 

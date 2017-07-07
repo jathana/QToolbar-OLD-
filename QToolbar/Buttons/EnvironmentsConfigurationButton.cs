@@ -13,7 +13,7 @@ namespace QToolbar.Buttons
 {
    public class EnvironmentsConfigurationButton : ButtonBase
    {
-      public EnvironmentsConfigurationButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.EnvironmentsConfigurationFolder, barManager, menu, EnvironmentsConfiguration_ItemClick)
+      public EnvironmentsConfigurationButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.EnvironmentsConfigurationFolder, barManager, menu, EnvironmentsConfiguration_ItemClick, ShouldAddItem)
       {
          
       }
