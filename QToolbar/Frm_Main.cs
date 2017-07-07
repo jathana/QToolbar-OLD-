@@ -79,8 +79,9 @@ namespace QToolbar
 
       private void CreateMenuItems()
       {
-         Task.Run(() =>
-         {
+         //Task.Run(() =>
+         //{
+         Cursor = Cursors.WaitCursor;
             _DatabaseScripterButton.CreateMenuItems();
             _DesignersButton.CreateMenuItems();
             _EnvironmentsConfigurationButton.CreateMenuItems();
@@ -95,7 +96,8 @@ namespace QToolbar
             _QCSAgentButton.CreateMenuItems();
             _ShellCommandsButton.CreateMenuItems();
             _DesignersLocalButton.CreateMenuItems();
-         });
+         Cursor = Cursors.Default;
+         //});
       }
 
       private void SetRibbonImages()
