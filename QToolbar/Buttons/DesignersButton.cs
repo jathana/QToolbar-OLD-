@@ -13,17 +13,12 @@ namespace QToolbar.Buttons
 {
    public class DesignersButton: ButtonBase
    {
-      public DesignersButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.DesignersFolder, barManager, menu, DesignerMenuItem_ItemClick, ShouldAddItem)
+      public DesignersButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.DesignersFolder, barManager, menu)
       {
          
       }
 
-      public void CreateItems()
-      {
-         CreateClickOnce();
-      }
-
-      private static void DesignerMenuItem_ItemClick(object sender, ItemClickEventArgs e)
+      protected override void MenuItemClick(object sender, ItemClickEventArgs e)
       {
          try
          {
@@ -37,12 +32,12 @@ namespace QToolbar.Buttons
          }
       }
 
-      private static new bool ShouldAddItem(BarItem item)
+      protected override bool ShouldAddMenuItem(BarButtonItem menuItem)
       {
-         return File.Exists(GetItemPath(item.Caption)); 
+         return File.Exists(GetItemPath(menuItem.Caption)); 
       }
 
-      private static string GetItemPath(string itemCaption)
+      private string GetItemPath(string itemCaption)
       {
          return Path.Combine(OptionsInstance.DesignersFolder, itemCaption, "SCToolkit.Designers.Client.application");
       }

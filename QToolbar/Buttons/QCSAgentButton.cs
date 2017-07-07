@@ -12,19 +12,13 @@ namespace QToolbar.Buttons
 {
    public class QCSAgentButton:ButtonBase
    {
-      public QCSAgentButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.QCSAgentFolder, barManager, menu, QCSAgentMenuItem_ItemClick, ShouldAddItem)
+      public QCSAgentButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.QCSAgentFolder, barManager, menu)
       {
 
          
       }
 
-
-      public void CreateItems()
-      {
-         CreateClickOnce();
-      }
-
-      private static void QCSAgentMenuItem_ItemClick(object sender, ItemClickEventArgs e)
+      protected override void MenuItemClick(object sender, ItemClickEventArgs e)
       {
          try
          {
@@ -37,12 +31,12 @@ namespace QToolbar.Buttons
          }
       }
 
-      private static new bool ShouldAddItem(BarItem item)
+      protected override bool ShouldAddMenuItem(BarButtonItem menuItem)
       {
-         return File.Exists(GetItemPath(item.Caption));
+         return File.Exists(GetItemPath(menuItem.Caption));
       }
 
-      private static string GetItemPath(string itemCaption)
+      private string GetItemPath(string itemCaption)
       {
          return Path.Combine(OptionsInstance.QCSAgentFolder, itemCaption, "CollectionAgentSystem.Client.application");
       }

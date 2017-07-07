@@ -12,17 +12,12 @@ namespace QToolbar.Buttons
 {
    public class FieldsExplorerButton : ButtonBase
    {
-      public FieldsExplorerButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.FieldsExplorerFolder, barManager, menu, FieldsExplorer_ItemClick, ShouldAddItem)
+      public FieldsExplorerButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.FieldsExplorerFolder, barManager, menu)
       {
          
       }
 
-      public void CreateItems()
-      {
-         CreateClickOnce();
-      }
-
-      private static void FieldsExplorer_ItemClick(object sender, ItemClickEventArgs e)
+      protected override void MenuItemClick(object sender, ItemClickEventArgs e)
       {
          try
          {
@@ -35,12 +30,12 @@ namespace QToolbar.Buttons
          }
       }
 
-      private static new bool ShouldAddItem(BarItem item)
+      protected override bool ShouldAddMenuItem(BarButtonItem menuItem)
       {
-         return File.Exists(GetItemPath(item.Caption));
+         return File.Exists(GetItemPath(menuItem.Caption));
       }
 
-      private static string GetItemPath(string itemCaption)
+      private string GetItemPath(string itemCaption)
       {
          return Path.Combine(OptionsInstance.FieldsExplorerFolder, itemCaption, "SCToolkit.Utilities.FieldExplorer.application");
       }

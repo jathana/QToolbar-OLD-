@@ -12,11 +12,11 @@ namespace QToolbar.Buttons
 {
    public class NextBuildButton:ButtonBase
    {
-      public NextBuildButton(BarManager barManager, BarSubItem menu):base("",barManager, menu, NextBuild_ItemClick, ShouldAddItem)
+      public NextBuildButton(BarManager barManager, BarSubItem menu):base("",barManager, menu)
       {
       }
 
-      public void CreateItems()
+      public override void CreateMenuItems()
       {
          _Menu.ClearLinks();
 
@@ -37,12 +37,12 @@ namespace QToolbar.Buttons
       private void AddNextBuildItem(DataRow row)
       {
          BarButtonItem nextBuildItem = new BarButtonItem(_BarManager, row["Name"].ToString(), 0);
-         nextBuildItem.ItemClick += NextBuild_ItemClick;
+         nextBuildItem.ItemClick += MenuItemClick;
          nextBuildItem.Tag = row;
          _Menu.AddItem(nextBuildItem);
       }
 
-      private static void NextBuild_ItemClick(object sender, ItemClickEventArgs e)
+      protected override void MenuItemClick(object sender, ItemClickEventArgs e)
       {
          try
          {

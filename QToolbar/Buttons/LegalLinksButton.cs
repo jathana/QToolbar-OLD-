@@ -13,11 +13,11 @@ namespace QToolbar.Buttons
    public class LegalLinksButton:ButtonBase
    {
       
-      public LegalLinksButton(BarManager barManager, BarSubItem menu):base("",barManager,menu, LegalCommand_ItemClick, ShouldAddItem)
+      public LegalLinksButton(BarManager barManager, BarSubItem menu):base("",barManager,menu)
       {
       }
 
-      public void CreateItems()
+      public override void CreateMenuItems()
       {
         
          _Menu.ClearLinks();
@@ -39,12 +39,12 @@ namespace QToolbar.Buttons
       {
          BarButtonItem legalLinkItem = new BarButtonItem(_BarManager, row["Name"].ToString(), 3);
          // legal links are shell commands
-         legalLinkItem.ItemClick += LegalCommand_ItemClick;
+         legalLinkItem.ItemClick += MenuItemClick;
          legalLinkItem.Tag = row;
          _Menu.AddItem(legalLinkItem);
       }
 
-      private static void LegalCommand_ItemClick(object sender, ItemClickEventArgs e)
+      protected override void MenuItemClick(object sender, ItemClickEventArgs e)
       {
          try
          {

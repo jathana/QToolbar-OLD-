@@ -13,11 +13,11 @@ namespace QToolbar.Buttons
 {
    public class InternalBuildsButton:ButtonBase
    {
-      public InternalBuildsButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.InternalBuildsFolder, barManager, menu, InternalBuilds_ItemClick, ShouldAddItem)
+      public InternalBuildsButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.InternalBuildsFolder, barManager, menu)
       {
       }
 
-      public void CreateItems()
+      public override void CreateMenuItems()
       {
          CreateInternalBuildsMenu();
       }
@@ -72,7 +72,7 @@ namespace QToolbar.Buttons
                      {
                         BarButtonItem subMenuItem = new BarButtonItem(_BarManager, Path.GetFileName(dir), 1);
                         subMenuItem.Tag = dir;
-                        subMenuItem.ItemClick += InternalBuilds_ItemClick;
+                        subMenuItem.ItemClick += MenuItemClick;
                         menuItem.AddItem(subMenuItem);
                      }
                   }
@@ -85,7 +85,7 @@ namespace QToolbar.Buttons
          }
       }
 
-      private static void InternalBuilds_ItemClick(object sender, ItemClickEventArgs e)
+      protected override void MenuItemClick(object sender, ItemClickEventArgs e)
       {
          try
          {

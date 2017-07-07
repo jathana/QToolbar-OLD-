@@ -14,21 +14,20 @@ namespace QToolbar.Buttons
 
    public class ButtonBase
    {
+
+      #region old
+
       protected BarManager _BarManager;
       protected BarSubItem _Menu;
-      protected ItemClickEventHandler _ItemClickHandler;
-      protected ShouldAddItem _ShouldAddHandler;
       protected string _Folder;
 
-
-      public ButtonBase(string folder, BarManager barManager, BarSubItem menu, ItemClickEventHandler handler, ShouldAddItem shouldAddHandler)
+      public ButtonBase(string folder, BarManager barManager, BarSubItem menu)
       {
          _Menu = menu;
          _BarManager = barManager;
-         _ItemClickHandler = handler;
          _Folder = folder;
-         _ShouldAddHandler = shouldAddHandler;
       }
+
 
       /// <summary>
       /// Used mostly for click once applications
@@ -37,7 +36,7 @@ namespace QToolbar.Buttons
       /// <param name="barManager"></param>
       /// <param name="menu"></param>
       /// <param name="handler"></param>
-      protected void CreateClickOnce()
+      public virtual void CreateMenuItems()
       {
          // clear links
          _Menu.ClearLinks();
@@ -55,9 +54,11 @@ namespace QToolbar.Buttons
                   {
                      
                      BarButtonItem menuItem = new BarButtonItem(_BarManager, Path.GetFileName(dir));
-                     if (_ShouldAddHandler(menuItem))
+                     //if (_ShouldAddHandler(menuItem))
+                     if(ShouldAddMenuItem(menuItem))
                      {
-                        menuItem.ItemClick += _ItemClickHandler;
+                        //menuItem.ItemClick += _ItemClickHandler;
+                        menuItem.ItemClick += MenuItemClick;
                         _Menu.AddItem(menuItem);
                      }
                   }
@@ -70,9 +71,23 @@ namespace QToolbar.Buttons
          }
       }
 
-      protected static bool ShouldAddItem(BarItem item)
+      #endregion
+
+      #region new
+      /// <summary>
+      /// Answers if an item should be added to menu.
+      /// </summary>
+      /// <returns></returns>
+      protected virtual bool ShouldAddMenuItem(BarButtonItem menuItem)
       {
          return true;
       }
+
+      protected virtual void MenuItemClick(object sender, ItemClickEventArgs e)
+      {
+
+      }
+
+      #endregion
    }
 }

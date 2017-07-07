@@ -13,16 +13,12 @@ namespace QToolbar.Buttons
 {
    public class QCSAdminCFsButton:ButtonBase
    {
-      public QCSAdminCFsButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.QCSAdminFolder, barManager, menu, QCSAdminCFMenuItem_ItemClick, ShouldAddItem)
+      public QCSAdminCFsButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.QCSAdminFolder, barManager, menu)
       {
       }
 
-      public void CreateItems()
-      {
-         CreateClickOnce();
-      }
 
-      private static void QCSAdminCFMenuItem_ItemClick(object sender, ItemClickEventArgs e)
+      protected override void MenuItemClick(object sender, ItemClickEventArgs e)
       {
          string qcsAdminCFDir = Path.Combine(OptionsInstance.QCSAdminFolder, e.Item.Caption, "Application Files");
          // find the newest dir

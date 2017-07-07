@@ -13,11 +13,11 @@ namespace QToolbar.Buttons
    public class ShellCommandsButton : ButtonBase
    {
       
-      public ShellCommandsButton(BarManager barManager, BarSubItem menu):base("",barManager,menu, ShellCommand_ItemClick, ShouldAddItem)
+      public ShellCommandsButton(BarManager barManager, BarSubItem menu):base("",barManager,menu)
       {
       }
 
-      public void CreateItems()
+      public override void CreateMenuItems()
       {
          _Menu.ClearLinks();
          // load shell commands
@@ -37,12 +37,12 @@ namespace QToolbar.Buttons
       private void AddShellCommandsItem(DataRow row)
       {
          BarButtonItem shellCommandItem = new BarButtonItem(_BarManager, row["Name"].ToString(), 2);
-         shellCommandItem.ItemClick += ShellCommand_ItemClick;
+         shellCommandItem.ItemClick += MenuItemClick;
          shellCommandItem.Tag = row;
          _Menu.AddItem(shellCommandItem);
       }
 
-      private static void ShellCommand_ItemClick(object sender, ItemClickEventArgs e)
+      protected override void MenuItemClick(object sender, ItemClickEventArgs e)
       {
          try
          {
@@ -55,7 +55,6 @@ namespace QToolbar.Buttons
             process.StartInfo.UseShellExecute = true;
 
             process.Start();
-
 
          }
          catch (Exception ex)

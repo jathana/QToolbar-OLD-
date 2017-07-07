@@ -15,11 +15,11 @@ namespace QToolbar.Buttons
 {
    public class DesignersLocalButton : ButtonBase
    {
-      public DesignersLocalButton(BarManager barManager, BarSubItem menu):base("",barManager, menu, LocalDesigner_ItemClick, ShouldAddItem)
+      public DesignersLocalButton(BarManager barManager, BarSubItem menu):base("",barManager, menu)
       {
       }
 
-      public void CreateItems()
+      public override void CreateMenuItems()
       {
          _Menu.ClearLinks();
 
@@ -40,19 +40,19 @@ namespace QToolbar.Buttons
       private void AddLocalDesignerItem(DataRow row)
       {
          BarButtonItem nextBuildItem = new BarButtonItem(_BarManager, row["Name"].ToString(), 0);
-         nextBuildItem.ItemClick += LocalDesigner_ItemClick;
+         nextBuildItem.ItemClick += MenuItemClick;
          nextBuildItem.Tag = row;
-         if (ShouldAddItem(nextBuildItem))
+         if (ShouldAddMenuItem(nextBuildItem))
          {
             _Menu.AddItem(nextBuildItem);
          }
       }
 
-      private static new bool ShouldAddItem(BarItem item)
+      protected override bool ShouldAddMenuItem(BarButtonItem menuItem)
       {
 
          bool retVal = false;
-         DataRow row = (DataRow)item.Tag;
+         DataRow row = (DataRow)menuItem.Tag;
          if (row != null)
          {
             string checkoutPath = row["Path"].ToString();
@@ -64,7 +64,7 @@ namespace QToolbar.Buttons
          return retVal;
       }
 
-      private static void LocalDesigner_ItemClick(object sender, ItemClickEventArgs e)
+      protected override void MenuItemClick(object sender, ItemClickEventArgs e)
       {
          try
          {
@@ -103,7 +103,7 @@ namespace QToolbar.Buttons
                   }
 
                   System.Diagnostics.Process process = new System.Diagnostics.Process();
-                  process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
+                  process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
                   process.StartInfo.FileName = FILE_NAME;
                   process.StartInfo.UseShellExecute = true;
                   process.Start();

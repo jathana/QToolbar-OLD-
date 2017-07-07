@@ -12,17 +12,17 @@ namespace QToolbar.Buttons
 {
    public class DatabaseScripterButton : ButtonBase
    {
-      public DatabaseScripterButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.DatabaseScripterFolder, barManager, menu, DatabaseScripter_ItemClick, ShouldAddItem)
+      public DatabaseScripterButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.DatabaseScripterFolder, barManager, menu)
       {
          
       }
 
-      public void CreateItems()
+      private string GetItemPath(string itemCaption)
       {
-         CreateClickOnce();
+         return Path.Combine(OptionsInstance.DatabaseScripterFolder, itemCaption, "QCSScript.application");
       }
 
-      private static void DatabaseScripter_ItemClick(object sender, ItemClickEventArgs e)
+      protected override void MenuItemClick(object sender, ItemClickEventArgs e)
       {
          try
          {
@@ -35,15 +35,9 @@ namespace QToolbar.Buttons
          }
       }
 
-      private static new bool ShouldAddItem(BarItem item)
+      protected override bool ShouldAddMenuItem(BarButtonItem menuItem)
       {
-         return File.Exists(GetItemPath(item.Caption));
+         return File.Exists(GetItemPath(menuItem.Caption));
       }
-
-      private static string GetItemPath(string itemCaption)
-      {
-         return Path.Combine(OptionsInstance.DatabaseScripterFolder, itemCaption, "QCSScript.application");
-      }
-
    }
 }

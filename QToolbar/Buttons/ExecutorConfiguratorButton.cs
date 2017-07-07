@@ -12,18 +12,13 @@ namespace QToolbar.Buttons
 {
    public class ExecutorConfiguratorButton : ButtonBase
    {
-      public ExecutorConfiguratorButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.ExecutorConfiguratorFolder, barManager, menu, ExecutorConfiguration_ItemClick, ShouldAddItem)
+      public ExecutorConfiguratorButton(BarManager barManager, BarSubItem menu):base(OptionsInstance.ExecutorConfiguratorFolder, barManager, menu)
       {
 
          
       }
 
-      public void CreateItems()
-      {
-         CreateClickOnce();
-      }
-
-      private static void ExecutorConfiguration_ItemClick(object sender, ItemClickEventArgs e)
+      protected override void MenuItemClick(object sender, ItemClickEventArgs e)
       {
          try
          {
@@ -36,12 +31,12 @@ namespace QToolbar.Buttons
          }
       }
 
-      private static new bool ShouldAddItem(BarItem item)
+      protected override bool ShouldAddMenuItem(BarButtonItem menuItem)
       {
-         return File.Exists(GetItemPath(item.Caption));
+         return File.Exists(GetItemPath(menuItem.Caption));
       }
 
-      private static string GetItemPath(string itemCaption)
+      private string GetItemPath(string itemCaption)
       {
          return Path.Combine(OptionsInstance.ExecutorConfiguratorFolder, itemCaption, "QC.ExecutorConfigurator.application");
       }

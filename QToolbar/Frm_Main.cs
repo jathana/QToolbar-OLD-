@@ -81,20 +81,20 @@ namespace QToolbar
       {
          Task.Run(() =>
          {
-            _DatabaseScripterButton.CreateItems();
-            _DesignersButton.CreateItems();
-            _EnvironmentsConfigurationButton.CreateItems();
-            _ExecutorConfiguratorButton.CreateItems();
-            _FieldsExplorerButton.CreateItems();
-            _FoldersButton.CreateItems();
-            _InternalBuildsButton.CreateItems();
-            _LegalLinksButton.CreateItems();
-            _NextBuildButton.CreateItems();
-            _QCSAdminButton.CreateItems();
-            _QCSAdminCFsButton.CreateItems();
-            _QCSAgentButton.CreateItems();
-            _ShellCommandsButton.CreateItems();
-            _DesignersLocalButton.CreateItems();
+            _DatabaseScripterButton.CreateMenuItems();
+            _DesignersButton.CreateMenuItems();
+            _EnvironmentsConfigurationButton.CreateMenuItems();
+            _ExecutorConfiguratorButton.CreateMenuItems();
+            _FieldsExplorerButton.CreateMenuItems();
+            _FoldersButton.CreateMenuItems();
+            _InternalBuildsButton.CreateMenuItems();
+            _LegalLinksButton.CreateMenuItems();
+            _NextBuildButton.CreateMenuItems();
+            _QCSAdminButton.CreateMenuItems();
+            _QCSAdminCFsButton.CreateMenuItems();
+            _QCSAgentButton.CreateMenuItems();
+            _ShellCommandsButton.CreateMenuItems();
+            _DesignersLocalButton.CreateMenuItems();
          });
       }
 
