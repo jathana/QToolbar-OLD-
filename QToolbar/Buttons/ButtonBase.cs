@@ -30,7 +30,7 @@ namespace QToolbar.Buttons
 
 
       /// <summary>
-      /// Used mostly for click once applications
+      /// The default menu items creation assumes click once applications. 
       /// </summary>
       /// <param name="folder"></param>
       /// <param name="barManager"></param>
@@ -52,12 +52,9 @@ namespace QToolbar.Buttons
                   dirs = dirs.OrderByDescending(s => s).ToList<string>();
                   foreach (string dir in dirs)
                   {
-                     
                      BarButtonItem menuItem = new BarButtonItem(_BarManager, Path.GetFileName(dir));
-                     //if (_ShouldAddHandler(menuItem))
                      if(ShouldAddMenuItem(menuItem))
                      {
-                        //menuItem.ItemClick += _ItemClickHandler;
                         menuItem.ItemClick += MenuItemClick;
                         _Menu.AddItem(menuItem);
                      }
