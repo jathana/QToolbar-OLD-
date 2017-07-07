@@ -82,9 +82,9 @@
          this.btnOK = new DevExpress.XtraEditors.SimpleButton();
          this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
          this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
          this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
+         this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
@@ -138,9 +138,9 @@
          ((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoEdit1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
          this.SuspendLayout();
          // 
          // layoutControl1
@@ -593,6 +593,7 @@
          this.gridLegalLiks.TabIndex = 0;
          this.gridLegalLiks.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView3});
+         this.gridLegalLiks.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.Grid_ProcessGridKey);
          // 
          // gridView3
          // 
@@ -622,6 +623,7 @@
          this.gridSQLQueries.TabIndex = 0;
          this.gridSQLQueries.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gviewSQLQueries});
+         this.gridSQLQueries.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.Grid_ProcessGridKey);
          // 
          // gviewSQLQueries
          // 
@@ -701,18 +703,6 @@
          this.layoutControlItem13.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem13.TextVisible = false;
          // 
-         // layoutControlItem3
-         // 
-         this.layoutControlItem3.Control = this.btnOK;
-         this.layoutControlItem3.Location = new System.Drawing.Point(624, 485);
-         this.layoutControlItem3.MaxSize = new System.Drawing.Size(92, 26);
-         this.layoutControlItem3.MinSize = new System.Drawing.Size(92, 26);
-         this.layoutControlItem3.Name = "layoutControlItem3";
-         this.layoutControlItem3.Size = new System.Drawing.Size(92, 26);
-         this.layoutControlItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-         this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
-         this.layoutControlItem3.TextVisible = false;
-         // 
          // layoutControlItem4
          // 
          this.layoutControlItem4.Control = this.btnCancel;
@@ -732,6 +722,18 @@
          this.emptySpaceItem4.Name = "emptySpaceItem4";
          this.emptySpaceItem4.Size = new System.Drawing.Size(624, 26);
          this.emptySpaceItem4.TextSize = new System.Drawing.Size(0, 0);
+         // 
+         // layoutControlItem3
+         // 
+         this.layoutControlItem3.Control = this.btnOK;
+         this.layoutControlItem3.Location = new System.Drawing.Point(624, 485);
+         this.layoutControlItem3.MaxSize = new System.Drawing.Size(92, 26);
+         this.layoutControlItem3.MinSize = new System.Drawing.Size(92, 26);
+         this.layoutControlItem3.Name = "layoutControlItem3";
+         this.layoutControlItem3.Size = new System.Drawing.Size(92, 26);
+         this.layoutControlItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+         this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
+         this.layoutControlItem3.TextVisible = false;
          // 
          // Frm_Options
          // 
@@ -797,9 +799,9 @@
          ((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoEdit1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
          this.ResumeLayout(false);
 
       }

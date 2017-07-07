@@ -110,11 +110,35 @@ namespace QToolbar.Builds
          return retval;
       }
 
+
+      protected bool ContainsNonAnsiChars(string content)
+      {
+         return content.ToCharArray().Count(c => c > sbyte.MaxValue) > 0;
+      }
+
+
+      protected bool CheckUnicode(string file, string content)
+      {
+         bool retval = true;
+
+         Encoding encoding = Utils.GetEncoding(file);
+         bool containsNonAnsiChars = ContainsNonAnsiChars(content);
+         if (encoding.BodyName != "utf-8" && encoding.BodyName != "utf-16" && containsNonAnsiChars)
+         {
+            Inform(file, "not in unicode and contains non ansi chars", "", CheckResult.Error);
+            _Errors = true;
+            retval = false;
+         }
+         return retval;
+      }
+
+
       protected bool CheckUnicode(string file)
       {
          bool retval = true;
 
          Encoding encoding = Utils.GetEncoding(file);
+
          if (encoding.BodyName != "utf-8" && encoding.BodyName != "utf-16")
          {
             Inform(file, "not in unicode", "", CheckResult.Error);

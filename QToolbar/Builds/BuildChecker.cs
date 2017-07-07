@@ -39,7 +39,7 @@ namespace QToolbar.Builds
                rdr.Dispose();
 
                // check unicode
-               fileOk = CheckUnicode(file) && fileOk;
+               fileOk = CheckUnicode(file,content) && fileOk;
 
                // scan sql file
                fileOk = ScanSqlFile(content, file) && fileOk;
