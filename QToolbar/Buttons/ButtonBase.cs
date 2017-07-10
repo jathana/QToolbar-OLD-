@@ -14,9 +14,6 @@ namespace QToolbar.Buttons
 
    public class ButtonBase
    {
-
-      #region old
-
       protected BarManager _BarManager;
       protected BarSubItem _Menu;
       protected string _Folder;
@@ -68,9 +65,6 @@ namespace QToolbar.Buttons
          }
       }
 
-      #endregion
-
-      #region new
       /// <summary>
       /// Answers if an item should be added to menu.
       /// </summary>
@@ -84,7 +78,5 @@ namespace QToolbar.Buttons
       {
 
       }
-
-      #endregion
    }
 }

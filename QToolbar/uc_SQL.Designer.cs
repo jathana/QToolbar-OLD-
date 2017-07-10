@@ -100,7 +100,7 @@ namespace QToolbar
         '\''};
          this.txtSQL.AutoIndentCharsPatterns = "";
          this.txtSQL.AutoIndentExistingLines = false;
-         this.txtSQL.AutoScrollMinSize = new System.Drawing.Size(2, 15);
+         this.txtSQL.AutoScrollMinSize = new System.Drawing.Size(32, 15);
          this.txtSQL.BackBrush = null;
          this.txtSQL.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.txtSQL.CharHeight = 15;
@@ -226,6 +226,7 @@ namespace QToolbar
          this.lgrProgress.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
          this.lgrProgress.Size = new System.Drawing.Size(629, 29);
          this.lgrProgress.TextVisible = false;
+         this.lgrProgress.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
          // 
          // layProgress
          // 

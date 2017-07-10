@@ -9,10 +9,6 @@ namespace QToolbar
 {
    public class TreeNode<T>:IState  where T:IState,new()
    {
-      
-      
-
-      
       private List<TreeNode<T>> _Children;
       public List<TreeNode<T>> Children {
          get

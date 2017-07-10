@@ -59,7 +59,8 @@ namespace QToolbar
             lgrProgress.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
             ClearGrids();
             ClearSplitters();
-            backgroundWorker1.RunWorkerAsync();
+            
+            backgroundWorker1.RunWorkerAsync(txtSQL.Text);
          }
          catch(Exception ex)
          {
@@ -79,7 +80,7 @@ namespace QToolbar
                _Messages.Clear();
                con.FireInfoMessageEventOnUserErrors = true;
                con.InfoMessage += Con_InfoMessage;
-               SqlDataAdapter adapter = new SqlDataAdapter(txtSQL.Text, con);
+               SqlDataAdapter adapter = new SqlDataAdapter((string)e.Argument, con);
                
                DataSet dataset = new DataSet();
                adapter.Fill(dataset);
@@ -171,7 +172,7 @@ namespace QToolbar
                   grid.Dock = i == 0 ? grid.Dock = DockStyle.Fill : grid.Dock = DockStyle.Top;
                   
                   grid.DataSource = ds.Tables[ds.Tables.Count - 1 - i];
-                  ((GridView)grid.DefaultView).BestFitColumns();
+                  //((GridView)grid.DefaultView).BestFitColumns();
 
                   // add splitter
                   if (i < ds.Tables.Count - 1)

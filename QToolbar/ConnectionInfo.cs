@@ -19,8 +19,6 @@ namespace QToolbar
    public class ConnectionInfo:IState
    {
       // fields
-
-
       private string _CFPath = "";
       private string _Environment = "";
       private string _Server = "";
