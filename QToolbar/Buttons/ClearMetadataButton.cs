@@ -51,11 +51,14 @@ namespace QToolbar.Buttons
                builder.AppendLine("del %TEMP%\\*.metadata");
                builder.AppendLine("del %TEMP%\\*localization.dat");
                builder.AppendLine("taskkill /IM iisexpress.exe");
-               builder.AppendLine("echo \"Deleting Silverlight Metadata\"");
-               builder.AppendLine("del /S %userprofile%\\AppData\\LocalLow\\Microsoft\\Silverlight\\*24_*");
-               builder.AppendLine("del /S %userprofile%\\AppData\\Local\\Temp\\*pr_*");
-               builder.AppendLine("del /Q %temp%\\*.*");
-
+               if (OptionsInstance.ClearLegalMetadata)
+               {
+                  builder.AppendLine("echo \"Deleting Silverlight Metadata\"");
+                  builder.AppendLine("del /S %userprofile%\\AppData\\LocalLow\\Microsoft\\Silverlight\\*24_*");
+                  builder.AppendLine("del /S %userprofile%\\AppData\\Local\\Temp\\*pr_*");
+                  builder.AppendLine("del /Q %temp%\\*.*");
+               }
+               builder.AppendLine("pause");
                string FILE_NAME = Path.Combine(AppInstance.CacheDirectory, "clear_metadata.bat");
                FileStream fs = null;
                try

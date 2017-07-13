@@ -56,7 +56,7 @@ namespace QToolbar.Builds
          }
          else
          {
-            Inform("Next Build folder does not exist.", CheckResult.Error);
+            Inform("Next Build folder does not exist.", CheckResult.Warning);
             _Errors = true;
          }
          // configuration files

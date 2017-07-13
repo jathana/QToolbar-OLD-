@@ -4,6 +4,7 @@ using QToolbar.Options;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,10 +37,13 @@ namespace QToolbar.Buttons
 
       private void AddNextBuildItem(DataRow row)
       {
-         BarButtonItem nextBuildItem = new BarButtonItem(_BarManager, row["Name"].ToString(), 0);
-         nextBuildItem.ItemClick += MenuItemClick;
-         nextBuildItem.Tag = row;
-         _Menu.AddItem(nextBuildItem);
+         if (Directory.Exists(row["Path"].ToString()))
+         {
+            BarButtonItem nextBuildItem = new BarButtonItem(_BarManager, row["Name"].ToString(), 0);
+            nextBuildItem.ItemClick += MenuItemClick;
+            nextBuildItem.Tag = row;
+            _Menu.AddItem(nextBuildItem);
+         }
       }
 
       protected override void MenuItemClick(object sender, ItemClickEventArgs e)

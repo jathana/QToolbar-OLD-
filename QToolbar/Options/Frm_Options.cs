@@ -43,12 +43,12 @@ namespace QToolbar
          Properties.Settings.Default.DesignersFolder = txtDesignersFolder.Text;
          Properties.Settings.Default.QCSAdminFolder = txtQCSAdminFolder.Text;
          Properties.Settings.Default.QCSAgentFolder = txtQCSAgentFolder.Text;
-         Properties.Settings.Default.SQLFolder = txtSQLFolder.Text;
          Properties.Settings.Default.ExecutorConfiguratorFolder = txtExecutorConfigurationFolder.Text;
          Properties.Settings.Default.DatabaseScripterFolder = txtDatabaseScripterFolder.Text;
          Properties.Settings.Default.FieldsExplorerFolder = txtFieldsExplorerFolder.Text;
          Properties.Settings.Default.EnvironmentsConfigurationFolder = txtEnvironmentsConfiguration.Text;
          Properties.Settings.Default.InternalBuildsFolder = txtInternalBuildsFolder.Text;
+         Properties.Settings.Default.ClearLegalMetadata = chkClearLegalMetadata.Checked;
 
          // save folders
          SaveFolders();
@@ -73,12 +73,12 @@ namespace QToolbar
          txtDesignersFolder.Text = Properties.Settings.Default.DesignersFolder;
          txtQCSAdminFolder.Text = Properties.Settings.Default.QCSAdminFolder;
          txtQCSAgentFolder.Text = Properties.Settings.Default.QCSAgentFolder;
-         txtSQLFolder.Text = Properties.Settings.Default.SQLFolder;
          txtExecutorConfigurationFolder.Text = Properties.Settings.Default.ExecutorConfiguratorFolder;
          txtDatabaseScripterFolder.Text= Properties.Settings.Default.DatabaseScripterFolder;
          txtFieldsExplorerFolder.Text = Properties.Settings.Default.FieldsExplorerFolder;
          txtEnvironmentsConfiguration.Text = Properties.Settings.Default.EnvironmentsConfigurationFolder;
          txtInternalBuildsFolder.Text = Properties.Settings.Default.InternalBuildsFolder;
+         chkClearLegalMetadata.Checked = Properties.Settings.Default.ClearLegalMetadata;
 
          // custom edit form for sql queries
          gviewSQLQueries.OptionsEditForm.CustomEditFormLayout = new uc_SQLQueriesEdit();
@@ -166,14 +166,6 @@ namespace QToolbar
          if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
          {
             txtExecutorConfigurationFolder.Text = folderBrowserDialog1.SelectedPath;
-         }
-      }
-
-      private void txtSQLFolder_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
-      {
-         if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-         {
-            txtSQLFolder.Text = folderBrowserDialog1.SelectedPath;
          }
       }
 

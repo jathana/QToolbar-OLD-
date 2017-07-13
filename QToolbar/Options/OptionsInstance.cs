@@ -43,13 +43,7 @@ namespace QToolbar.Options
             return Properties.Settings.Default.QCSAgentFolder;
          }
       }
-      public static string SQLFolder
-      {
-         get
-         {
-            return Properties.Settings.Default.SQLFolder;
-         }
-      }
+      
       public static string ExecutorConfiguratorFolder
       {
          get
@@ -125,6 +119,14 @@ namespace QToolbar.Options
          get
          {
             return new ShellCommands(Properties.Settings.Default.LegalLinks);
+         }
+      }
+
+      public static bool ClearLegalMetadata
+      {
+         get
+         {
+            return Properties.Settings.Default.ClearLegalMetadata;
          }
       }
 

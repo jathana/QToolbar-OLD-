@@ -29,13 +29,13 @@
       private void InitializeComponent()
       {
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+         this.chkClearLegalMetadata = new DevExpress.XtraEditors.CheckEdit();
          this.txtInternalBuildsFolder = new DevExpress.XtraEditors.ButtonEdit();
          this.txtEnvironmentsConfiguration = new DevExpress.XtraEditors.ButtonEdit();
          this.memFolders = new DevExpress.XtraEditors.MemoEdit();
          this.txtFieldsExplorerFolder = new DevExpress.XtraEditors.ButtonEdit();
          this.txtDatabaseScripterFolder = new DevExpress.XtraEditors.ButtonEdit();
          this.txtExecutorConfigurationFolder = new DevExpress.XtraEditors.ButtonEdit();
-         this.txtSQLFolder = new DevExpress.XtraEditors.ButtonEdit();
          this.txtQCSAgentFolder = new DevExpress.XtraEditors.ButtonEdit();
          this.txtQCSAdminFolder = new DevExpress.XtraEditors.ButtonEdit();
          this.txtDesignersFolder = new DevExpress.XtraEditors.ButtonEdit();
@@ -47,7 +47,6 @@
          this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
          this.simpleSeparator1 = new DevExpress.XtraLayout.SimpleSeparator();
          this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
          this.simpleSeparator2 = new DevExpress.XtraLayout.SimpleSeparator();
          this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
          this.emptySpaceItem5 = new DevExpress.XtraLayout.EmptySpaceItem();
@@ -59,6 +58,7 @@
          this.layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem14 = new DevExpress.XtraLayout.LayoutControlItem();
+         this.layoutControlItem15 = new DevExpress.XtraLayout.LayoutControlItem();
          this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
          this.layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
          this.tabOptions = new DevExpress.XtraTab.XtraTabControl();
@@ -88,13 +88,13 @@
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.chkClearLegalMetadata.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtInternalBuildsFolder.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtEnvironmentsConfiguration.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.memFolders.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtFieldsExplorerFolder.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtDatabaseScripterFolder.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtExecutorConfigurationFolder.Properties)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.txtSQLFolder.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtQCSAgentFolder.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtQCSAdminFolder.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtDesignersFolder.Properties)).BeginInit();
@@ -106,7 +106,6 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.simpleSeparator1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.simpleSeparator2)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).BeginInit();
@@ -118,6 +117,7 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).BeginInit();
          this.layoutControl2.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.tabOptions)).BeginInit();
@@ -145,13 +145,13 @@
          // 
          // layoutControl1
          // 
+         this.layoutControl1.Controls.Add(this.chkClearLegalMetadata);
          this.layoutControl1.Controls.Add(this.txtInternalBuildsFolder);
          this.layoutControl1.Controls.Add(this.txtEnvironmentsConfiguration);
          this.layoutControl1.Controls.Add(this.memFolders);
          this.layoutControl1.Controls.Add(this.txtFieldsExplorerFolder);
          this.layoutControl1.Controls.Add(this.txtDatabaseScripterFolder);
          this.layoutControl1.Controls.Add(this.txtExecutorConfigurationFolder);
-         this.layoutControl1.Controls.Add(this.txtSQLFolder);
          this.layoutControl1.Controls.Add(this.txtQCSAgentFolder);
          this.layoutControl1.Controls.Add(this.txtQCSAdminFolder);
          this.layoutControl1.Controls.Add(this.txtDesignersFolder);
@@ -165,9 +165,18 @@
          this.layoutControl1.TabIndex = 1;
          this.layoutControl1.Text = "layoutControl1";
          // 
+         // chkClearLegalMetadata
+         // 
+         this.chkClearLegalMetadata.Location = new System.Drawing.Point(12, 12);
+         this.chkClearLegalMetadata.Name = "chkClearLegalMetadata";
+         this.chkClearLegalMetadata.Properties.Caption = "Clear Legal Metadata";
+         this.chkClearLegalMetadata.Size = new System.Drawing.Size(777, 19);
+         this.chkClearLegalMetadata.StyleController = this.layoutControl1;
+         this.chkClearLegalMetadata.TabIndex = 18;
+         // 
          // txtInternalBuildsFolder
          // 
-         this.txtInternalBuildsFolder.Location = new System.Drawing.Point(159, 272);
+         this.txtInternalBuildsFolder.Location = new System.Drawing.Point(159, 271);
          this.txtInternalBuildsFolder.Name = "txtInternalBuildsFolder";
          this.txtInternalBuildsFolder.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
@@ -178,7 +187,7 @@
          // 
          // txtEnvironmentsConfiguration
          // 
-         this.txtEnvironmentsConfiguration.Location = new System.Drawing.Point(159, 202);
+         this.txtEnvironmentsConfiguration.Location = new System.Drawing.Point(159, 225);
          this.txtEnvironmentsConfiguration.Name = "txtEnvironmentsConfiguration";
          this.txtEnvironmentsConfiguration.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
@@ -189,15 +198,15 @@
          // 
          // memFolders
          // 
-         this.memFolders.Location = new System.Drawing.Point(159, 296);
+         this.memFolders.Location = new System.Drawing.Point(159, 295);
          this.memFolders.Name = "memFolders";
-         this.memFolders.Size = new System.Drawing.Size(630, 143);
+         this.memFolders.Size = new System.Drawing.Size(630, 144);
          this.memFolders.StyleController = this.layoutControl1;
          this.memFolders.TabIndex = 15;
          // 
          // txtFieldsExplorerFolder
          // 
-         this.txtFieldsExplorerFolder.Location = new System.Drawing.Point(159, 178);
+         this.txtFieldsExplorerFolder.Location = new System.Drawing.Point(159, 201);
          this.txtFieldsExplorerFolder.Name = "txtFieldsExplorerFolder";
          this.txtFieldsExplorerFolder.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
@@ -208,7 +217,7 @@
          // 
          // txtDatabaseScripterFolder
          // 
-         this.txtDatabaseScripterFolder.Location = new System.Drawing.Point(159, 154);
+         this.txtDatabaseScripterFolder.Location = new System.Drawing.Point(159, 177);
          this.txtDatabaseScripterFolder.Name = "txtDatabaseScripterFolder";
          this.txtDatabaseScripterFolder.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
@@ -219,7 +228,7 @@
          // 
          // txtExecutorConfigurationFolder
          // 
-         this.txtExecutorConfigurationFolder.Location = new System.Drawing.Point(159, 130);
+         this.txtExecutorConfigurationFolder.Location = new System.Drawing.Point(159, 153);
          this.txtExecutorConfigurationFolder.Name = "txtExecutorConfigurationFolder";
          this.txtExecutorConfigurationFolder.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
@@ -228,20 +237,9 @@
          this.txtExecutorConfigurationFolder.TabIndex = 12;
          this.txtExecutorConfigurationFolder.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.txtExecutorConfigurationFolder_ButtonClick);
          // 
-         // txtSQLFolder
-         // 
-         this.txtSQLFolder.Location = new System.Drawing.Point(159, 248);
-         this.txtSQLFolder.Name = "txtSQLFolder";
-         this.txtSQLFolder.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-         this.txtSQLFolder.Size = new System.Drawing.Size(630, 20);
-         this.txtSQLFolder.StyleController = this.layoutControl1;
-         this.txtSQLFolder.TabIndex = 11;
-         this.txtSQLFolder.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.txtSQLFolder_ButtonClick);
-         // 
          // txtQCSAgentFolder
          // 
-         this.txtQCSAgentFolder.Location = new System.Drawing.Point(159, 106);
+         this.txtQCSAgentFolder.Location = new System.Drawing.Point(159, 129);
          this.txtQCSAgentFolder.Name = "txtQCSAgentFolder";
          this.txtQCSAgentFolder.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
@@ -252,7 +250,7 @@
          // 
          // txtQCSAdminFolder
          // 
-         this.txtQCSAdminFolder.Location = new System.Drawing.Point(159, 82);
+         this.txtQCSAdminFolder.Location = new System.Drawing.Point(159, 105);
          this.txtQCSAdminFolder.Name = "txtQCSAdminFolder";
          this.txtQCSAdminFolder.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
@@ -263,7 +261,7 @@
          // 
          // txtDesignersFolder
          // 
-         this.txtDesignersFolder.Location = new System.Drawing.Point(159, 58);
+         this.txtDesignersFolder.Location = new System.Drawing.Point(159, 81);
          this.txtDesignersFolder.Name = "txtDesignersFolder";
          this.txtDesignersFolder.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
@@ -274,7 +272,7 @@
          // 
          // txtTestingFolder
          // 
-         this.txtTestingFolder.Location = new System.Drawing.Point(159, 12);
+         this.txtTestingFolder.Location = new System.Drawing.Point(159, 35);
          this.txtTestingFolder.Name = "txtTestingFolder";
          this.txtTestingFolder.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
@@ -294,7 +292,6 @@
             this.layoutControlItem6,
             this.simpleSeparator1,
             this.layoutControlItem9,
-            this.layoutControlItem8,
             this.simpleSeparator2,
             this.emptySpaceItem1,
             this.emptySpaceItem5,
@@ -305,7 +302,8 @@
             this.layoutControlItem10,
             this.layoutControlItem11,
             this.layoutControlItem12,
-            this.layoutControlItem14});
+            this.layoutControlItem14,
+            this.layoutControlItem15});
          this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
          this.layoutControlGroup1.Name = "Root";
          this.layoutControlGroup1.Size = new System.Drawing.Size(801, 453);
@@ -314,7 +312,7 @@
          // layoutControlItem2
          // 
          this.layoutControlItem2.Control = this.txtTestingFolder;
-         this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
+         this.layoutControlItem2.Location = new System.Drawing.Point(0, 23);
          this.layoutControlItem2.Name = "layoutControlItem2";
          this.layoutControlItem2.Size = new System.Drawing.Size(781, 24);
          this.layoutControlItem2.Text = "Testing Folder";
@@ -323,7 +321,7 @@
          // layoutControlItem1
          // 
          this.layoutControlItem1.Control = this.txtDesignersFolder;
-         this.layoutControlItem1.Location = new System.Drawing.Point(0, 46);
+         this.layoutControlItem1.Location = new System.Drawing.Point(0, 69);
          this.layoutControlItem1.Name = "layoutControlItem1";
          this.layoutControlItem1.Size = new System.Drawing.Size(781, 24);
          this.layoutControlItem1.Text = "Designers Folder";
@@ -332,7 +330,7 @@
          // layoutControlItem5
          // 
          this.layoutControlItem5.Control = this.txtQCSAdminFolder;
-         this.layoutControlItem5.Location = new System.Drawing.Point(0, 70);
+         this.layoutControlItem5.Location = new System.Drawing.Point(0, 93);
          this.layoutControlItem5.Name = "layoutControlItem5";
          this.layoutControlItem5.Size = new System.Drawing.Size(781, 24);
          this.layoutControlItem5.Text = "QCSAdmin Folder";
@@ -341,7 +339,7 @@
          // layoutControlItem6
          // 
          this.layoutControlItem6.Control = this.txtQCSAgentFolder;
-         this.layoutControlItem6.Location = new System.Drawing.Point(0, 94);
+         this.layoutControlItem6.Location = new System.Drawing.Point(0, 117);
          this.layoutControlItem6.Name = "layoutControlItem6";
          this.layoutControlItem6.Size = new System.Drawing.Size(781, 24);
          this.layoutControlItem6.Text = "QCS Agent Folder";
@@ -350,39 +348,30 @@
          // simpleSeparator1
          // 
          this.simpleSeparator1.AllowHotTrack = false;
-         this.simpleSeparator1.Location = new System.Drawing.Point(0, 34);
+         this.simpleSeparator1.Location = new System.Drawing.Point(0, 57);
          this.simpleSeparator1.Name = "simpleSeparator1";
          this.simpleSeparator1.Size = new System.Drawing.Size(781, 2);
          // 
          // layoutControlItem9
          // 
          this.layoutControlItem9.Control = this.txtExecutorConfigurationFolder;
-         this.layoutControlItem9.Location = new System.Drawing.Point(0, 118);
+         this.layoutControlItem9.Location = new System.Drawing.Point(0, 141);
          this.layoutControlItem9.Name = "layoutControlItem9";
          this.layoutControlItem9.Size = new System.Drawing.Size(781, 24);
          this.layoutControlItem9.Text = "Executor Configuration Folder";
          this.layoutControlItem9.TextSize = new System.Drawing.Size(144, 13);
          // 
-         // layoutControlItem8
-         // 
-         this.layoutControlItem8.Control = this.txtSQLFolder;
-         this.layoutControlItem8.Location = new System.Drawing.Point(0, 236);
-         this.layoutControlItem8.Name = "layoutControlItem8";
-         this.layoutControlItem8.Size = new System.Drawing.Size(781, 24);
-         this.layoutControlItem8.Text = "SQL Folder";
-         this.layoutControlItem8.TextSize = new System.Drawing.Size(144, 13);
-         // 
          // simpleSeparator2
          // 
          this.simpleSeparator2.AllowHotTrack = false;
-         this.simpleSeparator2.Location = new System.Drawing.Point(0, 224);
+         this.simpleSeparator2.Location = new System.Drawing.Point(0, 247);
          this.simpleSeparator2.Name = "simpleSeparator2";
          this.simpleSeparator2.Size = new System.Drawing.Size(781, 2);
          // 
          // emptySpaceItem1
          // 
          this.emptySpaceItem1.AllowHotTrack = false;
-         this.emptySpaceItem1.Location = new System.Drawing.Point(0, 226);
+         this.emptySpaceItem1.Location = new System.Drawing.Point(0, 249);
          this.emptySpaceItem1.MaxSize = new System.Drawing.Size(598, 10);
          this.emptySpaceItem1.MinSize = new System.Drawing.Size(598, 10);
          this.emptySpaceItem1.Name = "emptySpaceItem1";
@@ -393,7 +382,7 @@
          // emptySpaceItem5
          // 
          this.emptySpaceItem5.AllowHotTrack = false;
-         this.emptySpaceItem5.Location = new System.Drawing.Point(0, 36);
+         this.emptySpaceItem5.Location = new System.Drawing.Point(0, 59);
          this.emptySpaceItem5.MaxSize = new System.Drawing.Size(598, 10);
          this.emptySpaceItem5.MinSize = new System.Drawing.Size(598, 10);
          this.emptySpaceItem5.Name = "emptySpaceItem5";
@@ -404,7 +393,7 @@
          // emptySpaceItem7
          // 
          this.emptySpaceItem7.AllowHotTrack = false;
-         this.emptySpaceItem7.Location = new System.Drawing.Point(0, 24);
+         this.emptySpaceItem7.Location = new System.Drawing.Point(0, 47);
          this.emptySpaceItem7.MaxSize = new System.Drawing.Size(598, 10);
          this.emptySpaceItem7.MinSize = new System.Drawing.Size(598, 10);
          this.emptySpaceItem7.Name = "emptySpaceItem7";
@@ -415,7 +404,7 @@
          // emptySpaceItem8
          // 
          this.emptySpaceItem8.AllowHotTrack = false;
-         this.emptySpaceItem8.Location = new System.Drawing.Point(0, 214);
+         this.emptySpaceItem8.Location = new System.Drawing.Point(0, 237);
          this.emptySpaceItem8.MaxSize = new System.Drawing.Size(598, 10);
          this.emptySpaceItem8.MinSize = new System.Drawing.Size(598, 10);
          this.emptySpaceItem8.Name = "emptySpaceItem8";
@@ -433,7 +422,7 @@
          // layoutControlItem7
          // 
          this.layoutControlItem7.Control = this.txtDatabaseScripterFolder;
-         this.layoutControlItem7.Location = new System.Drawing.Point(0, 142);
+         this.layoutControlItem7.Location = new System.Drawing.Point(0, 165);
          this.layoutControlItem7.Name = "layoutControlItem7";
          this.layoutControlItem7.Size = new System.Drawing.Size(781, 24);
          this.layoutControlItem7.Text = "Database Scripter Folder";
@@ -442,7 +431,7 @@
          // layoutControlItem10
          // 
          this.layoutControlItem10.Control = this.txtFieldsExplorerFolder;
-         this.layoutControlItem10.Location = new System.Drawing.Point(0, 166);
+         this.layoutControlItem10.Location = new System.Drawing.Point(0, 189);
          this.layoutControlItem10.Name = "layoutControlItem10";
          this.layoutControlItem10.Size = new System.Drawing.Size(781, 24);
          this.layoutControlItem10.Text = "Fileds Explorer Folder";
@@ -451,16 +440,16 @@
          // layoutControlItem11
          // 
          this.layoutControlItem11.Control = this.memFolders;
-         this.layoutControlItem11.Location = new System.Drawing.Point(0, 284);
+         this.layoutControlItem11.Location = new System.Drawing.Point(0, 283);
          this.layoutControlItem11.Name = "layoutControlItem11";
-         this.layoutControlItem11.Size = new System.Drawing.Size(781, 147);
+         this.layoutControlItem11.Size = new System.Drawing.Size(781, 148);
          this.layoutControlItem11.Text = "My Folders";
          this.layoutControlItem11.TextSize = new System.Drawing.Size(144, 13);
          // 
          // layoutControlItem12
          // 
          this.layoutControlItem12.Control = this.txtEnvironmentsConfiguration;
-         this.layoutControlItem12.Location = new System.Drawing.Point(0, 190);
+         this.layoutControlItem12.Location = new System.Drawing.Point(0, 213);
          this.layoutControlItem12.Name = "layoutControlItem12";
          this.layoutControlItem12.Size = new System.Drawing.Size(781, 24);
          this.layoutControlItem12.Text = "Environments Configuration";
@@ -469,11 +458,20 @@
          // layoutControlItem14
          // 
          this.layoutControlItem14.Control = this.txtInternalBuildsFolder;
-         this.layoutControlItem14.Location = new System.Drawing.Point(0, 260);
+         this.layoutControlItem14.Location = new System.Drawing.Point(0, 259);
          this.layoutControlItem14.Name = "layoutControlItem14";
          this.layoutControlItem14.Size = new System.Drawing.Size(781, 24);
          this.layoutControlItem14.Text = "Internal Builds Folder";
          this.layoutControlItem14.TextSize = new System.Drawing.Size(144, 13);
+         // 
+         // layoutControlItem15
+         // 
+         this.layoutControlItem15.Control = this.chkClearLegalMetadata;
+         this.layoutControlItem15.Location = new System.Drawing.Point(0, 0);
+         this.layoutControlItem15.Name = "layoutControlItem15";
+         this.layoutControlItem15.Size = new System.Drawing.Size(781, 23);
+         this.layoutControlItem15.TextSize = new System.Drawing.Size(0, 0);
+         this.layoutControlItem15.TextVisible = false;
          // 
          // btnCancel
          // 
@@ -749,13 +747,13 @@
          this.Load += new System.EventHandler(this.Frm_Options_Load);
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
          this.layoutControl1.ResumeLayout(false);
+         ((System.ComponentModel.ISupportInitialize)(this.chkClearLegalMetadata.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtInternalBuildsFolder.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtEnvironmentsConfiguration.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.memFolders.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtFieldsExplorerFolder.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtDatabaseScripterFolder.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtExecutorConfigurationFolder.Properties)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.txtSQLFolder.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtQCSAgentFolder.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtQCSAdminFolder.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtDesignersFolder.Properties)).EndInit();
@@ -767,7 +765,6 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.simpleSeparator1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.simpleSeparator2)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).EndInit();
@@ -779,6 +776,7 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).EndInit();
          this.layoutControl2.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.tabOptions)).EndInit();
@@ -820,8 +818,6 @@
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
       private DevExpress.XtraEditors.ButtonEdit txtQCSAgentFolder;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
-      private DevExpress.XtraEditors.ButtonEdit txtSQLFolder;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
       private DevExpress.XtraEditors.ButtonEdit txtExecutorConfigurationFolder;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
       private DevExpress.XtraLayout.SimpleSeparator simpleSeparator1;
@@ -865,5 +861,7 @@
       private DevExpress.XtraGrid.Columns.GridColumn colSQL;
       private DevExpress.XtraGrid.Columns.GridColumn colRunImmediate;
       private DevExpress.XtraEditors.Repository.RepositoryItemMemoEdit repositoryItemMemoEdit1;
+      private DevExpress.XtraEditors.CheckEdit chkClearLegalMetadata;
+      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem15;
    }
 }

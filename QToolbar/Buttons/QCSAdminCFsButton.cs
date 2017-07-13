@@ -44,14 +44,9 @@ namespace QToolbar.Buttons
                   XtraMessageBox.Show("Cannot parse directory name.");
                }
             }
-            //List<string> sorted = subdirs.ToList<string>();
-            //sorted.Sort();
             string file = Path.Combine(destDir, "QBC_Admin.cf.deploy");
             try
             {
-               //Frm_FileViewer f = new Frm_FileViewer();
-               //f.ViewFile(file);
-
                Frm_FileViewer f = new Frm_FileViewer();
                f.Size = new Size(800, 800);
 
@@ -59,7 +54,7 @@ namespace QToolbar.Buttons
             }
             catch (Exception ex)
             {
-               XtraMessageBox.Show(ex.Message);
+               XtraMessageBox.Show($"file: {file}, msg:{ex.Message}, ");
             }
          }
       }

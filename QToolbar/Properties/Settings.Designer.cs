@@ -262,5 +262,17 @@ namespace QToolbar.Properties {
                 this["SQLQueries"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ClearLegalMetadata {
+            get {
+                return ((bool)(this["ClearLegalMetadata"]));
+            }
+            set {
+                this["ClearLegalMetadata"] = value;
+            }
+        }
     }
 }

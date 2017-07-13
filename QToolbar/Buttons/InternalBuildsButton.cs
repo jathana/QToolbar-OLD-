@@ -49,7 +49,7 @@ namespace QToolbar.Buttons
                         }
                         else
                         {
-                           builds.Add(major, new List<string>() { major });
+                           builds.Add(major, new List<string>() { dir });
                         }
                      }
                   }

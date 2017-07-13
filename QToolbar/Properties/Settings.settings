@@ -90,5 +90,8 @@
   &lt;/table&gt;
 &lt;/DocumentElement&gt;</Value>
     </Setting>
+    <Setting Name="ClearLegalMetadata" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

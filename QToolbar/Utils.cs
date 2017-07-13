@@ -134,6 +134,7 @@ namespace QToolbar
 
       public static string GetConnectionString(string server, string database)
       {
+         int a = default(int);
             return $"Server={server};Database={database};Integrated Security=SSPI;";
       }
 

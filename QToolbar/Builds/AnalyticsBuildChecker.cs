@@ -50,7 +50,7 @@ namespace QToolbar.Builds
          }
          else
          {
-            Inform("Next Build folder does not exist.", CheckResult.Error);
+            Inform("Next Build folder does not exist.", CheckResult.Warning);
             _Errors = true;
          }
          if (!_Errors && _Table.Rows.Count == 0)
