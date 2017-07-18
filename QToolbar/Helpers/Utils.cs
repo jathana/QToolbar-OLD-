@@ -14,7 +14,7 @@ namespace QToolbar
    public static class Utils
    {
 
-
+      #region IO
       public static bool EnsureFolder(string dir)
       {
          bool retval = true;
@@ -54,6 +54,7 @@ namespace QToolbar
          return retVal;
       }
 
+      #endregion
 
       /// <summary>
       /// constructs a version object from string. 
@@ -83,23 +84,23 @@ namespace QToolbar
          return retval;
       }
 
-      public static Dictionary<string,string> GetSectionItems(string section)
-      {
+      //public static Dictionary<string,string> GetSectionItems(string section)
+      //{
 
-         Dictionary<string, string> retval = new Dictionary<string, string>();
-         Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
-         ConfigurationSection foldersSection = config.GetSection(section);
-         XmlDocument doc = new XmlDocument();
-         doc.LoadXml(foldersSection.SectionInformation.GetRawXml());
-         foreach (XmlNode child in doc.ChildNodes[0].ChildNodes)
-         {
-            if (child.Attributes.GetNamedItem("key") != null && child.Attributes.GetNamedItem("value") != null)
-            {
-               retval.Add(child.Attributes["key"].Value, child.Attributes["value"].Value);
-            }
-         }
-         return retval;
-      }
+      //   Dictionary<string, string> retval = new Dictionary<string, string>();
+      //   Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+      //   ConfigurationSection foldersSection = config.GetSection(section);
+      //   XmlDocument doc = new XmlDocument();
+      //   doc.LoadXml(foldersSection.SectionInformation.GetRawXml());
+      //   foreach (XmlNode child in doc.ChildNodes[0].ChildNodes)
+      //   {
+      //      if (child.Attributes.GetNamedItem("key") != null && child.Attributes.GetNamedItem("value") != null)
+      //      {
+      //         retval.Add(child.Attributes["key"].Value, child.Attributes["value"].Value);
+      //      }
+      //   }
+      //   return retval;
+      //}
 
 
       public static Encoding GetEncoding(string srcFile)
@@ -132,11 +133,16 @@ namespace QToolbar
          return enc;
       }
 
+
+      #region database
       public static string GetConnectionString(string server, string database)
       {
-         int a = default(int);
-            return $"Server={server};Database={database};Integrated Security=SSPI;";
+         return $"Server={server};Database={database};Integrated Security=SSPI;";
       }
+
+
+      #endregion
+
 
    }
 }

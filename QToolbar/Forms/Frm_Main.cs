@@ -117,10 +117,10 @@ namespace QToolbar
 
       private void Frm_Main_Load(object sender, EventArgs e)
       {
-         this.ClientSize = new Size(ribbonControl1.Width, ribbonControl1.Height);
+         this.ClientSize = ribbonControl1.Size;         
          //this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
-         Location = Properties.Settings.Default.WindowLocation;
+         Location = Properties.Settings.Default.WindowLocation;         
          Size = Properties.Settings.Default.WindowSize;
          EnsureVisible(this);
          InitUI();

@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\q-wks-jathan\Shared\QToolbar\</InstallUrl>
-    <ApplicationRevision>83</ApplicationRevision>
+    <ApplicationRevision>84</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -65,17 +65,17 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Images.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Printing.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Sparkline.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Utils.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraBars.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraEditors.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraGrid.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraLayout.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraPrinting.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraTreeList.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Images.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v17.1.Core, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Sparkline.v17.1.Core, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraBars.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGrid.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraTreeList.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="FastColoredTextBox, Version=2.16.11.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b, processorArchitecture=MSIL">
       <HintPath>..\packages\FCTB.2.16.11.0\lib\FastColoredTextBox.dll</HintPath>
       <Private>True</Private>
@@ -118,35 +118,41 @@
     <Compile Include="Buttons\InternalBuildsButton.cs" />
     <Compile Include="Buttons\NextBuildButton.cs" />
     <Compile Include="Builds\CheckResult.cs" />
-    <Compile Include="ConnectionInfo.cs" />
-    <Compile Include="Builds\Frm_InternalBuilds.cs">
+    <Compile Include="Forms\Frm_EnvironmentsChecker.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Builds\Frm_InternalBuilds.Designer.cs">
+    <Compile Include="Forms\Frm_EnvironmentsChecker.Designer.cs">
+      <DependentUpon>Frm_EnvironmentsChecker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\ConnectionInfo.cs" />
+    <Compile Include="Forms\Frm_InternalBuilds.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Frm_InternalBuilds.Designer.cs">
       <DependentUpon>Frm_InternalBuilds.cs</DependentUpon>
     </Compile>
-    <Compile Include="Builds\Frm_NextBuildChecker.cs">
+    <Compile Include="Forms\Frm_NextBuildChecker.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Builds\Frm_NextBuildChecker.designer.cs">
+    <Compile Include="Forms\Frm_NextBuildChecker.designer.cs">
       <DependentUpon>Frm_NextBuildChecker.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frm_Main.cs">
+    <Compile Include="Forms\Frm_Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Frm_Main.Designer.cs">
+    <Compile Include="Forms\Frm_Main.Designer.cs">
       <DependentUpon>Frm_Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="Options\Frm_Options.cs">
+    <Compile Include="Forms\Frm_Options.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Options\Frm_Options.Designer.cs">
+    <Compile Include="Forms\Frm_Options.Designer.cs">
       <DependentUpon>Frm_Options.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frm_SQLQueries.cs">
+    <Compile Include="Forms\Frm_SQLQueries.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Frm_SQLQueries.Designer.cs">
+    <Compile Include="Forms\Frm_SQLQueries.Designer.cs">
       <DependentUpon>Frm_SQLQueries.cs</DependentUpon>
     </Compile>
     <Compile Include="Buttons\ButtonBase.cs" />
@@ -158,16 +164,16 @@
     <Compile Include="Buttons\QCSAdminButton.cs" />
     <Compile Include="Buttons\QCSAdminCFsButton.cs" />
     <Compile Include="Buttons\DesignersButton.cs" />
-    <Compile Include="IniFile.cs" />
-    <Compile Include="IniFile2.cs" />
-    <Compile Include="IState.cs" />
+    <Compile Include="Helpers\IniFile.cs" />
+    <Compile Include="Helpers\IniFile2.cs" />
+    <Compile Include="Helpers\IState.cs" />
     <Compile Include="Builds\NextBuildFile.cs" />
     <Compile Include="Options\SQLQueries.cs" />
     <Compile Include="Options\ShellCommands.cs" />
-    <Compile Include="Frm_FileViewer.cs">
+    <Compile Include="Forms\Frm_FileViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Frm_FileViewer.designer.cs">
+    <Compile Include="Forms\Frm_FileViewer.designer.cs">
       <DependentUpon>Frm_FileViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -175,57 +181,60 @@
     <Compile Include="Options\Checkouts.cs" />
     <Compile Include="Options\SerializableKeyValue.cs" />
     <Compile Include="Options\SerializableTable.cs" />
-    <Compile Include="StickyWindow.cs" />
+    <Compile Include="Helpers\StickyWindow.cs" />
     <Compile Include="Options\OptionsInstance.cs" />
-    <Compile Include="TextEncodingDetect.cs" />
-    <Compile Include="TextFileEncodingDetector.cs" />
-    <Compile Include="Environments\Frm_CreateEnvironment.cs">
+    <Compile Include="Helpers\TextEncodingDetect.cs" />
+    <Compile Include="Helpers\TextFileEncodingDetector.cs" />
+    <Compile Include="Forms\Frm_CreateEnvironment.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Environments\Frm_CreateEnvironment.Designer.cs">
+    <Compile Include="Forms\Frm_CreateEnvironment.Designer.cs">
       <DependentUpon>Frm_CreateEnvironment.cs</DependentUpon>
     </Compile>
-    <Compile Include="Criteria\Frm_ScriptCriteria.cs">
+    <Compile Include="Forms\Frm_ScriptCriteria.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Criteria\Frm_ScriptCriteria.Designer.cs">
+    <Compile Include="Forms\Frm_ScriptCriteria.Designer.cs">
       <DependentUpon>Frm_ScriptCriteria.cs</DependentUpon>
     </Compile>
     <Compile Include="Environments\QEnvironment.cs" />
     <Compile Include="Environments\QEnvironmentCreator.cs" />
     <Compile Include="Environments\QEnvironmentValidator.cs" />
-    <Compile Include="TreeNode.cs" />
-    <Compile Include="TreeNodeSerializer.cs" />
-    <Compile Include="uc_SQL.cs">
+    <Compile Include="Helpers\TreeNode.cs" />
+    <Compile Include="Helpers\TreeNodeSerializer.cs" />
+    <Compile Include="UserControls\uc_SQL.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="uc_SQL.Designer.cs">
+    <Compile Include="UserControls\uc_SQL.Designer.cs">
       <DependentUpon>uc_SQL.cs</DependentUpon>
     </Compile>
-    <Compile Include="uc_SQLQueriesEdit.cs">
+    <Compile Include="UserControls\uc_SQLQueriesEdit.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="uc_SQLQueriesEdit.Designer.cs">
+    <Compile Include="UserControls\uc_SQLQueriesEdit.Designer.cs">
       <DependentUpon>uc_SQLQueriesEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utils.cs" />
-    <Compile Include="XmlNodeExtensions.cs" />
-    <EmbeddedResource Include="Builds\Frm_InternalBuilds.resx">
+    <Compile Include="Helpers\Utils.cs" />
+    <Compile Include="Helpers\XmlNodeExtensions.cs" />
+    <EmbeddedResource Include="Forms\Frm_EnvironmentsChecker.resx">
+      <DependentUpon>Frm_EnvironmentsChecker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Frm_InternalBuilds.resx">
       <DependentUpon>Frm_InternalBuilds.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Builds\Frm_NextBuildChecker.resx">
+    <EmbeddedResource Include="Forms\Frm_NextBuildChecker.resx">
       <DependentUpon>Frm_NextBuildChecker.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Frm_Main.resx">
+    <EmbeddedResource Include="Forms\Frm_Main.resx">
       <DependentUpon>Frm_Main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Options\Frm_Options.resx">
+    <EmbeddedResource Include="Forms\Frm_Options.resx">
       <DependentUpon>Frm_Options.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Frm_SQLQueries.resx">
+    <EmbeddedResource Include="Forms\Frm_SQLQueries.resx">
       <DependentUpon>Frm_SQLQueries.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Frm_FileViewer.resx">
+    <EmbeddedResource Include="Forms\Frm_FileViewer.resx">
       <DependentUpon>Frm_FileViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
@@ -239,16 +248,16 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Environments\Frm_CreateEnvironment.resx">
+    <EmbeddedResource Include="Forms\Frm_CreateEnvironment.resx">
       <DependentUpon>Frm_CreateEnvironment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Criteria\Frm_ScriptCriteria.resx">
+    <EmbeddedResource Include="Forms\Frm_ScriptCriteria.resx">
       <DependentUpon>Frm_ScriptCriteria.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="uc_SQL.resx">
+    <EmbeddedResource Include="UserControls\uc_SQL.resx">
       <DependentUpon>uc_SQL.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="uc_SQLQueriesEdit.resx">
+    <EmbeddedResource Include="UserControls\uc_SQLQueriesEdit.resx">
       <DependentUpon>uc_SQLQueriesEdit.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -289,6 +298,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Criteria\" />
     <Folder Include="Database\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

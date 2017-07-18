@@ -34,6 +34,7 @@ namespace QToolbar.Tools
       private string _AnalyticsDatabase = "";
       private string _OLAPServer = "";
       private string _OLAPDatabase = "";
+      private string _STDConnector = "";
       //
       private string _CheckoutPath = "";
 
