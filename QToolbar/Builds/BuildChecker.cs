@@ -65,6 +65,8 @@ namespace QToolbar.Builds
          // check qbc_admin.cf
          CheckQBCAdminCF();
 
+         // check sql keywords
+         CheckSqlKeywords();
          if (!_Errors && _Table.Rows.Count == 0)
          {
             Inform("Everything ok!", CheckResult.OK);
@@ -87,5 +89,10 @@ namespace QToolbar.Builds
          }
          return retval;
       }
+
+
+
+
+      
    }
 }

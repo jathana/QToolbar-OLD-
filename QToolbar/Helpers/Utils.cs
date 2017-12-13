@@ -142,7 +142,62 @@ namespace QToolbar
 
 
       #endregion
+      #region sql
 
+      public static Tuple<string, int>[] GetSQLKeywords()
+      {
+         return new Tuple<string, int>[]
+         {
+            new Tuple<string,int>("CUME_DIST",2012),
+            new Tuple<string,int>("FIRST_VALUE",2012),
+            new Tuple<string,int>("LAG",2012),
+            new Tuple<string,int>("LAST_VALUE",2012),
+            new Tuple<string,int>("LEAD",2012),
+            new Tuple<string,int>("PERCENTILE_CONT",2012),
+            new Tuple<string,int>("PERCENTILE_DISC",2012),
+            new Tuple<string,int>("PERCENT_RANK",2012),
+            new Tuple<string,int>("PARSE",2012),
+            new Tuple<string,int>("TRY_CAST",2012),
+            new Tuple<string,int>("TRY_CONVERT",2012),
+            new Tuple<string,int>("TRY_PARSE",2012),
+            new Tuple<string,int>("DATEDIFF_BIG",2016),
+            new Tuple<string,int>("DATEFROMPARTS",2012),
+            new Tuple<string,int>("DATETIME2FROMPARTS",2012),
+            new Tuple<string,int>("DATETIMEFROMPARTS",2012),
+            new Tuple<string,int>("DATETIMEOFFSETFROMPARTS",2012),
+            new Tuple<string,int>("EOMONTH",2012),
+            new Tuple<string,int>("SMALLDATETIMEFROMPARTS",2012),
+            new Tuple<string,int>("TIMEFROMPARTS",2012),
+            new Tuple<string,int>("ISJSON",2016),
+            new Tuple<string,int>("JSON_VALUE",2016),
+            new Tuple<string,int>("JSON_QUERY",2016),
+            new Tuple<string,int>("JSON_MODIFY",2016),
+            new Tuple<string,int>("CHOOSE",2012),
+            new Tuple<string,int>("IIF",2012),
+            new Tuple<string,int>("NEXT VALUE FOR",2012),
+            new Tuple<string,int>("PARSENAME",2012),
+            new Tuple<string,int>("OPENJSON",2016),
+            new Tuple<string,int>("CERTENCODED",2012),
+            new Tuple<string,int>("CERTPRIVATEKEY",2012),
+            new Tuple<string,int>("IS_ROLEMEMBER",2012),
+            new Tuple<string,int>("CONCAT",2012),
+            new Tuple<string,int>("CONCAT_WS",2012),
+            new Tuple<string,int>("FORMAT",2012),
+            new Tuple<string,int>("STRING_AGG",2017),
+            new Tuple<string,int>("STRING_ESCAPE",2016),
+            new Tuple<string,int>("STRING_SPLIT",2016),
+            new Tuple<string,int>("TRANSLATE",2017),
+            new Tuple<string,int>("TRIM",2017),
+            new Tuple<string,int>("COMPRESS",2016),
+            new Tuple<string,int>("CURRENT_TRANSACTION_ID",2016),
+            new Tuple<string,int>("DECOMPRESS",2016),
+            new Tuple<string,int>("HOST_NAME",2016),
+            new Tuple<string,int>("SESSION_CONTEXT",2016)
+
+         };
+      }
+
+      #endregion
 
    }
 }

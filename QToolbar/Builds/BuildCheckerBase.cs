@@ -3,6 +3,7 @@ using QToolbar.Options;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -374,6 +375,99 @@ namespace QToolbar.Builds
 
       }
 
+
+
+      protected virtual bool CheckSqlKeywords()
+      {
+         bool retval = true;
+         string cfFile = Path.Combine(CheckoutPath, @"VS Projects\QCS\QCSClient\QBC_Admin.cf");
+         string[] keys = IniFile2.ReadKeys("Servers", cfFile);
+
+         string server = "";
+         string db = "";
+
+         Tuple<string, int>[] keywords = Utils.GetSQLKeywords();
+
+         foreach (var key in keys)
+         {
+            server = IniFile2.ReadValue("Servers", key, cfFile);
+            db = IniFile2.ReadValue("DatabaseName", key, cfFile);
+            using (SqlConnection con = new SqlConnection(Utils.GetConnectionString(server, db)))
+            {
+               try
+               {
+                  con.Open();
+                  SqlCommand command = new SqlCommand("SELECT @@VERSION", con);
+
+                  command.CommandType = CommandType.Text;
+                  string ret = (string)command.ExecuteScalar();
+                  if(ret.Contains("2008"))
+                  {
+
+                     // check views
+                     string viewsPath = Path.Combine(CheckoutPath, @"Database Scripts\Views");
+                     string[] views=Directory.GetFiles(viewsPath, "*.sql");
+                     foreach(string view in views)
+                     {
+                        string viewContent=File.ReadAllText(view);
+                        
+                        foreach(var keyword in keywords )
+                        {
+                           Regex reg = new Regex($@"\s+{keyword.Item1}(\s*[(]|\s+)",RegexOptions.IgnoreCase);
+                           if (reg.IsMatch(viewContent))
+                           {
+                              Inform(view, $"View {Path.GetFileName(view)} contains {keyword.Item1} and it is not supported in db {server}.{db}",view, CheckResult.Warning);
+                           }
+                        }
+                     }
+
+                     // check stored procs
+                     string spsPath = Path.Combine(CheckoutPath, @"Database Scripts\Stored Procedures");
+                     string[] sps = Directory.GetFiles(viewsPath, "*.sql");
+                     foreach (string sp in sps)
+                     {
+                        string spContent = File.ReadAllText(sp);
+                        foreach (var keyword in keywords)
+                        {
+                           Regex reg = new Regex($@"\s+{keyword.Item1}(\s*[(]|\s+)", RegexOptions.IgnoreCase);
+                           if (reg.IsMatch(spContent))
+                           {
+                              Inform(sp, $"Stored procedure {Path.GetFileName(sp)} contains {keyword.Item1} and it is not supported in db {server}.{db}", sp, CheckResult.Warning);
+                           }
+                        }
+                     }
+
+                     // user defined functions
+                     string udefsPath = Path.Combine(CheckoutPath, @"Database Scripts\User Defined Functions");
+                     string[] udefs = Directory.GetFiles(udefsPath, "*.sql");
+                     foreach (string udef in udefs)
+                     {
+                        string udefContent = File.ReadAllText(udef);
+                        foreach (var keyword in keywords)
+                        {
+                           Regex reg = new Regex($@"\s+{keyword.Item1}(\s*[(]|\s+)", RegexOptions.IgnoreCase);
+                           if (reg.IsMatch(udefContent))
+                           {
+                              Inform(udef, $"User Defined Function {Path.GetFileName(udef)} contains {keyword.Item1} and it is not supported in db {server}.{db}", udef, CheckResult.Warning);
+                           }
+                        }
+                     }
+
+                  }
+
+               }
+               catch (Exception ex)
+               {
+
+               }
+               finally
+               {
+                  con.Close();
+               }
+            }
+         }
+         return retval;
+      }
 
 
    }

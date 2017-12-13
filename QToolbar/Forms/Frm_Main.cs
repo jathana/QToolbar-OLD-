@@ -39,6 +39,7 @@ namespace QToolbar
       private ShellCommandsButton _ShellCommandsButton;
       private ClearMetadataButton _ClearMetadataButton;
       private DesignersLocalButton _DesignersLocalButton;
+      private PluginsButton _PluginsButton;
       #endregion
 
       private Blue.Windows.StickyWindow stickyWindow;
@@ -74,6 +75,7 @@ namespace QToolbar
          _ShellCommandsButton = new ShellCommandsButton(barManager1, mnuShellCommands);
          _ClearMetadataButton = new ClearMetadataButton();
          _DesignersLocalButton = new DesignersLocalButton(barManager1, mnuDesignersLocal);
+         _PluginsButton = new PluginsButton(barManager1, mnuPlugins);
 
       }
 
@@ -82,20 +84,21 @@ namespace QToolbar
          //Task.Run(() =>
          //{
          Cursor = Cursors.WaitCursor;
-            _DatabaseScripterButton.CreateMenuItems();
-            _DesignersButton.CreateMenuItems();
-            _EnvironmentsConfigurationButton.CreateMenuItems();
-            _ExecutorConfiguratorButton.CreateMenuItems();
-            _FieldsExplorerButton.CreateMenuItems();
-            _FoldersButton.CreateMenuItems();
-            _InternalBuildsButton.CreateMenuItems();
-            _LegalLinksButton.CreateMenuItems();
-            _NextBuildButton.CreateMenuItems();
-            _QCSAdminButton.CreateMenuItems();
-            _QCSAdminCFsButton.CreateMenuItems();
-            _QCSAgentButton.CreateMenuItems();
-            _ShellCommandsButton.CreateMenuItems();
-            _DesignersLocalButton.CreateMenuItems();
+         _DatabaseScripterButton.CreateMenuItems();
+         _DesignersButton.CreateMenuItems();
+         _EnvironmentsConfigurationButton.CreateMenuItems();
+         _ExecutorConfiguratorButton.CreateMenuItems();
+         _FieldsExplorerButton.CreateMenuItems();
+         _FoldersButton.CreateMenuItems();
+         _InternalBuildsButton.CreateMenuItems();
+         _LegalLinksButton.CreateMenuItems();
+         _NextBuildButton.CreateMenuItems();
+         _QCSAdminButton.CreateMenuItems();
+         _QCSAdminCFsButton.CreateMenuItems();
+         _QCSAgentButton.CreateMenuItems();
+         _ShellCommandsButton.CreateMenuItems();
+         _DesignersLocalButton.CreateMenuItems();
+         _PluginsButton.CreateMenuItems();
          Cursor = Cursors.Default;
          //});
       }
