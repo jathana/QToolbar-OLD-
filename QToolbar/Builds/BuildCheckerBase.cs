@@ -1,4 +1,6 @@
 ﻿using Microsoft.SqlServer.Management.SqlParser.Parser;
+using Microsoft.SqlServer.TransactSql.ScriptDom;
+using QToolbar.Helpers;
 using QToolbar.Options;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ using System.Xml;
 
 namespace QToolbar.Builds
 {
+   public delegate void FileCheckedEventHandler(object sender, BuildCheckerEventArgs e);
 
    public abstract class BuildCheckerBase
    {
@@ -26,10 +29,18 @@ namespace QToolbar.Builds
       protected DataTable _Table = new DataTable();
       protected bool _Errors = false;
 
+      protected SqlParser _SqlParser;
+
+      private List<Tuple<string, string, string>> _TestDatabases;
+
+
+      public event FileCheckedEventHandler FileChecked;
+
       #region constructors
       public BuildCheckerBase()
       {
          InitUI();
+         _SqlParser = new SqlParser();
       }
       #endregion
 
@@ -82,8 +93,19 @@ namespace QToolbar.Builds
          }
       }
 
-       
-      
+
+
+      #endregion
+
+      #region Events
+      protected virtual void OnFileChecked(BuildCheckerEventArgs e)
+      {
+         FileCheckedEventHandler handler = FileChecked;
+         if (handler != null)
+         {
+            handler(this, e);
+         }
+      }
       #endregion
 
       #region private
@@ -256,7 +278,7 @@ namespace QToolbar.Builds
       }
 
 
-      protected bool ParseSqlFile(string content, string file)
+      protected bool ParseSqlFileOld(string content, string file)
       {
          bool retval = true;
          if (Path.GetExtension(file).ToLower().Equals(".sql") || Path.GetExtension(file).ToLower().Equals(".bd"))
@@ -283,6 +305,29 @@ namespace QToolbar.Builds
          }
          return retval;
       }
+
+      protected bool ParseSqlFile(string content, string file)
+      {
+         bool retval = true;
+         if (Path.GetExtension(file).ToLower().Equals(".sql") || Path.GetExtension(file).ToLower().Equals(".bd"))
+         {
+            retval = _SqlParser.Parse(file);
+            AddParseErrors(file);
+
+            Tuple<string, int>[] keywords = Utils.GetSQLKeywords();
+            EnsureTestDatabases();
+
+            var dbs2008 = _TestDatabases.Where(database => database.Item3.Contains("2008")).ToList();
+            _SqlParser.Parse(file);
+            CheckTSQLKeywords2008(file, _SqlParser);
+         }
+
+         OnFileChecked(new BuildCheckerEventArgs() { Message = $"File {file}"});
+      
+         return retval;
+      }
+
+
 
       protected bool CheckQBCAdminCF()
       {
@@ -375,19 +420,16 @@ namespace QToolbar.Builds
 
       }
 
-
-
-      protected virtual bool CheckSqlKeywords()
+      protected virtual List<Tuple<string,string,string>> GetTestDBs()
       {
-         bool retval = true;
          string cfFile = Path.Combine(CheckoutPath, @"VS Projects\QCS\QCSClient\QBC_Admin.cf");
          string[] keys = IniFile2.ReadKeys("Servers", cfFile);
 
          string server = "";
          string db = "";
-
-         Tuple<string, int>[] keywords = Utils.GetSQLKeywords();
-
+         //SqlParser parser = new SqlParser();
+         List<Tuple<string, string, string>> dbs = new List<Tuple<string, string, string>>();
+         // get database versions
          foreach (var key in keys)
          {
             server = IniFile2.ReadValue("Servers", key, cfFile);
@@ -401,59 +443,8 @@ namespace QToolbar.Builds
 
                   command.CommandType = CommandType.Text;
                   string ret = (string)command.ExecuteScalar();
-                  if(ret.Contains("2008"))
-                  {
-
-                     // check views
-                     string viewsPath = Path.Combine(CheckoutPath, @"Database Scripts\Views");
-                     string[] views=Directory.GetFiles(viewsPath, "*.sql");
-                     foreach(string view in views)
-                     {
-                        string viewContent=File.ReadAllText(view);
-                        
-                        foreach(var keyword in keywords )
-                        {
-                           Regex reg = new Regex($@"\s+{keyword.Item1}(\s*[(]|\s+)",RegexOptions.IgnoreCase);
-                           if (reg.IsMatch(viewContent))
-                           {
-                              Inform(view, $"View {Path.GetFileName(view)} contains {keyword.Item1} and it is not supported in db {server}.{db}",view, CheckResult.Warning);
-                           }
-                        }
-                     }
-
-                     // check stored procs
-                     string spsPath = Path.Combine(CheckoutPath, @"Database Scripts\Stored Procedures");
-                     string[] sps = Directory.GetFiles(viewsPath, "*.sql");
-                     foreach (string sp in sps)
-                     {
-                        string spContent = File.ReadAllText(sp);
-                        foreach (var keyword in keywords)
-                        {
-                           Regex reg = new Regex($@"\s+{keyword.Item1}(\s*[(]|\s+)", RegexOptions.IgnoreCase);
-                           if (reg.IsMatch(spContent))
-                           {
-                              Inform(sp, $"Stored procedure {Path.GetFileName(sp)} contains {keyword.Item1} and it is not supported in db {server}.{db}", sp, CheckResult.Warning);
-                           }
-                        }
-                     }
-
-                     // user defined functions
-                     string udefsPath = Path.Combine(CheckoutPath, @"Database Scripts\User Defined Functions");
-                     string[] udefs = Directory.GetFiles(udefsPath, "*.sql");
-                     foreach (string udef in udefs)
-                     {
-                        string udefContent = File.ReadAllText(udef);
-                        foreach (var keyword in keywords)
-                        {
-                           Regex reg = new Regex($@"\s+{keyword.Item1}(\s*[(]|\s+)", RegexOptions.IgnoreCase);
-                           if (reg.IsMatch(udefContent))
-                           {
-                              Inform(udef, $"User Defined Function {Path.GetFileName(udef)} contains {keyword.Item1} and it is not supported in db {server}.{db}", udef, CheckResult.Warning);
-                           }
-                        }
-                     }
-
-                  }
+                  Tuple<string, string, string> newItem = Tuple.Create<string, string, string>(server, db, ret);
+                  dbs.Add(newItem);
 
                }
                catch (Exception ex)
@@ -466,9 +457,111 @@ namespace QToolbar.Builds
                }
             }
          }
+
+         return dbs;
+      }
+
+      private void EnsureTestDatabases()
+      {
+         if (_TestDatabases==null)
+         {
+            _TestDatabases = GetTestDBs();
+         }
+      }
+
+      protected virtual bool CheckDatabaseScripts()
+      {
+         bool retval = true;
+         string cfFile = Path.Combine(CheckoutPath, @"VS Projects\QCS\QCSClient\QBC_Admin.cf");
+         string[] keys = IniFile2.ReadKeys("Servers", cfFile);
+
+         Tuple<string, int>[] keywords = Utils.GetSQLKeywords();
+
+         EnsureTestDatabases();
+         List<Tuple<string, string, string>> dbs = _TestDatabases;
+
+         // check next build scripts
+
+
+         // check views
+         string viewsPath = Path.Combine(CheckoutPath, @"Database Scripts\Views");
+         string[] views=Directory.GetFiles(viewsPath, "*.sql");
+         var dbs2008 = dbs.Where(database => database.Item3.Contains("2008")).ToList();
+         foreach(string view in views)
+         {
+            _SqlParser.Parse(view);
+            AddParseErrors(view);
+            CheckTSQLKeywords2008(view, _SqlParser);
+            OnFileChecked(new BuildCheckerEventArgs() { Message = $"View: {view}" });
+         }
+
+         // check stored procs
+         string spsPath = Path.Combine(CheckoutPath, @"Database Scripts\Stored Procedures");
+         string[] sps = Directory.GetFiles(spsPath, "*.sql");
+         foreach (string sp in sps)
+         {
+            string spContent = File.ReadAllText(sp);
+
+            _SqlParser.Parse(sp);
+            AddParseErrors(sp);
+            CheckTSQLKeywords2008(sp, _SqlParser);
+            OnFileChecked(new BuildCheckerEventArgs() { Message = $"Stored Procedure: {sp}" });
+         }
+
+         // user defined functions
+         string udefsPath = Path.Combine(CheckoutPath, @"Database Scripts\User Defined Functions");
+         string[] udefs = Directory.GetFiles(udefsPath, "*.sql");
+         foreach (string udef in udefs)
+         {
+            string udefContent = File.ReadAllText(udef);
+            _SqlParser.Parse(udef);
+            AddParseErrors(udef);
+            CheckTSQLKeywords2008(udef, _SqlParser);
+            OnFileChecked(new BuildCheckerEventArgs() { Message = $"User Defined Func: {udef}" });
+         }
+
          return retval;
       }
 
+
+      private void AddParseErrors(string file)
+      {
+         if (_SqlParser.ParseErrors.Count > 0)
+         {
+            string msg = "";
+            foreach (var error in _SqlParser.ParseErrors)
+            {
+               msg = $"Line:{error.Line}, Col:{error.Column}, Number:{error.Number} Msg:{error.Message}";
+
+               Inform(file, msg, "", CheckResult.Error);
+               _Errors = true;
+            }
+
+         }
+      }
+
+
+      private void CheckTSQLKeywords2008(string file, SqlParser parser)
+      {
+         Tuple<string, int>[] keywords = Utils.GetSQLKeywords();
+         EnsureTestDatabases();
+
+         var dbs2008 = _TestDatabases.Where(database => database.Item3.Contains("2008")).ToList();
+         foreach (var keyword in keywords)
+         {
+            var func = parser.FunctionCalls.Where(f => f.FunctionName.Value.ToLower().Equals(keyword.Item1.ToString().ToLower())).FirstOrDefault();
+            if (func != null)
+            {
+               if (dbs2008 != null)
+               {
+                  foreach (var db2008 in dbs2008)
+                  {
+                     Inform(file, $"File {Path.GetFileName(file)} contains {keyword.Item1} and it is not supported in db {db2008.Item1}.{db2008.Item2}", file, CheckResult.Warning);
+                  }
+               }
+            }
+         }
+   }
 
    }
 }

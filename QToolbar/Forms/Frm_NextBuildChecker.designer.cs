@@ -53,6 +53,9 @@
          this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
          this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+         this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+         this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
+         this.barStaticItem2 = new DevExpress.XtraBars.BarStaticItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.grdAnalyticsResults)).BeginInit();
@@ -72,21 +75,21 @@
          this.layoutControl1.Controls.Add(this.gridResults);
          this.layoutControl1.Controls.Add(this.labelControl1);
          this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.layoutControl1.Location = new System.Drawing.Point(0, 95);
+         this.layoutControl1.Location = new System.Drawing.Point(0, 116);
          this.layoutControl1.Name = "layoutControl1";
          this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(2308, 203, 424, 592);
          this.layoutControl1.Root = this.layoutControlGroup1;
-         this.layoutControl1.Size = new System.Drawing.Size(999, 482);
+         this.layoutControl1.Size = new System.Drawing.Size(999, 441);
          this.layoutControl1.TabIndex = 0;
          this.layoutControl1.Text = "layoutControl1";
          // 
          // grdAnalyticsResults
          // 
-         this.grdAnalyticsResults.Location = new System.Drawing.Point(12, 324);
+         this.grdAnalyticsResults.Location = new System.Drawing.Point(12, 299);
          this.grdAnalyticsResults.MainView = this.gridView2;
          this.grdAnalyticsResults.MenuManager = this.ribbonControl1;
          this.grdAnalyticsResults.Name = "grdAnalyticsResults";
-         this.grdAnalyticsResults.Size = new System.Drawing.Size(975, 146);
+         this.grdAnalyticsResults.Size = new System.Drawing.Size(975, 130);
          this.grdAnalyticsResults.TabIndex = 4;
          this.grdAnalyticsResults.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView2});
@@ -143,14 +146,17 @@
          this.ribbonControl1.ExpandCollapseItem.Id = 0;
          this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
-            this.btnCheckBuild});
+            this.btnCheckBuild,
+            this.barStaticItem1,
+            this.barStaticItem2});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 2;
+         this.ribbonControl1.MaxItemId = 4;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
          this.ribbonControl1.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
-         this.ribbonControl1.Size = new System.Drawing.Size(999, 95);
+         this.ribbonControl1.Size = new System.Drawing.Size(999, 116);
+         this.ribbonControl1.StatusBar = this.ribbonStatusBar1;
          this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
          // 
          // btnCheckBuild
@@ -181,7 +187,7 @@
          this.gridResults.Location = new System.Drawing.Point(12, 50);
          this.gridResults.MainView = this.gridView1;
          this.gridResults.Name = "gridResults";
-         this.gridResults.Size = new System.Drawing.Size(975, 254);
+         this.gridResults.Size = new System.Drawing.Size(975, 229);
          this.gridResults.TabIndex = 0;
          this.gridResults.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -254,7 +260,7 @@
             this.layoutControlItem3});
          this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
          this.layoutControlGroup1.Name = "Root";
-         this.layoutControlGroup1.Size = new System.Drawing.Size(999, 482);
+         this.layoutControlGroup1.Size = new System.Drawing.Size(999, 441);
          this.layoutControlGroup1.TextVisible = false;
          // 
          // layoutControlItem1
@@ -271,7 +277,7 @@
          this.layoutControlItem2.Control = this.gridResults;
          this.layoutControlItem2.Location = new System.Drawing.Point(0, 22);
          this.layoutControlItem2.Name = "layoutControlItem2";
-         this.layoutControlItem2.Size = new System.Drawing.Size(979, 274);
+         this.layoutControlItem2.Size = new System.Drawing.Size(979, 249);
          this.layoutControlItem2.Text = "Builds\\Next Build";
          this.layoutControlItem2.TextLocation = DevExpress.Utils.Locations.Top;
          this.layoutControlItem2.TextSize = new System.Drawing.Size(122, 13);
@@ -279,18 +285,41 @@
          // layoutControlItem3
          // 
          this.layoutControlItem3.Control = this.grdAnalyticsResults;
-         this.layoutControlItem3.Location = new System.Drawing.Point(0, 296);
+         this.layoutControlItem3.Location = new System.Drawing.Point(0, 271);
          this.layoutControlItem3.Name = "layoutControlItem3";
-         this.layoutControlItem3.Size = new System.Drawing.Size(979, 166);
+         this.layoutControlItem3.Size = new System.Drawing.Size(979, 150);
          this.layoutControlItem3.Text = "AnalyticsBuilds\\Next Build";
          this.layoutControlItem3.TextLocation = DevExpress.Utils.Locations.Top;
          this.layoutControlItem3.TextSize = new System.Drawing.Size(122, 13);
          // 
          // backgroundWorker1
          // 
+         this.backgroundWorker1.WorkerReportsProgress = true;
+         this.backgroundWorker1.WorkerSupportsCancellation = true;
          this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
          this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
          this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+         // 
+         // ribbonStatusBar1
+         // 
+         this.ribbonStatusBar1.ItemLinks.Add(this.barStaticItem2);
+         this.ribbonStatusBar1.Location = new System.Drawing.Point(0, 557);
+         this.ribbonStatusBar1.Name = "ribbonStatusBar1";
+         this.ribbonStatusBar1.Ribbon = this.ribbonControl1;
+         this.ribbonStatusBar1.Size = new System.Drawing.Size(999, 20);
+         // 
+         // barStaticItem1
+         // 
+         this.barStaticItem1.Caption = "barStaticItem1";
+         this.barStaticItem1.Id = 2;
+         this.barStaticItem1.Name = "barStaticItem1";
+         // 
+         // barStaticItem2
+         // 
+         this.barStaticItem2.Caption = "lblStatus";
+         this.barStaticItem2.Id = 3;
+         this.barStaticItem2.Name = "barStaticItem2";
+         this.barStaticItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barStaticItem2_ItemClick);
          // 
          // Frm_NextBuildChecker
          // 
@@ -299,6 +328,7 @@
          this.ClientSize = new System.Drawing.Size(999, 577);
          this.Controls.Add(this.layoutControl1);
          this.Controls.Add(this.ribbonControl1);
+         this.Controls.Add(this.ribbonStatusBar1);
          this.Name = "Frm_NextBuildChecker";
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.Text = "Next Build Checker";
@@ -345,6 +375,9 @@
       private DevExpress.XtraGrid.Columns.GridColumn colAnalyticsFile;
       private DevExpress.XtraGrid.Columns.GridColumn colAnalyticsTag;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
+      private DevExpress.XtraBars.BarStaticItem barStaticItem1;
+      private DevExpress.XtraBars.BarStaticItem barStaticItem2;
+      private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
    }
 }
 

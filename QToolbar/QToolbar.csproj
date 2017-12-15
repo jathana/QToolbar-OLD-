@@ -82,6 +82,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\assembly\GAC_MSIL\Microsoft.SqlServer.Management.SqlParser\13.0.0.0__89845dcd8080cc91\Microsoft.SqlServer.Management.SqlParser.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.SqlServer.TransactSql.ScriptDom, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.TransactSql.ScriptDom.14.0.3811.1\lib\net40\Microsoft.SqlServer.TransactSql.ScriptDom.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -108,6 +112,7 @@
     <Compile Include="Builds\AnalyticsBuildChecker.cs" />
     <Compile Include="Builds\BuildChecker.cs" />
     <Compile Include="Builds\BuildCheckerBase.cs" />
+    <Compile Include="Builds\BuildCheckerEventArgs.cs" />
     <Compile Include="Buttons\ClearMetadataButton.cs" />
     <Compile Include="Buttons\PluginsButton.cs" />
     <Compile Include="Buttons\FoldersButton.cs" />
@@ -167,6 +172,7 @@
     <Compile Include="Helpers\IniFile2.cs" />
     <Compile Include="Helpers\IState.cs" />
     <Compile Include="Builds\NextBuildFile.cs" />
+    <Compile Include="Helpers\SqlParser.cs" />
     <Compile Include="Options\SQLQueries.cs" />
     <Compile Include="Options\ShellCommands.cs" />
     <Compile Include="Forms\Frm_FileViewer.cs">
@@ -194,7 +200,6 @@
     <Compile Include="Helpers\StickyWindow.cs" />
     <Compile Include="Options\OptionsInstance.cs" />
     <Compile Include="Helpers\TextEncodingDetect.cs" />
-    <Compile Include="Helpers\TextFileEncodingDetector.cs" />
     <Compile Include="Forms\Frm_CreateEnvironment.cs">
       <SubType>Form</SubType>
     </Compile>

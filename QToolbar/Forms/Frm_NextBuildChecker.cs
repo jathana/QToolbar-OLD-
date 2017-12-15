@@ -65,7 +65,8 @@ namespace QToolbar
          //_CheckoutName = checkoutName;
          //_CheckoutPath = checkoutPath;
 
-         _BuildChecker = new BuildChecker(); 
+         _BuildChecker = new BuildChecker();
+         _BuildChecker.FileChecked += _BuildChecker_FileChecked;
          _BuildChecker.CheckoutName = checkoutName;
          _BuildChecker.CheckoutPath = checkoutPath;
          _BuildChecker.NextBuildPath = Path.Combine(checkoutPath, @"Builds\Next Build");
@@ -76,6 +77,11 @@ namespace QToolbar
          _AnalyticsBuildChecker.NextBuildPath = Path.Combine(checkoutPath, @"AnalyticsBuilds\Next Build");
         
          Show();
+      }
+
+      private void _BuildChecker_FileChecked(object sender, BuildCheckerEventArgs e)
+      {
+         backgroundWorker1.ReportProgress(1, e.Message);
       }
 
       private void BeforeCheck()
@@ -164,7 +170,7 @@ namespace QToolbar
 
       private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
       {
-
+         ribbonStatusBar1.ItemLinks[0].Caption = e.UserState.ToString();
       }
 
       private void btnCheckBuild_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -182,6 +188,11 @@ namespace QToolbar
 
             f1.ViewFile(file, FastColoredTextBoxNS.Language.SQL);
          }
+      }
+
+      private void barStaticItem2_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      {
+
       }
    }
 }

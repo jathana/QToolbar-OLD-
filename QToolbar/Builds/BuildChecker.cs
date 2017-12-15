@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QToolbar.Helpers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace QToolbar.Builds
             string content = "";
             string lowerContent = "";
             bool fileOk = true;
+            //SqlParser parser = new SqlParser();
             foreach (string file in files)
             {
                fileOk = true;
@@ -45,7 +47,10 @@ namespace QToolbar.Builds
                fileOk = ScanSqlFile(content, file) && fileOk;
 
                // parse sql file
-               fileOk = ParseSqlFile(content, file) && fileOk;
+               //fileOk = ParseSqlFile(content, file) && fileOk;
+
+               fileOk = _SqlParser.Parse(file) && fileOk;
+
 
                if (fileOk) Inform(file, "File passed all checks!", "", CheckResult.OK);
             }
@@ -66,7 +71,13 @@ namespace QToolbar.Builds
          CheckQBCAdminCF();
 
          // check sql keywords
-         CheckSqlKeywords();
+         CheckDatabaseScripts();
+
+         // test
+         SqlParser p = new SqlParser();
+         p.Parse(@"E:\Temp\Stored Procedures\dbo.App_ActionsActivityExternalRegister.PRC.sql");
+
+
          if (!_Errors && _Table.Rows.Count == 0)
          {
             Inform("Everything ok!", CheckResult.OK);
