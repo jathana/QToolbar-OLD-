@@ -1,4 +1,5 @@
 ﻿using QToolbar.Helpers;
+using QToolbar.Options;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,52 +18,70 @@ namespace QToolbar.Plugins.Environments
 
       public event EventHandler PathsAdded;
 
-      private DataTable _Table;
+      private DataSet _Data;
 
       public EnvironmentsInfo()
       {
-         _Table = new DataTable();
-         _Table.Columns.Add("ENV_NAME", typeof(string));
-         _Table.Columns.Add("QBC_ADMIN_CF", typeof(string));
-         _Table.Columns.Add("ENV_VERSION", typeof(string));
-         _Table.Columns.Add("DB_SERVER", typeof(string));
-         _Table.Columns.Add("DB_NAME", typeof(string));
-         _Table.Columns.Add("TOOLKIT_WS_URL", typeof(string));
-         _Table.Columns.Add("APP_WS_URL", typeof(string));
-         _Table.Columns.Add("ENV_BATCHEXEC_SERVICE_PATH", typeof(string));
-         _Table.Columns.Add("ENV_EOD_SERVICE_PATH", typeof(string));
-         _Table.Columns.Add("ENV_SERVICES_PATH", typeof(string));
-         _Table.Columns.Add("ENV_GLM_FOLDER", typeof(string));
-         _Table.Columns.Add("ENV_GLM_LOCAL_FOLDER", typeof(string));
-         _Table.Columns.Add("ENV_GLM_LOG_FOLDER", typeof(string));
-         _Table.Columns.Add("ENV_GLM_LOG_LOCAL_FOLDER", typeof(string));
-         _Table.Columns.Add("ENV_QC_SYSTEM_FOLDER", typeof(string));
-         _Table.Columns.Add("ENV_QC_LOCAL_SYSTEM_FOLDER", typeof(string));
+         _Data = new DataSet();
+         
+         // Envs Table
+         DataTable table = new DataTable();
+         _Data.Tables.Add(table);
+         table.TableName = "TB_ENVS";
+         table.Columns.Add("ENV_NAME", typeof(string));
+         table.Columns.Add("ENV_CHECKOUT_PATH", typeof(string));
+         table.Columns.Add("QBC_ADMIN_CF", typeof(string));
+         table.Columns.Add("ENV_VERSION", typeof(string));
+         table.Columns.Add("DB_SERVER", typeof(string));
+         table.Columns.Add("DB_NAME", typeof(string));
+         table.Columns.Add("TOOLKIT_WS_URL", typeof(string));
+         table.Columns.Add("APP_WS_URL", typeof(string));
+         table.Columns.Add("ENV_BATCHEXEC_SERVICE_PATH", typeof(string));
+         table.Columns.Add("ENV_EOD_SERVICE_PATH", typeof(string));
+         table.Columns.Add("ENV_SERVICES_PATH", typeof(string));
+         table.Columns.Add("ENV_GLM_FOLDER", typeof(string));
+         table.Columns.Add("ENV_GLM_LOCAL_FOLDER", typeof(string));
+         table.Columns.Add("ENV_GLM_LOG_FOLDER", typeof(string));
+         table.Columns.Add("ENV_GLM_LOG_LOCAL_FOLDER", typeof(string));
+         table.Columns.Add("ENV_QC_SYSTEM_FOLDER", typeof(string));
+         table.Columns.Add("ENV_QC_LOCAL_SYSTEM_FOLDER", typeof(string));
+
+         // CFs Table
+         DataTable cfsTable = new DataTable();
+         _Data.Tables.Add(cfsTable);
+         cfsTable.TableName = "TB_CFS";
+         cfsTable.Columns.Add("ENV_NAME", typeof(string));
+         cfsTable.Columns.Add("CF_NAME", typeof(string));
+         cfsTable.Columns.Add("CF_PATH", typeof(string));
+
+
+         _Data.Relations.Add("EnvsUnderCfs", EnvsTable.Columns["ENV_NAME"], CFsTable.Columns["ENV_NAME"]);
       }
 
-      public DataTable Table
+      public DataSet Data
       {
          get
          {
-            return _Table;
+            return _Data;
          }
 
          set
          {
-            _Table = value;
+            _Data = value;
          }
       }
 
-      public void AddOrUpdate(string envName, CfFile cf)
+      public void AddOrUpdate(string envName, CfFile cf, string checkoutPath)
       {
          bool adding = false;
-         DataRow[] rows = _Table.Select($"ENV_NAME='{envName}'");
+         
+         DataRow[] rows = _Data.Tables["TB_ENVS"].Select($"ENV_NAME='{envName}'");
          DataRow rowToHandle = null;
 
          if (rows.Length == 0)
          {
             //add
-            rowToHandle = _Table.NewRow();
+            rowToHandle = _Data.Tables["TB_ENVS"].NewRow();
             adding = true;
          }
          else if (rows.Length == 1)
@@ -77,6 +96,7 @@ namespace QToolbar.Plugins.Environments
          if (rowToHandle != null)
          {
             rowToHandle["ENV_NAME"] = envName;
+            rowToHandle["ENV_CHECKOUT_PATH"] = checkoutPath;
             //newRow["ENV_VERSION"], typeof(string));
             rowToHandle["DB_SERVER"] = cf.GetServer(envName);
             rowToHandle["DB_NAME"] = cf.GetDatabase(envName);
@@ -87,7 +107,7 @@ namespace QToolbar.Plugins.Environments
 
          if (adding)
          {
-            _Table.Rows.Add(rowToHandle);
+            EnvsTable.Rows.Add(rowToHandle);
 
          }
          AddPaths(rowToHandle["DB_SERVER"].ToString(), rowToHandle["DB_NAME"].ToString(), rowToHandle);
@@ -209,12 +229,8 @@ namespace QToolbar.Plugins.Environments
              return vals;
           });
          await Task.WhenAll(rs).ContinueWith((t) =>
-         {
-            Dispatcher.CurrentDispatcher.Invoke(() => 
-               {
-               PathsAdded(this, new EventArgs());
-               return rs;
-            });
+         { 
+            Dispatcher.CurrentDispatcher.Invoke(() =>  {return rs; }).ContinueWith((t1)=> { PathsAdded(this, new EventArgs()); });
          });
          
 
@@ -234,14 +250,49 @@ namespace QToolbar.Plugins.Environments
 
       public void Remove(string envName)
       {
-         DataRow[] rows = _Table.Select($"ENV_NAME='{envName}'");
+         DataRow[] rows = EnvsTable.Select($"ENV_NAME='{envName}'");
          if (rows.Length == 1)
          {
-            _Table.Rows.Remove(rows[0]);
+            _Data.Tables["TB_ENVS"].Rows.Remove(rows[0]);
          }
          else if (rows.Length > 1)
          {
             throw new Exception($"Cannot delete.Multiple environments {envName} found.");
+         }
+      }
+
+
+      public void RemoveEnvsFromCFs()
+      {
+         for(int i=0;i< EnvsTable.Rows.Count;i++)
+         {
+            // delete already added cfs
+            foreach(DataRow cfRow in OptionsInstance.EnvCFs.Data.Rows)
+            {
+               DataRow newRow = CFsTable.NewRow();
+               newRow["ENV_NAME"] = EnvsTable.Rows[i]["ENV_NAME"];
+               newRow["CF_NAME"] = Path.GetFileName(cfRow["Path"].ToString());
+               newRow["CF_PATH"] = Path.Combine( EnvsTable.Rows[i]["ENV_CHECKOUT_PATH"].ToString(), cfRow["Path"].ToString()).Replace(@"QC$\","").Replace(@"Proteus$\","");
+               CFsTable.Rows.Add(newRow);
+            }
+
+         }
+      }
+
+
+      public DataTable EnvsTable
+      {
+         get
+         {
+            return _Data.Tables["TB_ENVS"];
+         }
+      }
+
+      private DataTable CFsTable
+      {
+         get
+         {
+            return _Data.Tables["TB_CFS"];
          }
       }
    }

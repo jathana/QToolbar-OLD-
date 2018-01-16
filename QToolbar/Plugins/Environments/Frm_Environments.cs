@@ -16,6 +16,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraEditors.Repository;
 using System.Threading;
+using System.Diagnostics;
 
 namespace QToolbar.Plugins.Environments
 {
@@ -39,7 +40,11 @@ namespace QToolbar.Plugins.Environments
 
       private void _EnvsInfo_PathsAdded(object sender, EventArgs e)
       {
-         _SyncContext.Post((a) => { UXGridView.BestFitColumns(); },null);
+         _SyncContext.Post((a) => 
+         {
+            UXGridView.BestFitColumns();
+            Debug.WriteLine("BestFitColumns");
+         },null);
          
       }
 
@@ -50,7 +55,7 @@ namespace QToolbar.Plugins.Environments
       {
         CreateEnvironmentsMenuItems();
 
-         UXGrid.DataSource = _EnvsInfo.Table;
+         UXGrid.DataSource = _EnvsInfo.EnvsTable;
          UXGridView.Columns["ENV_QC_SYSTEM_FOLDER"].ColumnEdit = new RepositoryItemMemoEdit();
          UXGridView.Columns["ENV_QC_LOCAL_SYSTEM_FOLDER"].ColumnEdit = new RepositoryItemMemoEdit();
       }
@@ -92,7 +97,7 @@ namespace QToolbar.Plugins.Environments
                envItem.ContentHorizontalAlignment = BarItemContentAlignment.Center;
                envItem.Caption = key;              
                envItem.EditValueChanged += EnvItem_EditValueChanged;
-               envItem.Tag = cfFile;
+               envItem.Tag = new Tuple<string, string>(cfFile, row["Path"].ToString());
                envMenu.AddItem(envItem);
                
             }
@@ -104,11 +109,12 @@ namespace QToolbar.Plugins.Environments
          try
          {
             BarEditItem item = (BarEditItem)sender;
-            CfFile cf = new CfFile(item.Tag.ToString());
+            Tuple<string, string> tag = (Tuple<string, string>)item.Tag;
+            CfFile cf = new CfFile(tag.Item1);
             if ((bool)item.EditValue)
             {
-               _EnvsInfo.AddOrUpdate(item.Caption, cf);
-               UXGrid.DataSource = _EnvsInfo.Table;
+               _EnvsInfo.AddOrUpdate(item.Caption, cf, tag.Item2);
+               UXGrid.DataSource = _EnvsInfo.EnvsTable;
             }
             else
             {
@@ -152,6 +158,11 @@ namespace QToolbar.Plugins.Environments
                   break;
             }
          }
+      }
+
+      private void btnRemoveEnvsFromCFs_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         _EnvsInfo.RemoveEnvsFromCFs();
       }
    }
 }

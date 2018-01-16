@@ -39,14 +39,13 @@
          this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
          this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
          this.mnuEnvironments = new DevExpress.XtraBars.BarSubItem();
-         this.barSubItem2 = new DevExpress.XtraBars.BarSubItem();
-         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
-         this.barCheckItem1 = new DevExpress.XtraBars.BarCheckItem();
-         this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
          this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
+         this.CFsManagement = new DevExpress.XtraBars.BarSubItem();
+         this.popupMenu2 = new DevExpress.XtraBars.PopupMenu(this.components);
+         this.btnRemoveEnvsFromCFs = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.UXGrid)).BeginInit();
@@ -57,6 +56,7 @@
          ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.popupMenu2)).BeginInit();
          this.SuspendLayout();
          // 
          // layoutControl1
@@ -116,12 +116,10 @@
          this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
             this.mnuEnvironments,
-            this.barSubItem1,
-            this.barSubItem2,
-            this.barButtonItem1,
-            this.barCheckItem1});
+            this.CFsManagement,
+            this.btnRemoveEnvsFromCFs});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 9;
+         this.ribbonControl1.MaxItemId = 13;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -143,38 +141,7 @@
          this.mnuEnvironments.Id = 2;
          this.mnuEnvironments.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuEnvironments.ImageOptions.Image")));
          this.mnuEnvironments.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuEnvironments.ImageOptions.LargeImage")));
-         this.mnuEnvironments.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.barSubItem2)});
          this.mnuEnvironments.Name = "mnuEnvironments";
-         // 
-         // barSubItem2
-         // 
-         this.barSubItem2.Caption = "barSubItem2";
-         this.barSubItem2.Id = 6;
-         this.barSubItem2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem1),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barCheckItem1)});
-         this.barSubItem2.Name = "barSubItem2";
-         // 
-         // barButtonItem1
-         // 
-         this.barButtonItem1.Caption = "barButtonItem1";
-         this.barButtonItem1.Id = 7;
-         this.barButtonItem1.Name = "barButtonItem1";
-         // 
-         // barCheckItem1
-         // 
-         this.barCheckItem1.BindableChecked = true;
-         this.barCheckItem1.Caption = "barCheckItem1";
-         this.barCheckItem1.Checked = true;
-         this.barCheckItem1.Id = 8;
-         this.barCheckItem1.Name = "barCheckItem1";
-         // 
-         // barSubItem1
-         // 
-         this.barSubItem1.Caption = "barSubItem1";
-         this.barSubItem1.Id = 5;
-         this.barSubItem1.Name = "barSubItem1";
          // 
          // ribbonPage1
          // 
@@ -186,6 +153,7 @@
          // ribbonPageGroup1
          // 
          this.ribbonPageGroup1.ItemLinks.Add(this.mnuEnvironments);
+         this.ribbonPageGroup1.ItemLinks.Add(this.CFsManagement);
          this.ribbonPageGroup1.Name = "ribbonPageGroup1";
          this.ribbonPageGroup1.Text = "Environments";
          // 
@@ -199,6 +167,30 @@
          // 
          this.popupMenu1.Name = "popupMenu1";
          this.popupMenu1.Ribbon = this.ribbonControl1;
+         // 
+         // CFsManagement
+         // 
+         this.CFsManagement.Caption = "CFs Management";
+         this.CFsManagement.Id = 9;
+         this.CFsManagement.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("CFsManagement.ImageOptions.Image")));
+         this.CFsManagement.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("CFsManagement.ImageOptions.LargeImage")));
+         this.CFsManagement.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnRemoveEnvsFromCFs)});
+         this.CFsManagement.Name = "CFsManagement";
+         // 
+         // popupMenu2
+         // 
+         this.popupMenu2.Name = "popupMenu2";
+         this.popupMenu2.Ribbon = this.ribbonControl1;
+         // 
+         // btnRemoveEnvsFromCFs
+         // 
+         this.btnRemoveEnvsFromCFs.Caption = "Remove Environments from CFs";
+         this.btnRemoveEnvsFromCFs.Id = 12;
+         this.btnRemoveEnvsFromCFs.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnRemoveEnvs.ImageOptions.Image")));
+         this.btnRemoveEnvsFromCFs.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRemoveEnvs.ImageOptions.LargeImage")));
+         this.btnRemoveEnvsFromCFs.Name = "btnRemoveEnvsFromCFs";
+         this.btnRemoveEnvsFromCFs.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRemoveEnvsFromCFs_ItemClick);
          // 
          // Frm_Environments
          // 
@@ -220,6 +212,7 @@
          ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.popupMenu2)).EndInit();
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -237,11 +230,10 @@
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
       private DevExpress.XtraBars.BarSubItem mnuEnvironments;
       private DevExpress.Utils.ImageCollection imageCollection1;
-      private DevExpress.XtraBars.BarSubItem barSubItem2;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem1;
-      private DevExpress.XtraBars.BarSubItem barSubItem1;
       private DevExpress.XtraBars.PopupMenu popupMenu1;
-      private DevExpress.XtraBars.BarCheckItem barCheckItem1;
       private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit1;
+      private DevExpress.XtraBars.BarSubItem CFsManagement;
+      private DevExpress.XtraBars.BarButtonItem btnRemoveEnvsFromCFs;
+      private DevExpress.XtraBars.PopupMenu popupMenu2;
    }
 }
