@@ -9,9 +9,9 @@ namespace QToolbar.Tools
 {
    public class QEnvironmentValidator
    {
-      private QEnvironment _Env;
+      private QEnvironmentConfiguration _Env;
 
-      public List<string> Validate(QEnvironment env)
+      public List<string> Validate(QEnvironmentConfiguration env)
       {
          List<string> retval = new List<string>();
 

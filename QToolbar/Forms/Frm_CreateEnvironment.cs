@@ -20,7 +20,7 @@ namespace QToolbar.Tools
 
       private void btnUpdateQCSolutionsCF_Click(object sender, EventArgs e)
       {
-         QEnvironment env = new QEnvironment();
+         QEnvironmentConfiguration env = new QEnvironmentConfiguration();
          env.CheckoutPath = @"E:\Temp\TestCheckouts\7.2\VS Projects";
 
          QEnvironmentCreator creator = new QEnvironmentCreator(env);

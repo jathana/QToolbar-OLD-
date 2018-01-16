@@ -79,6 +79,9 @@
          this.colSQL = new DevExpress.XtraGrid.Columns.GridColumn();
          this.repositoryItemMemoEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemMemoEdit();
          this.colRunImmediate = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.tabEnvCFs = new DevExpress.XtraTab.XtraTabPage();
+         this.gridEnvCFs = new DevExpress.XtraGrid.GridControl();
+         this.gridView4 = new DevExpress.XtraGrid.Views.Grid.GridView();
          this.btnOK = new DevExpress.XtraEditors.SimpleButton();
          this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
          this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -136,6 +139,9 @@
          ((System.ComponentModel.ISupportInitialize)(this.gridSQLQueries)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gviewSQLQueries)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoEdit1)).BeginInit();
+         this.tabEnvCFs.SuspendLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.gridEnvCFs)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.gridView4)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
@@ -509,7 +515,8 @@
             this.tabCheckouts,
             this.tabShellCommands,
             this.tabLegalLinks,
-            this.tabSQLQueries});
+            this.tabSQLQueries,
+            this.tabEnvCFs});
          // 
          // tabGeneral
          // 
@@ -667,6 +674,34 @@
          this.colRunImmediate.Visible = true;
          this.colRunImmediate.VisibleIndex = 2;
          // 
+         // tabEnvCFs
+         // 
+         this.tabEnvCFs.Controls.Add(this.gridEnvCFs);
+         this.tabEnvCFs.Name = "tabEnvCFs";
+         this.tabEnvCFs.Size = new System.Drawing.Size(801, 453);
+         this.tabEnvCFs.Text = "Environment CFs";
+         // 
+         // gridEnvCFs
+         // 
+         this.gridEnvCFs.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.gridEnvCFs.Location = new System.Drawing.Point(0, 0);
+         this.gridEnvCFs.MainView = this.gridView4;
+         this.gridEnvCFs.Name = "gridEnvCFs";
+         this.gridEnvCFs.Size = new System.Drawing.Size(801, 453);
+         this.gridEnvCFs.TabIndex = 1;
+         this.gridEnvCFs.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView4});
+         this.gridEnvCFs.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.Grid_ProcessGridKey);
+         // 
+         // gridView4
+         // 
+         this.gridView4.GridControl = this.gridEnvCFs;
+         this.gridView4.Name = "gridView4";
+         this.gridView4.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+         this.gridView4.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
+         this.gridView4.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.Inplace;
+         this.gridView4.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+         // 
          // btnOK
          // 
          this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -795,6 +830,9 @@
          ((System.ComponentModel.ISupportInitialize)(this.gridSQLQueries)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.gviewSQLQueries)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoEdit1)).EndInit();
+         this.tabEnvCFs.ResumeLayout(false);
+         ((System.ComponentModel.ISupportInitialize)(this.gridEnvCFs)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.gridView4)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
@@ -863,5 +901,8 @@
       private DevExpress.XtraEditors.Repository.RepositoryItemMemoEdit repositoryItemMemoEdit1;
       private DevExpress.XtraEditors.CheckEdit chkClearLegalMetadata;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem15;
+      private DevExpress.XtraTab.XtraTabPage tabEnvCFs;
+      private DevExpress.XtraGrid.GridControl gridEnvCFs;
+      private DevExpress.XtraGrid.Views.Grid.GridView gridView4;
    }
 }

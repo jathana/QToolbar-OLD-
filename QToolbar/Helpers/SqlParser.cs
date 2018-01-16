@@ -48,7 +48,7 @@ namespace QToolbar.Helpers
             List<Type> visited = new List<Type>();
             //ReadPropertiesRecursive(_SqlFragment.GetType(), visited);
             _FunctionCalls.Clear();            
-            PrintProperties(_SqlFragment, 5);
+            SearchParseInfo(_SqlFragment, 5);
             retval = ParseErrors.Count == 0;
          }
          catch(Exception ex)
@@ -60,7 +60,7 @@ namespace QToolbar.Helpers
       }
       
 
-      private void PrintProperties(object obj, int indent)
+      private void SearchParseInfo(object obj, int indent)
       {
          if (obj == null)
          {
@@ -97,7 +97,7 @@ namespace QToolbar.Helpers
                   {
                      if (child is TSqlFragment)
                      {
-                        PrintProperties(child, indent + 2);
+                        SearchParseInfo(child, indent + 2);
                      }
                   }
                }
@@ -105,7 +105,7 @@ namespace QToolbar.Helpers
             else
             {
                //Console.WriteLine("{0}{1}:", indentString, property.Name);
-               PrintProperties(propValue, indent + 2);
+               SearchParseInfo(propValue, indent + 2);
             }
          }
       }

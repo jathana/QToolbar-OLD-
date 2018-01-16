@@ -63,6 +63,9 @@ namespace QToolbar
          // save sql queries
          SaveSQLQueries();
 
+         // save env cfs
+         SaveEnvCFs();
+
          Properties.Settings.Default.Save();
       }
 
@@ -88,6 +91,7 @@ namespace QToolbar
          LoadShellCommands();
          LoadLegalLinks();
          LoadSQLQueries();
+         LoadEnvCFs();
       }
 
 
@@ -137,6 +141,18 @@ namespace QToolbar
       {
          SQLQueries sqlQueries = new SQLQueries((DataTable)gridSQLQueries.DataSource);
          Properties.Settings.Default.SQLQueries = sqlQueries.ToXml();
+      }
+
+      private void LoadEnvCFs()
+      {
+         EnvCFs envCFs = new EnvCFs(Properties.Settings.Default.EnvCFs);
+         gridEnvCFs.DataSource = envCFs.Data;
+      }
+
+      private void SaveEnvCFs()
+      {
+         EnvCFs envCFs = new EnvCFs((DataTable)gridEnvCFs.DataSource);
+         Properties.Settings.Default.EnvCFs = envCFs.ToXml();
       }
 
       private void LoadFolders()

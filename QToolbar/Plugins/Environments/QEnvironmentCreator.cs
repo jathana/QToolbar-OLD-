@@ -12,9 +12,9 @@ namespace QToolbar.Tools
    /// </summary>
    public class QEnvironmentCreator
    {
-      private QEnvironment _Env;
+      private QEnvironmentConfiguration _Env;
 
-      public QEnvironmentCreator(QEnvironment env)
+      public QEnvironmentCreator(QEnvironmentConfiguration env)
       {
          _Env = env;
       }

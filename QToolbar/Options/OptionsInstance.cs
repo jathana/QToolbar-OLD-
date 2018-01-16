@@ -130,5 +130,14 @@ namespace QToolbar.Options
          }
       }
 
+      public static EnvCFs EnvCFs
+      {
+         get
+         {
+            return new EnvCFs(Properties.Settings.Default.EnvCFs);
+         }
+      }
+
+
    }
 }

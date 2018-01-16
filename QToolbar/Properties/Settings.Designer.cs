@@ -274,5 +274,17 @@ namespace QToolbar.Properties {
                 this["ClearLegalMetadata"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string EnvCFs {
+            get {
+                return ((string)(this["EnvCFs"]));
+            }
+            set {
+                this["EnvCFs"] = value;
+            }
+        }
     }
 }

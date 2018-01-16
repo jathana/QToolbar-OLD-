@@ -92,6 +92,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Web.Extensions" />
@@ -122,11 +123,15 @@
     <Compile Include="Buttons\InternalBuildsButton.cs" />
     <Compile Include="Buttons\NextBuildButton.cs" />
     <Compile Include="Builds\CheckResult.cs" />
-    <Compile Include="Forms\Frm_EnvironmentsChecker.cs">
+    <Compile Include="Helpers\CfFile.cs" />
+    <Compile Include="Options\EnvCFs.cs" />
+    <Compile Include="Plugins\Environments\EnvironmentsInfo.cs" />
+    <Compile Include="Plugins\Environments\EnvironmentsInfoPlugin.cs" />
+    <Compile Include="Plugins\Environments\Frm_Environments.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Frm_EnvironmentsChecker.Designer.cs">
-      <DependentUpon>Frm_EnvironmentsChecker.cs</DependentUpon>
+    <Compile Include="Plugins\Environments\Frm_Environments.Designer.cs">
+      <DependentUpon>Frm_Environments.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ConnectionInfo.cs" />
     <Compile Include="Forms\Frm_InternalBuilds.cs">
@@ -212,9 +217,9 @@
     <Compile Include="Forms\Frm_ScriptCriteria.Designer.cs">
       <DependentUpon>Frm_ScriptCriteria.cs</DependentUpon>
     </Compile>
-    <Compile Include="Environments\QEnvironment.cs" />
-    <Compile Include="Environments\QEnvironmentCreator.cs" />
-    <Compile Include="Environments\QEnvironmentValidator.cs" />
+    <Compile Include="Plugins\Environments\QEnvironmentConfiguration.cs" />
+    <Compile Include="Plugins\Environments\QEnvironmentCreator.cs" />
+    <Compile Include="Plugins\Environments\QEnvironmentValidator.cs" />
     <Compile Include="Helpers\TreeNode.cs" />
     <Compile Include="Helpers\TreeNodeSerializer.cs" />
     <Compile Include="UserControls\uc_SQL.cs">
@@ -231,8 +236,8 @@
     </Compile>
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Helpers\XmlNodeExtensions.cs" />
-    <EmbeddedResource Include="Forms\Frm_EnvironmentsChecker.resx">
-      <DependentUpon>Frm_EnvironmentsChecker.cs</DependentUpon>
+    <EmbeddedResource Include="Plugins\Environments\Frm_Environments.resx">
+      <DependentUpon>Frm_Environments.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Frm_InternalBuilds.resx">
       <DependentUpon>Frm_InternalBuilds.cs</DependentUpon>

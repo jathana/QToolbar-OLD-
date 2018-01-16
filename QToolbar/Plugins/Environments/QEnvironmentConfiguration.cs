@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace QToolbar.Tools
 {
-   public class QEnvironment
+   /// <summary>
+   /// Environment Configuration Information
+   /// </summary>
+   public class QEnvironmentConfiguration
    {
 
       private string _Id = "";
