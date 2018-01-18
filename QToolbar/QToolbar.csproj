@@ -125,7 +125,6 @@
     <Compile Include="Builds\CheckResult.cs" />
     <Compile Include="Helpers\CfFile.cs" />
     <Compile Include="Options\EnvCFs.cs" />
-    <Compile Include="Plugins\Environments\EnvironmentsInfo.cs" />
     <Compile Include="Plugins\Environments\EnvironmentsInfoPlugin.cs" />
     <Compile Include="Plugins\Environments\Frm_Environments.cs">
       <SubType>Form</SubType>
@@ -186,6 +185,8 @@
     <Compile Include="Forms\Frm_FileViewer.designer.cs">
       <DependentUpon>Frm_FileViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Plugins\Environments\QEnvironment.cs" />
+    <Compile Include="Plugins\Environments\QEnvironments.cs" />
     <Compile Include="Plugins\NextBuildScript\AddFullEODMetadataPlugin.cs" />
     <Compile Include="Plugins\NextBuildScript\AddEODMetadataPlugin.cs" />
     <Compile Include="Plugins\NextBuildScript\Frm_NextBuildScript.cs">

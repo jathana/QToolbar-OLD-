@@ -9,8 +9,8 @@ namespace QToolbar.Options
 {
    public class Checkouts : SerializableTable
    {
-      private string[] columns = new string[] { "Name", "Path" };
-      private Type[] types = new Type[] { typeof(string), typeof(string) };
+      private string[] columns = new string[] { "Name", "Path", "ProteusPath" };
+      private Type[] types = new Type[] { typeof(string), typeof(string), typeof(string) };
 
       public Checkouts()
       {

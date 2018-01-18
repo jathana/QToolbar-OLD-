@@ -9,8 +9,8 @@ namespace QToolbar.Options
 {
    public class EnvCFs : SerializableTable
    {
-      private string[] columns = new string[] { "Path" };
-      private Type[] types = new Type[] { typeof(string) };
+      private string[] columns = new string[] { "Repository","Path" };
+      private Type[] types = new Type[] { typeof(string), typeof(string) };
 
       public EnvCFs()
       {

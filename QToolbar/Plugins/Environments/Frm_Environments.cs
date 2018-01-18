@@ -23,19 +23,45 @@ namespace QToolbar.Plugins.Environments
    public partial class Frm_Environments : DevExpress.XtraEditors.XtraForm
    {
       private CfFile _QbcAdminCF;
-      private EnvironmentsInfo _EnvsInfo;
+
+      private QEnvironments _Envs;
       SynchronizationContext _SyncContext;
 
 
       public Frm_Environments()
       {
          InitializeComponent();
-         _EnvsInfo = new EnvironmentsInfo();
-         _EnvsInfo.PathsAdded += _EnvsInfo_PathsAdded;
+
+         _Envs = new QEnvironments();
+         _Envs.InfoCollected += _Envs_InfoCollected;
+
          UXGridView.OptionsView.ColumnAutoWidth = false;
          UXGridView.OptionsBehavior.Editable = false;
          UXGridView.OptionsView.RowAutoHeight = true;
+         UXGrid.ViewRegistered += UXGrid_ViewRegistered;
          _SyncContext = SynchronizationContext.Current;
+      }
+
+      private void _Envs_InfoCollected(object sender, EventArgs e)
+      {
+         _SyncContext.Post((a) =>
+         {
+            UXGridView.BestFitColumns();
+            Debug.WriteLine("BestFitColumns");
+         }, null);
+      }
+
+      private void UXGrid_ViewRegistered(object sender, DevExpress.XtraGrid.ViewOperationEventArgs e)
+      {
+         e.View.DoubleClick += View_DoubleClick;
+         ((GridView)e.View).BestFitColumns();
+      }
+
+      private void View_DoubleClick(object sender, EventArgs e)
+      {
+         GridView view = (GridView)sender;
+         Point pt = view.GridControl.PointToClient(Control.MousePosition);
+         DoRowDoubleClick(view, pt);
       }
 
       private void _EnvsInfo_PathsAdded(object sender, EventArgs e)
@@ -55,9 +81,7 @@ namespace QToolbar.Plugins.Environments
       {
         CreateEnvironmentsMenuItems();
 
-         UXGrid.DataSource = _EnvsInfo.EnvsTable;
-         UXGridView.Columns["ENV_QC_SYSTEM_FOLDER"].ColumnEdit = new RepositoryItemMemoEdit();
-         UXGridView.Columns["ENV_QC_LOCAL_SYSTEM_FOLDER"].ColumnEdit = new RepositoryItemMemoEdit();
+         UXGrid.DataSource = _Envs.Data;
       }
 
 
@@ -97,7 +121,7 @@ namespace QToolbar.Plugins.Environments
                envItem.ContentHorizontalAlignment = BarItemContentAlignment.Center;
                envItem.Caption = key;              
                envItem.EditValueChanged += EnvItem_EditValueChanged;
-               envItem.Tag = new Tuple<string, string>(cfFile, row["Path"].ToString());
+               envItem.Tag = new Tuple<string, string, string>(cfFile, row["Path"].ToString(), row["ProteusPath"].ToString());
                envMenu.AddItem(envItem);
                
             }
@@ -109,16 +133,15 @@ namespace QToolbar.Plugins.Environments
          try
          {
             BarEditItem item = (BarEditItem)sender;
-            Tuple<string, string> tag = (Tuple<string, string>)item.Tag;
+            Tuple<string, string, string> tag = (Tuple<string, string, string>)item.Tag;
             CfFile cf = new CfFile(tag.Item1);
             if ((bool)item.EditValue)
             {
-               _EnvsInfo.AddOrUpdate(item.Caption, cf, tag.Item2);
-               UXGrid.DataSource = _EnvsInfo.EnvsTable;
+               _Envs.AddOrUpdate(item.Caption, cf, tag.Item2, tag.Item3);
             }
             else
             {
-               _EnvsInfo.Remove(item.Caption);
+               _Envs.Remove(item.Caption);
             }
             UXGridView.BestFitColumns();
          }
@@ -138,31 +161,42 @@ namespace QToolbar.Plugins.Environments
          DoRowDoubleClick(view, pt);
       }
 
-      private static void DoRowDoubleClick(GridView view, Point pt)
+      private void DoRowDoubleClick(GridView view, Point pt)
       {
          GridHitInfo info = view.CalcHitInfo(pt);
          if (info.InRow || info.InRowCell)
          {
-            
+            string file = "";
             switch (info.Column.GetCaption())
             {
-               case "QBC_ADMIN_CF":
-                  string file = view.GetFocusedDataRow()["QBC_ADMIN_CF"].ToString();
-                  if (!string.IsNullOrEmpty(file) && File.Exists(file))
-                  {
-                     Frm_FileViewer f1 = new Frm_FileViewer();
-                     f1.Size = new Size(800, 800);
+               case "Path":
+                  file = view.FocusedValue.ToString();
+                  viewFile(file);
 
-                     f1.ViewFile(file, FastColoredTextBoxNS.Language.SQL);
-                  }
+                  break;
+               case "QBC Admin Cf Path":
+                  file = view.FocusedValue.ToString();
+                  viewFile(file);
                   break;
             }
          }
       }
 
+
+      private void viewFile(string file)
+      {
+         if (!string.IsNullOrEmpty(file) && File.Exists(file))
+         {
+            Frm_FileViewer f1 = new Frm_FileViewer();
+            f1.Size = new Size(800, 800);
+
+            f1.ViewFile(file, FastColoredTextBoxNS.Language.SQL);
+         }
+      }
+
       private void btnRemoveEnvsFromCFs_ItemClick(object sender, ItemClickEventArgs e)
       {
-         _EnvsInfo.RemoveEnvsFromCFs();
+         _Envs.RemoveEnvsFromCFs();
       }
    }
 }
