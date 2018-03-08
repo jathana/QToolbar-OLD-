@@ -97,7 +97,7 @@ namespace QToolbar
          layCboLegalUrl.Text = $"LegalUrl ({((DataRowView)((LookUpEdit)sender).GetSelectedDataRow()).Row["Name"].ToString()})";
          memSuccessEmail.Text = $@"QA’s unfreeze!!
             
-Η {txtVersion.Text} είναι έτοιμη χωρίς errors &connector warnings.
+Η {txtVersion.Text} είναι έτοιμη χωρίς errors και connector warnings.
 
 Legal App: {cboLegalUrl.EditValue}
 

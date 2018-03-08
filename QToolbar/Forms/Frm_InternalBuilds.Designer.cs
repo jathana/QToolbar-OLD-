@@ -42,7 +42,6 @@
          this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
          this.btnCopyVersion = new DevExpress.XtraEditors.SimpleButton();
          this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
          this.btnCopyStarTeamLabel = new DevExpress.XtraEditors.SimpleButton();
          this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
          this.memSuccessEmail = new DevExpress.XtraEditors.MemoEdit();
@@ -62,7 +61,6 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.memSuccessEmail.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
@@ -134,6 +132,7 @@
          this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
          this.layoutControl1.Location = new System.Drawing.Point(0, 116);
          this.layoutControl1.Name = "layoutControl1";
+         this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(866, 208, 450, 400);
          this.layoutControl1.Root = this.layoutControlGroup1;
          this.layoutControl1.Size = new System.Drawing.Size(556, 303);
          this.layoutControl1.TabIndex = 6;
@@ -167,7 +166,6 @@
             this.layoutControlItem1,
             this.layoutControlItem2,
             this.layoutControlItem3,
-            this.emptySpaceItem1,
             this.layoutControlItem4,
             this.layoutControlItem5,
             this.layoutControlItem6,
@@ -216,14 +214,6 @@
          this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem3.TextVisible = false;
          // 
-         // emptySpaceItem1
-         // 
-         this.emptySpaceItem1.AllowHotTrack = false;
-         this.emptySpaceItem1.Location = new System.Drawing.Point(0, 204);
-         this.emptySpaceItem1.Name = "emptySpaceItem1";
-         this.emptySpaceItem1.Size = new System.Drawing.Size(536, 79);
-         this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
-         // 
          // btnCopyStarTeamLabel
          // 
          this.btnCopyStarTeamLabel.Location = new System.Drawing.Point(468, 38);
@@ -248,7 +238,7 @@
          this.memSuccessEmail.Location = new System.Drawing.Point(89, 88);
          this.memSuccessEmail.MenuManager = this.ribbonControl1;
          this.memSuccessEmail.Name = "memSuccessEmail";
-         this.memSuccessEmail.Size = new System.Drawing.Size(375, 124);
+         this.memSuccessEmail.Size = new System.Drawing.Size(375, 203);
          this.memSuccessEmail.StyleController = this.layoutControl1;
          this.memSuccessEmail.TabIndex = 8;
          // 
@@ -257,7 +247,7 @@
          this.layoutControlItem5.Control = this.memSuccessEmail;
          this.layoutControlItem5.Location = new System.Drawing.Point(0, 76);
          this.layoutControlItem5.Name = "layoutControlItem5";
-         this.layoutControlItem5.Size = new System.Drawing.Size(456, 128);
+         this.layoutControlItem5.Size = new System.Drawing.Size(456, 207);
          this.layoutControlItem5.Text = "Success Email";
          this.layoutControlItem5.TextSize = new System.Drawing.Size(74, 13);
          // 
@@ -285,7 +275,7 @@
          this.emptySpaceItem2.AllowHotTrack = false;
          this.emptySpaceItem2.Location = new System.Drawing.Point(456, 102);
          this.emptySpaceItem2.Name = "emptySpaceItem2";
-         this.emptySpaceItem2.Size = new System.Drawing.Size(80, 102);
+         this.emptySpaceItem2.Size = new System.Drawing.Size(80, 181);
          this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
          // 
          // emptySpaceItem3
@@ -337,7 +327,6 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.memSuccessEmail.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
@@ -368,7 +357,6 @@
       private DevExpress.XtraEditors.SimpleButton btnCopyStarTeamLabel;
       private DevExpress.XtraEditors.SimpleButton btnCopyVersion;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
-      private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
