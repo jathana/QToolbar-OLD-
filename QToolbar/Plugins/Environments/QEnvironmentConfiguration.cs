@@ -11,7 +11,7 @@ namespace QToolbar.Tools
    /// </summary>
    public class QEnvironmentConfiguration
    {
-
+      #region fields
       private string _Id = "";
       private string _Name = "";
       private string _Server = "";
@@ -40,7 +40,9 @@ namespace QToolbar.Tools
       private string _STDConnector = "";
       //
       private string _CheckoutPath = "";
+      #endregion
 
+      #region properties
       public string Id
       {
          get
@@ -378,5 +380,7 @@ namespace QToolbar.Tools
             _CheckoutPath = value;
          }
       }
+
+      #endregion
    }
 }

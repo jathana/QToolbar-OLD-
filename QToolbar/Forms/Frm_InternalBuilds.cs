@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using System.Diagnostics;
 using System.IO;
+using QToolbar.Options;
 
 namespace QToolbar
 {
@@ -29,7 +30,7 @@ namespace QToolbar
          Show();
       }
 
-      
+
 
       private void btnConnectorWarningsLog_ItemClick_1(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
       {
@@ -62,11 +63,45 @@ namespace QToolbar
       {
          txtVersion.Text = Path.GetFileName(_InternalBuildPath);
          txtStarTeamLabel.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+         cboLegalUrl.Properties.DisplayMember = "Command";
+         cboLegalUrl.Properties.ValueMember = "Command";
+         cboLegalUrl.Properties.DataSource = OptionsInstance.LegalLinks.Data;
+
       }
 
       private void Frm_InternalBuilds_Load(object sender, EventArgs e)
       {
          ShowInfo();
+      }
+
+      private void btnCopyVersion_Click(object sender, EventArgs e)
+      {
+         Clipboard.SetText(txtVersion.EditValue.ToString()); 
+      }
+
+      private void btnCopyStarTeamLabel_Click(object sender, EventArgs e)
+      {
+         Clipboard.SetText(txtStarTeamLabel.EditValue.ToString());
+      }
+
+      private void btnCopySuccessEmailText_Click(object sender, EventArgs e)
+      {
+         if (memSuccessEmail.EditValue != null)
+         {
+            Clipboard.SetText(memSuccessEmail.EditValue.ToString());
+         }
+      }
+
+      private void cboLegalUrl_EditValueChanged(object sender, EventArgs e)
+      {
+         layCboLegalUrl.Text = $"LegalUrl ({((DataRowView)((LookUpEdit)sender).GetSelectedDataRow()).Row["Name"].ToString()})";
+         memSuccessEmail.Text = $@"QA’s unfreeze!!
+            
+Η {txtVersion.Text} είναι έτοιμη χωρίς errors &connector warnings.
+
+Legal App: {cboLegalUrl.EditValue}
+
+Ευχαριστώ,";
       }
    }
 }

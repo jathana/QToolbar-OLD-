@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\q-wks-jathan\Shared\QToolbar\</InstallUrl>
-    <ApplicationRevision>89</ApplicationRevision>
+    <ApplicationRevision>96</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -67,6 +67,7 @@
   <ItemGroup>
     <Reference Include="DevExpress.Data.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Images.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Utils.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraBars.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -125,6 +126,15 @@
     <Compile Include="Builds\CheckResult.cs" />
     <Compile Include="Helpers\CfFile.cs" />
     <Compile Include="Options\EnvCFs.cs" />
+    <Compile Include="Plugins\CFsValidator\CfFileValidationEventArgs.cs" />
+    <Compile Include="Plugins\CFsValidator\CFsValidator.cs" />
+    <Compile Include="Plugins\CFsValidator\CFsValidatorPlugin.cs" />
+    <Compile Include="Plugins\CFsValidator\Frm_CFsValidator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Plugins\CFsValidator\Frm_CFsValidator.Designer.cs">
+      <DependentUpon>Frm_CFsValidator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Plugins\Environments\EnvironmentsInfoPlugin.cs" />
     <Compile Include="Plugins\Environments\Frm_Environments.cs">
       <SubType>Form</SubType>
@@ -187,6 +197,7 @@
     </Compile>
     <Compile Include="Plugins\Environments\QEnvironment.cs" />
     <Compile Include="Plugins\Environments\QEnvironments.cs" />
+    <Compile Include="Plugins\Environments\QEnvironmentsConfiguration.cs" />
     <Compile Include="Plugins\NextBuildScript\AddFullEODMetadataPlugin.cs" />
     <Compile Include="Plugins\NextBuildScript\AddEODMetadataPlugin.cs" />
     <Compile Include="Plugins\NextBuildScript\Frm_NextBuildScript.cs">
@@ -237,6 +248,9 @@
     </Compile>
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Helpers\XmlNodeExtensions.cs" />
+    <EmbeddedResource Include="Plugins\CFsValidator\Frm_CFsValidator.resx">
+      <DependentUpon>Frm_CFsValidator.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Plugins\Environments\Frm_Environments.resx">
       <DependentUpon>Frm_Environments.cs</DependentUpon>
     </EmbeddedResource>

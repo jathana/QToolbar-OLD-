@@ -30,28 +30,28 @@
       {
          this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_Main));
-         DevExpress.Utils.SuperToolTip superToolTip36 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem41 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip37 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem42 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip38 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem43 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip39 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem44 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip40 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem45 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip41 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem46 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.ToolTipItem toolTipItem6 = new DevExpress.Utils.ToolTipItem();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem47 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip42 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem48 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.ToolTipItem toolTipItem7 = new DevExpress.Utils.ToolTipItem();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem49 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip43 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem50 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.ToolTipItem toolTipItem8 = new DevExpress.Utils.ToolTipItem();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem51 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip6 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem6 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem7 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip7 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem8 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem9 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip8 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem10 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem11 = new DevExpress.Utils.ToolTipTitleItem();
          this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
          this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
@@ -59,6 +59,7 @@
          this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
          this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
          this.btnOptions = new DevExpress.XtraBars.BarButtonItem();
+         this.toolTipController1 = new DevExpress.Utils.ToolTipController(this.components);
          this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
          this.mnuDesigners = new DevExpress.XtraBars.BarSubItem();
          this.btnOptions2 = new DevExpress.XtraBars.BarButtonItem();
@@ -79,15 +80,14 @@
          this.btnSQL = new DevExpress.XtraBars.BarButtonItem();
          this.mnuPlugins = new DevExpress.XtraBars.BarSubItem();
          this.mnuDesignersLocal = new DevExpress.XtraBars.BarSubItem();
+         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.grpApplications = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpBuilds = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpFiles = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpSQL = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpTools = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-         this.toolTipController1 = new DevExpress.Utils.ToolTipController(this.components);
-         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -113,7 +113,7 @@
          this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
          this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
          this.barDockControlTop.Manager = this.barManager1;
-         this.barDockControlTop.Size = new System.Drawing.Size(1164, 0);
+         this.barDockControlTop.Size = new System.Drawing.Size(1176, 0);
          // 
          // barDockControlBottom
          // 
@@ -121,7 +121,7 @@
          this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
          this.barDockControlBottom.Location = new System.Drawing.Point(0, 90);
          this.barDockControlBottom.Manager = this.barManager1;
-         this.barDockControlBottom.Size = new System.Drawing.Size(1164, 0);
+         this.barDockControlBottom.Size = new System.Drawing.Size(1176, 0);
          // 
          // barDockControlLeft
          // 
@@ -135,7 +135,7 @@
          // 
          this.barDockControlRight.CausesValidation = false;
          this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-         this.barDockControlRight.Location = new System.Drawing.Point(1164, 0);
+         this.barDockControlRight.Location = new System.Drawing.Point(1176, 0);
          this.barDockControlRight.Manager = this.barManager1;
          this.barDockControlRight.Size = new System.Drawing.Size(0, 90);
          // 
@@ -201,7 +201,7 @@
          this.ribbonControl1.ShowExpandCollapseButton = DevExpress.Utils.DefaultBoolean.False;
          this.ribbonControl1.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
          this.ribbonControl1.ShowToolbarCustomizeItem = false;
-         this.ribbonControl1.Size = new System.Drawing.Size(1164, 95);
+         this.ribbonControl1.Size = new System.Drawing.Size(1176, 95);
          this.ribbonControl1.Toolbar.ShowCustomizeItem = false;
          this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
          // 
@@ -212,9 +212,9 @@
          this.mnuDesigners.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuDesigners.ImageOptions.Image")));
          this.mnuDesigners.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuDesigners.ImageOptions.LargeImage")));
          this.mnuDesigners.Name = "mnuDesigners";
-         toolTipTitleItem41.Text = "Opens Designer";
-         superToolTip36.Items.Add(toolTipTitleItem41);
-         this.mnuDesigners.SuperTip = superToolTip36;
+         toolTipTitleItem1.Text = "Opens Designer";
+         superToolTip1.Items.Add(toolTipTitleItem1);
+         this.mnuDesigners.SuperTip = superToolTip1;
          // 
          // btnOptions2
          // 
@@ -223,9 +223,9 @@
          this.btnOptions2.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnOptions2.ImageOptions.Image")));
          this.btnOptions2.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnOptions2.ImageOptions.LargeImage")));
          this.btnOptions2.Name = "btnOptions2";
-         toolTipTitleItem42.Text = "Opens options dialog";
-         superToolTip37.Items.Add(toolTipTitleItem42);
-         this.btnOptions2.SuperTip = superToolTip37;
+         toolTipTitleItem2.Text = "Opens options dialog";
+         superToolTip2.Items.Add(toolTipTitleItem2);
+         this.btnOptions2.SuperTip = superToolTip2;
          this.btnOptions2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnOptions2_ItemClick);
          // 
          // mnuQCSAdminCFs
@@ -235,9 +235,9 @@
          this.mnuQCSAdminCFs.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuQCSAdminCFs.ImageOptions.Image")));
          this.mnuQCSAdminCFs.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuQCSAdminCFs.ImageOptions.LargeImage")));
          this.mnuQCSAdminCFs.Name = "mnuQCSAdminCFs";
-         toolTipTitleItem43.Text = "Opens the latest cf file of the selected version";
-         superToolTip38.Items.Add(toolTipTitleItem43);
-         this.mnuQCSAdminCFs.SuperTip = superToolTip38;
+         toolTipTitleItem3.Text = "Opens the latest cf file of the selected version";
+         superToolTip3.Items.Add(toolTipTitleItem3);
+         this.mnuQCSAdminCFs.SuperTip = superToolTip3;
          // 
          // mnuQCSAdmin
          // 
@@ -246,9 +246,9 @@
          this.mnuQCSAdmin.ImageOptions.Image = global::QToolbar.Properties.Resources.mnuQCSAdmin_ImageOptions_LargeImage;
          this.mnuQCSAdmin.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuQCSAdmin.ImageOptions.LargeImage")));
          this.mnuQCSAdmin.Name = "mnuQCSAdmin";
-         toolTipTitleItem44.Text = "Opens QCS Admin application";
-         superToolTip39.Items.Add(toolTipTitleItem44);
-         this.mnuQCSAdmin.SuperTip = superToolTip39;
+         toolTipTitleItem4.Text = "Opens QCS Admin application";
+         superToolTip4.Items.Add(toolTipTitleItem4);
+         this.mnuQCSAdmin.SuperTip = superToolTip4;
          // 
          // mnuQCSAgent
          // 
@@ -257,9 +257,9 @@
          this.mnuQCSAgent.ImageOptions.Image = global::QToolbar.Properties.Resources.mnuQCSAgent_ImageOptions_LargeImage;
          this.mnuQCSAgent.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuQCSAgent.ImageOptions.LargeImage")));
          this.mnuQCSAgent.Name = "mnuQCSAgent";
-         toolTipTitleItem45.Text = "Opens QCS Agent application";
-         superToolTip40.Items.Add(toolTipTitleItem45);
-         this.mnuQCSAgent.SuperTip = superToolTip40;
+         toolTipTitleItem5.Text = "Opens QCS Agent application";
+         superToolTip5.Items.Add(toolTipTitleItem5);
+         this.mnuQCSAgent.SuperTip = superToolTip5;
          // 
          // mnuLegalLinks
          // 
@@ -364,8 +364,8 @@
          // 
          this.mnuPlugins.Caption = "Plugins";
          this.mnuPlugins.Id = 32;
-         this.mnuPlugins.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuTools.ImageOptions.Image")));
-         this.mnuPlugins.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuTools.ImageOptions.LargeImage")));
+         this.mnuPlugins.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuPlugins.ImageOptions.Image")));
+         this.mnuPlugins.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuPlugins.ImageOptions.LargeImage")));
          this.mnuPlugins.Name = "mnuPlugins";
          // 
          // mnuDesignersLocal
@@ -375,6 +375,48 @@
          this.mnuDesignersLocal.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuDesignersLocal.ImageOptions.Image")));
          this.mnuDesignersLocal.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuDesignersLocal.ImageOptions.LargeImage")));
          this.mnuDesignersLocal.Name = "mnuDesignersLocal";
+         // 
+         // barButtonItem1
+         // 
+         this.barButtonItem1.Caption = "barButtonItem1";
+         this.barButtonItem1.Id = 1;
+         this.barButtonItem1.Name = "barButtonItem1";
+         toolTipTitleItem6.Text = "G";
+         toolTipItem1.LeftIndent = 6;
+         toolTipItem1.Text = "GGG";
+         toolTipTitleItem7.LeftIndent = 6;
+         toolTipTitleItem7.Text = "GGGGG";
+         superToolTip6.Items.Add(toolTipTitleItem6);
+         superToolTip6.Items.Add(toolTipItem1);
+         superToolTip6.Items.Add(toolTipTitleItem7);
+         this.barButtonItem1.SuperTip = superToolTip6;
+         // 
+         // barButtonItem2
+         // 
+         this.barButtonItem2.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
+         this.barButtonItem2.Caption = "<b>barButtonItem2</b><br>hhhhh";
+         this.barButtonItem2.Description = "desc";
+         toolTipTitleItem8.Text = "gfhfgh";
+         toolTipItem2.LeftIndent = 6;
+         toolTipItem2.Text = "fghfg";
+         toolTipTitleItem9.LeftIndent = 6;
+         toolTipTitleItem9.Text = "fghfg";
+         superToolTip7.Items.Add(toolTipTitleItem8);
+         superToolTip7.Items.Add(toolTipItem2);
+         superToolTip7.Items.Add(toolTipTitleItem9);
+         this.barButtonItem2.DropDownSuperTip = superToolTip7;
+         this.barButtonItem2.Id = 2;
+         this.barButtonItem2.ItemAppearance.Hovered.Options.UseTextOptions = true;
+         this.barButtonItem2.Name = "barButtonItem2";
+         toolTipTitleItem10.Text = "444";
+         toolTipItem3.LeftIndent = 6;
+         toolTipItem3.Text = "444";
+         toolTipTitleItem11.LeftIndent = 6;
+         toolTipTitleItem11.Text = "444";
+         superToolTip8.Items.Add(toolTipTitleItem10);
+         superToolTip8.Items.Add(toolTipItem3);
+         superToolTip8.Items.Add(toolTipTitleItem11);
+         this.barButtonItem2.SuperTip = superToolTip8;
          // 
          // ribbonPage1
          // 
@@ -431,53 +473,11 @@
          this.grpTools.Name = "grpTools";
          this.grpTools.Text = "Tools";
          // 
-         // barButtonItem1
-         // 
-         this.barButtonItem1.Caption = "barButtonItem1";
-         this.barButtonItem1.Id = 1;
-         this.barButtonItem1.Name = "barButtonItem1";
-         toolTipTitleItem46.Text = "G";
-         toolTipItem6.LeftIndent = 6;
-         toolTipItem6.Text = "GGG";
-         toolTipTitleItem47.LeftIndent = 6;
-         toolTipTitleItem47.Text = "GGGGG";
-         superToolTip41.Items.Add(toolTipTitleItem46);
-         superToolTip41.Items.Add(toolTipItem6);
-         superToolTip41.Items.Add(toolTipTitleItem47);
-         this.barButtonItem1.SuperTip = superToolTip41;
-         // 
-         // barButtonItem2
-         // 
-         this.barButtonItem2.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
-         this.barButtonItem2.Caption = "<b>barButtonItem2</b><br>hhhhh";
-         this.barButtonItem2.Description = "desc";
-         toolTipTitleItem48.Text = "gfhfgh";
-         toolTipItem7.LeftIndent = 6;
-         toolTipItem7.Text = "fghfg";
-         toolTipTitleItem49.LeftIndent = 6;
-         toolTipTitleItem49.Text = "fghfg";
-         superToolTip42.Items.Add(toolTipTitleItem48);
-         superToolTip42.Items.Add(toolTipItem7);
-         superToolTip42.Items.Add(toolTipTitleItem49);
-         this.barButtonItem2.DropDownSuperTip = superToolTip42;
-         this.barButtonItem2.Id = 2;
-         this.barButtonItem2.ItemAppearance.Hovered.Options.UseTextOptions = true;
-         this.barButtonItem2.Name = "barButtonItem2";
-         toolTipTitleItem50.Text = "444";
-         toolTipItem8.LeftIndent = 6;
-         toolTipItem8.Text = "444";
-         toolTipTitleItem51.LeftIndent = 6;
-         toolTipTitleItem51.Text = "444";
-         superToolTip43.Items.Add(toolTipTitleItem50);
-         superToolTip43.Items.Add(toolTipItem8);
-         superToolTip43.Items.Add(toolTipTitleItem51);
-         this.barButtonItem2.SuperTip = superToolTip43;
-         // 
          // Frm_Main
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.ClientSize = new System.Drawing.Size(1164, 90);
+         this.ClientSize = new System.Drawing.Size(1176, 90);
          this.Controls.Add(this.ribbonControl1);
          this.Controls.Add(this.barDockControlLeft);
          this.Controls.Add(this.barDockControlRight);
@@ -485,7 +485,7 @@
          this.Controls.Add(this.barDockControlTop);
          this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
          this.MaximizeBox = false;
-         this.MaximumSize = new System.Drawing.Size(1180, 128);
+         this.MaximumSize = new System.Drawing.Size(1192, 128);
          this.Name = "Frm_Main";
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.Text = "QToolbar";

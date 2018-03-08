@@ -82,6 +82,7 @@ namespace QToolbar.Plugins.Environments
         CreateEnvironmentsMenuItems();
 
          UXGrid.DataSource = _Envs.Data;
+
       }
 
 
@@ -143,6 +144,9 @@ namespace QToolbar.Plugins.Environments
             {
                _Envs.Remove(item.Caption);
             }
+
+            _Envs.RemoveEnvsFromCFs();
+
             UXGridView.BestFitColumns();
          }
          catch (Exception ex)

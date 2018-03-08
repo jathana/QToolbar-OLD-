@@ -30,6 +30,8 @@
       {
          this.cboBranch = new DevExpress.XtraEditors.ImageComboBoxEdit();
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+         this.chkOpenFolder = new DevExpress.XtraEditors.CheckEdit();
+         this.memResults = new DevExpress.XtraEditors.MemoEdit();
          this.lblDescription = new DevExpress.XtraEditors.LabelControl();
          this.btnApply = new DevExpress.XtraEditors.SimpleButton();
          this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
@@ -40,14 +42,14 @@
          this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
          this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
          this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.memResults = new DevExpress.XtraEditors.MemoEdit();
          this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
          this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
-         this.chkOpenFolder = new DevExpress.XtraEditors.CheckEdit();
          this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
          ((System.ComponentModel.ISupportInitialize)(this.cboBranch.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.chkOpenFolder.Properties)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.memResults.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
@@ -55,10 +57,8 @@
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.memResults.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.chkOpenFolder.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
          this.SuspendLayout();
          // 
@@ -88,6 +88,26 @@
          this.layoutControl1.Size = new System.Drawing.Size(558, 233);
          this.layoutControl1.TabIndex = 1;
          this.layoutControl1.Text = "layoutControl1";
+         // 
+         // chkOpenFolder
+         // 
+         this.chkOpenFolder.EditValue = true;
+         this.chkOpenFolder.Location = new System.Drawing.Point(12, 53);
+         this.chkOpenFolder.Name = "chkOpenFolder";
+         this.chkOpenFolder.Properties.Caption = "Explore Next Build folder on completion.";
+         this.chkOpenFolder.Size = new System.Drawing.Size(534, 19);
+         this.chkOpenFolder.StyleController = this.layoutControl1;
+         this.chkOpenFolder.TabIndex = 8;
+         // 
+         // memResults
+         // 
+         this.memResults.EditValue = "";
+         this.memResults.Location = new System.Drawing.Point(12, 108);
+         this.memResults.Name = "memResults";
+         this.memResults.Properties.ReadOnly = true;
+         this.memResults.Size = new System.Drawing.Size(534, 87);
+         this.memResults.StyleController = this.layoutControl1;
+         this.memResults.TabIndex = 7;
          // 
          // lblDescription
          // 
@@ -201,16 +221,6 @@
          this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem4.TextVisible = false;
          // 
-         // memResults
-         // 
-         this.memResults.EditValue = "";
-         this.memResults.Location = new System.Drawing.Point(12, 108);
-         this.memResults.Name = "memResults";
-         this.memResults.Properties.ReadOnly = true;
-         this.memResults.Size = new System.Drawing.Size(534, 87);
-         this.memResults.StyleController = this.layoutControl1;
-         this.memResults.TabIndex = 7;
-         // 
          // layoutControlItem5
          // 
          this.layoutControlItem5.Control = this.memResults;
@@ -228,16 +238,6 @@
          this.emptySpaceItem1.Name = "emptySpaceItem1";
          this.emptySpaceItem1.Size = new System.Drawing.Size(538, 16);
          this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
-         // 
-         // chkOpenFolder
-         // 
-         this.chkOpenFolder.EditValue = true;
-         this.chkOpenFolder.Location = new System.Drawing.Point(12, 53);
-         this.chkOpenFolder.Name = "chkOpenFolder";
-         this.chkOpenFolder.Properties.Caption = "Explore Next Build folder on completion.";
-         this.chkOpenFolder.Size = new System.Drawing.Size(534, 19);
-         this.chkOpenFolder.StyleController = this.layoutControl1;
-         this.chkOpenFolder.TabIndex = 8;
          // 
          // layoutControlItem6
          // 
@@ -262,6 +262,8 @@
          ((System.ComponentModel.ISupportInitialize)(this.cboBranch.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
          this.layoutControl1.ResumeLayout(false);
+         ((System.ComponentModel.ISupportInitialize)(this.chkOpenFolder.Properties)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.memResults.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
@@ -269,10 +271,8 @@
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.memResults.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.chkOpenFolder.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
          this.ResumeLayout(false);
 

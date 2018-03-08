@@ -31,11 +31,11 @@ namespace QToolbar
         {
          this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_FileViewer));
-         DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
-         DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
+         DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
          this.menuStrip1 = new System.Windows.Forms.MenuStrip();
          this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -90,6 +90,7 @@ namespace QToolbar
          this.bar2 = new DevExpress.XtraBars.Bar();
          this.btnRefresh = new DevExpress.XtraBars.BarButtonItem();
          this.btnOpenFileLocation = new DevExpress.XtraBars.BarButtonItem();
+         this.btnEditFile = new DevExpress.XtraBars.BarButtonItem();
          this.bar3 = new DevExpress.XtraBars.Bar();
          this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
@@ -472,7 +473,7 @@ namespace QToolbar
          this.fctb.AutoIndentCharsPatterns = "^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\r\n^\\s*(case|default)\\s*[^:]*(" +
     "?<range>:)\\s*(?<range>[^;]+);";
          this.fctb.AutoIndentExistingLines = false;
-         this.fctb.AutoScrollMinSize = new System.Drawing.Size(254, 285);
+         this.fctb.AutoScrollMinSize = new System.Drawing.Size(284, 285);
          this.fctb.BackBrush = null;
          this.fctb.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.fctb.CharHeight = 15;
@@ -549,9 +550,10 @@ namespace QToolbar
          this.barManager1.Form = this;
          this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.btnRefresh,
-            this.btnOpenFileLocation});
+            this.btnOpenFileLocation,
+            this.btnEditFile});
          this.barManager1.MainMenu = this.bar2;
-         this.barManager1.MaxItemId = 2;
+         this.barManager1.MaxItemId = 3;
          this.barManager1.StatusBar = this.bar3;
          // 
          // bar2
@@ -562,7 +564,8 @@ namespace QToolbar
          this.bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Left;
          this.bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnRefresh, DevExpress.XtraBars.BarItemPaintStyle.Standard),
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnOpenFileLocation)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnOpenFileLocation),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnEditFile)});
          this.bar2.OptionsBar.MultiLine = true;
          this.bar2.OptionsBar.UseWholeRow = true;
          this.bar2.Text = "Main menu";
@@ -574,12 +577,12 @@ namespace QToolbar
          this.btnRefresh.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.ImageOptions.Image")));
          this.btnRefresh.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRefresh.ImageOptions.LargeImage")));
          this.btnRefresh.Name = "btnRefresh";
-         toolTipTitleItem1.Text = "Refresh";
-         toolTipItem1.LeftIndent = 6;
-         toolTipItem1.Text = "Reads file content.";
-         superToolTip1.Items.Add(toolTipTitleItem1);
-         superToolTip1.Items.Add(toolTipItem1);
-         this.btnRefresh.SuperTip = superToolTip1;
+         toolTipTitleItem3.Text = "Refresh";
+         toolTipItem2.LeftIndent = 6;
+         toolTipItem2.Text = "Reads file content.";
+         superToolTip3.Items.Add(toolTipTitleItem3);
+         superToolTip3.Items.Add(toolTipItem2);
+         this.btnRefresh.SuperTip = superToolTip3;
          this.btnRefresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRefresh_ItemClick);
          // 
          // btnOpenFileLocation
@@ -589,10 +592,19 @@ namespace QToolbar
          this.btnOpenFileLocation.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenFileLocation.ImageOptions.Image")));
          this.btnOpenFileLocation.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnOpenFileLocation.ImageOptions.LargeImage")));
          this.btnOpenFileLocation.Name = "btnOpenFileLocation";
-         toolTipTitleItem2.Text = "Open File Location";
-         superToolTip2.Items.Add(toolTipTitleItem2);
-         this.btnOpenFileLocation.SuperTip = superToolTip2;
+         toolTipTitleItem4.Text = "Open File Location";
+         superToolTip4.Items.Add(toolTipTitleItem4);
+         this.btnOpenFileLocation.SuperTip = superToolTip4;
          this.btnOpenFileLocation.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnOpenFileLocation_ItemClick);
+         // 
+         // btnEditFile
+         // 
+         this.btnEditFile.Caption = "Edit File";
+         this.btnEditFile.Id = 2;
+         this.btnEditFile.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnEditFile.ImageOptions.Image")));
+         this.btnEditFile.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnEditFile.ImageOptions.LargeImage")));
+         this.btnEditFile.Name = "btnEditFile";
+         this.btnEditFile.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnEditFile_ItemClick);
          // 
          // bar3
          // 
@@ -728,6 +740,7 @@ namespace QToolbar
       private DevExpress.XtraBars.BarDockControl barDockControlRight;
       private DevExpress.XtraBars.BarButtonItem btnRefresh;
       private DevExpress.XtraBars.BarButtonItem btnOpenFileLocation;
+      private DevExpress.XtraBars.BarButtonItem btnEditFile;
    }
 }
 

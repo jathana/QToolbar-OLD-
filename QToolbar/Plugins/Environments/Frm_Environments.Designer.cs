@@ -29,7 +29,7 @@
       private void InitializeComponent()
       {
          this.components = new System.ComponentModel.Container();
-         DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
+         DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_Environments));
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
          this.UXGrid = new DevExpress.XtraGrid.GridControl();
@@ -39,13 +39,13 @@
          this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
          this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
          this.mnuEnvironments = new DevExpress.XtraBars.BarSubItem();
+         this.CFsManagement = new DevExpress.XtraBars.BarSubItem();
+         this.btnRemoveEnvsFromCFs = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
          this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
-         this.CFsManagement = new DevExpress.XtraBars.BarSubItem();
          this.popupMenu2 = new DevExpress.XtraBars.PopupMenu(this.components);
-         this.btnRemoveEnvsFromCFs = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.UXGrid)).BeginInit();
@@ -72,9 +72,9 @@
          // 
          // UXGrid
          // 
-         gridLevelNode2.RelationName = "Level1";
+         gridLevelNode1.RelationName = "Level1";
          this.UXGrid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode2});
+            gridLevelNode1});
          this.UXGrid.Location = new System.Drawing.Point(12, 12);
          this.UXGrid.MainView = this.UXGridView;
          this.UXGrid.Name = "UXGrid";
@@ -143,6 +143,25 @@
          this.mnuEnvironments.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuEnvironments.ImageOptions.LargeImage")));
          this.mnuEnvironments.Name = "mnuEnvironments";
          // 
+         // CFsManagement
+         // 
+         this.CFsManagement.Caption = "CFs Management";
+         this.CFsManagement.Id = 9;
+         this.CFsManagement.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("CFsManagement.ImageOptions.Image")));
+         this.CFsManagement.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("CFsManagement.ImageOptions.LargeImage")));
+         this.CFsManagement.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnRemoveEnvsFromCFs)});
+         this.CFsManagement.Name = "CFsManagement";
+         // 
+         // btnRemoveEnvsFromCFs
+         // 
+         this.btnRemoveEnvsFromCFs.Caption = "Remove Environments from CFs";
+         this.btnRemoveEnvsFromCFs.Id = 12;
+         this.btnRemoveEnvsFromCFs.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnRemoveEnvsFromCFs.ImageOptions.Image")));
+         this.btnRemoveEnvsFromCFs.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRemoveEnvsFromCFs.ImageOptions.LargeImage")));
+         this.btnRemoveEnvsFromCFs.Name = "btnRemoveEnvsFromCFs";
+         this.btnRemoveEnvsFromCFs.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRemoveEnvsFromCFs_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -168,29 +187,10 @@
          this.popupMenu1.Name = "popupMenu1";
          this.popupMenu1.Ribbon = this.ribbonControl1;
          // 
-         // CFsManagement
-         // 
-         this.CFsManagement.Caption = "CFs Management";
-         this.CFsManagement.Id = 9;
-         this.CFsManagement.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("CFsManagement.ImageOptions.Image")));
-         this.CFsManagement.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("CFsManagement.ImageOptions.LargeImage")));
-         this.CFsManagement.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnRemoveEnvsFromCFs)});
-         this.CFsManagement.Name = "CFsManagement";
-         // 
          // popupMenu2
          // 
          this.popupMenu2.Name = "popupMenu2";
          this.popupMenu2.Ribbon = this.ribbonControl1;
-         // 
-         // btnRemoveEnvsFromCFs
-         // 
-         this.btnRemoveEnvsFromCFs.Caption = "Remove Environments from CFs";
-         this.btnRemoveEnvsFromCFs.Id = 12;
-         this.btnRemoveEnvsFromCFs.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnRemoveEnvs.ImageOptions.Image")));
-         this.btnRemoveEnvsFromCFs.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRemoveEnvs.ImageOptions.LargeImage")));
-         this.btnRemoveEnvsFromCFs.Name = "btnRemoveEnvsFromCFs";
-         this.btnRemoveEnvsFromCFs.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRemoveEnvsFromCFs_ItemClick);
          // 
          // Frm_Environments
          // 

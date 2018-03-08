@@ -42,6 +42,19 @@ namespace QToolbar
          ViewFile(_File, _LangObj);
       }
 
+
+      private void EnableButtons(bool enable)
+      {
+         btnOpenFileLocation.Enabled = enable;
+         btnRefresh.Enabled = enable;
+         EnableEditButton(enable);
+      }
+      private void EnableEditButton(bool enable)
+      {
+         btnEditFile.Enabled = enable && !Path.GetExtension(_File).ToLower().Equals(".deploy");
+         
+      }
+
       public void ViewFile(string file, Language lang)
       {
          if (File.Exists(file))
@@ -60,11 +73,14 @@ namespace QToolbar
             {
                XtraMessageBox.Show(string.Format("Cannot open file:", ex.Message));
             }
+
          }
          else
          {
             XtraMessageBox.Show($"File not found:{file}");
          }
+
+         EnableButtons(File.Exists(file));
       }
         private void InitStylesPriority()
         {           
@@ -458,6 +474,18 @@ namespace QToolbar
          if (File.Exists(_File))
          {
             Process.Start("explorer.exe", "/select, " + _File);
+         }
+         else
+         {
+            XtraMessageBox.Show($"File {_File} does not exist!");
+         }
+      }
+
+      private void btnEditFile_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      {
+         if (File.Exists(_File))
+         {
+            Process.Start(_File);
          }
          else
          {

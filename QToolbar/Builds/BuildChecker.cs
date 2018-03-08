@@ -71,11 +71,7 @@ namespace QToolbar.Builds
          CheckQBCAdminCF();
 
          // check sql keywords
-         CheckDatabaseScripts();
-
-         // test
-         SqlParser p = new SqlParser();
-         p.Parse(@"E:\Temp\Stored Procedures\dbo.App_ActionsActivityExternalRegister.PRC.sql");
+         //CheckDatabaseScripts();
 
 
          if (!_Errors && _Table.Rows.Count == 0)
