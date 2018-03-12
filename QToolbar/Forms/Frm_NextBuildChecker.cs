@@ -101,6 +101,7 @@ namespace QToolbar
       {
          gridResults.DataSource = _BuildChecker.Table;
          grdAnalyticsResults.DataSource = _AnalyticsBuildChecker.Table;
+         ribbonStatusBar1.ItemLinks[0].Caption = "Finished.";
          Cursor.Current = Cursors.Default;
       }
 

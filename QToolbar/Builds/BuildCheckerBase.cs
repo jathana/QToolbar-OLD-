@@ -278,7 +278,7 @@ namespace QToolbar.Builds
       }
 
 
-      protected bool ParseSqlFileOld(string content, string file)
+      protected bool ParseSqlFile(string content, string file)
       {
          bool retval = true;
          if (Path.GetExtension(file).ToLower().Equals(".sql") || Path.GetExtension(file).ToLower().Equals(".bd"))
@@ -302,11 +302,12 @@ namespace QToolbar.Builds
                }
                retval = false;
             }
+            OnFileChecked(new BuildCheckerEventArgs() { Message = $"File {file}" });
          }
          return retval;
       }
 
-      protected bool ParseSqlFile(string content, string file)
+      protected bool ParseSqlFileNew(string content, string file)
       {
          bool retval = true;
          if (Path.GetExtension(file).ToLower().Equals(".sql") || Path.GetExtension(file).ToLower().Equals(".bd"))
@@ -314,12 +315,12 @@ namespace QToolbar.Builds
             retval = _SqlParser.Parse(file);
             AddParseErrors(file);
 
-            Tuple<string, int>[] keywords = Utils.GetSQLKeywords();
-            EnsureTestDatabases();
+            //Tuple<string, int>[] keywords = Utils.GetSQLKeywords();
+            //EnsureTestDatabases();
 
-            var dbs2008 = _TestDatabases.Where(database => database.Item3.Contains("2008")).ToList();
-            _SqlParser.Parse(file);
-            CheckTSQLKeywords2008(file, _SqlParser);
+            //var dbs2008 = _TestDatabases.Where(database => database.Item3.Contains("2008")).ToList();
+            //_SqlParser.Parse(file);
+            //CheckTSQLKeywords2008(file, _SqlParser);
          }
 
          OnFileChecked(new BuildCheckerEventArgs() { Message = $"File {file}"});
@@ -543,6 +544,7 @@ namespace QToolbar.Builds
 
       private void CheckTSQLKeywords2008(string file, SqlParser parser)
       {
+         return;
          Tuple<string, int>[] keywords = Utils.GetSQLKeywords();
          EnsureTestDatabases();
 

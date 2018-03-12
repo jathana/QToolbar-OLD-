@@ -89,7 +89,7 @@ namespace QToolbar.Helpers
             }
             if (typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
             {
-               //Console.WriteLine("{0}{1}:", indentString, property.Name);
+               Console.WriteLine("{0}{1}:", indentString, property.Name);
                if (propValue != null && property.PropertyType != typeof(string[]))
                {
                   IEnumerable enumerable = (IEnumerable)propValue;
@@ -104,7 +104,7 @@ namespace QToolbar.Helpers
             }
             else
             {
-               //Console.WriteLine("{0}{1}:", indentString, property.Name);
+               Console.WriteLine("{0}{1}:", indentString, property.Name);
                SearchParseInfo(propValue, indent + 2);
             }
          }

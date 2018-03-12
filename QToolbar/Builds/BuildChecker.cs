@@ -1,6 +1,7 @@
 ﻿using QToolbar.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,6 @@ namespace QToolbar.Builds
 
       public override void Check()
       {
-
          _Errors = false;
 
          base.Check();
@@ -34,6 +34,7 @@ namespace QToolbar.Builds
             foreach (string file in files)
             {
                fileOk = true;
+               Debug.WriteLine(file);
                StreamReader rdr = new StreamReader(file, true);
                content = rdr.ReadToEnd();
                lowerContent = content.ToLower();
@@ -47,17 +48,13 @@ namespace QToolbar.Builds
                fileOk = ScanSqlFile(content, file) && fileOk;
 
                // parse sql file
-               //fileOk = ParseSqlFile(content, file) && fileOk;
-
-               fileOk = _SqlParser.Parse(file) && fileOk;
-
+               fileOk = ParseSqlFile(content, file) && fileOk;
 
                if (fileOk) Inform(file, "File passed all checks!", "", CheckResult.OK);
             }
 
             // EOD Metadata files 
             CheckForEODMetadataFiles(_NextBuildPath);
-
          }
          else
          {
@@ -71,8 +68,7 @@ namespace QToolbar.Builds
          CheckQBCAdminCF();
 
          // check sql keywords
-         //CheckDatabaseScripts();
-
+         // CheckDatabaseScripts();
 
          if (!_Errors && _Table.Rows.Count == 0)
          {

@@ -144,9 +144,7 @@ namespace QToolbar.Plugins.Environments
             {
                _Envs.Remove(item.Caption);
             }
-
-            _Envs.RemoveEnvsFromCFs();
-
+            
             UXGridView.BestFitColumns();
          }
          catch (Exception ex)

@@ -78,7 +78,6 @@ namespace QToolbar.Plugins.Environments
       private async void CollectEnvInfo(string server, string db, QEnvironment env)
       {
 
-
          Task<QEnvironment> rs = Task<QEnvironment>.Factory.StartNew(() =>
          {
             QEnvironment retval = new QEnvironment();
@@ -166,6 +165,28 @@ namespace QToolbar.Plugins.Environments
                   }
                }
 
+               try
+               {
+                  // add cfs
+                  retval.CFs.Clear();
+                  // add cfs
+                  foreach (DataRow cfRow in OptionsInstance.EnvCFs.Data.Rows)
+                  {
+                     QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
+                     cfInfo.Name = Path.GetFileName(cfRow["Path"].ToString());
+                     cfInfo.Repository = Path.GetFileName(cfRow["Repository"].ToString());
+                     if (cfInfo.Repository == "QC")
+                        cfInfo.Path = Path.Combine(env.CheckoutPath, cfRow["Path"].ToString());
+                     else if (cfInfo.Repository == "PROTEUS")
+                        cfInfo.Path = Path.Combine(env.ProteusCheckoutPath, cfRow["Path"].ToString());
+
+                     retval.CFs.Add(cfInfo);
+                  }
+               }
+               catch(Exception ex)
+               {
+
+               }
             };
             return retval;
          });
@@ -174,17 +195,17 @@ namespace QToolbar.Plugins.Environments
             Dispatcher.CurrentDispatcher.Invoke(() => { return rs; }).ContinueWith((t1) => { InfoCollected(this, new EventArgs()); });
          });
 
-
          QEnvironment val = rs.Result;
 
          env.DBCollectionPlusVersion = val.DBCollectionPlusVersion;
          env.GLMDir = val.GLMDir;
          env.GLMLocalDir = val.GLMLocalDir;
          env.GLMLogDir = val.GLMLogDir;
-         env.GLMLocalLogDir = val.GLMLocalLogDir;
-         env.QCSystemSharedDirs.AddRange(val.QCSystemSharedDirs);
+         env.GLMLocalLogDir = val.GLMLocalLogDir;         
          env.QCLocalSystemDir = val.QCLocalSystemDir;
 
+         env.QCSystemSharedDirs.AddRange(val.QCSystemSharedDirs);
+         env.CFs.AddRange(val.CFs);
       }
 
       public void Remove(string envName)
