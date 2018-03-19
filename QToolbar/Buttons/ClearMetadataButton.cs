@@ -48,6 +48,12 @@ namespace QToolbar.Buttons
                builder.AppendLine("echo \"Deleting Local Metadata\"");
                builder.AppendLine("del %userprofile%\\documents\\*.metadata");
                builder.AppendLine("del %userprofile%\\documents\\*.localization.dat");
+               // del all :: My Documents\XX_YY_UI Metadata dirs
+               string[] uiMetadataDirs = Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "*_*_UI Metadata");
+               foreach(string metaDir in uiMetadataDirs)
+               {
+                  builder.AppendLine($"del /Q \"{metaDir}\"");
+               }               
                builder.AppendLine("del %TEMP%\\*.metadata");
                builder.AppendLine("del %TEMP%\\*localization.dat");
                builder.AppendLine("taskkill /IM iisexpress.exe");

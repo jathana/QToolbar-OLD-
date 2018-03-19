@@ -146,16 +146,11 @@ namespace QToolbar.Plugins.CFsValidator
 
 
          var grouped = from table in _Data.Select("SECTION='DBS'").AsEnumerable() 
-
                        group table by new { versionCol = table["VERSION"], valueCol = table["VALUE"], keyCol = table["KEY"] } into groupby
-
                        select new
-
                        {
-
                           Value = groupby.Key,
                           ColumnValues = groupby
-
                        };
 
          var s = grouped.ToList();
