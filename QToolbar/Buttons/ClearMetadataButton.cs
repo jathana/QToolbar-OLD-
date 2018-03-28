@@ -52,7 +52,7 @@ namespace QToolbar.Buttons
                string[] uiMetadataDirs = Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "*_*_UI Metadata");
                foreach(string metaDir in uiMetadataDirs)
                {
-                  builder.AppendLine($"del /Q \"{metaDir}\"");
+                  builder.AppendLine($"rd /Q /S \"{metaDir}\"");
                }               
                builder.AppendLine("del %TEMP%\\*.metadata");
                builder.AppendLine("del %TEMP%\\*localization.dat");

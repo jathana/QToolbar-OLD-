@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace QToolbar.Plugins.Environments
 {
-   public class QEnvironmentsConfiguration
+   public class QEnvironmentsConfiguration:List<QEnvironmentConfiguration>
    {
       private XmlDocument _XmlDoc;
       private string _Version = "";
@@ -44,30 +44,34 @@ namespace QToolbar.Plugins.Environments
       {
          _Version = version;
          _ConfigurationFile = configurationFile;
-
+         
       }
 
-
-      private void Load(string configurationFile)
+      
+      public void Load()
       {
-         if(File.Exists(configurationFile))
+         Clear();
+         if(File.Exists(_ConfigurationFile))
          {
             _XmlDoc = new XmlDocument();
             try
             {
-               _XmlDoc.Load(configurationFile);
-
+               _XmlDoc.Load(_ConfigurationFile);
+               XmlNodeList envNodes = _XmlDoc.DocumentElement.GetElementsByTagName("Environment");
+               foreach(XmlNode env in envNodes)
+               {
+                  QEnvironmentConfiguration newEnv = new QEnvironmentConfiguration();
+                  newEnv.FromXml(env);
+                  Add(newEnv);                  
+               }               
             }
             catch (Exception ex)
             {
-               throw new Exception($"Invalid enviromnents configuration file {configurationFile}.", ex);
+               throw new Exception($"Invalid environments configuration file {_ConfigurationFile}.", ex);
             }
          }
 
       }
-         
-         
-         
 
    }
 }

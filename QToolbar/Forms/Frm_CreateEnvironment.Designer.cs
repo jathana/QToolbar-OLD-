@@ -1,4 +1,4 @@
-﻿namespace QToolbar.Tools
+﻿namespace QToolbar.Plugins.Environments
 {
    partial class Frm_CreateEnvironment
    {

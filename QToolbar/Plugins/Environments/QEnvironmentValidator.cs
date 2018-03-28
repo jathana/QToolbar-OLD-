@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QToolbar.Tools
+namespace QToolbar.Plugins.Environments
 {
    public class QEnvironmentValidator
    {

@@ -70,5 +70,21 @@ namespace QToolbar
       }
 
 
+      public static string ReadChildInnerTextString(this XmlNode node, string childElemName, string defaultValue)
+      {
+         string retval = defaultValue;
+         XmlNode child = node.SelectSingleNode(childElemName);
+         if (!string.IsNullOrEmpty(childElemName) && child != null)
+         {
+            retval = child.InnerText;
+         }
+         return retval;
+      }
+
+      public static string ReadChildInnerTextString(this XmlNode node, string childElemName)
+      {
+         return ReadChildInnerTextString(node, childElemName,"");
+      }
+
    }
 }

@@ -17,6 +17,7 @@ using System.Text.RegularExpressions;
 using QToolbar.Options;
 using QToolbar.Tools;
 using QToolbar.Buttons;
+using QToolbar.Plugins.Environments;
 
 namespace QToolbar
 {

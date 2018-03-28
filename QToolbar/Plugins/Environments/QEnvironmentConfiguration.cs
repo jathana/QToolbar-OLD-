@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
-namespace QToolbar.Tools
+namespace QToolbar.Plugins.Environments
 {
    /// <summary>
    /// Environment Configuration Information
@@ -23,6 +24,7 @@ namespace QToolbar.Tools
       private string _NightlyBuildDB = "";
       private string _GLMPrefix = "";
       private string _ConnectorRepositoryRoot = "";
+      private string _ConnectorBranch = "";
       private string _EoDMonitorAlerts = "";
       private string _BatchServiceName = "";
       private string _BatchServicePath = "";
@@ -170,6 +172,19 @@ namespace QToolbar.Tools
          set
          {
             _ConnectorRepositoryRoot = value;
+         }
+      }
+
+      public string ConnectorBranch
+      {
+         get
+         {
+            return _ConnectorBranch;
+         }
+
+         set
+         {
+            _ConnectorBranch = value;
          }
       }
 
@@ -381,6 +396,52 @@ namespace QToolbar.Tools
          }
       }
 
+      #endregion
+
+      #region methods
+      public void FromXml(XmlNode node)
+      {
+         try
+         {
+            _Id = node.ReadString("ID");
+            _Name = node.ReadChildInnerTextString("Name");
+            _Server = node.ReadChildInnerTextString("Server");
+            _Database = node.ReadChildInnerTextString("Database");
+            _Username = node.ReadChildInnerTextString("Username");
+            _Password = node.ReadChildInnerTextString("Password");
+
+            _IsWinAuth = node.ReadChildInnerTextString("IsWinAuth");
+            _GLMPrefix = node.ReadChildInnerTextString("GLMPrefix");
+            _ConnectorRepositoryRoot = node.ReadChildInnerTextString("ConnectorRepositoryRoot");
+            _ConnectorBranch = node.ReadChildInnerTextString("ConnectorBranch");
+
+            
+            _NightlyBuildDBServer = node.ReadChildInnerTextString("NightlyBuildDBServer");
+            _NightlyBuildDB = node.ReadChildInnerTextString("NightlyBuildDB");
+            _BatchServiceName = node.ReadChildInnerTextString("BatchServiceName");
+            _BatchServicePath = node.ReadChildInnerTextString("BatchServicePath");
+            _BatchServiceServer = node.ReadChildInnerTextString("BatchServiceServer");
+            _BatchServiceUNCPath = node.ReadChildInnerTextString("BatchServiceUNCPath");
+
+            _EODServiceName = node.ReadChildInnerTextString("EODServiceName");
+            _EODServicePath = node.ReadChildInnerTextString("EODServicePath");
+            _EODServiceServer = node.ReadChildInnerTextString("EODServiceServer");
+            _EODServiceUNCPath = node.ReadChildInnerTextString("EODServiceUNCPath");
+
+            _EnvironmentFlavor = node.ReadChildInnerTextString("EnvironmentFlavor");
+            _AnalyticsServer = node.ReadChildInnerTextString("AnalyticsServer");
+            _AnalyticsDatabase = node.ReadChildInnerTextString("AnalyticsDatabase");
+
+            _OLAPServer = node.ReadChildInnerTextString("OLAPServer");
+            _OLAPDatabase = node.ReadChildInnerTextString("OLAPDatabase");
+            _STDConnector = node.ReadChildInnerTextString("STDConnector");
+
+         }
+         catch(Exception ex)
+         {
+            throw new Exception($"xml element not read");
+         }
+      }
       #endregion
    }
 }

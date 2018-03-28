@@ -1,4 +1,5 @@
-﻿using QToolbar.Helpers;
+﻿using Microsoft.Web.Administration;
+using QToolbar.Helpers;
 using QToolbar.Options;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,8 @@ namespace QToolbar.Plugins.Environments
       #endregion
 
       #region events
-      public event EventHandler InfoCollected;
+      public delegate void InfoCollectedEventHandler(object sender, EnvInfoEventArgs args);
+      public event InfoCollectedEventHandler InfoCollected;
       #endregion
 
       #region properties
@@ -69,8 +71,11 @@ namespace QToolbar.Plugins.Environments
          {
             _Data.Add(envObj);
          }
+
          // collect rest info
          CollectEnvInfo(envObj.DBCollectionPlusServer, envObj.DBCollectionPlusName, envObj);
+
+
       }
       #endregion
 
@@ -90,7 +95,7 @@ namespace QToolbar.Plugins.Environments
                   con.Open();
                   SqlCommand com = new SqlCommand();
                   com.Connection = con;
-                  // vesrion
+                  // version
                   try
                   {
                      com.CommandText = "SELECT TOP(1) CONVERT(NVARCHAR,MAJOR)+'.' + CONVERT(NVARCHAR,MINOR) FROM TLK_DATABASE_VERSIONS ORDER BY MAJOR DESC,MINOR DESC";
@@ -106,8 +111,9 @@ namespace QToolbar.Plugins.Environments
                   try
                   {
                      com.CommandText = "select inst_root from bi_glm_installation";
-                     retval.GLMDir = com.ExecuteScalar().ToString();
-                     retval.GLMLocalDir = Utils.GetPath(retval.GLMDir);
+                     string glmDir= com.ExecuteScalar().ToString();
+                     retval.GLMDir = glmDir;
+                     retval.GLMLocalDir = new Utils().GetPath(glmDir);
                   }
                   catch (Exception ex)
                   {
@@ -119,8 +125,9 @@ namespace QToolbar.Plugins.Environments
                   try
                   {
                      com.CommandText = "select SPRA_VALUE from AT_SYSTEM_PARAMS where SPRA_TYPE = 'EOD_LOGS_PATH'";
-                     retval.GLMLogDir = com.ExecuteScalar().ToString();
-                     retval.GLMLocalLogDir = Utils.GetPath(retval.GLMLogDir);
+                     string glmLogDir= com.ExecuteScalar().ToString();
+                     retval.GLMLogDir = glmLogDir;
+                     retval.GLMLocalLogDir = new Utils().GetPath(glmLogDir);
                   }
                   catch (Exception ex)
                   {
@@ -141,17 +148,16 @@ namespace QToolbar.Plugins.Environments
                      StringBuilder locbuilder = new StringBuilder();
                      foreach (DataRow pathrow in pathsTable.Rows)
                      {
-                        string localPath = Utils.GetPath(pathrow["SPR_VALUE"].ToString());
+                        string localPath = new Utils().GetPath(pathrow["SPR_VALUE"].ToString());
                         retval.QCSystemSharedDirs.Add(new QEnvironment.SharedDir()
                         {
                            UNC = pathrow["SPR_VALUE"].ToString(),
-                           LocalPath = Utils.GetPath(pathrow["SPR_VALUE"].ToString())
+                           LocalPath = new Utils().GetPath(pathrow["SPR_VALUE"].ToString())
                         });
                      }
                   }
                   catch (Exception ex)
-                  {
-                     retval.QCLocalSystemDir = ex.Message;
+                  {                     
                   }
                }
                catch (Exception ex)
@@ -167,9 +173,9 @@ namespace QToolbar.Plugins.Environments
 
                try
                {
-                  // add cfs
+                  // add cfs from local checkout
                   retval.CFs.Clear();
-                  // add cfs
+                  // add cfs from local checkout
                   foreach (DataRow cfRow in OptionsInstance.EnvCFs.Data.Rows)
                   {
                      QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
@@ -187,25 +193,140 @@ namespace QToolbar.Plugins.Environments
                {
 
                }
+
+               try
+               {
+                  string envNameInWeb = $"QCS_{string.Join("_", Path.GetFileName(env.CheckoutPath).Split('.'))}";
+
+                  // add cfs from web server
+                  Uri webServer = new Uri(env.AppWSUrl);
+                  using (ServerManager mgr = ServerManager.OpenRemote(webServer.Host))
+                  {
+                     foreach (var s in mgr.Sites)
+                     {
+                        if (s.Name.StartsWith(envNameInWeb))
+                        {
+                           string qcwsPhPath = null;
+                           string toolkitPhPath = null;
+                           foreach (var a in s.Applications)
+                           {
+                              var qcwsVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\Qualco\\QCSWS"));
+                              if (qcwsVDir != null)
+                              {
+                                 qcwsPhPath = qcwsVDir.PhysicalPath;
+                                 QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
+                                 cfInfo.Name = "qbc.cf";
+                                 cfInfo.Repository = "QC";
+                                 cfInfo.Path = $"\\\\{webServer.Host}\\{qcwsPhPath.Replace(":", "$")}\\qbc.cf";
+                                 retval.CFs.Add(cfInfo);
+                              }
+
+
+                              var toolkitVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\Qualco\\SCToolkitWS"));
+                              if (toolkitVDir != null)
+                              {
+                                 toolkitPhPath = toolkitVDir.PhysicalPath;
+                                 QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
+                                 cfInfo.Name = "qbc.cf";
+                                 cfInfo.Repository = "QC";
+                                 cfInfo.Path = $"\\\\{webServer.Host}\\{toolkitPhPath.Replace(":", "$")}\\qbc.cf";
+                                 retval.CFs.Add(cfInfo);
+
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+               catch (Exception ex)
+               {
+
+               }
+
+               // Add cfs from batch & eod services
+               string ver = Path.GetFileName(env.CheckoutPath);
+               string envConfFile = GetEnvironmentsConfigurationFile(ver);
+               QEnvironmentsConfiguration ec = new QEnvironmentsConfiguration(ver, envConfFile);
+               ec.Load();
+               var envFound=ec.FirstOrDefault(e => e.Database == env.DBCollectionPlusName && e.Server == env.DBCollectionPlusServer);
+               if (envFound != null)
+               {
+                  
+                  QEnvironment.CfInfo cfInfoBatch = new QEnvironment.CfInfo();
+                  cfInfoBatch.Name = "qbc.cf";
+                  cfInfoBatch.Repository = "QC";
+                  cfInfoBatch.Path = $"{envFound.BatchServiceUNCPath}\\qbc.cf";
+                  retval.CFs.Add(cfInfoBatch);
+                  retval.BatchExecutorWinServicePath = envFound.BatchServiceUNCPath;
+
+                  QEnvironment.CfInfo cfInfoEOD = new QEnvironment.CfInfo();
+                  cfInfoEOD.Name = "qbc.cf";
+                  cfInfoEOD.Repository = "QC";
+                  cfInfoEOD.Path = $"{envFound.EODServiceUNCPath}\\qbc.cf";
+                  retval.CFs.Add(cfInfoEOD);
+                  retval.EodExecutorWinServicePath= envFound.EODServiceUNCPath;
+                  retval.WinServicesDir = Directory.GetParent(envFound.EODServiceUNCPath).FullName;
+               }
+
+
+               retval.CheckoutPath = env.CheckoutPath;
+               retval.ProteusCheckoutPath = env.ProteusCheckoutPath;
+               retval.DBCollectionPlusServer = env.DBCollectionPlusServer;
+               retval.DBCollectionPlusName = env.DBCollectionPlusName;
+               retval.ToolkitWSUrl = env.ToolkitWSUrl;
+               retval.AppWSUrl = env.AppWSUrl;
+               retval.QBCAdminCfPath = env.QBCAdminCfPath;
+
+
+
+
             };
             return retval;
          });
          await Task.WhenAll(rs).ContinueWith((t) =>
          {
-            Dispatcher.CurrentDispatcher.Invoke(() => { return rs; }).ContinueWith((t1) => { InfoCollected(this, new EventArgs()); });
+            Dispatcher.CurrentDispatcher.Invoke(() => {
+
+               QEnvironment val = rs.Result;
+
+               env.DBCollectionPlusVersion = val.DBCollectionPlusVersion;
+               env.GLMDir = val.GLMDir;
+               env.GLMLocalDir = val.GLMLocalDir;
+               env.GLMLogDir = val.GLMLogDir;
+               env.GLMLocalLogDir = val.GLMLocalLogDir;
+
+               env.QCSystemSharedDirs.AddRange(val.QCSystemSharedDirs);
+               env.CFs.AddRange(val.CFs);
+               env.BatchExecutorWinServicePath = val.BatchExecutorWinServicePath;
+               env.EodExecutorWinServicePath = val.EodExecutorWinServicePath;
+               env.WinServicesDir = val.WinServicesDir;
+
+
+
+               return rs; })
+
+            .ContinueWith((t1) => {
+               
+
+
+               InfoCollected(this, new EnvInfoEventArgs(rs.Result));
+            });
+
          });
 
-         QEnvironment val = rs.Result;
+         //QEnvironment val = rs.Result;
 
-         env.DBCollectionPlusVersion = val.DBCollectionPlusVersion;
-         env.GLMDir = val.GLMDir;
-         env.GLMLocalDir = val.GLMLocalDir;
-         env.GLMLogDir = val.GLMLogDir;
-         env.GLMLocalLogDir = val.GLMLocalLogDir;         
-         env.QCLocalSystemDir = val.QCLocalSystemDir;
+         //env.DBCollectionPlusVersion = val.DBCollectionPlusVersion;
+         //env.GLMDir = val.GLMDir;
+         //env.GLMLocalDir = val.GLMLocalDir;
+         //env.GLMLogDir = val.GLMLogDir;
+         //env.GLMLocalLogDir = val.GLMLocalLogDir;         
 
-         env.QCSystemSharedDirs.AddRange(val.QCSystemSharedDirs);
-         env.CFs.AddRange(val.CFs);
+         //env.QCSystemSharedDirs.AddRange(val.QCSystemSharedDirs);
+         //env.CFs.AddRange(val.CFs);
+         //env.BatchExecutorWinServicePath = val.BatchExecutorWinServicePath;
+         //env.EodExecutorWinServicePath = val.EodExecutorWinServicePath;
+         //env.WinServicesDir = val.WinServicesDir;
       }
 
       public void Remove(string envName)
@@ -243,6 +364,35 @@ namespace QToolbar.Plugins.Environments
             }
 
          }
+      }
+
+
+      private string GetEnvironmentsConfigurationFile(string version)
+      {
+         string retval = "";
+         string EnvDir = Path.Combine(OptionsInstance.EnvironmentsConfigurationFolder, version);
+
+         DataRow[] ch = OptionsInstance.Checkouts.Data.Select($"Name='{version}'");
+         if (ch.Length == 1)
+         {
+            string localPath = Path.Combine(ch[0]["Path"].ToString(), "BuildConfiguration");
+            if (Directory.Exists(localPath))
+            {
+               string localFile = Path.Combine(localPath, "EnvironmentsConfiguration.xml");
+               DateTime lastLocalWr = File.GetLastWriteTimeUtc(localFile);
+               string remFile = Path.Combine(EnvDir, "EnvironmentsConfiguration.xml");
+               DateTime lastRemWr = File.GetLastWriteTimeUtc(remFile);
+               if (lastLocalWr > lastRemWr)
+               {
+                  EnvDir = localPath;
+               }
+            }
+         }
+         if (Directory.Exists(EnvDir))
+         {
+            retval = Path.Combine(EnvDir, "EnvironmentsConfiguration.xml");
+         }
+         return retval;
       }
       #endregion
 

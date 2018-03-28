@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management;
@@ -12,7 +13,7 @@ using System.Xml;
 
 namespace QToolbar
 {
-   public static class Utils
+   public class Utils
    {
 
       #region IO
@@ -57,7 +58,7 @@ namespace QToolbar
 
 
 
-      public static string GetPath(string uncPath)
+      public string GetPath(string uncPath)
       {
          try
          {
@@ -70,22 +71,23 @@ namespace QToolbar
             ManagementScope scope = new ManagementScope(@"\\" + uncParts[0] + @"\root\cimv2");
             // Query the server for the share name
             SelectQuery query = new SelectQuery("Select * From Win32_Share Where Name = '" + uncParts[1] + "'");
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher(scope, query);
-
-            // Get the path
+            //SelectQuery query = new SelectQuery("Select * From Win32_Share");
             string path = string.Empty;
-            foreach (ManagementObject obj in searcher.Get())
+            using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(scope, query))
             {
-               path = obj["path"].ToString();
+               // Get the path
+               foreach (ManagementObject obj in searcher.Get())
+               {
+                  path = obj["path"].ToString();
+               }
+               Debug.WriteLine(path);
+               // Append any additional folders to the local path name
+               if (uncParts.Length > 2)
+               {
+                  for (int i = 2; i < uncParts.Length; i++)
+                     path = path.EndsWith(@"\") ? path + uncParts[i] : path + @"\" + uncParts[i];
+               }
             }
-
-            // Append any additional folders to the local path name
-            if (uncParts.Length > 2)
-            {
-               for (int i = 2; i < uncParts.Length; i++)
-                  path = path.EndsWith(@"\") ? path + uncParts[i] : path + @"\" + uncParts[i];
-            }
-
             return path;
          }
          catch (Exception ex)

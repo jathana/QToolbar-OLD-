@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 
-namespace QToolbar.Tools
+namespace QToolbar.Plugins.Environments
 {
    public partial class Frm_CreateEnvironment : DevExpress.XtraEditors.XtraForm
    {

@@ -34,21 +34,39 @@ namespace QToolbar.Plugins.Environments
 
          _Envs = new QEnvironments();
          _Envs.InfoCollected += _Envs_InfoCollected;
-
          UXGridView.OptionsView.ColumnAutoWidth = false;
          UXGridView.OptionsBehavior.Editable = false;
          UXGridView.OptionsView.RowAutoHeight = true;
          UXGrid.ViewRegistered += UXGrid_ViewRegistered;
+
+         UXGridView.RowStyle += UXGridView_RowStyle;
          _SyncContext = SynchronizationContext.Current;
       }
 
-      private void _Envs_InfoCollected(object sender, EventArgs e)
+      private void UXGridView_RowStyle(object sender, RowStyleEventArgs e)
       {
-         _SyncContext.Post((a) =>
+         //if (_ColorRows.Contains(e.RowHandle))
+         //{
+         //   e.Appearance.ForeColor = Color.Green;
+         //}
+      }
+
+      private void _Envs_InfoCollected(object sender, EnvInfoEventArgs e)
+      {
+         _SyncContext.Post((input) =>
          {
+
+            QEnvironment env = (input as EnvInfoEventArgs).Environment;
+            if (env != null)
+            {
+               int rowHandle = UXGridView.LocateByValue("DBCollectionPlusName", env.DBCollectionPlusName);
+               if (rowHandle != DevExpress.XtraGrid.GridControl.InvalidRowHandle)
+               {
+                  UXGridView.SetRowCellValue(rowHandle,"Status","Ready");
+               }
+            }
             UXGridView.BestFitColumns();
-            Debug.WriteLine("BestFitColumns");
-         }, null);
+         }, e);
       }
 
       private void UXGrid_ViewRegistered(object sender, DevExpress.XtraGrid.ViewOperationEventArgs e)
@@ -63,17 +81,6 @@ namespace QToolbar.Plugins.Environments
          Point pt = view.GridControl.PointToClient(Control.MousePosition);
          DoRowDoubleClick(view, pt);
       }
-
-      private void _EnvsInfo_PathsAdded(object sender, EventArgs e)
-      {
-         _SyncContext.Post((a) => 
-         {
-            UXGridView.BestFitColumns();
-            Debug.WriteLine("BestFitColumns");
-         },null);
-         
-      }
-
 
       #region Environments Menu
 

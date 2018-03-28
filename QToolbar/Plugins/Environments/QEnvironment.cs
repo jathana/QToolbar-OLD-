@@ -92,6 +92,7 @@ namespace QToolbar.Plugins.Environments
       }
 
       #region fields
+      private string _Status = "Loading...";
       private string _Name = "";
       private string _CheckoutPath = "";
       private string _ProteusCheckoutPath = "";
@@ -109,13 +110,24 @@ namespace QToolbar.Plugins.Environments
       private string _GLMLogDir = "";
       private string _GLMLocalLogDir = "";
       private List<SharedDir> _QCSystemSharedDirs = new List<SharedDir>();
-      private string _QCLocalSystemDir = "";
       private List<CfInfo> _CFs= new List<CfInfo>();
-
 
       #endregion
 
       #region properties
+      public string Status
+      {
+         get
+         {
+            return _Status;
+         }
+
+         set
+         {
+            _Status = value;
+         }
+      }
+
       public string Name
       {
          get
@@ -316,18 +328,6 @@ namespace QToolbar.Plugins.Environments
          }
       }
 
-      public string QCLocalSystemDir
-      {
-         get
-         {
-            return _QCLocalSystemDir;
-         }
-
-         set
-         {
-            _QCLocalSystemDir = value;
-         }
-      }
       public List<CfInfo> CFs
       {
          get
@@ -335,6 +335,7 @@ namespace QToolbar.Plugins.Environments
             return _CFs;
          }
       }
+      
       #endregion
 
       #region constructor

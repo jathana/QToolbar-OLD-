@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\q-wks-jathan\Shared\QToolbar\</InstallUrl>
-    <ApplicationRevision>101</ApplicationRevision>
+    <ApplicationRevision>102</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -87,6 +87,10 @@
       <HintPath>..\packages\Microsoft.SqlServer.TransactSql.ScriptDom.14.0.3811.1\lib\net40\Microsoft.SqlServer.TransactSql.ScriptDom.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Administration.7.0.0.0\lib\net20\Microsoft.Web.Administration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -125,6 +129,7 @@
     <Compile Include="Buttons\NextBuildButton.cs" />
     <Compile Include="Builds\CheckResult.cs" />
     <Compile Include="Helpers\CfFile.cs" />
+    <Compile Include="Helpers\SharedDirsHelper.cs" />
     <Compile Include="Options\EnvCFs.cs" />
     <Compile Include="Plugins\CFsValidator\CfFileValidationEventArgs.cs" />
     <Compile Include="Plugins\CFsValidator\CFsValidator.cs" />
@@ -135,6 +140,7 @@
     <Compile Include="Plugins\CFsValidator\Frm_CFsValidator.Designer.cs">
       <DependentUpon>Frm_CFsValidator.cs</DependentUpon>
     </Compile>
+    <Compile Include="Plugins\Environments\EnvInfoEventArgs.cs" />
     <Compile Include="Plugins\Environments\EnvironmentsInfoPlugin.cs" />
     <Compile Include="Plugins\Environments\Frm_Environments.cs">
       <SubType>Form</SubType>
