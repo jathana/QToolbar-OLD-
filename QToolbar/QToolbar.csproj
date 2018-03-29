@@ -129,7 +129,6 @@
     <Compile Include="Buttons\NextBuildButton.cs" />
     <Compile Include="Builds\CheckResult.cs" />
     <Compile Include="Helpers\CfFile.cs" />
-    <Compile Include="Helpers\SharedDirsHelper.cs" />
     <Compile Include="Options\EnvCFs.cs" />
     <Compile Include="Plugins\CFsValidator\CfFileValidationEventArgs.cs" />
     <Compile Include="Plugins\CFsValidator\CFsValidator.cs" />

@@ -59,11 +59,26 @@ namespace QToolbar.Plugins.Environments
       public class SharedDir
       {
          #region fields
+         private string _Description;
          private string _UNC;
          private string _LocalPath;
+         private int _Permissions;
+         
          #endregion
 
          #region properties
+         public string Description
+         {
+            get
+            {
+               return _Description;
+            }
+
+            set
+            {
+               _Description = value;
+            }
+         }
          public string UNC
          {
             get
@@ -88,6 +103,69 @@ namespace QToolbar.Plugins.Environments
                _LocalPath = value;
             }
          }
+
+         
+         internal int Permissions
+         {
+            get
+            {
+               return _Permissions;
+            }
+
+            set
+            {
+               _Permissions = value;
+            }
+         }
+
+         public string PermissionsDesc
+         {
+            get
+            {
+               return Utils.GetPermissionsDesc(Permissions);               
+            }
+
+         }
+
+         
+
+
+         #endregion
+      }
+
+      public class ErrorInfo
+      {
+         #region fields
+         private string _ErrorType;
+         private string _Message;
+         #endregion
+
+         #region properties
+         public string ErrorType
+         {
+            get
+            {
+               return _ErrorType;
+            }
+
+            set
+            {
+               _ErrorType = value;
+            }
+         }
+         public string Message
+         {
+            get
+            {
+               return _Message;
+            }
+
+            set
+            {
+               _Message = value;
+            }
+         }
+         
          #endregion
       }
 
@@ -106,11 +184,14 @@ namespace QToolbar.Plugins.Environments
       private string _EodExecutorWinServicePath = "";
       private string _WinServicesDir = "";
       private string _GLMDir = "";
+      private string _GLMDirPermissions = "";
       private string _GLMLocalDir = "";
       private string _GLMLogDir = "";
+      private string _GLMLogDirPermissions = "";
       private string _GLMLocalLogDir = "";
       private List<SharedDir> _QCSystemSharedDirs = new List<SharedDir>();
       private List<CfInfo> _CFs= new List<CfInfo>();
+      private List<ErrorInfo> _Errors = new List<ErrorInfo>();
 
       #endregion
 
@@ -284,6 +365,18 @@ namespace QToolbar.Plugins.Environments
             _GLMDir = value;
          }
       }
+      public string GLMDirPermissions
+      {
+         get
+         {
+            return _GLMDirPermissions;
+         }
+
+         set
+         {
+            _GLMDirPermissions = value;
+         }
+      }
       public string GLMLocalDir
       {
          get
@@ -308,6 +401,20 @@ namespace QToolbar.Plugins.Environments
             _GLMLogDir = value;
          }
       }
+
+      public string GLMLogDirPermissions
+      {
+         get
+         {
+            return _GLMLogDirPermissions;
+         }
+
+         set
+         {
+            _GLMLogDirPermissions = value;
+         }
+      }
+
       public string GLMLocalLogDir
       {
          get
@@ -335,7 +442,20 @@ namespace QToolbar.Plugins.Environments
             return _CFs;
          }
       }
+
       
+      public List<ErrorInfo> Errors
+      {
+         get
+         {
+            return _Errors;
+         }
+      }
+
+
+
+
+
       #endregion
 
       #region constructor
@@ -343,5 +463,10 @@ namespace QToolbar.Plugins.Environments
       {
       }
       #endregion
+
+      public void AddError(string msg)
+      {
+         _Errors.Add(new ErrorInfo() { Message = msg, ErrorType = "Error" });
+      }
    }
 }

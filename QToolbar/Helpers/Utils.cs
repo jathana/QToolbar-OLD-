@@ -15,6 +15,7 @@ namespace QToolbar
 {
    public class Utils
    {
+      private static object _Locker = new object();
 
       #region IO
       public static bool EnsureFolder(string dir)
@@ -58,42 +59,80 @@ namespace QToolbar
 
 
 
-      public string GetPath(string uncPath)
+      public static string GetPath(string uncPath, out int permissions)
       {
-         try
+         permissions = -1;
+         lock (_Locker)
          {
-            // remove the "\\" from the UNC path and split the path
-            uncPath = uncPath.Replace(@"\\", "");
-            string[] uncParts = uncPath.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
-            if (uncParts.Length < 2)
-               return "[UNRESOLVED UNC PATH: " + uncPath + "]";
-            // Get a connection to the server as found in the UNC path
-            ManagementScope scope = new ManagementScope(@"\\" + uncParts[0] + @"\root\cimv2");
-            // Query the server for the share name
-            SelectQuery query = new SelectQuery("Select * From Win32_Share Where Name = '" + uncParts[1] + "'");
-            //SelectQuery query = new SelectQuery("Select * From Win32_Share");
-            string path = string.Empty;
-            using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(scope, query))
+            try
             {
-               // Get the path
-               foreach (ManagementObject obj in searcher.Get())
+
+               // remove the "\\" from the UNC path and split the path
+               uncPath = uncPath.Replace(@"\\", "");
+               string[] uncParts = uncPath.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+               if (uncParts.Length < 2)
+                  return "[UNRESOLVED UNC PATH: " + uncPath + "]";
+               // Get a connection to the server as found in the UNC path
+               ManagementScope scope = new ManagementScope(@"\\" + uncParts[0] + @"\root\cimv2");
+               // Query the server for the share name
+               SelectQuery query = new SelectQuery("Select * From Win32_Share Where Name = '" + uncParts[1] + "'");
+               //SelectQuery query = new SelectQuery("Select * From Win32_Share");
+               string path = string.Empty;
+               using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(scope, query))
                {
-                  path = obj["path"].ToString();
+                  // Get the path
+                  foreach (ManagementObject obj in searcher.Get())
+                  {
+                     if (obj != null && obj["path"] != null)
+                        path = obj["path"].ToString();
+
+                     try
+                     {
+                        //get the access values you have
+                        ManagementBaseObject result = obj.InvokeMethod("GetAccessMask", null, null);
+
+                        //value meanings: http://msdn.microsoft.com/en-us/library/aa390438(v=vs.85).aspx
+                        permissions = Convert.ToInt32(result.Properties["ReturnValue"].Value);
+                     }
+                     catch (ManagementException me)
+                     {
+                        permissions = -1; //no permissions are set on the share
+                     }
+                  }
+                  Debug.WriteLine(path);
+                  // Append any additional folders to the local path name
+                  if (uncParts.Length > 2)
+                  {
+                     for (int i = 2; i < uncParts.Length; i++)
+                        path = path.EndsWith(@"\") ? path + uncParts[i] : path + @"\" + uncParts[i];
+                  }
                }
-               Debug.WriteLine(path);
-               // Append any additional folders to the local path name
-               if (uncParts.Length > 2)
-               {
-                  for (int i = 2; i < uncParts.Length; i++)
-                     path = path.EndsWith(@"\") ? path + uncParts[i] : path + @"\" + uncParts[i];
-               }
+
+               return path;
             }
-            return path;
+            catch (Exception ex)
+            {
+               return "[ERROR RESOLVING UNC PATH: " + uncPath + ": " + ex.Message + "]";
+            }
          }
-         catch (Exception ex)
+      }
+
+      public static string GetPermissionsDesc(int permissions)
+      {
+         string retval = string.Empty;
+         switch (permissions)
          {
-            return "[ERROR RESOLVING UNC PATH: " + uncPath + ": " + ex.Message + "]";
+            case -1:
+               retval = string.Empty;
+               break;
+            case 2032127:
+               retval = "Full Access";
+               break;
+            default:
+               retval = $"Limited Access ({permissions})";
+               break;
          }
+         return retval;
       }
 
       #endregion

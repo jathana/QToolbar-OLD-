@@ -62,7 +62,7 @@ namespace QToolbar.Plugins.Environments
                int rowHandle = UXGridView.LocateByValue("DBCollectionPlusName", env.DBCollectionPlusName);
                if (rowHandle != DevExpress.XtraGrid.GridControl.InvalidRowHandle)
                {
-                  UXGridView.SetRowCellValue(rowHandle,"Status","Ready");
+                  UXGridView.SetRowCellValue(rowHandle,"Status","Ready" + (env.Errors.Count>0?"(Errors)":""));
                }
             }
             UXGridView.BestFitColumns();

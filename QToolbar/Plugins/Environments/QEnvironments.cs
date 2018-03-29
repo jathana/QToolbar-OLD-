@@ -103,7 +103,7 @@ namespace QToolbar.Plugins.Environments
                   }
                   catch (Exception ex)
                   {
-                     retval.DBCollectionPlusVersion = ex.Message;
+                     retval.AddError($"Error while fetching version information ({ex.Message})");
                   }
 
                   //The location of the GLM folder can be found from the following query:
@@ -113,11 +113,14 @@ namespace QToolbar.Plugins.Environments
                      com.CommandText = "select inst_root from bi_glm_installation";
                      string glmDir= com.ExecuteScalar().ToString();
                      retval.GLMDir = glmDir;
-                     retval.GLMLocalDir = new Utils().GetPath(glmDir);
+                     int permissions = -1;
+                     retval.GLMLocalDir = Utils.GetPath(glmDir, out permissions);
+                     retval.GLMDirPermissions = Utils.GetPermissionsDesc(permissions);
+
                   }
                   catch (Exception ex)
                   {
-                     retval.GLMDir = ex.Message;
+                     retval.AddError($"Error while fetching glm information ({ex.Message})");
                   }
 
                   //Also the location of the GLM logs folder can be found with:
@@ -127,16 +130,19 @@ namespace QToolbar.Plugins.Environments
                      com.CommandText = "select SPRA_VALUE from AT_SYSTEM_PARAMS where SPRA_TYPE = 'EOD_LOGS_PATH'";
                      string glmLogDir= com.ExecuteScalar().ToString();
                      retval.GLMLogDir = glmLogDir;
-                     retval.GLMLocalLogDir = new Utils().GetPath(glmLogDir);
+                     int permissions = -1;
+                     retval.GLMLocalLogDir = Utils.GetPath(glmLogDir,out permissions);
+                     retval.GLMLogDirPermissions = Utils.GetPermissionsDesc(permissions);
+
                   }
                   catch (Exception ex)
                   {
-                     retval.GLMLogDir = ex.Message;
+                     retval.AddError($"Error while fetching glm log information ({ex.Message})");
                   }
 
                   try
                   {
-                     com.CommandText = @"select SPR_VALUE from AT_SYSTEM_PREF
+                     com.CommandText = @"select SPR_TYPE, SPR_VALUE from AT_SYSTEM_PREF
                                        where SPR_TYPE in ('WORDTEMPLATESFOLDER',
                                                          'ATTACHMENTS_DIRECTORY',
                                                          'BULK_OUTPUT_EXPORT_DIRECTORY', 
@@ -148,20 +154,27 @@ namespace QToolbar.Plugins.Environments
                      StringBuilder locbuilder = new StringBuilder();
                      foreach (DataRow pathrow in pathsTable.Rows)
                      {
-                        string localPath = new Utils().GetPath(pathrow["SPR_VALUE"].ToString());
+
+                        int permissions = -1;
                         retval.QCSystemSharedDirs.Add(new QEnvironment.SharedDir()
                         {
                            UNC = pathrow["SPR_VALUE"].ToString(),
-                           LocalPath = new Utils().GetPath(pathrow["SPR_VALUE"].ToString())
+                           LocalPath = Utils.GetPath(pathrow["SPR_VALUE"].ToString(), out permissions),
+                           Permissions = permissions,
+                           Description= pathrow["SPR_TYPE"].ToString()
+                           //LocalPath = new Utils().GetPath(pathrow["SPR_VALUE"].ToString())
+                           //LocalPath = _ShDirs.GetPath(pathrow["SPR_VALUE"].ToString())
                         });
                      }
                   }
                   catch (Exception ex)
-                  {                     
+                  {
+                     retval.AddError($"Error while fetching shared dirs information ({ex.Message})");
                   }
                }
                catch (Exception ex)
                {
+                  retval.AddError($"Generic Error ({ex.Message})");
                }
                finally
                {
@@ -191,7 +204,7 @@ namespace QToolbar.Plugins.Environments
                }
                catch(Exception ex)
                {
-
+                  retval.AddError($"Error getting local cfs information ({ex.Message})");
                }
 
                try
@@ -204,7 +217,7 @@ namespace QToolbar.Plugins.Environments
                   {
                      foreach (var s in mgr.Sites)
                      {
-                        if (s.Name.StartsWith(envNameInWeb))
+                        if (s.Name.Equals(envNameInWeb))
                         {
                            string qcwsPhPath = null;
                            string toolkitPhPath = null;
@@ -240,34 +253,40 @@ namespace QToolbar.Plugins.Environments
                }
                catch (Exception ex)
                {
-
+                  retval.AddError($"Error while fetching web server's cf information ({ex.Message})");
                }
 
-               // Add cfs from batch & eod services
-               string ver = Path.GetFileName(env.CheckoutPath);
-               string envConfFile = GetEnvironmentsConfigurationFile(ver);
-               QEnvironmentsConfiguration ec = new QEnvironmentsConfiguration(ver, envConfFile);
-               ec.Load();
-               var envFound=ec.FirstOrDefault(e => e.Database == env.DBCollectionPlusName && e.Server == env.DBCollectionPlusServer);
-               if (envFound != null)
+               try
                {
-                  
-                  QEnvironment.CfInfo cfInfoBatch = new QEnvironment.CfInfo();
-                  cfInfoBatch.Name = "qbc.cf";
-                  cfInfoBatch.Repository = "QC";
-                  cfInfoBatch.Path = $"{envFound.BatchServiceUNCPath}\\qbc.cf";
-                  retval.CFs.Add(cfInfoBatch);
-                  retval.BatchExecutorWinServicePath = envFound.BatchServiceUNCPath;
+                  // Add cfs from batch & eod services
+                  string ver = Path.GetFileName(env.CheckoutPath);
+                  string envConfFile = GetEnvironmentsConfigurationFile(ver);
+                  QEnvironmentsConfiguration ec = new QEnvironmentsConfiguration(ver, envConfFile);
+                  ec.Load();
+                  var envFound = ec.FirstOrDefault(e => e.Database.ToLower() == env.DBCollectionPlusName.ToLower() && e.Server.ToLower() == env.DBCollectionPlusServer.ToLower());
+                  if (envFound != null)
+                  {
 
-                  QEnvironment.CfInfo cfInfoEOD = new QEnvironment.CfInfo();
-                  cfInfoEOD.Name = "qbc.cf";
-                  cfInfoEOD.Repository = "QC";
-                  cfInfoEOD.Path = $"{envFound.EODServiceUNCPath}\\qbc.cf";
-                  retval.CFs.Add(cfInfoEOD);
-                  retval.EodExecutorWinServicePath= envFound.EODServiceUNCPath;
-                  retval.WinServicesDir = Directory.GetParent(envFound.EODServiceUNCPath).FullName;
+                     QEnvironment.CfInfo cfInfoBatch = new QEnvironment.CfInfo();
+                     cfInfoBatch.Name = "qbc.cf";
+                     cfInfoBatch.Repository = "QC";
+                     cfInfoBatch.Path = $"{envFound.BatchServiceUNCPath}\\qbc.cf";
+                     retval.CFs.Add(cfInfoBatch);
+                     retval.BatchExecutorWinServicePath = envFound.BatchServiceUNCPath;
+
+                     QEnvironment.CfInfo cfInfoEOD = new QEnvironment.CfInfo();
+                     cfInfoEOD.Name = "qbc.cf";
+                     cfInfoEOD.Repository = "QC";
+                     cfInfoEOD.Path = $"{envFound.EODServiceUNCPath}\\qbc.cf";
+                     retval.CFs.Add(cfInfoEOD);
+                     retval.EodExecutorWinServicePath = envFound.EODServiceUNCPath;
+                     retval.WinServicesDir = Directory.GetParent(envFound.EODServiceUNCPath).FullName;
+                  }
                }
-
+               catch(Exception ex)
+               {
+                  retval.AddError($"Error while fetching Batch Executor's & EOD Executor's  cf information ({ex.Message})");
+               }
 
                retval.CheckoutPath = env.CheckoutPath;
                retval.ProteusCheckoutPath = env.ProteusCheckoutPath;
@@ -292,16 +311,17 @@ namespace QToolbar.Plugins.Environments
                env.DBCollectionPlusVersion = val.DBCollectionPlusVersion;
                env.GLMDir = val.GLMDir;
                env.GLMLocalDir = val.GLMLocalDir;
+               env.GLMDirPermissions = val.GLMDirPermissions;
                env.GLMLogDir = val.GLMLogDir;
                env.GLMLocalLogDir = val.GLMLocalLogDir;
+               env.GLMLogDirPermissions = val.GLMLogDirPermissions;
 
                env.QCSystemSharedDirs.AddRange(val.QCSystemSharedDirs);
                env.CFs.AddRange(val.CFs);
                env.BatchExecutorWinServicePath = val.BatchExecutorWinServicePath;
                env.EodExecutorWinServicePath = val.EodExecutorWinServicePath;
                env.WinServicesDir = val.WinServicesDir;
-
-
+               env.Errors.AddRange(val.Errors);
 
                return rs; })
 
