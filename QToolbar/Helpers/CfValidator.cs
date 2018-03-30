@@ -10,7 +10,7 @@ namespace QToolbar.Helpers
    public class CfValidator
    {
 
-      public Errors Validate(string cfFile, List<string> keysToCheck )
+      public Errors Validate(string cfFile, List<string> keysToCheck)
       {
          Errors retVal = new Errors();
 
@@ -22,15 +22,33 @@ namespace QToolbar.Helpers
             List<Tuple<string, string>> servers = cfObj.GetServers();
             List<Tuple<string, string>> pwds = cfObj.GetPasswords();
 
+            // 
+            foreach(var key in keysToCheck)
+            {
+
+               // check key existence in dbs
+               if (dbs.Where(i => i.Item1 == key) == null)
+                  retVal.AddError($"Key {key} does not exist in [DatabaseName] section of {cfFile}");
+
+               // check key existence in servers
+               if (servers.Where(i => i.Item1 == key) == null)
+                  retVal.AddError($"Key {key} does not exist in [Servers] section of {cfFile}");
+
+               // check key existence in dbs
+               if (pwds.Where(i => i.Item1 == key) == null)
+                  retVal.AddError($"Key {key} does not exist in [Passwords] section of {cfFile}");
+
+            }
+
             Dictionary<string, int> info = new Dictionary<string, int>();
             foreach (var item in dbs)
             {
                if (!IsInCheckList(item.Item1, keysToCheck)) continue;
 
-                  if (info.ContainsKey(item.Item1))
-                     info[item.Item1]++;
-                  else
-                     info.Add(item.Item1, 1);
+               if (info.ContainsKey(item.Item1))
+                  info[item.Item1]++;
+               else
+                  info.Add(item.Item1, 1);
             }
             foreach (var item in servers)
             {
@@ -67,6 +85,9 @@ namespace QToolbar.Helpers
                   retVal.AddWarning($"file {cfFile} : {item.Item1} is not contained in {item.Item2}");
                }
             }
+
+            
+
 
          }
          return retVal;
