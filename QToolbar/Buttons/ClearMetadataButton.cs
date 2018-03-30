@@ -37,9 +37,14 @@ namespace QToolbar.Buttons
                   }
                }
 
+               string FILE_NAME = Path.Combine(AppInstance.CacheDirectory, "clear_metadata.bat");
+
                // create batch content
                StringBuilder builder = new StringBuilder();
 
+               builder.AppendLine($"rem clear_metadata.bat file");
+               builder.AppendLine($"rem {FILE_NAME}");
+               builder.AppendLine($"rem ");
                builder.AppendLine("del %temp%\\current*");
                foreach (var del in deletions)
                {
@@ -65,7 +70,7 @@ namespace QToolbar.Buttons
                   builder.AppendLine("del /Q %temp%\\*.*");
                }
                builder.AppendLine("pause");
-               string FILE_NAME = Path.Combine(AppInstance.CacheDirectory, "clear_metadata.bat");
+               
                FileStream fs = null;
                try
                {

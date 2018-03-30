@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QToolbar.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace QToolbar.Plugins.Environments
 {
+
    public class QEnvironment
    {
       public class CfInfo
@@ -133,41 +135,7 @@ namespace QToolbar.Plugins.Environments
          #endregion
       }
 
-      public class ErrorInfo
-      {
-         #region fields
-         private string _ErrorType;
-         private string _Message;
-         #endregion
-
-         #region properties
-         public string ErrorType
-         {
-            get
-            {
-               return _ErrorType;
-            }
-
-            set
-            {
-               _ErrorType = value;
-            }
-         }
-         public string Message
-         {
-            get
-            {
-               return _Message;
-            }
-
-            set
-            {
-               _Message = value;
-            }
-         }
-         
-         #endregion
-      }
+      
 
       #region fields
       private string _Status = "Loading...";
@@ -191,7 +159,7 @@ namespace QToolbar.Plugins.Environments
       private string _GLMLocalLogDir = "";
       private List<SharedDir> _QCSystemSharedDirs = new List<SharedDir>();
       private List<CfInfo> _CFs= new List<CfInfo>();
-      private List<ErrorInfo> _Errors = new List<ErrorInfo>();
+      private Errors _Errors = new Errors();
 
       #endregion
 
@@ -444,7 +412,7 @@ namespace QToolbar.Plugins.Environments
       }
 
       
-      public List<ErrorInfo> Errors
+      public Errors Errors
       {
          get
          {
@@ -463,10 +431,5 @@ namespace QToolbar.Plugins.Environments
       {
       }
       #endregion
-
-      public void AddError(string msg)
-      {
-         _Errors.Add(new ErrorInfo() { Message = msg, ErrorType = "Error" });
-      }
    }
 }

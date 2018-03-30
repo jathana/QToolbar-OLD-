@@ -68,6 +68,19 @@ namespace QToolbar.Helpers
          return IniFile2.ReadKeys("Servers", _File).ToList<string>();
       }
 
+      public List<string> GetKeys(string server, string database)
+      {
+         List<string> retVal = new List<string>();
+         var dbs = GetDatabases().Where(i=>i.Item2==database);
+         foreach(var item in dbs)
+         {
+            var srv = GetServer(item.Item1);
+            if (!string.IsNullOrEmpty(srv))
+               retVal.Add(item.Item1);
+         }
+         return retVal;
+      }
+
       private List<Tuple<string, string>> FromKeyValuePairs(string[] keyValuePairs)
       {
          List<Tuple<string, string>> list = new List<Tuple<string, string>>();
@@ -91,5 +104,8 @@ namespace QToolbar.Helpers
          }
          return list;
       }
+
+
+
    }
 }

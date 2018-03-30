@@ -16,7 +16,7 @@ namespace QToolbar
    public class Utils
    {
       private static object _Locker = new object();
-
+      public const int FILE_PERMISSION_FULL_ACCESS = 2032127;
       #region IO
       public static bool EnsureFolder(string dir)
       {
@@ -59,9 +59,10 @@ namespace QToolbar
 
 
 
-      public static string GetPath(string uncPath, out int permissions)
+      public static string GetPath(string uncPath, out int permissions, out bool unresolved)
       {
          permissions = -1;
+         unresolved = false;
          lock (_Locker)
          {
             try
@@ -71,7 +72,10 @@ namespace QToolbar
                uncPath = uncPath.Replace(@"\\", "");
                string[] uncParts = uncPath.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
                if (uncParts.Length < 2)
+               {
+                  unresolved = true;
                   return "[UNRESOLVED UNC PATH: " + uncPath + "]";
+               }
                // Get a connection to the server as found in the UNC path
                ManagementScope scope = new ManagementScope(@"\\" + uncParts[0] + @"\root\cimv2");
                // Query the server for the share name
@@ -112,6 +116,7 @@ namespace QToolbar
             }
             catch (Exception ex)
             {
+               unresolved = true;
                return "[ERROR RESOLVING UNC PATH: " + uncPath + ": " + ex.Message + "]";
             }
          }
@@ -119,20 +124,20 @@ namespace QToolbar
 
       public static string GetPermissionsDesc(int permissions)
       {
-         string retval = string.Empty;
-         switch (permissions)
-         {
-            case -1:
-               retval = string.Empty;
-               break;
-            case 2032127:
-               retval = "Full Access";
-               break;
-            default:
-               retval = $"Limited Access ({permissions})";
-               break;
-         }
-         return retval;
+            string retval = string.Empty;
+            switch (permissions)
+            {
+               case -1:
+                  retval = string.Empty;
+                  break;
+               case FILE_PERMISSION_FULL_ACCESS:
+                  retval = "Full Access";
+                  break;
+               default:
+                  retval = $"Limited Access ({permissions})";
+                  break;
+            }
+            return retval;
       }
 
       #endregion
