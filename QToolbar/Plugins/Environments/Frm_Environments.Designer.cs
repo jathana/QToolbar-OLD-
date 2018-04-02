@@ -39,12 +39,12 @@
          this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
          this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
          this.mnuEnvironments = new DevExpress.XtraBars.BarSubItem();
-         this.mnuEnvironmentsRemote = new DevExpress.XtraBars.BarSubItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
          this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
          this.popupMenu2 = new DevExpress.XtraBars.PopupMenu(this.components);
+         this.btnRefresh = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.UXGrid)).BeginInit();
@@ -115,9 +115,9 @@
          this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
             this.mnuEnvironments,
-            this.mnuEnvironmentsRemote});
+            this.btnRefresh});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 13;
+         this.ribbonControl1.MaxItemId = 14;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -132,6 +132,8 @@
          this.imageCollection1.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("imageCollection1.ImageStream")));
          this.imageCollection1.InsertGalleryImage("env.png", "images/actions/right_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/actions/right_16x16.png"), 0);
          this.imageCollection1.Images.SetKeyName(0, "env.png");
+         this.imageCollection1.InsertGalleryImage("delete.png", "images/edit/delete_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/edit/delete_16x16.png"), 1);
+         this.imageCollection1.Images.SetKeyName(1, "delete.png");
          // 
          // mnuEnvironments
          // 
@@ -140,14 +142,6 @@
          this.mnuEnvironments.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuEnvironments.ImageOptions.Image")));
          this.mnuEnvironments.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuEnvironments.ImageOptions.LargeImage")));
          this.mnuEnvironments.Name = "mnuEnvironments";
-         // 
-         // mnuEnvironmentsRemote
-         // 
-         this.mnuEnvironmentsRemote.Caption = "Environments (Remote)";
-         this.mnuEnvironmentsRemote.Id = 9;
-         this.mnuEnvironmentsRemote.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("CFsManagement.ImageOptions.Image")));
-         this.mnuEnvironmentsRemote.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("CFsManagement.ImageOptions.LargeImage")));
-         this.mnuEnvironmentsRemote.Name = "mnuEnvironmentsRemote";
          // 
          // ribbonPage1
          // 
@@ -159,7 +153,7 @@
          // ribbonPageGroup1
          // 
          this.ribbonPageGroup1.ItemLinks.Add(this.mnuEnvironments);
-         this.ribbonPageGroup1.ItemLinks.Add(this.mnuEnvironmentsRemote);
+         this.ribbonPageGroup1.ItemLinks.Add(this.btnRefresh);
          this.ribbonPageGroup1.Name = "ribbonPageGroup1";
          this.ribbonPageGroup1.Text = "Environments";
          // 
@@ -179,6 +173,15 @@
          this.popupMenu2.Name = "popupMenu2";
          this.popupMenu2.Ribbon = this.ribbonControl1;
          // 
+         // btnRefresh
+         // 
+         this.btnRefresh.Caption = "Refresh";
+         this.btnRefresh.Id = 13;
+         this.btnRefresh.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.ImageOptions.Image")));
+         this.btnRefresh.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRefresh.ImageOptions.LargeImage")));
+         this.btnRefresh.Name = "btnRefresh";
+         this.btnRefresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRefresh_ItemClick);
+         // 
          // Frm_Environments
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -187,7 +190,9 @@
          this.Controls.Add(this.layoutControl1);
          this.Controls.Add(this.ribbonControl1);
          this.Name = "Frm_Environments";
+         this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.Text = "Environments";
+         this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Frm_Environments_FormClosing);
          this.Load += new System.EventHandler(this.Frm_Environments_Load);
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
          this.layoutControl1.ResumeLayout(false);
@@ -219,7 +224,7 @@
       private DevExpress.Utils.ImageCollection imageCollection1;
       private DevExpress.XtraBars.PopupMenu popupMenu1;
       private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit1;
-      private DevExpress.XtraBars.BarSubItem mnuEnvironmentsRemote;
       private DevExpress.XtraBars.PopupMenu popupMenu2;
+      private DevExpress.XtraBars.BarButtonItem btnRefresh;
    }
 }

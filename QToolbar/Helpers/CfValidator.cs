@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace QToolbar.Helpers
@@ -22,10 +23,9 @@ namespace QToolbar.Helpers
             List<Tuple<string, string>> servers = cfObj.GetServers();
             List<Tuple<string, string>> pwds = cfObj.GetPasswords();
 
-            // 
+            
             foreach(var key in keysToCheck)
             {
-
                // check key existence in dbs
                if (dbs.Where(i => i.Item1 == key) == null)
                   retVal.AddError($"Key {key} does not exist in [DatabaseName] section of {cfFile}");
@@ -37,7 +37,6 @@ namespace QToolbar.Helpers
                // check key existence in dbs
                if (pwds.Where(i => i.Item1 == key) == null)
                   retVal.AddError($"Key {key} does not exist in [Passwords] section of {cfFile}");
-
             }
 
             Dictionary<string, int> info = new Dictionary<string, int>();
@@ -80,15 +79,25 @@ namespace QToolbar.Helpers
             {
                if (!IsInCheckList(item.Item1, keysToCheck)) continue;
 
-               if (!item.Item2.Contains(item.Item1))
+               Regex reg = new Regex("[A-Za-z_]+[_]*(?<major>[0-9]*)[_]*(?<minor>[0-9]*)[_]*(?<release>[0-9]*)");
+               string keyMatch = string.Empty;
+               string valueMatch = string.Empty;
+               if (reg.IsMatch(item.Item1))
                {
-                  retVal.AddWarning($"file {cfFile} : {item.Item1} is not contained in {item.Item2}");
+                  Match match = reg.Match(item.Item1);
+                  keyMatch = $"{match.Groups["major"].Value}_{match.Groups["minor"].Value}_{match.Groups["release"].Value}";
+               }
+               if (reg.IsMatch(item.Item2))
+               {
+                  Match match = reg.Match(item.Item2);
+                  valueMatch = $"{match.Groups["major"].Value}_{match.Groups["minor"].Value}_{match.Groups["release"].Value}";
+               }
+
+               if(!keyMatch.Equals(valueMatch))
+               {
+                  retVal.AddWarning($"Check names : {item.Item1} vs {item.Item2} file {cfFile}");
                }
             }
-
-            
-
-
          }
          return retVal;
       }

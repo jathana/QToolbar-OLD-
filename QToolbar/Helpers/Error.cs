@@ -9,12 +9,12 @@ namespace QToolbar.Helpers
    public class Error
    {
       #region fields
-      private string _ErrorType;
+      private ErrorType _ErrorType;
       private string _Message;
       #endregion
 
       #region properties
-      public string ErrorType
+      public ErrorType ErrorType
       {
          get
          {

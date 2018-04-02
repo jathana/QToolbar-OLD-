@@ -132,6 +132,7 @@
     <Compile Include="Helpers\CfValidator.cs" />
     <Compile Include="Helpers\Error.cs" />
     <Compile Include="Helpers\Errors.cs" />
+    <Compile Include="Helpers\ErrorType.cs" />
     <Compile Include="Options\EnvCFs.cs" />
     <Compile Include="Plugins\CFsValidator\CfFileValidationEventArgs.cs" />
     <Compile Include="Plugins\CFsValidator\CFsValidator.cs" />

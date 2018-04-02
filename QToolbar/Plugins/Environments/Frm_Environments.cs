@@ -34,6 +34,7 @@ namespace QToolbar.Plugins.Environments
 
          _Envs = new QEnvironments();
          _Envs.InfoCollected += _Envs_InfoCollected;
+         _Envs.AllInfoCollected += _Envs_AllInfoCollected;
          UXGridView.OptionsView.ColumnAutoWidth = false;
          UXGridView.OptionsBehavior.Editable = false;
          UXGridView.OptionsView.RowAutoHeight = true;
@@ -41,6 +42,11 @@ namespace QToolbar.Plugins.Environments
 
          UXGridView.RowStyle += UXGridView_RowStyle;
          _SyncContext = SynchronizationContext.Current;
+      }
+
+      private void _Envs_AllInfoCollected(object sender, EventArgs e)
+      {
+         btnRefresh.Enabled = true;
       }
 
       private void UXGridView_RowStyle(object sender, RowStyleEventArgs e)
@@ -62,7 +68,7 @@ namespace QToolbar.Plugins.Environments
                int rowHandle = UXGridView.LocateByValue("DBCollectionPlusName", env.DBCollectionPlusName);
                if (rowHandle != DevExpress.XtraGrid.GridControl.InvalidRowHandle)
                {
-                  UXGridView.SetRowCellValue(rowHandle,"Status","Ready" + (env.Errors.Count>0?"(Errors)":""));
+                  UXGridView.SetRowCellValue(rowHandle,"Status",$"Ready({env.Errors.GetStrongestDesc()})");
                }
             }
             UXGridView.BestFitColumns();
@@ -96,7 +102,9 @@ namespace QToolbar.Plugins.Environments
       public void CreateEnvironmentsMenuItems()
       {
          mnuEnvironments.ClearLinks();
-
+         BarButtonItem mniClearAll = new BarButtonItem(null, "Clear All",1);
+         mniClearAll.ItemClick += MniClearAll_ItemClick;
+         mnuEnvironments.AddItem(mniClearAll);
          // load custom folders
          try
          {
@@ -108,6 +116,26 @@ namespace QToolbar.Plugins.Environments
          catch (Exception ex)
          {
             XtraMessageBox.Show("Failed to retrieve folders settings");
+         }
+      }
+
+      private void MniClearAll_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         RemoveAllSelectedEnvironments();
+      }
+
+      private void RemoveAllSelectedEnvironments()
+      {
+         foreach (var mnuItem in mnuEnvironments.ItemLinks)
+         {
+            if (mnuItem.GetType().Equals(typeof(BarSubItemLink)))
+            {
+
+               foreach (var itemLink in ((BarSubItemLink)mnuItem).Item.ItemLinks)
+               {
+                  (itemLink as BarEditItemLink).EditValue = false;
+               }
+            }
          }
       }
 
@@ -145,6 +173,7 @@ namespace QToolbar.Plugins.Environments
             CfFile cf = new CfFile(tag.Item1);
             if ((bool)item.EditValue)
             {
+               btnRefresh.Enabled = false;
                _Envs.AddOrUpdate(item.Caption, cf, tag.Item2, tag.Item3);
             }
             else
@@ -175,17 +204,30 @@ namespace QToolbar.Plugins.Environments
          GridHitInfo info = view.CalcHitInfo(pt);
          if (info.InRow || info.InRowCell)
          {
-            string file = "";
+            string cellText = view.FocusedValue.ToString(); 
             switch (info.Column.GetCaption())
             {
                case "Path":
-                  file = view.FocusedValue.ToString();
-                  viewFile(file);
-
-                  break;
                case "QBC Admin Cf Path":
-                  file = view.FocusedValue.ToString();
-                  viewFile(file);
+                  viewFile(cellText);
+                  break;
+               case "Checkout Path":
+               case "Proteus Checkout Path":
+               case "Batch Executor Win Service Path":
+               case "Eod Executor Win Service Path":
+               case "Win Services Dir":
+               case "GLM Dir":
+               case "GLM Log Dir":
+               case "UNC":
+
+                  if (Directory.Exists(cellText))
+                  {
+                     Process.Start("explorer.exe", "/select, " + cellText);
+                  }
+                  else
+                  {
+                     XtraMessageBox.Show($"Dir {cellText} does not exist!");
+                  }
                   break;
             }
          }
@@ -206,6 +248,21 @@ namespace QToolbar.Plugins.Environments
       private void btnRemoveEnvsFromCFs_ItemClick(object sender, ItemClickEventArgs e)
       {
          _Envs.RemoveEnvsFromCFs();
+      }
+
+      private void Frm_Environments_FormClosing(object sender, FormClosingEventArgs e)
+      {
+         RemoveAllSelectedEnvironments();
+      }
+
+      private void btnRefresh_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         if (_Envs.Data.Count > 0)
+         {
+            btnRefresh.Enabled = false;
+            _Envs.Refresh();
+            UXGridView.RefreshData();
+         }
       }
    }
 }

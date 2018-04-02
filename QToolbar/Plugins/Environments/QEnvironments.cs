@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -17,11 +19,15 @@ namespace QToolbar.Plugins.Environments
    {
       #region fields
       private List<QEnvironment> _Data = new List<QEnvironment>();
+
+      private List<Task> _Tasks = new List<Task>();
+      private Dictionary<string, CancellationTokenSource> _CancellationTokenSourceList = new Dictionary<string, CancellationTokenSource>();
       #endregion
 
       #region events
       public delegate void InfoCollectedEventHandler(object sender, EnvInfoEventArgs args);
       public event InfoCollectedEventHandler InfoCollected;
+      public event EventHandler AllInfoCollected;
       #endregion
 
       #region properties
@@ -32,9 +38,17 @@ namespace QToolbar.Plugins.Environments
             return _Data;
          }
       }
+
+
       #endregion
 
+
+      public QEnvironments()
+      {
+      }
+
       #region methods
+
       public void AddOrUpdate(string envName, CfFile qbcAdminCf, string checkoutPath, string proteusCheckoutPath)
       {
          QEnvironment envObj = null;
@@ -58,6 +72,7 @@ namespace QToolbar.Plugins.Environments
          }
          if (envObj != null)
          {
+            envObj.Status = "Loading...";
             envObj.Name = envName;
             envObj.CheckoutPath = checkoutPath;
             envObj.ProteusCheckoutPath = proteusCheckoutPath;
@@ -81,7 +96,7 @@ namespace QToolbar.Plugins.Environments
          {
             string remoteQBCAdminCf = GetRemoteQBCAdminFile(Path.GetFileName(envObj.CheckoutPath));
             envObj.AppWSUrl = IniFile2.ReadValue("General", "ApplicationWSURL", remoteQBCAdminCf);
-            if(!string.IsNullOrEmpty(envObj.AppWSUrl))
+            if (!string.IsNullOrEmpty(envObj.AppWSUrl))
                envObj.Errors.AddWarning($"ApplicationWSURL was not found in local file ({envObj.QBCAdminCfPath}).Read from remote ({remoteQBCAdminCf}).");
          }
          // read ToolkitWSURL from OptionsInstance.QCSAdminFolder Folder if it is not in local qbc_admin.cf
@@ -97,7 +112,7 @@ namespace QToolbar.Plugins.Environments
             _Data.Add(envObj);
          }
 
-         // collect rest info
+         // collect rest info async
          CollectEnvInfoAsync(envObj.DBCollectionPlusServer, envObj.DBCollectionPlusName, envObj);
       }
       #endregion
@@ -105,306 +120,412 @@ namespace QToolbar.Plugins.Environments
       #region private methods
       private async void CollectEnvInfoAsync(string server, string db, QEnvironment env)
       {
+         CancellationTokenSource tokenSource = null;
 
-         Task<QEnvironment> rs = Task<QEnvironment>.Factory.StartNew(() =>
+         if (!_CancellationTokenSourceList.ContainsKey(env.Name))
          {
+            tokenSource = new CancellationTokenSource();
+            _CancellationTokenSourceList.Add(env.Name, tokenSource);
+         }
+         else
+         {
+            tokenSource = _CancellationTokenSourceList[env.Name];
+         }
+
+         Task<QEnvironment> rs = Task<QEnvironment>.Factory.StartNew(state =>
+         {
+
+            CancellationTokenSource cancelTokenSource = (CancellationTokenSource)state;
+            CancellationToken cancelToken = cancelTokenSource.Token;
+
             QEnvironment retval = new QEnvironment();
 
             CfFile adminCf = new CfFile(env.QBCAdminCfPath);
 
-            using (SqlConnection con = new SqlConnection())
+
+            if (!cancelToken.IsCancellationRequested)
             {
-               con.ConnectionString = Utils.GetConnectionString(server, db);
-               try
+               using (SqlConnection con = new SqlConnection())
                {
-                  con.Open();
-                  SqlCommand com = new SqlCommand();
-                  com.Connection = con;
-                  // version
-                  try
-                  {
-                     com.CommandText = "SELECT TOP(1) CONVERT(NVARCHAR,MAJOR)+'.' + CONVERT(NVARCHAR,MINOR) FROM TLK_DATABASE_VERSIONS ORDER BY MAJOR DESC,MINOR DESC";
-                     retval.DBCollectionPlusVersion = com.ExecuteScalar().ToString();
-                  }
-                  catch (Exception ex)
-                  {
-                     retval.Errors.AddError($"Error while fetching version information ({ex.Message})");
-                  }
-                  // fix AppWSUrl,ToolkitWSUrl for current
-                  // read ApplicationWSURL from OptionsInstance.QCSAdminFolder Folder if it is not in local qbc_admin.cf
-                  if (string.IsNullOrEmpty(env.AppWSUrl))
-                  {
-                     string remoteQBCAdminCf = GetRemoteQBCAdminFile(Path.GetFileName(retval.DBCollectionPlusVersion));
-                     env.AppWSUrl = IniFile2.ReadValue("General", "ApplicationWSURL", remoteQBCAdminCf);
-                     env.Errors.AddWarning($"ApplicationWSURL was not found in local file ({env.QBCAdminCfPath}).Read from remote ({remoteQBCAdminCf}).");
-                  }
-                  // read ToolkitWSURL from OptionsInstance.QCSAdminFolder Folder if it is not in local qbc_admin.cf
-                  if (string.IsNullOrEmpty(env.ToolkitWSUrl))
-                  {
-                     string remoteQBCAdminCf = GetRemoteQBCAdminFile(Path.GetFileName(retval.DBCollectionPlusVersion));
-                     env.ToolkitWSUrl = IniFile2.ReadValue("General", "ToolkitWSURL", remoteQBCAdminCf);
-                     env.Errors.AddWarning($"ToolkitWSURL was not found in local file ({env.QBCAdminCfPath}).Read from remote ({remoteQBCAdminCf}).");
-                  }
-
-
-
-                  //The location of the GLM folder can be found from the following query:
-                  //select inst_root from bi_glm_installation
-                  try
-                  {
-                     com.CommandText = "select inst_root from bi_glm_installation";
-                     string glmDir = com.ExecuteScalar().ToString();
-                     retval.GLMDir = glmDir;
-                     int permissions = -1;
-                     bool unresolved = false;
-                     retval.GLMLocalDir = Utils.GetPath(glmDir, out permissions, out unresolved);
-                     retval.GLMDirPermissions = Utils.GetPermissionsDesc(permissions);
-                     if (!string.IsNullOrEmpty(glmDir) && permissions != Utils.FILE_PERMISSION_FULL_ACCESS)
-                     {
-                        retval.Errors.AddError($"Full Access permission is required for GLM dir {glmDir}");
-                     }
-                     if(unresolved)
-                     {
-                        retval.Errors.AddError($"Unresolved GLM dir.");
-                     }
-                     if(string.IsNullOrEmpty(glmDir))
-                     {
-                        retval.Errors.AddError($"GLM dir is empty.");
-                     }
-
-
-                  }
-                  catch (Exception ex)
-                  {
-                     retval.Errors.AddError($"Error while fetching glm information ({ex.Message})");
-                  }
-
-                  //Also the location of the GLM logs folder can be found with:
-                  //select SPRA_VALUE from AT_SYSTEM_PARAMS where SPRA_TYPE = 'EOD_LOGS_PATH'
-                  try
-                  {
-                     com.CommandText = "select SPRA_VALUE from AT_SYSTEM_PARAMS where SPRA_TYPE = 'EOD_LOGS_PATH'";
-                     string glmLogDir = com.ExecuteScalar().ToString();
-                     retval.GLMLogDir = glmLogDir;
-                     int permissions = -1;
-                     bool unresolved = false;
-                     retval.GLMLocalLogDir = Utils.GetPath(glmLogDir, out permissions, out unresolved);
-                     retval.GLMLogDirPermissions = Utils.GetPermissionsDesc(permissions);
-                     if (!string.IsNullOrEmpty(glmLogDir) && permissions != Utils.FILE_PERMISSION_FULL_ACCESS)
-                     {
-                        retval.Errors.AddError($"Full Access permission is required for GLM Log dir {glmLogDir}");
-                     }
-                     if (unresolved)
-                     {
-                        retval.Errors.AddError($"Unresolved GLM Log dir.");
-                     }
-                     if (string.IsNullOrEmpty(glmLogDir))
-                     {
-                        retval.Errors.AddError($"Empty GLM Log dir");
-                     }
-
-                  }
-                  catch (Exception ex)
-                  {
-                     retval.Errors.AddError($"Error while fetching glm log information ({ex.Message})");
-                  }
+                  con.ConnectionString = Utils.GetConnectionString(server, db);
 
                   try
                   {
-                     com.CommandText = @"select SPR_TYPE, SPR_VALUE from AT_SYSTEM_PREF
+                     con.Open();
+                     SqlCommand com = new SqlCommand();
+                     com.Connection = con;
+
+                     #region get version from database 
+                     if (!cancelToken.IsCancellationRequested)
+                     {
+                        // version
+                        try
+                        {
+                           com.CommandText = "SELECT TOP(1) CONVERT(NVARCHAR,MAJOR)+'.' + CONVERT(NVARCHAR,MINOR) FROM TLK_DATABASE_VERSIONS ORDER BY MAJOR DESC,MINOR DESC";
+                           retval.DBCollectionPlusVersion = com.ExecuteScalar().ToString();
+                        }
+                        catch (Exception ex)
+                        {
+                           retval.Errors.AddError($"Error while fetching version information ({ex.Message})");
+                        }
+                        // fix AppWSUrl,ToolkitWSUrl for current
+                        // read ApplicationWSURL from OptionsInstance.QCSAdminFolder Folder if it is not in local qbc_admin.cf
+                        if (string.IsNullOrEmpty(env.AppWSUrl))
+                        {
+                           string remoteQBCAdminCf = GetRemoteQBCAdminFile(Path.GetFileName(retval.DBCollectionPlusVersion));
+                           env.AppWSUrl = IniFile2.ReadValue("General", "ApplicationWSURL", remoteQBCAdminCf);
+                           env.Errors.AddWarning($"ApplicationWSURL was not found in local file ({env.QBCAdminCfPath}).Read from remote ({remoteQBCAdminCf}).");
+                        }
+                        // read ToolkitWSURL from OptionsInstance.QCSAdminFolder Folder if it is not in local qbc_admin.cf
+                        if (string.IsNullOrEmpty(env.ToolkitWSUrl))
+                        {
+                           string remoteQBCAdminCf = GetRemoteQBCAdminFile(Path.GetFileName(retval.DBCollectionPlusVersion));
+                           env.ToolkitWSUrl = IniFile2.ReadValue("General", "ToolkitWSURL", remoteQBCAdminCf);
+                           env.Errors.AddWarning($"ToolkitWSURL was not found in local file ({env.QBCAdminCfPath}).Read from remote ({remoteQBCAdminCf}).");
+                        }
+                     }
+                     #endregion
+
+                     #region get location of the GLM folder
+                     if (!cancelToken.IsCancellationRequested)
+                     {
+                        //The location of the GLM folder can be found from the following query:
+                        //select inst_root from bi_glm_installation
+                        try
+                        {
+                           com.CommandText = "select inst_root from bi_glm_installation";
+                           string glmDir = com.ExecuteScalar().ToString();
+                           retval.GLMDir = glmDir;
+                           int permissions = -1;
+                           bool unresolved = false;
+                           string glmLocalDir = Utils.GetPath(glmDir, out permissions, out unresolved);
+                           retval.GLMLocalDir = glmLocalDir;
+                           retval.GLMDirPermissions = Utils.GetPermissionsDesc(permissions);
+                           if (!string.IsNullOrEmpty(glmDir) && permissions != Utils.FILE_PERMISSION_FULL_ACCESS)
+                           {
+                              retval.Errors.AddError($"Full Access permission is required for GLM dir {glmDir}");
+                           }
+                           if (unresolved)
+                           {
+                              retval.Errors.AddError($"Unresolved GLM dir.");
+                           }
+                           if (string.IsNullOrEmpty(glmDir))
+                           {
+                              retval.Errors.AddError($"GLM dir is empty.");
+                           }
+
+                           QEnvironment.SharedDir objGlmDir = new QEnvironment.SharedDir()
+                           {
+                              UNC = glmDir,
+                              LocalPath = glmLocalDir,
+                              Permissions = permissions,
+                              Description = "GLM DIR"
+                           };
+                           retval.QCSystemSharedDirs.Add(objGlmDir);
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                           retval.Errors.AddError($"Error while fetching glm information ({ex.Message})");
+                        }
+                     }
+                     #endregion
+
+                     #region get the location of GLM log folder
+                     if (!cancelToken.IsCancellationRequested)
+                     {
+                        //Also the location of the GLM logs folder can be found with:
+                        //select SPRA_VALUE from AT_SYSTEM_PARAMS where SPRA_TYPE = 'EOD_LOGS_PATH'
+                        try
+                        {
+                           com.CommandText = "select SPRA_VALUE from AT_SYSTEM_PARAMS where SPRA_TYPE = 'EOD_LOGS_PATH'";
+                           string glmLogDir = com.ExecuteScalar().ToString();
+                           retval.GLMLogDir = glmLogDir;
+                           int permissions = -1;
+                           bool unresolved = false;
+                           string glmLocalLogDir = Utils.GetPath(glmLogDir, out permissions, out unresolved);
+                           retval.GLMLocalLogDir = glmLocalLogDir;
+                           retval.GLMLogDirPermissions = Utils.GetPermissionsDesc(permissions);
+                           if (!string.IsNullOrEmpty(glmLogDir) && permissions != Utils.FILE_PERMISSION_FULL_ACCESS)
+                           {
+                              retval.Errors.AddError($"Full Access permission is required for GLM Log dir {glmLogDir}");
+                           }
+                           if (unresolved)
+                           {
+                              retval.Errors.AddError($"Unresolved GLM Log dir.");
+                           }
+                           if (string.IsNullOrEmpty(glmLogDir))
+                           {
+                              retval.Errors.AddError($"Empty GLM Log dir");
+                           }
+
+                           QEnvironment.SharedDir objGlmLogDir = new QEnvironment.SharedDir()
+                           {
+                              UNC = glmLogDir,
+                              LocalPath = glmLocalLogDir,
+                              Permissions = permissions,
+                              Description = "GLM LOG DIR"
+                           };
+                           retval.QCSystemSharedDirs.Add(objGlmLogDir);
+                        }
+                        catch (Exception ex)
+                        {
+                           retval.Errors.AddError($"Error while fetching glm log information ({ex.Message})");
+                        }
+                     }
+                     #endregion
+
+                     #region get system shared folders
+                     if (!cancelToken.IsCancellationRequested)
+                     {
+
+                        try
+                        {
+                           com.CommandText = @"select SPR_TYPE, SPR_VALUE from AT_SYSTEM_PREF
                                        where SPR_TYPE in ('WORDTEMPLATESFOLDER',
                                                          'ATTACHMENTS_DIRECTORY',
                                                          'BULK_OUTPUT_EXPORT_DIRECTORY', 
                                                          'CRITERIA_PUBLISHED_PATH')";
-                     SqlDataAdapter adapter = new SqlDataAdapter(com);
-                     DataTable pathsTable = new DataTable();
-                     adapter.Fill(pathsTable);
-                     StringBuilder builder = new StringBuilder();
-                     StringBuilder locbuilder = new StringBuilder();
-                     foreach (DataRow pathrow in pathsTable.Rows)
-                     {
+                           SqlDataAdapter adapter = new SqlDataAdapter(com);
+                           DataTable pathsTable = new DataTable();
+                           adapter.Fill(pathsTable);
+                           StringBuilder builder = new StringBuilder();
+                           StringBuilder locbuilder = new StringBuilder();
+                           foreach (DataRow pathrow in pathsTable.Rows)
+                           {
 
-                        int permissions = -1;
-                        bool unresolved = false;
-                        //retval.QCSystemSharedDirs.Add(
+                              int permissions = -1;
+                              bool unresolved = false;
+                              //retval.QCSystemSharedDirs.Add(
 
 
-                        QEnvironment.SharedDir sharedDdir = new QEnvironment.SharedDir()
-                        {
-                           UNC = pathrow["SPR_VALUE"].ToString(),
-                           LocalPath = Utils.GetPath(pathrow["SPR_VALUE"].ToString(), out permissions, out unresolved),
-                           Permissions = permissions,
-                           Description = pathrow["SPR_TYPE"].ToString()
-                        };
-                        retval.QCSystemSharedDirs.Add(sharedDdir);
+                              QEnvironment.SharedDir sharedDdir = new QEnvironment.SharedDir()
+                              {
+                                 UNC = pathrow["SPR_VALUE"].ToString(),
+                                 LocalPath = Utils.GetPath(pathrow["SPR_VALUE"].ToString(), out permissions, out unresolved),
+                                 Permissions = permissions,
+                                 Description = pathrow["SPR_TYPE"].ToString()
+                              };
+                              retval.QCSystemSharedDirs.Add(sharedDdir);
 
-                        if (permissions!=Utils.FILE_PERMISSION_FULL_ACCESS)
-                        {
-                           retval.Errors.AddError($"Full Access permission is required {sharedDdir.UNC}");
+                              if (permissions != Utils.FILE_PERMISSION_FULL_ACCESS)
+                              {
+                                 retval.Errors.AddError($"Full Access permission is required {sharedDdir.UNC}");
+                              }
+                              if (unresolved)
+                              {
+                                 retval.Errors.AddError($"Unresolved dir {sharedDdir.Description} : {sharedDdir.UNC}.");
+                              }
+                              if (string.IsNullOrEmpty(sharedDdir.UNC))
+                              {
+                                 retval.Errors.AddError($"Empty dir {sharedDdir.Description} ");
+                              }
+                           }
                         }
-                        if (unresolved)
+                        catch (Exception ex)
                         {
-                           retval.Errors.AddError($"Unresolved dir {sharedDdir.Description} : {sharedDdir.UNC}.");
-                        }
-                        if (string.IsNullOrEmpty(sharedDdir.UNC))
-                        {
-                           retval.Errors.AddError($"Empty dir {sharedDdir.Description} ");
+                           retval.Errors.AddError($"Error while fetching shared dirs information ({ex.Message})");
                         }
                      }
+                     #endregion
                   }
                   catch (Exception ex)
                   {
-                     retval.Errors.AddError($"Error while fetching shared dirs information ({ex.Message})");
+                     retval.Errors.AddError($"Generic Error ({ex.Message})");
                   }
-               }
-               catch (Exception ex)
-               {
-                  retval.Errors.AddError($"Generic Error ({ex.Message})");
-               }
-               finally
-               {
-                  if (con.State == ConnectionState.Open)
+                  finally
                   {
-                     con.Close();
-                  }
-               }
-
-               try
-               {
-                  // add cfs from local checkout
-                  retval.CFs.Clear();
-                  // add cfs from local checkout
-                  foreach (DataRow cfRow in OptionsInstance.EnvCFs.Data.Rows)
-                  {
-                     QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
-                     cfInfo.Name = Path.GetFileName(cfRow["Path"].ToString());
-                     cfInfo.Repository = Path.GetFileName(cfRow["Repository"].ToString());
-                     if (cfInfo.Repository == "QC")
-                        cfInfo.Path = Path.Combine(env.CheckoutPath, cfRow["Path"].ToString());
-                     else if (cfInfo.Repository == "PROTEUS")
-                        cfInfo.Path = Path.Combine(env.ProteusCheckoutPath, cfRow["Path"].ToString());
-
-                     retval.CFs.Add(cfInfo);
-                  }
-               }
-               catch (Exception ex)
-               {
-                  retval.Errors.AddError($"Error getting local cfs information ({ex.Message})");
-               }
-
-               try
-               {
-                  string envNameInWeb = $"QCS_{string.Join("_", Path.GetFileName(env.CheckoutPath).Split('.'))}";
-
-                  // add cfs from web server
-                  
-                  Uri webServer = new Uri(env.AppWSUrl);
-                  using (ServerManager mgr = ServerManager.OpenRemote(webServer.Host))
-                  {
-                     foreach (var s in mgr.Sites)
+                     if (con.State == ConnectionState.Open)
                      {
-                        if (s.Name.Equals(envNameInWeb))
+                        con.Close();
+                     }
+                  }
+
+                  #region add cfs from local checkout
+                  if (!cancelToken.IsCancellationRequested)
+                  {
+
+                     try
+                     {
+                        // add cfs from local checkout
+                        retval.CFs.Clear();
+                        // add cfs from local checkout
+                        foreach (DataRow cfRow in OptionsInstance.EnvCFs.Data.Rows)
                         {
-                           string qcwsPhPath = null;
-                           string toolkitPhPath = null;
-                           foreach (var a in s.Applications)
+                           QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
+                           cfInfo.Name = Path.GetFileName(cfRow["Path"].ToString());
+                           cfInfo.Repository = Path.GetFileName(cfRow["Repository"].ToString());
+                           if (cfInfo.Repository == "QC")
+                              cfInfo.Path = Path.Combine(env.CheckoutPath, cfRow["Path"].ToString());
+                           else if (cfInfo.Repository == "PROTEUS")
+                              cfInfo.Path = Path.Combine(env.ProteusCheckoutPath, cfRow["Path"].ToString());
+
+                           retval.CFs.Add(cfInfo);
+                        }
+                     }
+                     catch (Exception ex)
+                     {
+                        retval.Errors.AddError($"Error getting local cfs information ({ex.Message})");
+                     }
+                  }
+                  #endregion
+
+                  #region add cfs from web server
+                  if (!cancelToken.IsCancellationRequested)
+                  {
+
+                     try
+                     {
+                        string envNameInWeb = $"QCS_{string.Join("_", Path.GetFileName(env.CheckoutPath).Split('.'))}";
+
+                        // add cfs from web server
+
+                        Uri webServer = new Uri(env.AppWSUrl);
+                        using (ServerManager mgr = ServerManager.OpenRemote(webServer.Host))
+                        {
+                           foreach (var s in mgr.Sites)
                            {
-                              var qcwsVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\Qualco\\QCSWS"));
-                              if (qcwsVDir != null)
+                              if (s.Name.Equals(envNameInWeb))
                               {
-                                 qcwsPhPath = qcwsVDir.PhysicalPath;
-                                 QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
-                                 cfInfo.Name = "qbc.cf";
-                                 cfInfo.Repository = "QC";
-                                 cfInfo.Path = $"\\\\{webServer.Host}\\{qcwsPhPath.Replace(":", "$")}\\qbc.cf";
-                                 retval.CFs.Add(cfInfo);
-                              }
+                                 string qcwsPhPath = null;
+                                 string toolkitPhPath = null;
+                                 foreach (var a in s.Applications)
+                                 {
+                                    var qcwsVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\Qualco\\QCSWS"));
+                                    if (qcwsVDir != null)
+                                    {
+                                       qcwsPhPath = qcwsVDir.PhysicalPath;
+                                       QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
+                                       cfInfo.Name = "qbc.cf";
+                                       cfInfo.Repository = "QC";
+                                       cfInfo.Path = $"\\\\{webServer.Host}\\{qcwsPhPath.Replace(":", "$")}\\qbc.cf";
+                                       retval.CFs.Add(cfInfo);
+                                    }
 
 
-                              var toolkitVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\Qualco\\SCToolkitWS"));
-                              if (toolkitVDir != null)
-                              {
-                                 toolkitPhPath = toolkitVDir.PhysicalPath;
-                                 QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
-                                 cfInfo.Name = "qbc.cf";
-                                 cfInfo.Repository = "QC";
-                                 cfInfo.Path = $"\\\\{webServer.Host}\\{toolkitPhPath.Replace(":", "$")}\\qbc.cf";
-                                 retval.CFs.Add(cfInfo);
+                                    var toolkitVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\Qualco\\SCToolkitWS"));
+                                    if (toolkitVDir != null)
+                                    {
+                                       toolkitPhPath = toolkitVDir.PhysicalPath;
+                                       QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
+                                       cfInfo.Name = "qbc.cf";
+                                       cfInfo.Repository = "QC";
+                                       cfInfo.Path = $"\\\\{webServer.Host}\\{toolkitPhPath.Replace(":", "$")}\\qbc.cf";
+                                       retval.CFs.Add(cfInfo);
 
+                                    }
+                                 }
                               }
                            }
                         }
                      }
+                     catch (Exception ex)
+                     {
+                        retval.Errors.AddError($"Error while fetching web server's cf information ({ex.Message})");
+                     }
                   }
-               }
-               catch (Exception ex)
-               {
-                  retval.Errors.AddError($"Error while fetching web server's cf information ({ex.Message})");
-               }
+                  #endregion
 
-               try
-               {
-                  // Add cfs from batch & eod services
-                  string ver = Path.GetFileName(env.CheckoutPath);
-                  string envConfFile = GetEnvironmentsConfigurationFile(ver);
-                  QEnvironmentsConfiguration ec = new QEnvironmentsConfiguration(ver, envConfFile);
-                  ec.Load();
-                  var envFound = ec.FirstOrDefault(e => e.Database.ToLower() == env.DBCollectionPlusName.ToLower() && e.Server.ToLower() == env.DBCollectionPlusServer.ToLower());
-                  if (envFound != null)
+                  #region add cfs from batch & eod services
+                  if (!cancelToken.IsCancellationRequested)
                   {
 
-                     QEnvironment.CfInfo cfInfoBatch = new QEnvironment.CfInfo();
-                     cfInfoBatch.Name = "qbc.cf";
-                     cfInfoBatch.Repository = "QC";
-                     cfInfoBatch.Path = $"{envFound.BatchServiceUNCPath}\\qbc.cf";
-                     retval.CFs.Add(cfInfoBatch);
-                     retval.BatchExecutorWinServicePath = envFound.BatchServiceUNCPath;
+                     try
+                     {
+                        // Add cfs from batch & eod services
+                        string ver = Path.GetFileName(env.CheckoutPath);
+                        string envConfFile = GetEnvironmentsConfigurationFile(ver);
+                        QEnvironmentsConfiguration ec = new QEnvironmentsConfiguration(ver, envConfFile);
+                        ec.Load();
+                        var envFound = ec.FirstOrDefault(e => e.Database.ToLower() == env.DBCollectionPlusName.ToLower() && e.Server.ToLower() == env.DBCollectionPlusServer.ToLower());
+                        if (envFound != null)
+                        {
 
-                     QEnvironment.CfInfo cfInfoEOD = new QEnvironment.CfInfo();
-                     cfInfoEOD.Name = "qbc.cf";
-                     cfInfoEOD.Repository = "QC";
-                     cfInfoEOD.Path = $"{envFound.EODServiceUNCPath}\\qbc.cf";
-                     retval.CFs.Add(cfInfoEOD);
-                     retval.EodExecutorWinServicePath = envFound.EODServiceUNCPath;
-                     retval.WinServicesDir = Directory.GetParent(envFound.EODServiceUNCPath).FullName;
+                           QEnvironment.CfInfo cfInfoBatch = new QEnvironment.CfInfo();
+                           cfInfoBatch.Name = "qbc.cf";
+                           cfInfoBatch.Repository = "QC";
+                           cfInfoBatch.Path = $"{envFound.BatchServiceUNCPath}\\qbc.cf";
+                           retval.CFs.Add(cfInfoBatch);
+                           retval.BatchExecutorWinServicePath = envFound.BatchServiceUNCPath;
+
+                           QEnvironment.SharedDir objBatchServiceDir = new QEnvironment.SharedDir()
+                           {
+                              UNC = envFound.BatchServiceUNCPath,
+                              LocalPath = envFound.BatchServicePath,
+                              Permissions = -1,
+                              Description = "BATCH SERVICE"
+                           };
+                           retval.QCSystemSharedDirs.Add(objBatchServiceDir);
+
+                           QEnvironment.CfInfo cfInfoEOD = new QEnvironment.CfInfo();
+                           cfInfoEOD.Name = "qbc.cf";
+                           cfInfoEOD.Repository = "QC";
+                           cfInfoEOD.Path = $"{envFound.EODServiceUNCPath}\\qbc.cf";
+                           retval.CFs.Add(cfInfoEOD);
+                           retval.EodExecutorWinServicePath = envFound.EODServiceUNCPath;
+                           retval.WinServicesDir = Directory.GetParent(envFound.EODServiceUNCPath).FullName;
+
+                           QEnvironment.SharedDir objEODServiceDir = new QEnvironment.SharedDir()
+                           {
+                              UNC = envFound.EODServiceUNCPath,
+                              LocalPath = envFound.EODServicePath,
+                              Permissions = -1,
+                              Description = "EOD SERVICE"
+                           };
+                           retval.QCSystemSharedDirs.Add(objEODServiceDir);
+                        }
+                        else
+                        {
+                           retval.Errors.AddError($"Environment not found (file:{envConfFile})");
+                        }
+                     }
+                     catch (Exception ex)
+                     {
+                        retval.Errors.AddError($"Error while fetching Batch Executor's & EOD Executor's  cf information ({ex.Message})");
+                     }
                   }
-               }
-               catch (Exception ex)
-               {
-                  retval.Errors.AddError($"Error while fetching Batch Executor's & EOD Executor's  cf information ({ex.Message})");
-               }
+                  #endregion
 
-               retval.CheckoutPath = env.CheckoutPath;
-               retval.ProteusCheckoutPath = env.ProteusCheckoutPath;
-               retval.DBCollectionPlusServer = env.DBCollectionPlusServer;
-               retval.DBCollectionPlusName = env.DBCollectionPlusName;
-               retval.ToolkitWSUrl = env.ToolkitWSUrl;
-               retval.AppWSUrl = env.AppWSUrl;
-               retval.QBCAdminCfPath = env.QBCAdminCfPath;
+                  retval.CheckoutPath = env.CheckoutPath;
+                  retval.ProteusCheckoutPath = env.ProteusCheckoutPath;
+                  retval.DBCollectionPlusServer = env.DBCollectionPlusServer;
+                  retval.DBCollectionPlusName = env.DBCollectionPlusName;
+                  retval.ToolkitWSUrl = env.ToolkitWSUrl;
+                  retval.AppWSUrl = env.AppWSUrl;
+                  retval.QBCAdminCfPath = env.QBCAdminCfPath;
 
-               // validate cfs
-               CfValidator cfValidator = new CfValidator();
+                  // validate cfs
+                  CfValidator cfValidator = new CfValidator();
 
-               List<string> keys = adminCf.GetKeys(retval.DBCollectionPlusServer, retval.DBCollectionPlusName);
-               if(keys.Count != 1)
-               {
-                  retval.Errors.AddError($"Info not found {retval.DBCollectionPlusServer}.{retval.DBCollectionPlusName}");
+                  List<string> keys = adminCf.GetKeys(retval.DBCollectionPlusServer, retval.DBCollectionPlusName);
+                  if (keys.Count == 0)
+                  {
+                     retval.Errors.AddError($"Info not found {retval.DBCollectionPlusServer}.{retval.DBCollectionPlusName}");
+                  }
+                  foreach (QEnvironment.CfInfo cfInfo in retval.CFs)
+                  {
+                     retval.Errors.AddRange(cfValidator.Validate(cfInfo.Path, keys));
+                  }
+
+                  if (cancelToken.IsCancellationRequested)
+                  {
+                     Debug.WriteLine($"Task Cancelled {env.Name}");
+                  }
+
                }
-               foreach (QEnvironment.CfInfo cfInfo in retval.CFs)
-               {
-                  retval.Errors.AddRange(cfValidator.Validate(cfInfo.Path,keys));
-               }
-
             };
             return retval;
-         });
+         }, tokenSource);
+
+         _Tasks.Add(rs);
+
          await Task.WhenAll(rs).ContinueWith((t) =>
          {
             Dispatcher.CurrentDispatcher.Invoke(() =>
             {
-
                QEnvironment val = rs.Result;
-
+               // assign info fetched async
                env.DBCollectionPlusVersion = val.DBCollectionPlusVersion;
                env.GLMDir = val.GLMDir;
                env.GLMLocalDir = val.GLMLocalDir;
@@ -421,57 +542,111 @@ namespace QToolbar.Plugins.Environments
                env.Errors.AddRange(val.Errors);
 
                //return val;
-               InfoCollected(this, new EnvInfoEventArgs(env));
+
+               OnInfoCollected(new EnvInfoEventArgs(env));
             });
-
          });
-   }
 
-   private string GetRemoteQBCAdminFile(string version)
-   {
-      string retVal = string.Empty;
-      string qcsAdminCFDir = Path.Combine(OptionsInstance.QCSAdminFolder, version, "Application Files");
-      // find the newest dir
-      if (Directory.Exists(qcsAdminCFDir))
-      {
-         string[] subdirs = Directory.GetDirectories(qcsAdminCFDir);
-         string destDir = "";
-         Version maxVersion = new Version(0, 0, 0, 0);
-         foreach (string dir in subdirs)
-         {
-            Version curVersion = Utils.GetVersion(dir, "_", 1);
-
-            if (curVersion != null)
+         // when all tasks are completed raise AllInfoCollected event
+         await Task.Factory.ContinueWhenAll(_Tasks.ToArray(), 
+            (z)=>
             {
-               if (maxVersion < curVersion)
+               AllInfoCollected(this, new EventArgs());
+            });
+      }
+
+
+      private void OnInfoCollected(EnvInfoEventArgs args)
+      {
+         if(InfoCollected!=null)
+         {
+            InfoCollected(this, args);
+         }
+      }
+
+      private void OnAllInfoCollected(EventArgs args)
+      {
+         if (AllInfoCollected != null)
+         {
+            AllInfoCollected(this, args);
+         }
+      }
+
+
+      public void Refresh()
+      {
+         string envName = string.Empty;
+         CfFile cf = new CfFile(string.Empty);
+         string checkoutPath = string.Empty;
+         string proteusCheckoutPath = string.Empty;
+         QEnvironment item = null;
+         for (int i = 0; i < _Data.Count; i++)
+         {
+            item = _Data[i];
+            envName = item.Name;
+            cf.File = item.QBCAdminCfPath;
+            checkoutPath = item.CheckoutPath;
+            proteusCheckoutPath = item.ProteusCheckoutPath;
+
+            item.Clear();
+
+            AddOrUpdate(envName, cf, checkoutPath, proteusCheckoutPath);
+            Debug.WriteLine(envName);
+         }
+
+      }
+
+      private string GetRemoteQBCAdminFile(string version)
+      {
+         string retVal = string.Empty;
+         string qcsAdminCFDir = Path.Combine(OptionsInstance.QCSAdminFolder, version, "Application Files");
+         // find the newest dir
+         if (Directory.Exists(qcsAdminCFDir))
+         {
+            string[] subdirs = Directory.GetDirectories(qcsAdminCFDir);
+            string destDir = "";
+            Version maxVersion = new Version(0, 0, 0, 0);
+            foreach (string dir in subdirs)
+            {
+               Version curVersion = Utils.GetVersion(dir, "_", 1);
+
+               if (curVersion != null)
                {
-                  maxVersion = curVersion;
-                  destDir = dir;
+                  if (maxVersion < curVersion)
+                  {
+                     maxVersion = curVersion;
+                     destDir = dir;
+                  }
+               }
+               else
+               {
+
                }
             }
-            else
-            {
-
-            }
+            retVal = Path.Combine(destDir, "QBC_Admin.cf.deploy");
+            if (!File.Exists(retVal))
+               retVal = string.Empty;
          }
-         retVal = Path.Combine(destDir, "QBC_Admin.cf.deploy");
-         if (!File.Exists(retVal))
-            retVal = string.Empty;
+         return retVal;
       }
-      return retVal;
-   }
 
-   public void Remove(string envName)
+      public void Remove(string envName)
       {
          List<QEnvironment> rs = _Data.FindAll(e => e.Name == envName);
          if (rs.Count == 1)
          {
+            CancellationTokenSource cts = _CancellationTokenSourceList.FirstOrDefault(ct => ct.Key == envName).Value;
+            if (cts != null)
+               cts.Cancel();
+            _CancellationTokenSourceList.Remove(envName);
             _Data.Remove(rs[0]);
          }
          else if (rs.Count > 1)
          {
             throw new Exception($"Cannot delete.Multiple environments {envName} found.");
          }
+
+         Debug.WriteLine(_CancellationTokenSourceList.Count);
       }
 
 

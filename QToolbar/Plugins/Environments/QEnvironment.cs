@@ -134,29 +134,28 @@ namespace QToolbar.Plugins.Environments
 
          #endregion
       }
-
       
 
       #region fields
-      private string _Status = "Loading...";
-      private string _Name = "";
-      private string _CheckoutPath = "";
-      private string _ProteusCheckoutPath = "";
-      private string _QBCAdminCfPath = "";
-      private string _DBCollectionPlusVersion = "";
-      private string _DBCollectionPlusServer = "";
-      private string _DBCollectionPlusName = "";
-      private string _ToolkitWSUrl = "";
-      private string _AppWSUrl = "";
-      private string _BatchExecutorWinServicePath = "";
-      private string _EodExecutorWinServicePath = "";
-      private string _WinServicesDir = "";
-      private string _GLMDir = "";
-      private string _GLMDirPermissions = "";
-      private string _GLMLocalDir = "";
-      private string _GLMLogDir = "";
-      private string _GLMLogDirPermissions = "";
-      private string _GLMLocalLogDir = "";
+      private string _Status = string.Empty;
+      private string _Name = string.Empty;
+      private string _CheckoutPath = string.Empty;
+      private string _ProteusCheckoutPath = string.Empty;
+      private string _QBCAdminCfPath = string.Empty;
+      private string _DBCollectionPlusVersion = string.Empty;
+      private string _DBCollectionPlusServer = string.Empty;
+      private string _DBCollectionPlusName = string.Empty;
+      private string _ToolkitWSUrl = string.Empty;
+      private string _AppWSUrl = string.Empty;
+      private string _BatchExecutorWinServicePath = string.Empty;
+      private string _EodExecutorWinServicePath = string.Empty;
+      private string _WinServicesDir = string.Empty;
+      private string _GLMDir = string.Empty;
+      private string _GLMDirPermissions = string.Empty;
+      private string _GLMLocalDir = string.Empty;
+      private string _GLMLogDir = string.Empty;
+      private string _GLMLogDirPermissions = string.Empty;
+      private string _GLMLocalLogDir = string.Empty;
       private List<SharedDir> _QCSystemSharedDirs = new List<SharedDir>();
       private List<CfInfo> _CFs= new List<CfInfo>();
       private Errors _Errors = new Errors();
@@ -430,6 +429,35 @@ namespace QToolbar.Plugins.Environments
       public QEnvironment()
       {
       }
+      #endregion
+
+      #region methods
+      public void Clear()
+      {
+         _Status = string.Empty;
+         _CheckoutPath = string.Empty;
+         _ProteusCheckoutPath = string.Empty;
+         _QBCAdminCfPath = string.Empty;
+         _DBCollectionPlusVersion = string.Empty;
+         _DBCollectionPlusServer = string.Empty;
+         _DBCollectionPlusName = string.Empty;
+         _ToolkitWSUrl = string.Empty;
+         _AppWSUrl = string.Empty;
+         _BatchExecutorWinServicePath = string.Empty;
+         _EodExecutorWinServicePath = string.Empty;
+         _WinServicesDir = string.Empty;
+         _GLMDir = string.Empty;
+         _GLMDirPermissions = string.Empty;
+         _GLMLocalDir = string.Empty;
+         _GLMLogDir = string.Empty;
+         _GLMLogDirPermissions = string.Empty;
+         _GLMLocalLogDir = string.Empty;
+
+         _CFs.Clear();
+         _Errors.Clear();
+         _QCSystemSharedDirs.Clear();
+      }
+
       #endregion
    }
 }
