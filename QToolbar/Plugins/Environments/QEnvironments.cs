@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using System.Xml;
 
 namespace QToolbar.Plugins.Environments
 {
@@ -308,7 +309,7 @@ namespace QToolbar.Plugins.Environments
                                  Description = pathrow["SPR_TYPE"].ToString()
                               };
                               retval.QCSystemSharedDirs.Add(sharedDdir);
-
+                              
                               if (permissions != Utils.FILE_PERMISSION_FULL_ACCESS)
                               {
                                  retval.Errors.AddError($"Full Access permission is required {sharedDdir.UNC}");
@@ -316,6 +317,11 @@ namespace QToolbar.Plugins.Environments
                               if (unresolved)
                               {
                                  retval.Errors.AddError($"Unresolved dir {sharedDdir.Description} : {sharedDdir.UNC}.");
+                              }
+                              else
+                              {
+                                 // take a system sub folder that exists and get system folder
+                                 retval.SystemFolder = Directory.GetParent("sharedDdir.UNC").FullName;
                               }
                               if (string.IsNullOrEmpty(sharedDdir.UNC))
                               {
@@ -329,6 +335,7 @@ namespace QToolbar.Plugins.Environments
                         }
                      }
                      #endregion
+
                   }
                   catch (Exception ex)
                   {
@@ -447,7 +454,8 @@ namespace QToolbar.Plugins.Environments
                            cfInfoBatch.Repository = "QC";
                            cfInfoBatch.Path = $"{envFound.BatchServiceUNCPath}\\qbc.cf";
                            retval.CFs.Add(cfInfoBatch);
-                           retval.BatchExecutorWinServicePath = envFound.BatchServiceUNCPath;
+                           retval.BatchWinServiceUNC = envFound.BatchServiceUNCPath;
+                           retval.BatchWinServicePath = envFound.BatchServicePath;
 
                            QEnvironment.SharedDir objBatchServiceDir = new QEnvironment.SharedDir()
                            {
@@ -463,8 +471,12 @@ namespace QToolbar.Plugins.Environments
                            cfInfoEOD.Repository = "QC";
                            cfInfoEOD.Path = $"{envFound.EODServiceUNCPath}\\qbc.cf";
                            retval.CFs.Add(cfInfoEOD);
-                           retval.EodExecutorWinServicePath = envFound.EODServiceUNCPath;
-                           retval.WinServicesDir = Directory.GetParent(envFound.EODServiceUNCPath).FullName;
+                           retval.EodWinServiceUNC = envFound.EODServiceUNCPath;
+                           retval.EodWinServicePath = envFound.EODServicePath;
+
+                           retval.WinServicesUNC = Directory.GetParent(envFound.EODServiceUNCPath).FullName;
+                           retval.WinServicesPath = Directory.GetParent(Directory.GetParent(envFound.EODServicePath).FullName).FullName;
+
 
                            QEnvironment.SharedDir objEODServiceDir = new QEnvironment.SharedDir()
                            {
@@ -487,6 +499,110 @@ namespace QToolbar.Plugins.Environments
                   }
                   #endregion
 
+                  #region check BatchExecutorService.exe.config
+                  string batchServiceConfig = $"{retval.BatchWinServiceUNC}\\BatchExecutorService.exe.config";
+                  try
+                  {
+                     if (File.Exists(batchServiceConfig))
+                     {
+                        XmlDocument doc = new XmlDocument();
+                        doc.Load(batchServiceConfig);
+                        XmlNode node = doc.SelectSingleNode("/configuration/appSettings/add[@key='ServiceName']");
+                        if (node != null)
+                        {
+                           string value = node.ReadString("value");
+                           string expected = $"QCS Batch Executor {env.Name}";
+                           if (!value.Equals(expected))
+                              retval.Errors.AddWarning($"QCS Batch Executor service name expected '{expected}' but found '{value}'");
+                        }
+                        else
+                           retval.Errors.AddError($"Service Name was not found in batch executor's config file ({batchServiceConfig})");
+
+                        // add file to Other Files
+                        retval.OtherFiles.Add(new QEnvironment.OtherFile() { Name = Path.GetFileName(batchServiceConfig), Path = batchServiceConfig });
+                     }
+                     else
+                        retval.Errors.AddError($"Batch executor config file not found ({batchServiceConfig})");
+                  }
+                  catch (Exception ex)
+                  {
+                     retval.Errors.AddError($"Error while accessing Batch Executor's config file ({ex.Message})");
+                  }
+                  #endregion
+
+                  #region check EODExecutorService.exe.config
+                  string eodServiceConfig = $"{retval.EodWinServiceUNC}\\EODExecutorService.exe.config";
+                  try
+                  {
+                     if (File.Exists(batchServiceConfig))
+                     {
+                        XmlDocument doc = new XmlDocument();
+                        doc.Load(eodServiceConfig);
+                        XmlNode node = doc.SelectSingleNode("/configuration/appSettings/add[@key='ServiceName']");
+                        if (node != null)
+                        {
+                           string value = node.ReadString("value");
+                           string expected = $"QCS EOD Executor {env.Name}";
+                           if (!value.Equals(expected))
+                              retval.Errors.AddWarning($"QCS EOD Executor service name expected '{expected}' but found '{value}'");
+                        }
+                        else
+                           retval.Errors.AddError($"Service Name was not found in EOD executor's config file ({eodServiceConfig})");
+
+                        // add file to Other Files
+                        retval.OtherFiles.Add(new QEnvironment.OtherFile() { Name = Path.GetFileName(eodServiceConfig), Path = eodServiceConfig });
+                     }
+                     else
+                        retval.Errors.AddError($"EOD executor config file not found ({eodServiceConfig})");
+
+
+                  }
+                  catch (Exception ex)
+                  {
+                     retval.Errors.AddError($"Error while accessing EOD Executor's config file ({ex.Message})");
+                  }
+                  #endregion
+
+                  #region check cmd_commands.txt
+                  string cmdFile = Path.Combine(retval.WinServicesUNC, "cmd_commands.txt");
+                  if (File.Exists(cmdFile))
+                  {
+
+                     string content = File.ReadAllText(cmdFile).ToLower();
+                     string uninstallBatch = $"\"{retval.WinServicesPath}\\Uninstall_Service.bat\" \"{retval.BatchWinServicePath}\"";
+                     string uninstallEod = $"\"{retval.WinServicesPath}\\Uninstall_Service.bat\" \"{retval.EodWinServicePath}\"";
+
+                     string installBatch = $"\"{retval.WinServicesPath}\\Install_Service.bat\" \"{retval.BatchWinServicePath}\"";
+                     string installEod = $"\"{retval.WinServicesPath}\\Install_Service.bat\" \"{retval.EodWinServicePath}\"";
+
+                     if (!content.Contains(uninstallBatch.ToLower())) retval.Errors.AddError($"Wrong uninstall Batch Service command in ({cmdFile}). Expected:{uninstallBatch}");
+                     if (!content.Contains(uninstallEod.ToLower())) retval.Errors.AddError($"Wrong uninstall EOD Service command in ({cmdFile}). Expected:{uninstallEod}");
+                     if (!content.Contains(installBatch.ToLower())) retval.Errors.AddError($"Wrong install Batch Service command in ({cmdFile}). Expected:{installBatch}");
+                     if (!content.Contains(installEod.ToLower())) retval.Errors.AddError($"Wrong install EOD Service command in ({cmdFile}). Expected:{installEod}");
+
+
+                     // add file to Other Files
+                     retval.OtherFiles.Add(new QEnvironment.OtherFile() { Name = Path.GetFileName(cmdFile), Path = cmdFile });
+                  }
+                  else
+                  {
+                     retval.Errors.AddError($"File not found: {cmdFile}");
+                  }
+                  #endregion
+
+                  #region check existence of Install_Service.bat & Uninstall_Service.bat
+                  string installServiceFile = Path.Combine(retval.WinServicesUNC, "Install_Service.bat");
+                  if (!File.Exists(installServiceFile)) retval.Errors.AddError($"File not found \"{installServiceFile}\"");
+                  string uninstallServiceFile = Path.Combine(retval.WinServicesUNC, "Uninstall_Service.bat");
+                  if (!File.Exists(uninstallServiceFile)) retval.Errors.AddError($"File not found \"{uninstallServiceFile}\"");
+
+                  #endregion
+
+                  #region check subfolders of system folder
+                  CheckFolderExistence(Path.Combine(env.SystemFolder, "ApplicationUpdate"), retval);
+                  
+                  #endregion
+
                   retval.CheckoutPath = env.CheckoutPath;
                   retval.ProteusCheckoutPath = env.ProteusCheckoutPath;
                   retval.DBCollectionPlusServer = env.DBCollectionPlusServer;
@@ -495,7 +611,7 @@ namespace QToolbar.Plugins.Environments
                   retval.AppWSUrl = env.AppWSUrl;
                   retval.QBCAdminCfPath = env.QBCAdminCfPath;
 
-                  // validate cfs
+                  #region Validate cfs
                   CfValidator cfValidator = new CfValidator();
 
                   List<string> keys = adminCf.GetKeys(retval.DBCollectionPlusServer, retval.DBCollectionPlusName);
@@ -507,6 +623,7 @@ namespace QToolbar.Plugins.Environments
                   {
                      retval.Errors.AddRange(cfValidator.Validate(cfInfo.Path, keys));
                   }
+                  #endregion
 
                   if (cancelToken.IsCancellationRequested)
                   {
@@ -536,11 +653,12 @@ namespace QToolbar.Plugins.Environments
 
                env.QCSystemSharedDirs.AddRange(val.QCSystemSharedDirs);
                env.CFs.AddRange(val.CFs);
-               env.BatchExecutorWinServicePath = val.BatchExecutorWinServicePath;
-               env.EodExecutorWinServicePath = val.EodExecutorWinServicePath;
-               env.WinServicesDir = val.WinServicesDir;
+               env.BatchWinServiceUNC = val.BatchWinServiceUNC;
+               env.EodWinServiceUNC = val.EodWinServiceUNC;
+               env.WinServicesUNC = val.WinServicesUNC;
                env.Errors.AddRange(val.Errors);
-
+               env.OtherFiles.AddRange(val.OtherFiles);
+               env.SystemFolder = val.SystemFolder;
                //return val;
 
                OnInfoCollected(new EnvInfoEventArgs(env));
@@ -548,17 +666,24 @@ namespace QToolbar.Plugins.Environments
          });
 
          // when all tasks are completed raise AllInfoCollected event
-         await Task.Factory.ContinueWhenAll(_Tasks.ToArray(), 
-            (z)=>
+         await Task.Factory.ContinueWhenAll(_Tasks.ToArray(),
+            (z) =>
             {
                AllInfoCollected(this, new EventArgs());
             });
       }
 
+      private void CheckFolderExistence(string path, QEnvironment env)
+      {
+         if(!Directory.Exists(path))
+         {
+            env.Errors.AddError($"Folder not found \"{path}\"");
+         }
+      }
 
       private void OnInfoCollected(EnvInfoEventArgs args)
       {
-         if(InfoCollected!=null)
+         if (InfoCollected != null)
          {
             InfoCollected(this, args);
          }
@@ -589,6 +714,7 @@ namespace QToolbar.Plugins.Environments
             proteusCheckoutPath = item.ProteusCheckoutPath;
 
             item.Clear();
+            item.Name = envName;
 
             AddOrUpdate(envName, cf, checkoutPath, proteusCheckoutPath);
             Debug.WriteLine(envName);

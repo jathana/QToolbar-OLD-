@@ -58,6 +58,41 @@ namespace QToolbar.Plugins.Environments
          #endregion
       }
 
+      public class OtherFile
+      {
+         #region fields
+         private string _Name;
+         private string _Path;
+         #endregion
+
+         #region properties
+         public string Name
+         {
+            get
+            {
+               return _Name;
+            }
+
+            set
+            {
+               _Name = value;
+            }
+         }
+         public string Path
+         {
+            get
+            {
+               return _Path;
+            }
+
+            set
+            {
+               _Path = value;
+            }
+         }
+         #endregion
+      }
+
       public class SharedDir
       {
          #region fields
@@ -147,18 +182,23 @@ namespace QToolbar.Plugins.Environments
       private string _DBCollectionPlusName = string.Empty;
       private string _ToolkitWSUrl = string.Empty;
       private string _AppWSUrl = string.Empty;
-      private string _BatchExecutorWinServicePath = string.Empty;
-      private string _EodExecutorWinServicePath = string.Empty;
-      private string _WinServicesDir = string.Empty;
+      private string _BatchWinServiceUNC = string.Empty;
+      private string _BatchWinServicePath = string.Empty;
+      private string _EodWinServiceUNC = string.Empty;
+      private string _EodWinServicePath = string.Empty;
+      private string _WinServicesUNC = string.Empty;
+      private string _WinServicesPath = string.Empty;
       private string _GLMDir = string.Empty;
       private string _GLMDirPermissions = string.Empty;
       private string _GLMLocalDir = string.Empty;
       private string _GLMLogDir = string.Empty;
       private string _GLMLogDirPermissions = string.Empty;
       private string _GLMLocalLogDir = string.Empty;
+      private string _SystemFolder = string.Empty;
       private List<SharedDir> _QCSystemSharedDirs = new List<SharedDir>();
       private List<CfInfo> _CFs= new List<CfInfo>();
       private Errors _Errors = new Errors();
+      private List<OtherFile> _OtherFiles = new List<OtherFile>();
 
       #endregion
 
@@ -284,40 +324,40 @@ namespace QToolbar.Plugins.Environments
             _AppWSUrl = value;
          }
       }
-      public string BatchExecutorWinServicePath
+      public string BatchWinServiceUNC
       {
          get
          {
-            return _BatchExecutorWinServicePath;
+            return _BatchWinServiceUNC;
          }
 
          set
          {
-            _BatchExecutorWinServicePath = value;
+            _BatchWinServiceUNC = value;
          }
       }
-      public string EodExecutorWinServicePath
+      public string EodWinServiceUNC
       {
          get
          {
-            return _EodExecutorWinServicePath;
+            return _EodWinServiceUNC;
          }
 
          set
          {
-            _EodExecutorWinServicePath = value;
+            _EodWinServiceUNC = value;
          }
       }
-      public string WinServicesDir
+      public string WinServicesUNC
       {
          get
          {
-            return _WinServicesDir;
+            return _WinServicesUNC;
          }
 
          set
          {
-            _WinServicesDir = value;
+            _WinServicesUNC = value;
          }
       }
       public string GLMDir
@@ -409,8 +449,56 @@ namespace QToolbar.Plugins.Environments
             return _CFs;
          }
       }
-
       
+      public string BatchWinServicePath
+      {
+         get
+         {
+            return _BatchWinServicePath;
+         }
+
+         set
+         {
+            _BatchWinServicePath = value;
+         }
+      }
+
+      public string EodWinServicePath
+      {
+         get
+         {
+            return _EodWinServicePath;
+         }
+
+         set
+         {
+            _EodWinServicePath = value;
+         }
+      }
+
+      public string WinServicesPath
+      {
+         get
+         {
+            return _WinServicesPath;
+         }
+
+         set
+         {
+            _WinServicesPath = value;
+         }
+      }
+
+      public List<OtherFile> OtherFiles
+      {
+         get
+         {
+            return _OtherFiles;
+         }
+      }
+
+
+      // keep error as the last collection 
       public Errors Errors
       {
          get
@@ -419,7 +507,18 @@ namespace QToolbar.Plugins.Environments
          }
       }
 
+      public string SystemFolder
+      {
+         get
+         {
+            return _SystemFolder;
+         }
 
+         set
+         {
+            _SystemFolder = value;
+         }
+      }
 
 
 
@@ -434,6 +533,7 @@ namespace QToolbar.Plugins.Environments
       #region methods
       public void Clear()
       {
+         _Name = string.Empty;
          _Status = string.Empty;
          _CheckoutPath = string.Empty;
          _ProteusCheckoutPath = string.Empty;
@@ -443,9 +543,9 @@ namespace QToolbar.Plugins.Environments
          _DBCollectionPlusName = string.Empty;
          _ToolkitWSUrl = string.Empty;
          _AppWSUrl = string.Empty;
-         _BatchExecutorWinServicePath = string.Empty;
-         _EodExecutorWinServicePath = string.Empty;
-         _WinServicesDir = string.Empty;
+         _BatchWinServiceUNC = string.Empty;
+         _EodWinServiceUNC = string.Empty;
+         _WinServicesUNC = string.Empty;
          _GLMDir = string.Empty;
          _GLMDirPermissions = string.Empty;
          _GLMLocalDir = string.Empty;
@@ -456,6 +556,7 @@ namespace QToolbar.Plugins.Environments
          _CFs.Clear();
          _Errors.Clear();
          _QCSystemSharedDirs.Clear();
+         _OtherFiles.Clear();
       }
 
       #endregion

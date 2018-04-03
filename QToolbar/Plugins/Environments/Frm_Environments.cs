@@ -102,7 +102,7 @@ namespace QToolbar.Plugins.Environments
       public void CreateEnvironmentsMenuItems()
       {
          mnuEnvironments.ClearLinks();
-         BarButtonItem mniClearAll = new BarButtonItem(null, "Clear All",1);
+         BarButtonItem mniClearAll = new BarButtonItem(null, "Clear List", 1);
          mniClearAll.ItemClick += MniClearAll_ItemClick;
          mnuEnvironments.AddItem(mniClearAll);
          // load custom folders
@@ -213,8 +213,8 @@ namespace QToolbar.Plugins.Environments
                   break;
                case "Checkout Path":
                case "Proteus Checkout Path":
-               case "Batch Executor Win Service Path":
-               case "Eod Executor Win Service Path":
+               case "Batch Executor Win Service UNC":
+               case "Eod Executor Win Service UNC":
                case "Win Services Dir":
                case "GLM Dir":
                case "GLM Log Dir":

@@ -172,7 +172,7 @@ namespace QToolbar
                   grid.Dock = i == 0 ? grid.Dock = DockStyle.Fill : grid.Dock = DockStyle.Top;
                   
                   grid.DataSource = ds.Tables[ds.Tables.Count - 1 - i];
-                  //((GridView)grid.DefaultView).BestFitColumns();
+                  ((GridView)grid.DefaultView).BestFitColumns();
 
                   // add splitter
                   if (i < ds.Tables.Count - 1)
