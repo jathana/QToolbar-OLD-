@@ -18,6 +18,7 @@ using QToolbar.Options;
 using QToolbar.Tools;
 using QToolbar.Buttons;
 using QToolbar.Plugins.Environments;
+using System.Threading;
 
 namespace QToolbar
 {
@@ -41,6 +42,7 @@ namespace QToolbar
       private ClearMetadataButton _ClearMetadataButton;
       private DesignersLocalButton _DesignersLocalButton;
       private PluginsButton _PluginsButton;
+      private SynchronizationContext _SyncContext;
       #endregion
 
       private Blue.Windows.StickyWindow stickyWindow;
@@ -48,6 +50,8 @@ namespace QToolbar
       {
          stickyWindow = new Blue.Windows.StickyWindow(this);
          InitializeComponent();
+
+         _SyncContext = SynchronizationContext.Current;
       }
 
       private void btnOptions_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -82,9 +86,9 @@ namespace QToolbar
 
       private void CreateMenuItems()
       {
+         Text = "QToolbar (Loading...)";
          Task.Run(() =>
          {
-            //Cursor = Cursors.WaitCursor;
             _DatabaseScripterButton.CreateMenuItems();
             _DesignersButton.CreateMenuItems();
             _EnvironmentsConfigurationButton.CreateMenuItems();
@@ -100,7 +104,13 @@ namespace QToolbar
             _ShellCommandsButton.CreateMenuItems();
             _DesignersLocalButton.CreateMenuItems();
             _PluginsButton.CreateMenuItems();
-            //Cursor = Cursors.Default;
+         }).ContinueWith((x) =>
+         {
+            _SyncContext.Post((input) =>
+            {
+
+               Text = "QToolbar (Ready)";
+            }, null);
          });
       }
 

@@ -139,10 +139,9 @@ namespace QToolbar.Plugins.Environments
 
             CancellationToken cancelToken = tokenSource.Token;
 
-            //QEnvironment retval = new QEnvironment();
-
             CfFile adminCf = new CfFile(env.QBCAdminCfPath);
 
+            List<string> eodFlows = new List<string>();
 
             if (!cancelToken.IsCancellationRequested)
             {
@@ -334,6 +333,39 @@ namespace QToolbar.Plugins.Environments
                         catch (Exception ex)
                         {
                            objEnv.Errors.AddError($"Error while fetching shared dirs information ({ex.Message})");
+                        }
+                     }
+                     #endregion
+
+                     #region get flows for eod.ini
+
+                     if (!cancelToken.IsCancellationRequested)
+                     {
+
+                        try
+                        {
+                           com.CommandText =  @"declare @prefix nvarchar(10)
+                                                select @prefix=INST.INST_PREFIX 
+                                                from Enterprises ENT 
+                                                INNER JOIN AT_INSTALLATIONS INST ON ENT.INST_CODE=INST.INST_CODE
+
+                                                SELECT EOFC_FLOW_NAME
+                                                FROM Man_ClientFlows(@prefix)
+                                                WHERE EOFC_ACTIVE = 1 ORDER BY FLOW_ORDERING 
+                                                ";
+                           SqlDataAdapter adapter = new SqlDataAdapter(com);
+                           DataTable table = new DataTable();
+                           adapter.Fill(table);
+                           StringBuilder builder = new StringBuilder();
+                           StringBuilder locbuilder = new StringBuilder();
+                           foreach (DataRow row in table.Rows)
+                           {
+                              eodFlows.Add(row["EOFC_FLOW_NAME"].ToString());
+                           }
+                        }
+                        catch (Exception ex)
+                        {
+                           objEnv.Errors.AddError($"Error while fetching flows for eod.ini ({ex.Message})");
                         }
                      }
                      #endregion
@@ -604,33 +636,68 @@ namespace QToolbar.Plugins.Environments
                   string applicationUpdateDir = Path.Combine(objEnv.SystemFolder, "ApplicationUpdate");
                   string[] eodExecutorDirs = Directory.GetDirectories(objEnv.SystemFolder, "EOD*Executor");
                   string eodExecutorDir = string.Empty;
+                  string eodExecutorEodIniFile = string.Empty;
                   if(eodExecutorDirs.Length == 1)
                   {
                      eodExecutorDir = eodExecutorDirs[0];
-                     string eodIniFile = Path.Combine(eodExecutorDir, "eod.ini");
-                     if (File.Exists(eodIniFile))
+                     eodExecutorEodIniFile = Path.Combine(eodExecutorDir, "eod.ini");
+                     if (File.Exists(eodExecutorEodIniFile))
                      {
-                        objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = "EOD Executor eod.ini", Path = eodIniFile });
+                        objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = "EOD Executor eod.ini", Path = eodExecutorEodIniFile });
                      }
                      else
-                        objEnv.Errors.AddError($"File not found \"{eodIniFile}\"");
+                        objEnv.Errors.AddError($"File not found \"{eodExecutorEodIniFile}\"");
                   }
                   else
                      objEnv.Errors.AddError($"Dir not found \"{objEnv.SystemFolder}\\EOD*Executor\"");
 
-                  string applicationUpdateIniFile = Path.Combine(applicationUpdateDir, "eod.ini");
-                  if(File.Exists(applicationUpdateIniFile))
+                  string applicationUpdateEodIniFile = Path.Combine(applicationUpdateDir, "eod.ini");
+                  if(File.Exists(applicationUpdateEodIniFile))
                   {
-                     objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = "Application Update eod.ini", Path = applicationUpdateIniFile });
+                     objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = "Application Update eod.ini", Path = applicationUpdateEodIniFile });
                   }
                   else
-                     objEnv.Errors.AddError($"File not found \"{applicationUpdateIniFile}\"");
+                     objEnv.Errors.AddError($"File not found \"{applicationUpdateEodIniFile}\"");
 
                   CheckFolderExistence(applicationUpdateDir, objEnv);
                   CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Attachments"), objEnv);
                   CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Exports"), objEnv);
                   CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "ExternalAgencies"), objEnv);
                   CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Templates"), objEnv);
+                  #endregion
+
+                  #region check eod.ini if out of date
+                  try
+                  {
+                     string eodIniFileText = File.ReadAllText(eodExecutorEodIniFile);
+                     foreach(string name in eodFlows)
+                     {
+                        if(!eodIniFileText.Contains(name))
+                        {
+                           objEnv.Errors.AddError($"eod.ini out of date, flow \"{name}\" is missing (\"{eodExecutorEodIniFile}\"))");
+                        }
+                     }
+                  }
+                  catch(Exception ex)
+                  {
+                     objEnv.Errors.AddError($"Error while reading \"{eodExecutorEodIniFile}\" ({ex.Message})");
+                  }
+                  try
+                  {
+                     string applicationUpdateEodIniFileText = File.ReadAllText(applicationUpdateEodIniFile);
+                     foreach (string name in eodFlows)
+                     {
+                        if (!applicationUpdateEodIniFileText.Contains(name))
+                        {
+                           objEnv.Errors.AddError($"eod.ini out of date, flow \"{name}\" is missing (\"{applicationUpdateEodIniFile}\"))");
+                        }
+                     }
+                  }
+                  catch (Exception ex)
+                  {
+                     objEnv.Errors.AddError($"Error while reading \"{applicationUpdateEodIniFile}\" ({ex.Message})");
+                  }
+
                   #endregion
 
                   #region Validate cfs
