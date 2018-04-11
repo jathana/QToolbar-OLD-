@@ -86,11 +86,11 @@ namespace QToolbar.Plugins.Environments
 
          if (string.IsNullOrEmpty(checkoutPath))
          {
-            envObj.Errors.AddError($"Checkout path is empty.");
+            envObj.Errors.AddError($"Checkout path is empty.","");
          }
          if (string.IsNullOrEmpty(proteusCheckoutPath))
          {
-            envObj.Errors.AddWarning($"Proteus checkout path is empty.");
+            envObj.Errors.AddWarning($"Proteus checkout path is empty.","");
          }
          // read ApplicationWSURL from OptionsInstance.QCSAdminFolder Folder if it is not in local qbc_admin.cf
          if (string.IsNullOrEmpty(envObj.AppWSUrl))
@@ -98,7 +98,7 @@ namespace QToolbar.Plugins.Environments
             string remoteQBCAdminCf = GetRemoteQBCAdminFile(Path.GetFileName(envObj.CheckoutPath));
             envObj.AppWSUrl = IniFile2.ReadValue("General", "ApplicationWSURL", remoteQBCAdminCf);
             if (!string.IsNullOrEmpty(envObj.AppWSUrl))
-               envObj.Errors.AddWarning($"ApplicationWSURL was not found in local file ({envObj.QBCAdminCfPath}).Read from remote ({remoteQBCAdminCf}).");
+               envObj.Errors.AddWarning($"ApplicationWSURL was not found in local file ({envObj.QBCAdminCfPath}).Read from remote ({remoteQBCAdminCf}).", envObj.QBCAdminCfPath);
          }
          // read ToolkitWSURL from OptionsInstance.QCSAdminFolder Folder if it is not in local qbc_admin.cf
          if (string.IsNullOrEmpty(envObj.ToolkitWSUrl))
@@ -106,7 +106,7 @@ namespace QToolbar.Plugins.Environments
             string remoteQBCAdminCf = GetRemoteQBCAdminFile(Path.GetFileName(envObj.CheckoutPath));
             envObj.ToolkitWSUrl = IniFile2.ReadValue("General", "ToolkitWSURL", remoteQBCAdminCf);
             if (!string.IsNullOrEmpty(envObj.ToolkitWSUrl))
-               envObj.Errors.AddWarning($"ToolkitWSURL was not found in local file ({envObj.QBCAdminCfPath}).Read from remote ({remoteQBCAdminCf}).");
+               envObj.Errors.AddWarning($"ToolkitWSURL was not found in local file ({envObj.QBCAdminCfPath}).Read from remote ({remoteQBCAdminCf}).", envObj.QBCAdminCfPath);
          }
          if (adding)
          {
@@ -166,7 +166,7 @@ namespace QToolbar.Plugins.Environments
                         }
                         catch (Exception ex)
                         {
-                           objEnv.Errors.AddError($"Error while fetching version information ({ex.Message})");
+                           objEnv.Errors.AddError($"Error while fetching version information ({ex.Message})","");
                         }
                         // fix AppWSUrl,ToolkitWSUrl for current
                         // read ApplicationWSURL from OptionsInstance.QCSAdminFolder Folder if it is not in local qbc_admin.cf
@@ -174,14 +174,14 @@ namespace QToolbar.Plugins.Environments
                         {
                            string remoteQBCAdminCf = GetRemoteQBCAdminFile(Path.GetFileName(objEnv.DBCollectionPlusVersion));
                            env.AppWSUrl = IniFile2.ReadValue("General", "ApplicationWSURL", remoteQBCAdminCf);
-                           env.Errors.AddWarning($"ApplicationWSURL was not found in local file ({env.QBCAdminCfPath}).Read from remote ({remoteQBCAdminCf}).");
+                           env.Errors.AddWarning($"ApplicationWSURL was not found in local file ({env.QBCAdminCfPath}).Read from remote ({remoteQBCAdminCf}).", env.QBCAdminCfPath);
                         }
                         // read ToolkitWSURL from OptionsInstance.QCSAdminFolder Folder if it is not in local qbc_admin.cf
                         if (string.IsNullOrEmpty(env.ToolkitWSUrl))
                         {
                            string remoteQBCAdminCf = GetRemoteQBCAdminFile(Path.GetFileName(objEnv.DBCollectionPlusVersion));
                            env.ToolkitWSUrl = IniFile2.ReadValue("General", "ToolkitWSURL", remoteQBCAdminCf);
-                           env.Errors.AddWarning($"ToolkitWSURL was not found in local file ({env.QBCAdminCfPath}).Read from remote ({remoteQBCAdminCf}).");
+                           env.Errors.AddWarning($"ToolkitWSURL was not found in local file ({env.QBCAdminCfPath}).Read from remote ({remoteQBCAdminCf}).", env.QBCAdminCfPath);
                         }
                      }
                      #endregion
@@ -203,15 +203,15 @@ namespace QToolbar.Plugins.Environments
                            objEnv.GLMDirPermissions = Utils.GetPermissionsDesc(permissions);
                            if (!string.IsNullOrEmpty(glmDir) && permissions != Utils.FILE_PERMISSION_FULL_ACCESS)
                            {
-                              objEnv.Errors.AddError($"Full Access permission is required for GLM dir {glmDir}");
+                              objEnv.Errors.AddError($"Full Access permission is required for GLM dir {glmDir}", glmDir);
                            }
                            if (unresolved)
                            {
-                              objEnv.Errors.AddError($"Unresolved GLM dir.");
+                              objEnv.Errors.AddError($"Unresolved GLM dir.","");
                            }
                            if (string.IsNullOrEmpty(glmDir))
                            {
-                              objEnv.Errors.AddError($"GLM dir is empty.");
+                              objEnv.Errors.AddError($"GLM dir is empty.","");
                            }
 
                            QEnvironment.SharedDir objGlmDir = new QEnvironment.SharedDir()
@@ -227,7 +227,7 @@ namespace QToolbar.Plugins.Environments
                         }
                         catch (Exception ex)
                         {
-                           objEnv.Errors.AddError($"Error while fetching glm information ({ex.Message})");
+                           objEnv.Errors.AddError($"Error while fetching glm information ({ex.Message})","");
                         }
                      }
                      #endregion
@@ -249,15 +249,15 @@ namespace QToolbar.Plugins.Environments
                            objEnv.GLMLogDirPermissions = Utils.GetPermissionsDesc(permissions);
                            if (!string.IsNullOrEmpty(glmLogDir) && permissions != Utils.FILE_PERMISSION_FULL_ACCESS)
                            {
-                              objEnv.Errors.AddError($"Full Access permission is required for GLM Log dir {glmLogDir}");
+                              objEnv.Errors.AddError($"Full Access permission is required for GLM Log dir {glmLogDir}", glmLogDir);
                            }
                            if (unresolved)
                            {
-                              objEnv.Errors.AddError($"Unresolved GLM Log dir.");
+                              objEnv.Errors.AddError($"Unresolved GLM Log dir.","");
                            }
                            if (string.IsNullOrEmpty(glmLogDir))
                            {
-                              objEnv.Errors.AddError($"Empty GLM Log dir");
+                              objEnv.Errors.AddError($"Empty GLM Log dir","");
                            }
 
                            QEnvironment.SharedDir objGlmLogDir = new QEnvironment.SharedDir()
@@ -271,7 +271,7 @@ namespace QToolbar.Plugins.Environments
                         }
                         catch (Exception ex)
                         {
-                           objEnv.Errors.AddError($"Error while fetching glm log information ({ex.Message})");
+                           objEnv.Errors.AddError($"Error while fetching glm log information ({ex.Message})","");
                         }
                      }
                      #endregion
@@ -311,11 +311,11 @@ namespace QToolbar.Plugins.Environments
                               
                               if (permissions != Utils.FILE_PERMISSION_FULL_ACCESS)
                               {
-                                 objEnv.Errors.AddError($"Full Access permission is required {sharedDir.UNC}");
+                                 objEnv.Errors.AddError($"Full Access permission is required {sharedDir.UNC}", sharedDir.UNC);
                               }
                               if (unresolved)
                               {
-                                 objEnv.Errors.AddError($"Unresolved dir {sharedDir.Description} : {sharedDir.UNC}.");
+                                 objEnv.Errors.AddError($"Unresolved dir {sharedDir.Description} : {sharedDir.UNC}.", sharedDir.UNC);
                               }
                               else
                               {
@@ -326,13 +326,13 @@ namespace QToolbar.Plugins.Environments
                               }
                               if (string.IsNullOrEmpty(sharedDir.UNC))
                               {
-                                 objEnv.Errors.AddError($"Empty dir {sharedDir.Description} ");
+                                 objEnv.Errors.AddError($"Empty dir {sharedDir.Description} ", "");
                               }
                            }
                         }
                         catch (Exception ex)
                         {
-                           objEnv.Errors.AddError($"Error while fetching shared dirs information ({ex.Message})");
+                           objEnv.Errors.AddError($"Error while fetching shared dirs information ({ex.Message})", "");
                         }
                      }
                      #endregion
@@ -365,7 +365,7 @@ namespace QToolbar.Plugins.Environments
                         }
                         catch (Exception ex)
                         {
-                           objEnv.Errors.AddError($"Error while fetching flows for eod.ini ({ex.Message})");
+                           objEnv.Errors.AddError($"Error while fetching flows for eod.ini ({ex.Message})", "");
                         }
                      }
                      #endregion
@@ -373,7 +373,7 @@ namespace QToolbar.Plugins.Environments
                   }
                   catch (Exception ex)
                   {
-                     objEnv.Errors.AddError($"Generic Error ({ex.Message})");
+                     objEnv.Errors.AddError($"Generic Error ({ex.Message})", "");
                   }
                   finally
                   {
@@ -407,7 +407,7 @@ namespace QToolbar.Plugins.Environments
                      }
                      catch (Exception ex)
                      {
-                        objEnv.Errors.AddError($"Error getting local cfs information ({ex.Message})");
+                        objEnv.Errors.AddError($"Error getting local cfs information ({ex.Message})", "");
                      }
                   }
                   #endregion
@@ -463,7 +463,7 @@ namespace QToolbar.Plugins.Environments
                      }
                      catch (Exception ex)
                      {
-                        objEnv.Errors.AddError($"Error while fetching web server's cf information ({ex.Message})");
+                        objEnv.Errors.AddError($"Error while fetching web server's cf information ({ex.Message})", "");
                      }
                   }
                   #endregion
@@ -523,12 +523,12 @@ namespace QToolbar.Plugins.Environments
                         }
                         else
                         {
-                           objEnv.Errors.AddError($"Environment not found (file:{envConfFile})");
+                           objEnv.Errors.AddError($"Environment not found (file:{envConfFile})", envConfFile);
                         }
                      }
                      catch (Exception ex)
                      {
-                        objEnv.Errors.AddError($"Error while fetching Batch Executor's & EOD Executor's  cf information ({ex.Message})");
+                        objEnv.Errors.AddError($"Error while fetching Batch Executor's & EOD Executor's  cf information ({ex.Message})", "");
                      }
                   }
                   #endregion
@@ -547,20 +547,20 @@ namespace QToolbar.Plugins.Environments
                            string value = node.ReadString("value");
                            string expected = $"QCS Batch Executor {env.Name}";
                            if (!value.Equals(expected))
-                              objEnv.Errors.AddWarning($"QCS Batch Executor service name expected '{expected}' but found '{value}'");
+                              objEnv.Errors.AddWarning($"QCS Batch Executor service name expected '{expected}' but found '{value}'", batchServiceConfig);
                         }
                         else
-                           objEnv.Errors.AddError($"Service Name was not found in batch executor's config file ({batchServiceConfig})");
+                           objEnv.Errors.AddError($"Service Name was not found in batch executor's config file ({batchServiceConfig})", batchServiceConfig);
 
                         // add file to Other Files
                         objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = Path.GetFileName(batchServiceConfig), Path = batchServiceConfig });
                      }
                      else
-                        objEnv.Errors.AddError($"Batch executor config file not found ({batchServiceConfig})");
+                        objEnv.Errors.AddError($"Batch executor config file not found ({batchServiceConfig})", batchServiceConfig);
                   }
                   catch (Exception ex)
                   {
-                     objEnv.Errors.AddError($"Error while accessing Batch Executor's config file ({ex.Message})");
+                     objEnv.Errors.AddError($"Error while accessing Batch Executor's config file ({ex.Message})","");
                   }
                   #endregion
 
@@ -578,22 +578,22 @@ namespace QToolbar.Plugins.Environments
                            string value = node.ReadString("value");
                            string expected = $"QCS EOD Executor {env.Name}";
                            if (!value.Equals(expected))
-                              objEnv.Errors.AddWarning($"QCS EOD Executor service name expected '{expected}' but found '{value}'");
+                              objEnv.Errors.AddWarning($"QCS EOD Executor service name expected '{expected}' but found '{value}'", eodServiceConfig);
                         }
                         else
-                           objEnv.Errors.AddError($"Service Name was not found in EOD executor's config file ({eodServiceConfig})");
+                           objEnv.Errors.AddError($"Service Name was not found in EOD executor's config file ({eodServiceConfig})", eodServiceConfig);
 
                         // add file to Other Files
                         objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = Path.GetFileName(eodServiceConfig), Path = eodServiceConfig });
                      }
                      else
-                        objEnv.Errors.AddError($"EOD executor config file not found ({eodServiceConfig})");
+                        objEnv.Errors.AddError($"EOD executor config file not found ({eodServiceConfig})", eodServiceConfig);
 
 
                   }
                   catch (Exception ex)
                   {
-                     objEnv.Errors.AddError($"Error while accessing EOD Executor's config file ({ex.Message})");
+                     objEnv.Errors.AddError($"Error while accessing EOD Executor's config file ({ex.Message})", "");
                   }
                   #endregion
 
@@ -609,10 +609,10 @@ namespace QToolbar.Plugins.Environments
                      string installBatch = $"\"{objEnv.WinServicesPath}\\Install_Service.bat\" \"{objEnv.BatchWinServicePath}\"";
                      string installEod = $"\"{objEnv.WinServicesPath}\\Install_Service.bat\" \"{objEnv.EodWinServicePath}\"";
 
-                     if (!content.Contains(uninstallBatch.ToLower())) objEnv.Errors.AddError($"Wrong uninstall Batch Service command in ({cmdFile}). Expected:{uninstallBatch}");
-                     if (!content.Contains(uninstallEod.ToLower())) objEnv.Errors.AddError($"Wrong uninstall EOD Service command in ({cmdFile}). Expected:{uninstallEod}");
-                     if (!content.Contains(installBatch.ToLower())) objEnv.Errors.AddError($"Wrong install Batch Service command in ({cmdFile}). Expected:{installBatch}");
-                     if (!content.Contains(installEod.ToLower())) objEnv.Errors.AddError($"Wrong install EOD Service command in ({cmdFile}). Expected:{installEod}");
+                     if (!content.Contains(uninstallBatch.ToLower())) objEnv.Errors.AddError($"Wrong uninstall Batch Service command. Expected:{uninstallBatch}", cmdFile);
+                     if (!content.Contains(uninstallEod.ToLower())) objEnv.Errors.AddError($"Wrong uninstall EOD Service command. Expected:{uninstallEod}", cmdFile);
+                     if (!content.Contains(installBatch.ToLower())) objEnv.Errors.AddError($"Wrong install Batch Service command. Expected:{installBatch}", cmdFile);
+                     if (!content.Contains(installEod.ToLower())) objEnv.Errors.AddError($"Wrong install EOD Service command. Expected:{installEod}", cmdFile);
 
 
                      // add file to Other Files
@@ -620,15 +620,15 @@ namespace QToolbar.Plugins.Environments
                   }
                   else
                   {
-                     objEnv.Errors.AddError($"File not found: {cmdFile}");
+                     objEnv.Errors.AddError($"File not found: {cmdFile}", cmdFile);
                   }
                   #endregion
 
                   #region check existence of Install_Service.bat & Uninstall_Service.bat
                   string installServiceFile = Path.Combine(objEnv.WinServicesUNC, "Install_Service.bat");
-                  if (!File.Exists(installServiceFile)) objEnv.Errors.AddError($"File not found \"{installServiceFile}\"");
+                  if (!File.Exists(installServiceFile)) objEnv.Errors.AddError($"File not found \"{installServiceFile}\"", installServiceFile);
                   string uninstallServiceFile = Path.Combine(objEnv.WinServicesUNC, "Uninstall_Service.bat");
-                  if (!File.Exists(uninstallServiceFile)) objEnv.Errors.AddError($"File not found \"{uninstallServiceFile}\"");
+                  if (!File.Exists(uninstallServiceFile)) objEnv.Errors.AddError($"File not found \"{uninstallServiceFile}\"", uninstallServiceFile);
 
                   #endregion
 
@@ -646,10 +646,10 @@ namespace QToolbar.Plugins.Environments
                         objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = "EOD Executor eod.ini", Path = eodExecutorEodIniFile });
                      }
                      else
-                        objEnv.Errors.AddError($"File not found \"{eodExecutorEodIniFile}\"");
+                        objEnv.Errors.AddError($"File not found \"{eodExecutorEodIniFile}\"", eodExecutorEodIniFile);
                   }
                   else
-                     objEnv.Errors.AddError($"Dir not found \"{objEnv.SystemFolder}\\EOD*Executor\"");
+                     objEnv.Errors.AddError($"Dir not found \"{objEnv.SystemFolder}\\EOD*Executor\"", objEnv.SystemFolder);
 
                   string applicationUpdateEodIniFile = Path.Combine(applicationUpdateDir, "eod.ini");
                   if(File.Exists(applicationUpdateEodIniFile))
@@ -657,7 +657,7 @@ namespace QToolbar.Plugins.Environments
                      objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = "Application Update eod.ini", Path = applicationUpdateEodIniFile });
                   }
                   else
-                     objEnv.Errors.AddError($"File not found \"{applicationUpdateEodIniFile}\"");
+                     objEnv.Errors.AddError($"File not found \"{applicationUpdateEodIniFile}\"", applicationUpdateEodIniFile);
 
                   CheckFolderExistence(applicationUpdateDir, objEnv);
                   CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Attachments"), objEnv);
@@ -674,13 +674,13 @@ namespace QToolbar.Plugins.Environments
                      {
                         if(!eodIniFileText.Contains(name))
                         {
-                           objEnv.Errors.AddError($"eod.ini out of date, flow \"{name}\" is missing (\"{eodExecutorEodIniFile}\"))");
+                           objEnv.Errors.AddError($"eod.ini out of date, flow \"{name}\" is missing (\"{eodExecutorEodIniFile}\"))", eodExecutorEodIniFile);
                         }
                      }
                   }
                   catch(Exception ex)
                   {
-                     objEnv.Errors.AddError($"Error while reading \"{eodExecutorEodIniFile}\" ({ex.Message})");
+                     objEnv.Errors.AddError($"Error while reading \"{eodExecutorEodIniFile}\" ({ex.Message})", eodExecutorEodIniFile);
                   }
                   try
                   {
@@ -689,13 +689,13 @@ namespace QToolbar.Plugins.Environments
                      {
                         if (!applicationUpdateEodIniFileText.Contains(name))
                         {
-                           objEnv.Errors.AddError($"eod.ini out of date, flow \"{name}\" is missing (\"{applicationUpdateEodIniFile}\"))");
+                           objEnv.Errors.AddError($"eod.ini out of date, flow \"{name}\" is missing (\"{applicationUpdateEodIniFile}\"))", applicationUpdateEodIniFile);
                         }
                      }
                   }
                   catch (Exception ex)
                   {
-                     objEnv.Errors.AddError($"Error while reading \"{applicationUpdateEodIniFile}\" ({ex.Message})");
+                     objEnv.Errors.AddError($"Error while reading \"{applicationUpdateEodIniFile}\" ({ex.Message})", applicationUpdateEodIniFile);
                   }
 
                   #endregion
@@ -706,7 +706,7 @@ namespace QToolbar.Plugins.Environments
                   List<string> keys = adminCf.GetKeys(objEnv.DBCollectionPlusServer, objEnv.DBCollectionPlusName);
                   if (keys.Count == 0)
                   {
-                     objEnv.Errors.AddError($"Info not found {objEnv.DBCollectionPlusServer}.{objEnv.DBCollectionPlusName}");
+                     objEnv.Errors.AddError($"Info not found {objEnv.DBCollectionPlusServer}.{objEnv.DBCollectionPlusName}","");
                   }
                   foreach (QEnvironment.CfInfo cfInfo in objEnv.CFs)
                   {
@@ -746,7 +746,7 @@ namespace QToolbar.Plugins.Environments
       {
          if(!Directory.Exists(path))
          {
-            env.Errors.AddError($"Folder not found \"{path}\"");
+            env.Errors.AddError($"Folder not found \"{path}\"", path);
          }
       }
 
@@ -756,7 +756,7 @@ namespace QToolbar.Plugins.Environments
 
          if (subDirs.Length == 0)
          {
-            env.Errors.AddError($"Folder not found \"{path}\\{pattern}\"");
+            env.Errors.AddError($"Folder not found \"{path}\\{pattern}\"", path);
          }
       }
 

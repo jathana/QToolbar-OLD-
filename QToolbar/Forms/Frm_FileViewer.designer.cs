@@ -31,11 +31,11 @@ namespace QToolbar
         {
          this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_FileViewer));
-         DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
-         DevExpress.Utils.SuperToolTip superToolTip6 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem6 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+         DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
          this.menuStrip1 = new System.Windows.Forms.MenuStrip();
          this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -473,7 +473,7 @@ namespace QToolbar
          this.fctb.AutoIndentCharsPatterns = "^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\r\n^\\s*(case|default)\\s*[^:]*(" +
     "?<range>:)\\s*(?<range>[^;]+);";
          this.fctb.AutoIndentExistingLines = false;
-         this.fctb.AutoScrollMinSize = new System.Drawing.Size(284, 285);
+         this.fctb.AutoScrollMinSize = new System.Drawing.Size(254, 285);
          this.fctb.BackBrush = null;
          this.fctb.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.fctb.CharHeight = 15;
@@ -577,12 +577,12 @@ namespace QToolbar
          this.btnRefresh.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.ImageOptions.Image")));
          this.btnRefresh.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRefresh.ImageOptions.LargeImage")));
          this.btnRefresh.Name = "btnRefresh";
-         toolTipTitleItem5.Text = "Refresh";
-         toolTipItem3.LeftIndent = 6;
-         toolTipItem3.Text = "Reads file content.";
-         superToolTip5.Items.Add(toolTipTitleItem5);
-         superToolTip5.Items.Add(toolTipItem3);
-         this.btnRefresh.SuperTip = superToolTip5;
+         toolTipTitleItem1.Text = "Refresh";
+         toolTipItem1.LeftIndent = 6;
+         toolTipItem1.Text = "Reads file content.";
+         superToolTip1.Items.Add(toolTipTitleItem1);
+         superToolTip1.Items.Add(toolTipItem1);
+         this.btnRefresh.SuperTip = superToolTip1;
          this.btnRefresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRefresh_ItemClick);
          // 
          // btnOpenFileLocation
@@ -592,9 +592,9 @@ namespace QToolbar
          this.btnOpenFileLocation.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenFileLocation.ImageOptions.Image")));
          this.btnOpenFileLocation.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnOpenFileLocation.ImageOptions.LargeImage")));
          this.btnOpenFileLocation.Name = "btnOpenFileLocation";
-         toolTipTitleItem6.Text = "Open File Location";
-         superToolTip6.Items.Add(toolTipTitleItem6);
-         this.btnOpenFileLocation.SuperTip = superToolTip6;
+         toolTipTitleItem2.Text = "Open File Location";
+         superToolTip2.Items.Add(toolTipTitleItem2);
+         this.btnOpenFileLocation.SuperTip = superToolTip2;
          this.btnOpenFileLocation.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnOpenFileLocation_ItemClick);
          // 
          // btnEditFile

@@ -28,15 +28,15 @@ namespace QToolbar.Helpers
             {
                // check key existence in dbs
                if (dbs.Where(i => i.Item1 == key) == null)
-                  retVal.AddError($"Key {key} does not exist in [DatabaseName] section of {cfFile}");
+                  retVal.AddError($"Key {key} does not exist in [DatabaseName] section",cfFile );
 
                // check key existence in servers
                if (servers.Where(i => i.Item1 == key) == null)
-                  retVal.AddError($"Key {key} does not exist in [Servers] section of {cfFile}");
+                  retVal.AddError($"Key {key} does not exist in [Servers] section",cfFile);
 
                // check key existence in dbs
                if (pwds.Where(i => i.Item1 == key) == null)
-                  retVal.AddError($"Key {key} does not exist in [Passwords] section of {cfFile}");
+                  retVal.AddError($"Key {key} does not exist in [Passwords] section",cfFile);
             }
 
             Dictionary<string, int> info = new Dictionary<string, int>();
@@ -71,7 +71,7 @@ namespace QToolbar.Helpers
             var lst = info.Where(i => i.Value != 3);
             foreach (var item in lst)
             {
-               retVal.AddError($"file {cfFile} : {item.Key} found {item.Value} times instead of 3.");
+               retVal.AddError($"{item.Key} found {item.Value} times instead of 3.", cfFile);
             }
 
             // for each database check key and value
@@ -95,7 +95,7 @@ namespace QToolbar.Helpers
 
                if(!keyMatch.Equals(valueMatch))
                {
-                  retVal.AddWarning($"Check names : {item.Item1} vs {item.Item2} file {cfFile}");
+                  retVal.AddWarning($"Check database key \"{item.Item1}\" against db name \"{item.Item2}\"", cfFile);
                }
             }
          }

@@ -9,13 +9,13 @@ namespace QToolbar.Helpers
    public class Errors:List<Error>
    {
 
-      public void AddError(string msg)
+      public void AddError(string msg,string file)
       {
-         Add(new Error() { Message = msg, ErrorType = ErrorType.Error });
+         Add(new Error() { Message = msg, ErrorType = ErrorType.Error, Path = file });
       }
-      public void AddWarning(string msg)
+      public void AddWarning(string msg, string file)
       {
-         Add(new Error() { Message = msg, ErrorType = ErrorType.Warning });
+         Add(new Error() { Message = msg, ErrorType = ErrorType.Warning, Path = file });
       }
 
 

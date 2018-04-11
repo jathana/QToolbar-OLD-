@@ -39,12 +39,12 @@
          this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
          this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
          this.mnuEnvironments = new DevExpress.XtraBars.BarSubItem();
+         this.btnRefresh = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
          this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
          this.popupMenu2 = new DevExpress.XtraBars.PopupMenu(this.components);
-         this.btnRefresh = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.UXGrid)).BeginInit();
@@ -143,6 +143,15 @@
          this.mnuEnvironments.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuEnvironments.ImageOptions.LargeImage")));
          this.mnuEnvironments.Name = "mnuEnvironments";
          // 
+         // btnRefresh
+         // 
+         this.btnRefresh.Caption = "Refresh";
+         this.btnRefresh.Id = 13;
+         this.btnRefresh.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.ImageOptions.Image")));
+         this.btnRefresh.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRefresh.ImageOptions.LargeImage")));
+         this.btnRefresh.Name = "btnRefresh";
+         this.btnRefresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRefresh_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -172,15 +181,6 @@
          // 
          this.popupMenu2.Name = "popupMenu2";
          this.popupMenu2.Ribbon = this.ribbonControl1;
-         // 
-         // btnRefresh
-         // 
-         this.btnRefresh.Caption = "Refresh";
-         this.btnRefresh.Id = 13;
-         this.btnRefresh.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.ImageOptions.Image")));
-         this.btnRefresh.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRefresh.ImageOptions.LargeImage")));
-         this.btnRefresh.Name = "btnRefresh";
-         this.btnRefresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRefresh_ItemClick);
          // 
          // Frm_Environments
          // 
