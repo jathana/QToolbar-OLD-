@@ -163,6 +163,8 @@ namespace QToolbar.Plugins.Environments
                         {
                            com.CommandText = "SELECT TOP(1) CONVERT(NVARCHAR,MAJOR)+'.' + CONVERT(NVARCHAR,MINOR) FROM TLK_DATABASE_VERSIONS ORDER BY MAJOR DESC,MINOR DESC";
                            objEnv.DBCollectionPlusVersion = com.ExecuteScalar().ToString();
+                           objEnv.DBCollectionPlusMajorVersion = objEnv.DBCollectionPlusVersion.Split('.')[0];
+                           objEnv.DBCollectionPlusMinorVersion = objEnv.DBCollectionPlusVersion.Split('.')[1];
                         }
                         catch (Exception ex)
                         {
@@ -193,37 +195,89 @@ namespace QToolbar.Plugins.Environments
                         //select inst_root from bi_glm_installation
                         try
                         {
-                           com.CommandText = "select inst_root from bi_glm_installation";
-                           string glmDir = com.ExecuteScalar().ToString();
-                           objEnv.GLMDir = glmDir;
-                           int permissions = -1;
-                           bool unresolved = false;
-                           string glmLocalDir = Utils.GetPath(glmDir, out permissions, out unresolved);
-                           objEnv.GLMLocalDir = glmLocalDir;
-                           objEnv.GLMDirPermissions = Utils.GetPermissionsDesc(permissions);
-                           if (!string.IsNullOrEmpty(glmDir) && permissions != Utils.FILE_PERMISSION_FULL_ACCESS)
+                           com.CommandText = @"select INST1.INST_PREFIX ALIAS_INST_NAME , INST2.INST_PREFIX ALIAS_INST_STEM_NAME, * 
+                                                from bi_glm_installation glm
+                                                left
+                                                join at_installations inst1 on inst1.INST_PREFIX = glm.INST_NAME
+                                                left
+                                                join at_installations inst2 on inst2.INST_PREFIX = glm.INST_STEM_NAME";
+                           SqlDataAdapter adapter = new SqlDataAdapter(com);
+                           DataTable glmTable = new DataTable();
+                           adapter.Fill(glmTable);
+                           if (glmTable.Rows.Count == 1)
                            {
-                              objEnv.Errors.AddError($"Full Access permission is required for GLM dir {glmDir}", glmDir);
-                           }
-                           if (unresolved)
-                           {
-                              objEnv.Errors.AddError($"Unresolved GLM dir.","");
-                           }
-                           if (string.IsNullOrEmpty(glmDir))
-                           {
-                              objEnv.Errors.AddError($"GLM dir is empty.","");
-                           }
+                              DataRow glmRow = glmTable.Rows[0];
+                              #region check GLM folder
+                              string glmDir = glmRow["inst_root"].ToString();
+                              objEnv.GLMDir = glmDir;
+                              int permissions = -1;
+                              bool unresolved = false;
+                              string glmLocalDir = Utils.GetPath(glmDir, out permissions, out unresolved);
+                              objEnv.GLMLocalDir = glmLocalDir;
+                              objEnv.GLMDirPermissions = Utils.GetPermissionsDesc(permissions);
+                              if (!string.IsNullOrEmpty(glmDir) && permissions != Utils.FILE_PERMISSION_FULL_ACCESS)
+                              {
+                                 objEnv.Errors.AddError($"Full Access permission is required for GLM dir {glmDir}", glmDir);
+                              }
+                              if (unresolved)
+                              {
+                                 objEnv.Errors.AddError($"Unresolved GLM dir.", "");
+                              }
+                              if (string.IsNullOrEmpty(glmDir))
+                              {
+                                 objEnv.Errors.AddError($"GLM dir is empty.", "");
+                              }
 
-                           QEnvironment.SharedDir objGlmDir = new QEnvironment.SharedDir()
+                              QEnvironment.SharedDir objGlmDir = new QEnvironment.SharedDir()
+                              {
+                                 UNC = glmDir,
+                                 LocalPath = glmLocalDir,
+                                 Permissions = permissions,
+                                 Description = "GLM DIR"
+                              };
+                              objEnv.QCSystemSharedDirs.Add(objGlmDir);
+                              #endregion
+
+                              #region check db information of bi_glm_installation table
+                              // check bi_glm_installation.INST_STEM_NAME
+                              if (!glmRow["INST_STEM_NAME"].ToString().ToLower().Equals(glmRow["ALIAS_INST_STEM_NAME"].ToString().ToLower()))
+                              {
+                                 objEnv.Errors.AddWarning($"bi_glm_installation table : INST_STEM_NAME={glmRow["INST_STEM_NAME"].ToString()} not matches to any installation prefix.", "");
+                              }
+                              // check bi_glm_installation.INST_NAME
+                              if (!glmRow["INST_NAME"].ToString().ToLower().Equals(glmRow["ALIAS_INST_NAME"].ToString().ToLower()))
+                              {
+                                 objEnv.Errors.AddWarning($"bi_glm_installation table : INST_NAME={glmRow["INST_NAME"].ToString()} not matches to any installation prefix.", "");
+                              }
+                              // check bi_glm_installation.INST_SERVER
+                              if (!glmRow["INST_SERVER"].ToString().ToLower().Equals(objEnv.DBCollectionPlusServer.ToLower()))
+                              {
+                                 objEnv.Errors.AddError($"bi_glm_installation table : found INST_SERVER={glmRow["INST_SERVER"].ToString()} while expecting {objEnv.DBCollectionPlusServer}.", "");
+                              }
+                              // check bi_glm_installation.INST_DB_NAME
+                              if (!glmRow["INST_DB_NAME"].ToString().ToLower().Equals(objEnv.DBCollectionPlusName.ToLower()))
+                              {
+                                 objEnv.Errors.AddError($"bi_glm_installation table : found INST_DB_NAME={glmRow["INST_DB_NAME"].ToString()} while expecting {objEnv.DBCollectionPlusName}.", "");
+                              }
+                              
+                              // QBA
+                              objEnv.Errors.AddInfo($"Check validity of bi_glm_installation QBA_SERVER.QBA_DB_NAME = {glmRow["QBA_SERVER"].ToString()}.{glmRow["QBA_DB_NAME"].ToString()}.", "");
+
+                              // D3F
+                              objEnv.Errors.AddInfo($"Check validity of bi_glm_installation QD3F_SERVER.QD3F_DB_NAME = {glmRow["QD3F_SERVER"].ToString()}.{glmRow["QD3F_DB_NAME"].ToString()}.", "");
+
+                              #endregion
+
+
+                           }
+                           else if (glmTable.Rows.Count == 0)
                            {
-                              UNC = glmDir,
-                              LocalPath = glmLocalDir,
-                              Permissions = permissions,
-                              Description = "GLM DIR"
-                           };
-                           objEnv.QCSystemSharedDirs.Add(objGlmDir);
-
-
+                              objEnv.Errors.AddError($"bi_glm_installation table is empty.", "");
+                           }
+                           else
+                           {
+                              objEnv.Errors.AddError($"More than one rows found in bi_glm_installation table.", "");
+                           }
                         }
                         catch (Exception ex)
                         {
@@ -286,7 +340,8 @@ namespace QToolbar.Plugins.Environments
                                        where SPR_TYPE in ('WORDTEMPLATESFOLDER',
                                                          'ATTACHMENTS_DIRECTORY',
                                                          'BULK_OUTPUT_EXPORT_DIRECTORY', 
-                                                         'CRITERIA_PUBLISHED_PATH')";
+                                                         'CRITERIA_PUBLISHED_PATH',
+                                                         'LEGAL_APP_PROCESS_MAPPING_WS_URL')";
                            SqlDataAdapter adapter = new SqlDataAdapter(com);
                            DataTable pathsTable = new DataTable();
                            adapter.Fill(pathsTable);
@@ -295,39 +350,63 @@ namespace QToolbar.Plugins.Environments
                            foreach (DataRow pathrow in pathsTable.Rows)
                            {
 
-                              int permissions = -1;
-                              bool unresolved = false;
-                              //retval.QCSystemSharedDirs.Add(
 
+                              #region check shared folders
+                              try
+                              {
+                                 if (pathrow["SPR_TYPE"].ToString().Equals("LEGAL_APP_PROCESS_MAPPING_WS_URL"))
+                                 {
+                                    objEnv.Errors.AddInfo($"Check AT_SYSTEM_PREF.SPR_TYPE = LEGAL_APP_PROCESS_MAPPING_WS_URL  ({pathrow["SPR_VALUE"].ToString()}) ", "");
+                                 }
+                                 else
+                                 {
+                                    int permissions = -1;
+                                    bool unresolved = false;
 
-                              QEnvironment.SharedDir sharedDir = new QEnvironment.SharedDir()
-                              {
-                                 UNC = pathrow["SPR_VALUE"].ToString(),
-                                 LocalPath = Utils.GetPath(pathrow["SPR_VALUE"].ToString(), out permissions, out unresolved),
-                                 Permissions = permissions,
-                                 Description = pathrow["SPR_TYPE"].ToString()
-                              };
-                              objEnv.QCSystemSharedDirs.Add(sharedDir);
-                              
-                              if (permissions != Utils.FILE_PERMISSION_FULL_ACCESS)
-                              {
-                                 objEnv.Errors.AddError($"Full Access permission is required {sharedDir.UNC}", sharedDir.UNC);
-                              }
-                              if (unresolved)
-                              {
-                                 objEnv.Errors.AddError($"Unresolved dir {sharedDir.Description} : {sharedDir.UNC}.", sharedDir.UNC);
-                              }
-                              else
-                              {
-                                 // take a system sub folder that exists and get system folder
-                                 Uri uri = new Uri(sharedDir.UNC);
+                                    QEnvironment.SharedDir sharedDir = new QEnvironment.SharedDir()
+                                    {
+                                       UNC = pathrow["SPR_VALUE"].ToString(),
+                                       LocalPath = Utils.GetPath(pathrow["SPR_VALUE"].ToString(), out permissions, out unresolved),
+                                       Permissions = permissions,
+                                       Description = pathrow["SPR_TYPE"].ToString()
+                                    };
+                                    objEnv.QCSystemSharedDirs.Add(sharedDir);
 
-                                 objEnv.SystemFolder = Directory.GetParent($"\\\\{uri.Host}\\{sharedDir.LocalPath.Replace(":","$")}").FullName;
+                                    if (permissions != Utils.FILE_PERMISSION_FULL_ACCESS)
+                                    {
+                                       objEnv.Errors.AddError($"Full Access permission is required {sharedDir.UNC}", sharedDir.UNC);
+                                    }
+                                    if (unresolved)
+                                    {
+                                       objEnv.Errors.AddError($"Unresolved dir {sharedDir.Description} : {sharedDir.UNC}.", sharedDir.UNC);
+                                    }
+                                    else
+                                    {
+                                       // take a system sub folder that exists and get system folder
+                                       Uri uri = new Uri(sharedDir.UNC);
+
+                                       objEnv.SystemFolder = Directory.GetParent($"\\\\{uri.Host}\\{sharedDir.LocalPath.Replace(":", "$")}").FullName;
+                                    }
+                                    if (string.IsNullOrEmpty(sharedDir.UNC))
+                                    {
+                                       objEnv.Errors.AddError($"Empty dir {sharedDir.Description} ", "");
+                                    }
+                                    // check shared folders names
+                                    if (!string.IsNullOrEmpty(sharedDir.UNC) && !string.IsNullOrEmpty(objEnv.DBCollectionPlusVersion))
+                                    {
+                                       string versionWithUnderscore = env.DBCollectionPlusVersion.Replace('.', '_');
+                                       if (!sharedDir.UNC.Contains(versionWithUnderscore))
+                                       {
+                                          objEnv.Errors.AddWarning($"Shared dir \"{sharedDir.UNC}\" naming convention warning. {versionWithUnderscore} is not contained in dir's name.", "");
+                                       }
+                                    }
+                                 }
                               }
-                              if (string.IsNullOrEmpty(sharedDir.UNC))
+                              catch(Exception ex)
                               {
-                                 objEnv.Errors.AddError($"Empty dir {sharedDir.Description} ", "");
+                                 objEnv.Errors.AddError($"Error while fetching shared dir \"{pathrow["SPR_VALUE"].ToString()}\" information ({ex.Message})", "");
                               }
+                              #endregion
                            }
                         }
                         catch (Exception ex)
@@ -368,6 +447,10 @@ namespace QToolbar.Plugins.Environments
                            objEnv.Errors.AddError($"Error while fetching flows for eod.ini ({ex.Message})", "");
                         }
                      }
+                     #endregion
+
+                     #region check bi_glm_installation table
+
                      #endregion
 
                   }

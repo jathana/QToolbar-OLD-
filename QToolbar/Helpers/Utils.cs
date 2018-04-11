@@ -111,7 +111,10 @@ namespace QToolbar
                         path = path.EndsWith(@"\") ? path + uncParts[i] : path + @"\" + uncParts[i];
                   }
                }
-
+               if(string.IsNullOrWhiteSpace(path))
+               {
+                  unresolved = true;
+               }
                return path;
             }
             catch (Exception ex)

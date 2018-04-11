@@ -177,6 +177,8 @@ namespace QToolbar.Plugins.Environments
       private string _CheckoutPath = string.Empty;
       private string _ProteusCheckoutPath = string.Empty;
       private string _QBCAdminCfPath = string.Empty;
+      private string _DBCollectionPlusMinorVersion = string.Empty;
+      private string _DBCollectionPlusMajorVersion = string.Empty;
       private string _DBCollectionPlusVersion = string.Empty;
       private string _DBCollectionPlusServer = string.Empty;
       private string _DBCollectionPlusName = string.Empty;
@@ -520,6 +522,32 @@ namespace QToolbar.Plugins.Environments
          }
       }
 
+      public string DBCollectionPlusMinorVersion
+      {
+         get
+         {
+            return _DBCollectionPlusMinorVersion;
+         }
+
+         set
+         {
+            _DBCollectionPlusMinorVersion = value;
+         }
+      }
+
+      public string DBCollectionPlusMajorVersion
+      {
+         get
+         {
+            return _DBCollectionPlusMajorVersion;
+         }
+
+         set
+         {
+            _DBCollectionPlusMajorVersion = value;
+         }
+      }
+
 
 
       #endregion
@@ -552,7 +580,8 @@ namespace QToolbar.Plugins.Environments
          _GLMLogDir = string.Empty;
          _GLMLogDirPermissions = string.Empty;
          _GLMLocalLogDir = string.Empty;
-
+         _DBCollectionPlusMajorVersion = string.Empty;
+         _DBCollectionPlusMinorVersion = string.Empty;
          _CFs.Clear();
          _Errors.Clear();
          _QCSystemSharedDirs.Clear();

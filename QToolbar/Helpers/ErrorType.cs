@@ -8,6 +8,6 @@ namespace QToolbar.Helpers
 {
    public enum ErrorType
    {
-      Error, Warning
+      Error, Warning, Info
    }
 }
