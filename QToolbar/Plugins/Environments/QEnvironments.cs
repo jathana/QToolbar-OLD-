@@ -463,7 +463,7 @@ namespace QToolbar.Plugins.Environments
                      }
                      catch (Exception ex)
                      {
-                        objEnv.Errors.AddError($"Error while fetching web server's cf information ({ex.Message})", "");
+                        objEnv.Errors.AddError($"Error while fetching web server's cf information. IIS Management Console is needed to install. ({ex.Message})", "");
                      }
                   }
                   #endregion
