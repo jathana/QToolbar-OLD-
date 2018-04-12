@@ -32,6 +32,12 @@ namespace QToolbar.Plugins.Environments
       {
          InitializeComponent();
 
+
+
+         //UXGridView.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.CellFocus;
+         //UXGridView.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CellSelect;
+         //UXGridView.OptionsSelection.EnableAppearanceFocusedRow = false;
+
          _Envs = new QEnvironments();
          _Envs.InfoCollected += _Envs_InfoCollected;
          _Envs.AllInfoCollected += _Envs_AllInfoCollected;
@@ -209,7 +215,10 @@ namespace QToolbar.Plugins.Environments
             {
                case "Path":
                case "QBC Admin Cf Path":
+                  
                   viewFile(cellText);
+                  OpenDir(cellText);
+
                   break;
                case "Checkout Path":
                case "Proteus Checkout Path":
@@ -220,19 +229,23 @@ namespace QToolbar.Plugins.Environments
                case "GLM Log Dir":
                case "UNC":
 
-                  if (Directory.Exists(cellText))
-                  {
-                     Process.Start("explorer.exe", "/select, " + cellText);
-                  }
-                  else
-                  {
-                     XtraMessageBox.Show($"Dir {cellText} does not exist!");
-                  }
+                  OpenDir(cellText);
                   break;
             }
          }
       }
 
+      private void OpenDir(string path)
+      {
+         if (Directory.Exists(path))
+         {
+            Process.Start("explorer.exe", "/select, " + path);
+         }
+         else
+         {
+            XtraMessageBox.Show($"Dir {path} does not exist!");
+         }
+      }
 
       private void viewFile(string file)
       {
@@ -262,6 +275,16 @@ namespace QToolbar.Plugins.Environments
             btnRefresh.Enabled = false;
             _Envs.Refresh();
             UXGridView.RefreshData();
+         }
+      }
+
+      private void UXGrid_KeyDown(object sender, KeyEventArgs e)
+      {
+         if (e.Control && e.KeyCode == Keys.C)
+         {
+            GridView view = UXGrid.FocusedView as GridView;
+            Clipboard.SetText(view.GetFocusedDisplayText());
+            e.Handled = true;
          }
       }
    }

@@ -168,7 +168,7 @@ namespace QToolbar.Plugins.Environments
                         }
                         catch (Exception ex)
                         {
-                           objEnv.Errors.AddError($"Error while fetching version information ({ex.Message})","");
+                           objEnv.Errors.AddError($"Error while fetching version information ({ex.Message})", "");
                         }
                         // fix AppWSUrl,ToolkitWSUrl for current
                         // read ApplicationWSURL from OptionsInstance.QCSAdminFolder Folder if it is not in local qbc_admin.cf
@@ -195,12 +195,7 @@ namespace QToolbar.Plugins.Environments
                         //select inst_root from bi_glm_installation
                         try
                         {
-                           com.CommandText = @"select INST1.INST_PREFIX ALIAS_INST_NAME , INST2.INST_PREFIX ALIAS_INST_STEM_NAME, * 
-                                                from bi_glm_installation glm
-                                                left
-                                                join at_installations inst1 on inst1.INST_PREFIX = glm.INST_NAME
-                                                left
-                                                join at_installations inst2 on inst2.INST_PREFIX = glm.INST_STEM_NAME";
+                           com.CommandText = @"select *  from bi_glm_installation glm";
                            SqlDataAdapter adapter = new SqlDataAdapter(com);
                            DataTable glmTable = new DataTable();
                            adapter.Fill(glmTable);
@@ -208,6 +203,7 @@ namespace QToolbar.Plugins.Environments
                            {
                               DataRow glmRow = glmTable.Rows[0];
                               #region check GLM folder
+                              objEnv.GLMInstStemName = glmRow["inst_stem_name"].ToString();
                               string glmDir = glmRow["inst_root"].ToString();
                               objEnv.GLMDir = glmDir;
                               int permissions = -1;
@@ -238,17 +234,7 @@ namespace QToolbar.Plugins.Environments
                               objEnv.QCSystemSharedDirs.Add(objGlmDir);
                               #endregion
 
-                              #region check db information of bi_glm_installation table
-                              // check bi_glm_installation.INST_STEM_NAME
-                              if (!glmRow["INST_STEM_NAME"].ToString().ToLower().Equals(glmRow["ALIAS_INST_STEM_NAME"].ToString().ToLower()))
-                              {
-                                 objEnv.Errors.AddWarning($"bi_glm_installation table : INST_STEM_NAME={glmRow["INST_STEM_NAME"].ToString()} not matches to any installation prefix.", "");
-                              }
-                              // check bi_glm_installation.INST_NAME
-                              if (!glmRow["INST_NAME"].ToString().ToLower().Equals(glmRow["ALIAS_INST_NAME"].ToString().ToLower()))
-                              {
-                                 objEnv.Errors.AddWarning($"bi_glm_installation table : INST_NAME={glmRow["INST_NAME"].ToString()} not matches to any installation prefix.", "");
-                              }
+                              #region check db information of bi_glm_installation table                             
                               // check bi_glm_installation.INST_SERVER
                               if (!glmRow["INST_SERVER"].ToString().ToLower().Equals(objEnv.DBCollectionPlusServer.ToLower()))
                               {
@@ -259,7 +245,7 @@ namespace QToolbar.Plugins.Environments
                               {
                                  objEnv.Errors.AddError($"bi_glm_installation table : found INST_DB_NAME={glmRow["INST_DB_NAME"].ToString()} while expecting {objEnv.DBCollectionPlusName}.", "");
                               }
-                              
+
                               // QBA
                               objEnv.Errors.AddInfo($"Check validity of bi_glm_installation QBA_SERVER.QBA_DB_NAME = {glmRow["QBA_SERVER"].ToString()}.{glmRow["QBA_DB_NAME"].ToString()}.", "");
 
@@ -281,7 +267,7 @@ namespace QToolbar.Plugins.Environments
                         }
                         catch (Exception ex)
                         {
-                           objEnv.Errors.AddError($"Error while fetching glm information ({ex.Message})","");
+                           objEnv.Errors.AddError($"Error while fetching glm information ({ex.Message})", "");
                         }
                      }
                      #endregion
@@ -307,11 +293,11 @@ namespace QToolbar.Plugins.Environments
                            }
                            if (unresolved)
                            {
-                              objEnv.Errors.AddError($"Unresolved GLM Log dir.","");
+                              objEnv.Errors.AddError($"Unresolved GLM Log dir.", "");
                            }
                            if (string.IsNullOrEmpty(glmLogDir))
                            {
-                              objEnv.Errors.AddError($"Empty GLM Log dir","");
+                              objEnv.Errors.AddError($"Empty GLM Log dir", "");
                            }
 
                            QEnvironment.SharedDir objGlmLogDir = new QEnvironment.SharedDir()
@@ -325,7 +311,7 @@ namespace QToolbar.Plugins.Environments
                         }
                         catch (Exception ex)
                         {
-                           objEnv.Errors.AddError($"Error while fetching glm log information ({ex.Message})","");
+                           objEnv.Errors.AddError($"Error while fetching glm log information ({ex.Message})", "");
                         }
                      }
                      #endregion
@@ -402,7 +388,7 @@ namespace QToolbar.Plugins.Environments
                                     }
                                  }
                               }
-                              catch(Exception ex)
+                              catch (Exception ex)
                               {
                                  objEnv.Errors.AddError($"Error while fetching shared dir \"{pathrow["SPR_VALUE"].ToString()}\" information ({ex.Message})", "");
                               }
@@ -423,7 +409,7 @@ namespace QToolbar.Plugins.Environments
 
                         try
                         {
-                           com.CommandText =  @"declare @prefix nvarchar(10)
+                           com.CommandText = @"declare @prefix nvarchar(10)
                                                 select @prefix=INST.INST_PREFIX 
                                                 from Enterprises ENT 
                                                 INNER JOIN AT_INSTALLATIONS INST ON ENT.INST_CODE=INST.INST_CODE
@@ -449,10 +435,42 @@ namespace QToolbar.Plugins.Environments
                      }
                      #endregion
 
-                     #region check bi_glm_installation table
+                     #region check AT_EXTERNAL_COMPANIES.EXTC_IO_DIR field with the appropriate path per external company                      
+                     if (!cancelToken.IsCancellationRequested)
+                     {
+                        try
+                        {
+                           com.CommandText = @"SELECT EXTC_IO_DIR FROM AT_EXTERNAL_COMPANIES";
+                           SqlDataAdapter adapter = new SqlDataAdapter(com);
+                           DataTable table = new DataTable();
+                           adapter.Fill(table);
+                           StringBuilder builder = new StringBuilder();
+                           foreach (DataRow row in table.Rows)
+                           {
+                              string extcIODir = string.Empty;
+                              try
+                              {
+                                 extcIODir= row["EXTC_IO_DIR"].ToString();
+                                 if (!string.IsNullOrEmpty(extcIODir))
+                                 {
+                                    if (!Directory.Exists(extcIODir))
+                                    {
+                                       objEnv.Errors.AddError($"AT_EXTERNAL_COMPANIES.EXTC_IO_DIR \"{extcIODir}\" not found", extcIODir);
+                                    }
+                                 }
+                              }
+                              catch (Exception ex)
+                              {
+                                 objEnv.Errors.AddError($"Error while fetching AT_EXTERNAL_COMPANIES.EXTC_IO_DIR \"{extcIODir}\"", extcIODir);
+                              }
+                           }
+                        }
+                        catch (Exception ex)
+                        {
 
+                        }
+                     }
                      #endregion
-
                   }
                   catch (Exception ex)
                   {
@@ -551,10 +569,9 @@ namespace QToolbar.Plugins.Environments
                   }
                   #endregion
 
-                  #region add cfs from batch & eod services
+                  #region add cfs from batch & eod services, check glm inst stem name
                   if (!cancelToken.IsCancellationRequested)
                   {
-
                      try
                      {
                         // Add cfs from batch & eod services
@@ -566,6 +583,16 @@ namespace QToolbar.Plugins.Environments
                         if (envFound != null)
                         {
 
+                           // check bi_glm_installetion.inst_stem_name
+                           if(!string.IsNullOrEmpty(envFound.GLMPrefix))
+                           {
+                              if(!envFound.GLMPrefix.Equals(objEnv.GLMInstStemName))
+                              {
+                                 objEnv.Errors.AddError($"BI_GLM_INSTALLATION.INST_STEM_NAME({objEnv.GLMInstStemName}) must equals to <GLMPrefix>({envFound.GLMPrefix}) of EnvironmentsConfiguration.xml", envConfFile);
+                              }
+                           }
+
+                           // batch executor
                            QEnvironment.CfInfo cfInfoBatch = new QEnvironment.CfInfo();
                            cfInfoBatch.Name = "qbc.cf";
                            cfInfoBatch.Repository = "QC";
@@ -583,6 +610,7 @@ namespace QToolbar.Plugins.Environments
                            };
                            objEnv.QCSystemSharedDirs.Add(objBatchServiceDir);
 
+                           // EOD executor
                            QEnvironment.CfInfo cfInfoEOD = new QEnvironment.CfInfo();
                            cfInfoEOD.Name = "qbc.cf";
                            cfInfoEOD.Repository = "QC";

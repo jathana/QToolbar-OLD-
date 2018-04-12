@@ -197,6 +197,7 @@ namespace QToolbar.Plugins.Environments
       private string _GLMLogDirPermissions = string.Empty;
       private string _GLMLocalLogDir = string.Empty;
       private string _SystemFolder = string.Empty;
+      private string _GLMInstStemName = string.Empty;  // from bi_glm_installation
       private List<SharedDir> _QCSystemSharedDirs = new List<SharedDir>();
       private List<CfInfo> _CFs= new List<CfInfo>();
       private Errors _Errors = new Errors();
@@ -548,6 +549,19 @@ namespace QToolbar.Plugins.Environments
          }
       }
 
+      public string GLMInstStemName
+      {
+         get
+         {
+            return _GLMInstStemName;
+         }
+
+         set
+         {
+            _GLMInstStemName = value;
+         }
+      }
+
 
 
       #endregion
@@ -580,6 +594,8 @@ namespace QToolbar.Plugins.Environments
          _GLMLogDir = string.Empty;
          _GLMLogDirPermissions = string.Empty;
          _GLMLocalLogDir = string.Empty;
+         _SystemFolder = string.Empty;
+         _GLMInstStemName = string.Empty;
          _DBCollectionPlusMajorVersion = string.Empty;
          _DBCollectionPlusMinorVersion = string.Empty;
          _CFs.Clear();

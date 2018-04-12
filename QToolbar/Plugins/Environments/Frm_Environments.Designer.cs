@@ -81,6 +81,7 @@
          this.UXGrid.TabIndex = 4;
          this.UXGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.UXGridView});
+         this.UXGrid.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UXGrid_KeyDown);
          // 
          // UXGridView
          // 

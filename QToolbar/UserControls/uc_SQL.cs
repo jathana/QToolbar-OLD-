@@ -210,6 +210,7 @@ namespace QToolbar
          retVal.MainView = gridView;
          retVal.Name = "retVal";
          retVal.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {gridView});
+         retVal.KeyDown += grid_KeyDown;
          
          // 
          // gridView1
@@ -221,6 +222,17 @@ namespace QToolbar
          gridView.OptionsView.ShowGroupPanel = false;
 
          return retVal;
+      }
+
+      private void grid_KeyDown(object sender, KeyEventArgs e)
+      {
+         if (e.Control && e.KeyCode == Keys.C)
+         {
+            GridControl grid = (GridControl)sender;
+            GridView view = grid.FocusedView as GridView;
+            Clipboard.SetText(view.GetFocusedDisplayText());
+            e.Handled = true;
+         }
       }
 
       private void pageResults_SizeChanged(object sender, EventArgs e)
