@@ -473,7 +473,7 @@ namespace QToolbar
          this.fctb.AutoIndentCharsPatterns = "^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\r\n^\\s*(case|default)\\s*[^:]*(" +
     "?<range>:)\\s*(?<range>[^;]+);";
          this.fctb.AutoIndentExistingLines = false;
-         this.fctb.AutoScrollMinSize = new System.Drawing.Size(254, 285);
+         this.fctb.AutoScrollMinSize = new System.Drawing.Size(284, 285);
          this.fctb.BackBrush = null;
          this.fctb.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.fctb.CharHeight = 15;
@@ -665,6 +665,7 @@ namespace QToolbar
          this.ImeMode = System.Windows.Forms.ImeMode.Hiragana;
          this.MainMenuStrip = this.menuStrip1;
          this.Name = "Frm_FileViewer";
+         this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.Text = "FastColoredTextBox sample";
          this.menuStrip1.ResumeLayout(false);
          this.menuStrip1.PerformLayout();

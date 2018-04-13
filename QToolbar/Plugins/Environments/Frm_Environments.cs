@@ -215,9 +215,15 @@ namespace QToolbar.Plugins.Environments
             {
                case "Path":
                case "QBC Admin Cf Path":
-                  
-                  viewFile(cellText);
-                  OpenDir(cellText);
+
+                  if (File.Exists(cellText))
+                  {
+                     viewFile(cellText);
+                  }
+                  else
+                  {
+                     OpenDir(cellText);
+                  }
 
                   break;
                case "Checkout Path":
@@ -273,6 +279,7 @@ namespace QToolbar.Plugins.Environments
          if (_Envs.Data.Count > 0)
          {
             btnRefresh.Enabled = false;
+            UXGridView.CollapseAllDetails();
             _Envs.Refresh();
             UXGridView.RefreshData();
          }
