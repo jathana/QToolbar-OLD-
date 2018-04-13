@@ -145,10 +145,12 @@ namespace QToolbar.Plugins.Environments
 
             if (!cancelToken.IsCancellationRequested)
             {
+               #region Check QBCollection Plus DB
+
                using (SqlConnection con = new SqlConnection())
                {
                   con.ConnectionString = Utils.GetConnectionString(server, db);
-
+                  
                   try
                   {
                      con.Open();
@@ -483,354 +485,360 @@ namespace QToolbar.Plugins.Environments
                         con.Close();
                      }
                   }
-
-                  #region add cfs from local checkout
-                  if (!cancelToken.IsCancellationRequested)
-                  {
-
-                     try
-                     {
-                        // add cfs from local checkout
-                        objEnv.CFs.Clear();
-                        // add cfs from local checkout
-                        foreach (DataRow cfRow in OptionsInstance.EnvCFs.Data.Rows)
-                        {
-                           QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
-                           cfInfo.Name = Path.GetFileName(cfRow["Path"].ToString());
-                           cfInfo.Repository = Path.GetFileName(cfRow["Repository"].ToString());
-                           if (cfInfo.Repository == "QC")
-                              cfInfo.Path = Path.Combine(env.CheckoutPath, cfRow["Path"].ToString());
-                           else if (cfInfo.Repository == "PROTEUS")
-                              cfInfo.Path = Path.Combine(env.ProteusCheckoutPath, cfRow["Path"].ToString());
-
-                           objEnv.CFs.Add(cfInfo);
-                        }
-                     }
-                     catch (Exception ex)
-                     {
-                        objEnv.Errors.AddError($"Error getting local cfs information ({ex.Message})", "");
-                     }
-                  }
-                  #endregion
-
-                  #region add cfs from web server
-                  if (!cancelToken.IsCancellationRequested)
-                  {
-
-                     try
-                     {
-                        string envNameInWeb = $"QCS_{string.Join("_", Path.GetFileName(env.CheckoutPath).Split('.'))}";
-
-                        // add cfs from web server
-
-                        Uri webServer = new Uri(env.AppWSUrl);
-                        using (ServerManager mgr = ServerManager.OpenRemote(webServer.Host))
-                        {
-                           foreach (var s in mgr.Sites)
-                           {
-                              if (s.Name.Equals(envNameInWeb))
-                              {
-                                 string qcwsPhPath = null;
-                                 string toolkitPhPath = null;
-                                 foreach (var a in s.Applications)
-                                 {
-                                    var qcwsVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\Qualco\\QCSWS"));
-                                    if (qcwsVDir != null)
-                                    {
-                                       qcwsPhPath = qcwsVDir.PhysicalPath;
-                                       QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
-                                       cfInfo.Name = "qbc.cf";
-                                       cfInfo.Repository = "QC";
-                                       cfInfo.Path = $"\\\\{webServer.Host}\\{qcwsPhPath.Replace(":", "$")}\\qbc.cf";
-                                       objEnv.CFs.Add(cfInfo);
-                                    }
-
-
-                                    var toolkitVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\Qualco\\SCToolkitWS"));
-                                    if (toolkitVDir != null)
-                                    {
-                                       toolkitPhPath = toolkitVDir.PhysicalPath;
-                                       QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
-                                       cfInfo.Name = "qbc.cf";
-                                       cfInfo.Repository = "QC";
-                                       cfInfo.Path = $"\\\\{webServer.Host}\\{toolkitPhPath.Replace(":", "$")}\\qbc.cf";
-                                       objEnv.CFs.Add(cfInfo);
-
-                                    }
-                                 }
-                              }
-                           }
-                        }
-                     }
-                     catch (Exception ex)
-                     {
-                        objEnv.Errors.AddError($"Error while fetching web server's cf information. IIS Management Console is needed to install. ({ex.Message})", "");
-                     }
-                  }
-                  #endregion
-
-                  #region add cfs from batch & eod services, check glm inst stem name
-                  if (!cancelToken.IsCancellationRequested)
-                  {
-                     try
-                     {
-                        // Add cfs from batch & eod services
-                        string ver = Path.GetFileName(env.CheckoutPath);
-                        string envConfFile = GetEnvironmentsConfigurationFile(ver);
-                        QEnvironmentsConfiguration ec = new QEnvironmentsConfiguration(ver, envConfFile);
-                        ec.Load();
-                        var envFound = ec.FirstOrDefault(e => e.Database.ToLower() == env.DBCollectionPlusName.ToLower() && e.Server.ToLower() == env.DBCollectionPlusServer.ToLower());
-                        if (envFound != null)
-                        {
-
-                           // check bi_glm_installetion.inst_stem_name
-                           if(!string.IsNullOrEmpty(envFound.GLMPrefix))
-                           {
-                              if(!envFound.GLMPrefix.Equals(objEnv.GLMInstStemName))
-                              {
-                                 objEnv.Errors.AddError($"BI_GLM_INSTALLATION.INST_STEM_NAME({objEnv.GLMInstStemName}) must equals to <GLMPrefix>({envFound.GLMPrefix}) of EnvironmentsConfiguration.xml", envConfFile);
-                              }
-                           }
-
-                           // batch executor
-                           QEnvironment.CfInfo cfInfoBatch = new QEnvironment.CfInfo();
-                           cfInfoBatch.Name = "qbc.cf";
-                           cfInfoBatch.Repository = "QC";
-                           cfInfoBatch.Path = $"{envFound.BatchServiceUNCPath}\\qbc.cf";
-                           objEnv.CFs.Add(cfInfoBatch);
-                           objEnv.BatchWinServiceUNC = envFound.BatchServiceUNCPath;
-                           objEnv.BatchWinServicePath = envFound.BatchServicePath;
-
-                           QEnvironment.SharedDir objBatchServiceDir = new QEnvironment.SharedDir()
-                           {
-                              UNC = envFound.BatchServiceUNCPath,
-                              LocalPath = envFound.BatchServicePath,
-                              Permissions = -1,
-                              Description = "BATCH SERVICE"
-                           };
-                           objEnv.QCSystemSharedDirs.Add(objBatchServiceDir);
-
-                           // EOD executor
-                           QEnvironment.CfInfo cfInfoEOD = new QEnvironment.CfInfo();
-                           cfInfoEOD.Name = "qbc.cf";
-                           cfInfoEOD.Repository = "QC";
-                           cfInfoEOD.Path = $"{envFound.EODServiceUNCPath}\\qbc.cf";
-                           objEnv.CFs.Add(cfInfoEOD);
-                           objEnv.EodWinServiceUNC = envFound.EODServiceUNCPath;
-                           objEnv.EodWinServicePath = envFound.EODServicePath;
-
-                           objEnv.WinServicesUNC = Directory.GetParent(envFound.EODServiceUNCPath).FullName;
-                           objEnv.WinServicesPath = Directory.GetParent(Directory.GetParent(envFound.EODServicePath).FullName).FullName;
-
-
-                           QEnvironment.SharedDir objEODServiceDir = new QEnvironment.SharedDir()
-                           {
-                              UNC = envFound.EODServiceUNCPath,
-                              LocalPath = envFound.EODServicePath,
-                              Permissions = -1,
-                              Description = "EOD SERVICE"
-                           };
-                           objEnv.QCSystemSharedDirs.Add(objEODServiceDir);
-                        }
-                        else
-                        {
-                           objEnv.Errors.AddError($"Environment not found (file:{envConfFile})", envConfFile);
-                        }
-                     }
-                     catch (Exception ex)
-                     {
-                        objEnv.Errors.AddError($"Error while fetching Batch Executor's & EOD Executor's  cf information ({ex.Message})", "");
-                     }
-                  }
-                  #endregion
-
-                  #region check BatchExecutorService.exe.config
-                  string batchServiceConfig = $"{objEnv.BatchWinServiceUNC}\\BatchExecutorService.exe.config";
-                  try
-                  {
-                     if (File.Exists(batchServiceConfig))
-                     {
-                        XmlDocument doc = new XmlDocument();
-                        doc.Load(batchServiceConfig);
-                        XmlNode node = doc.SelectSingleNode("/configuration/appSettings/add[@key='ServiceName']");
-                        if (node != null)
-                        {
-                           string value = node.ReadString("value");
-                           string expected = $"QCS Batch Executor {env.Name}";
-                           if (!value.Equals(expected))
-                              objEnv.Errors.AddWarning($"QCS Batch Executor service name expected '{expected}' but found '{value}'", batchServiceConfig);
-                        }
-                        else
-                           objEnv.Errors.AddError($"Service Name was not found in batch executor's config file ({batchServiceConfig})", batchServiceConfig);
-
-                        // add file to Other Files
-                        objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = Path.GetFileName(batchServiceConfig), Path = batchServiceConfig });
-                     }
-                     else
-                        objEnv.Errors.AddError($"Batch executor config file not found ({batchServiceConfig})", batchServiceConfig);
-                  }
-                  catch (Exception ex)
-                  {
-                     objEnv.Errors.AddError($"Error while accessing Batch Executor's config file ({ex.Message})","");
-                  }
-                  #endregion
-
-                  #region check EODExecutorService.exe.config
-                  string eodServiceConfig = $"{objEnv.EodWinServiceUNC}\\EODExecutorService.exe.config";
-                  try
-                  {
-                     if (File.Exists(batchServiceConfig))
-                     {
-                        XmlDocument doc = new XmlDocument();
-                        doc.Load(eodServiceConfig);
-                        XmlNode node = doc.SelectSingleNode("/configuration/appSettings/add[@key='ServiceName']");
-                        if (node != null)
-                        {
-                           string value = node.ReadString("value");
-                           string expected = $"QCS EOD Executor {env.Name}";
-                           if (!value.Equals(expected))
-                              objEnv.Errors.AddWarning($"QCS EOD Executor service name expected '{expected}' but found '{value}'", eodServiceConfig);
-                        }
-                        else
-                           objEnv.Errors.AddError($"Service Name was not found in EOD executor's config file ({eodServiceConfig})", eodServiceConfig);
-
-                        // add file to Other Files
-                        objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = Path.GetFileName(eodServiceConfig), Path = eodServiceConfig });
-                     }
-                     else
-                        objEnv.Errors.AddError($"EOD executor config file not found ({eodServiceConfig})", eodServiceConfig);
-
-
-                  }
-                  catch (Exception ex)
-                  {
-                     objEnv.Errors.AddError($"Error while accessing EOD Executor's config file ({ex.Message})", "");
-                  }
-                  #endregion
-
-                  #region check cmd_commands.txt
-                  string cmdFile = Path.Combine(objEnv.WinServicesUNC, "cmd_commands.txt");
-                  if (File.Exists(cmdFile))
-                  {
-
-                     string content = File.ReadAllText(cmdFile).ToLower();
-                     string uninstallBatch = $"\"{objEnv.WinServicesPath}\\Uninstall_Service.bat\" \"{objEnv.BatchWinServicePath}\"";
-                     string uninstallEod = $"\"{objEnv.WinServicesPath}\\Uninstall_Service.bat\" \"{objEnv.EodWinServicePath}\"";
-
-                     string installBatch = $"\"{objEnv.WinServicesPath}\\Install_Service.bat\" \"{objEnv.BatchWinServicePath}\"";
-                     string installEod = $"\"{objEnv.WinServicesPath}\\Install_Service.bat\" \"{objEnv.EodWinServicePath}\"";
-
-                     if (!content.Contains(uninstallBatch.ToLower())) objEnv.Errors.AddError($"Wrong uninstall Batch Service command. Expected:{uninstallBatch}", cmdFile);
-                     if (!content.Contains(uninstallEod.ToLower())) objEnv.Errors.AddError($"Wrong uninstall EOD Service command. Expected:{uninstallEod}", cmdFile);
-                     if (!content.Contains(installBatch.ToLower())) objEnv.Errors.AddError($"Wrong install Batch Service command. Expected:{installBatch}", cmdFile);
-                     if (!content.Contains(installEod.ToLower())) objEnv.Errors.AddError($"Wrong install EOD Service command. Expected:{installEod}", cmdFile);
-
-
-                     // add file to Other Files
-                     objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = Path.GetFileName(cmdFile), Path = cmdFile });
-                  }
-                  else
-                  {
-                     objEnv.Errors.AddError($"File not found: {cmdFile}", cmdFile);
-                  }
-                  #endregion
-
-                  #region check existence of Install_Service.bat & Uninstall_Service.bat
-                  string installServiceFile = Path.Combine(objEnv.WinServicesUNC, "Install_Service.bat");
-                  if (!File.Exists(installServiceFile)) objEnv.Errors.AddError($"File not found \"{installServiceFile}\"", installServiceFile);
-                  string uninstallServiceFile = Path.Combine(objEnv.WinServicesUNC, "Uninstall_Service.bat");
-                  if (!File.Exists(uninstallServiceFile)) objEnv.Errors.AddError($"File not found \"{uninstallServiceFile}\"", uninstallServiceFile);
-
-                  #endregion
-
-                  #region check subfolders of system folder and eod.ini files
-                  string applicationUpdateDir = Path.Combine(objEnv.SystemFolder, "ApplicationUpdate");
-                  string[] eodExecutorDirs = Directory.GetDirectories(objEnv.SystemFolder, "EOD*Executor");
-                  string eodExecutorDir = string.Empty;
-                  string eodExecutorEodIniFile = string.Empty;
-                  if(eodExecutorDirs.Length == 1)
-                  {
-                     eodExecutorDir = eodExecutorDirs[0];
-                     eodExecutorEodIniFile = Path.Combine(eodExecutorDir, "eod.ini");
-                     if (File.Exists(eodExecutorEodIniFile))
-                     {
-                        objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = "EOD Executor eod.ini", Path = eodExecutorEodIniFile });
-                     }
-                     else
-                        objEnv.Errors.AddError($"File not found \"{eodExecutorEodIniFile}\"", eodExecutorEodIniFile);
-                  }
-                  else
-                     objEnv.Errors.AddError($"Dir not found \"{objEnv.SystemFolder}\\EOD*Executor\"", objEnv.SystemFolder);
-
-                  string applicationUpdateEodIniFile = Path.Combine(applicationUpdateDir, "eod.ini");
-                  if(File.Exists(applicationUpdateEodIniFile))
-                  {
-                     objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = "Application Update eod.ini", Path = applicationUpdateEodIniFile });
-                  }
-                  else
-                     objEnv.Errors.AddError($"File not found \"{applicationUpdateEodIniFile}\"", applicationUpdateEodIniFile);
-
-                  CheckFolderExistence(applicationUpdateDir, objEnv);
-                  CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Attachments"), objEnv);
-                  CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Exports"), objEnv);
-                  CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "ExternalAgencies"), objEnv);
-                  CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Templates"), objEnv);
-                  #endregion
-
-                  #region check eod.ini if out of date
-                  try
-                  {
-                     string eodIniFileText = File.ReadAllText(eodExecutorEodIniFile);
-                     foreach(string name in eodFlows)
-                     {
-                        if(!eodIniFileText.Contains(name))
-                        {
-                           objEnv.Errors.AddError($"eod.ini out of date, flow \"{name}\" is missing (\"{eodExecutorEodIniFile}\"))", eodExecutorEodIniFile);
-                        }
-                     }
-                  }
-                  catch(Exception ex)
-                  {
-                     objEnv.Errors.AddError($"Error while reading \"{eodExecutorEodIniFile}\" ({ex.Message})", eodExecutorEodIniFile);
-                  }
-                  try
-                  {
-                     string applicationUpdateEodIniFileText = File.ReadAllText(applicationUpdateEodIniFile);
-                     foreach (string name in eodFlows)
-                     {
-                        if (!applicationUpdateEodIniFileText.Contains(name))
-                        {
-                           objEnv.Errors.AddError($"eod.ini out of date, flow \"{name}\" is missing (\"{applicationUpdateEodIniFile}\"))", applicationUpdateEodIniFile);
-                        }
-                     }
-                  }
-                  catch (Exception ex)
-                  {
-                     objEnv.Errors.AddError($"Error while reading \"{applicationUpdateEodIniFile}\" ({ex.Message})", applicationUpdateEodIniFile);
-                  }
-
-                  #endregion
-
-                  #region Validate cfs
-                  CfValidator cfValidator = new CfValidator();
-
-                  List<string> keys = adminCf.GetKeys(objEnv.DBCollectionPlusServer, objEnv.DBCollectionPlusName);
-                  if (keys.Count == 0)
-                  {
-                     objEnv.Errors.AddError($"Info not found {objEnv.DBCollectionPlusServer}.{objEnv.DBCollectionPlusName}","");
-                  }
-                  foreach (QEnvironment.CfInfo cfInfo in objEnv.CFs)
-                  {
-                     objEnv.Errors.AddRange(cfValidator.Validate(cfInfo.Path, keys));
-                  }
-                  #endregion
+                 
 
                   if (cancelToken.IsCancellationRequested)
                   {
                      Debug.WriteLine($"Task Cancelled {env.Name}");
                   }
+               }
+               #endregion
+
+               #region check environment's files & folders
+
+               #region add cfs from local checkout
+               if (!cancelToken.IsCancellationRequested)
+               {
+
+                  try
+                  {
+                     // add cfs from local checkout
+                     objEnv.CFs.Clear();
+                     // add cfs from local checkout
+                     foreach (DataRow cfRow in OptionsInstance.EnvCFs.Data.Rows)
+                     {
+                        QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
+                        cfInfo.Name = Path.GetFileName(cfRow["Path"].ToString());
+                        cfInfo.Repository = Path.GetFileName(cfRow["Repository"].ToString());
+                        if (cfInfo.Repository == "QC")
+                           cfInfo.Path = Path.Combine(env.CheckoutPath, cfRow["Path"].ToString());
+                        else if (cfInfo.Repository == "PROTEUS")
+                           cfInfo.Path = Path.Combine(env.ProteusCheckoutPath, cfRow["Path"].ToString());
+
+                        objEnv.CFs.Add(cfInfo);
+                     }
+                  }
+                  catch (Exception ex)
+                  {
+                     objEnv.Errors.AddError($"Error getting local cfs information ({ex.Message})", "");
+                  }
+               }
+               #endregion
+
+               #region add cfs from web server
+               if (!cancelToken.IsCancellationRequested)
+               {
+
+                  try
+                  {
+                     string envNameInWeb = $"QCS_{string.Join("_", Path.GetFileName(env.CheckoutPath).Split('.'))}";
+
+                     // add cfs from web server
+
+                     Uri webServer = new Uri(env.AppWSUrl);
+                     using (ServerManager mgr = ServerManager.OpenRemote(webServer.Host))
+                     {
+                        foreach (var s in mgr.Sites)
+                        {
+                           if (s.Name.Equals(envNameInWeb))
+                           {
+                              string qcwsPhPath = null;
+                              string toolkitPhPath = null;
+                              foreach (var a in s.Applications)
+                              {
+                                 var qcwsVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\Qualco\\QCSWS"));
+                                 if (qcwsVDir != null)
+                                 {
+                                    qcwsPhPath = qcwsVDir.PhysicalPath;
+                                    QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
+                                    cfInfo.Name = "qbc.cf";
+                                    cfInfo.Repository = "QC";
+                                    cfInfo.Path = $"\\\\{webServer.Host}\\{qcwsPhPath.Replace(":", "$")}\\qbc.cf";
+                                    objEnv.CFs.Add(cfInfo);
+                                 }
+
+
+                                 var toolkitVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\Qualco\\SCToolkitWS"));
+                                 if (toolkitVDir != null)
+                                 {
+                                    toolkitPhPath = toolkitVDir.PhysicalPath;
+                                    QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
+                                    cfInfo.Name = "qbc.cf";
+                                    cfInfo.Repository = "QC";
+                                    cfInfo.Path = $"\\\\{webServer.Host}\\{toolkitPhPath.Replace(":", "$")}\\qbc.cf";
+                                    objEnv.CFs.Add(cfInfo);
+
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+                  catch (Exception ex)
+                  {
+                     objEnv.Errors.AddError($"Error while fetching web server's cf information. IIS Management Console is needed to install. ({ex.Message})", "");
+                  }
+               }
+               #endregion
+
+               #region add cfs from batch & eod services, check glm inst stem name
+               if (!cancelToken.IsCancellationRequested)
+               {
+                  try
+                  {
+                     // Add cfs from batch & eod services
+                     string ver = Path.GetFileName(env.CheckoutPath);
+                     string envConfFile = GetEnvironmentsConfigurationFile(ver);
+                     QEnvironmentsConfiguration ec = new QEnvironmentsConfiguration(ver, envConfFile);
+                     ec.Load();
+                     var envFound = ec.FirstOrDefault(e => e.Database.ToLower() == env.DBCollectionPlusName.ToLower() && e.Server.ToLower() == env.DBCollectionPlusServer.ToLower());
+                     if (envFound != null)
+                     {
+
+                        // check bi_glm_installetion.inst_stem_name
+                        if (!string.IsNullOrEmpty(envFound.GLMPrefix))
+                        {
+                           if (!envFound.GLMPrefix.Equals(objEnv.GLMInstStemName))
+                           {
+                              objEnv.Errors.AddError($"BI_GLM_INSTALLATION.INST_STEM_NAME({objEnv.GLMInstStemName}) must equals to <GLMPrefix>({envFound.GLMPrefix}) of EnvironmentsConfiguration.xml", envConfFile);
+                           }
+                        }
+
+                        // batch executor
+                        QEnvironment.CfInfo cfInfoBatch = new QEnvironment.CfInfo();
+                        cfInfoBatch.Name = "qbc.cf";
+                        cfInfoBatch.Repository = "QC";
+                        cfInfoBatch.Path = $"{envFound.BatchServiceUNCPath}\\qbc.cf";
+                        objEnv.CFs.Add(cfInfoBatch);
+                        objEnv.BatchWinServiceUNC = envFound.BatchServiceUNCPath;
+                        objEnv.BatchWinServicePath = envFound.BatchServicePath;
+
+                        QEnvironment.SharedDir objBatchServiceDir = new QEnvironment.SharedDir()
+                        {
+                           UNC = envFound.BatchServiceUNCPath,
+                           LocalPath = envFound.BatchServicePath,
+                           Permissions = -1,
+                           Description = "BATCH SERVICE"
+                        };
+                        objEnv.QCSystemSharedDirs.Add(objBatchServiceDir);
+
+                        // EOD executor
+                        QEnvironment.CfInfo cfInfoEOD = new QEnvironment.CfInfo();
+                        cfInfoEOD.Name = "qbc.cf";
+                        cfInfoEOD.Repository = "QC";
+                        cfInfoEOD.Path = $"{envFound.EODServiceUNCPath}\\qbc.cf";
+                        objEnv.CFs.Add(cfInfoEOD);
+                        objEnv.EodWinServiceUNC = envFound.EODServiceUNCPath;
+                        objEnv.EodWinServicePath = envFound.EODServicePath;
+
+                        objEnv.WinServicesUNC = Directory.GetParent(envFound.EODServiceUNCPath).FullName;
+                        objEnv.WinServicesPath = Directory.GetParent(Directory.GetParent(envFound.EODServicePath).FullName).FullName;
+
+
+                        QEnvironment.SharedDir objEODServiceDir = new QEnvironment.SharedDir()
+                        {
+                           UNC = envFound.EODServiceUNCPath,
+                           LocalPath = envFound.EODServicePath,
+                           Permissions = -1,
+                           Description = "EOD SERVICE"
+                        };
+                        objEnv.QCSystemSharedDirs.Add(objEODServiceDir);
+                     }
+                     else
+                     {
+                        objEnv.Errors.AddError($"Environment not found (file:{envConfFile})", envConfFile);
+                     }
+                  }
+                  catch (Exception ex)
+                  {
+                     objEnv.Errors.AddError($"Error while fetching Batch Executor's & EOD Executor's  cf information ({ex.Message})", "");
+                  }
+               }
+               #endregion
+
+               #region check BatchExecutorService.exe.config
+               string batchServiceConfig = $"{objEnv.BatchWinServiceUNC}\\BatchExecutorService.exe.config";
+               try
+               {
+                  if (File.Exists(batchServiceConfig))
+                  {
+                     XmlDocument doc = new XmlDocument();
+                     doc.Load(batchServiceConfig);
+                     XmlNode node = doc.SelectSingleNode("/configuration/appSettings/add[@key='ServiceName']");
+                     if (node != null)
+                     {
+                        string value = node.ReadString("value");
+                        string expected = $"QCS Batch Executor {env.Name}";
+                        if (!value.Equals(expected))
+                           objEnv.Errors.AddWarning($"QCS Batch Executor service name expected '{expected}' but found '{value}'", batchServiceConfig);
+                     }
+                     else
+                        objEnv.Errors.AddError($"Service Name was not found in batch executor's config file ({batchServiceConfig})", batchServiceConfig);
+
+                     // add file to Other Files
+                     objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = Path.GetFileName(batchServiceConfig), Path = batchServiceConfig });
+                  }
+                  else
+                     objEnv.Errors.AddError($"Batch executor config file not found ({batchServiceConfig})", batchServiceConfig);
+               }
+               catch (Exception ex)
+               {
+                  objEnv.Errors.AddError($"Error while accessing Batch Executor's config file ({ex.Message})", "");
+               }
+               #endregion
+
+               #region check EODExecutorService.exe.config
+               string eodServiceConfig = $"{objEnv.EodWinServiceUNC}\\EODExecutorService.exe.config";
+               try
+               {
+                  if (File.Exists(batchServiceConfig))
+                  {
+                     XmlDocument doc = new XmlDocument();
+                     doc.Load(eodServiceConfig);
+                     XmlNode node = doc.SelectSingleNode("/configuration/appSettings/add[@key='ServiceName']");
+                     if (node != null)
+                     {
+                        string value = node.ReadString("value");
+                        string expected = $"QCS EOD Executor {env.Name}";
+                        if (!value.Equals(expected))
+                           objEnv.Errors.AddWarning($"QCS EOD Executor service name expected '{expected}' but found '{value}'", eodServiceConfig);
+                     }
+                     else
+                        objEnv.Errors.AddError($"Service Name was not found in EOD executor's config file ({eodServiceConfig})", eodServiceConfig);
+
+                     // add file to Other Files
+                     objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = Path.GetFileName(eodServiceConfig), Path = eodServiceConfig });
+                  }
+                  else
+                     objEnv.Errors.AddError($"EOD executor config file not found ({eodServiceConfig})", eodServiceConfig);
+
 
                }
+               catch (Exception ex)
+               {
+                  objEnv.Errors.AddError($"Error while accessing EOD Executor's config file ({ex.Message})", "");
+               }
+               #endregion
+
+               #region check cmd_commands.txt
+               string cmdFile = Path.Combine(objEnv.WinServicesUNC, "cmd_commands.txt");
+               if (File.Exists(cmdFile))
+               {
+
+                  string content = File.ReadAllText(cmdFile).ToLower();
+                  string uninstallBatch = $"\"{objEnv.WinServicesPath}\\Uninstall_Service.bat\" \"{objEnv.BatchWinServicePath}\"";
+                  string uninstallEod = $"\"{objEnv.WinServicesPath}\\Uninstall_Service.bat\" \"{objEnv.EodWinServicePath}\"";
+
+                  string installBatch = $"\"{objEnv.WinServicesPath}\\Install_Service.bat\" \"{objEnv.BatchWinServicePath}\"";
+                  string installEod = $"\"{objEnv.WinServicesPath}\\Install_Service.bat\" \"{objEnv.EodWinServicePath}\"";
+
+                  if (!content.Contains(uninstallBatch.ToLower())) objEnv.Errors.AddError($"Wrong uninstall Batch Service command. Expected:{uninstallBatch}", cmdFile);
+                  if (!content.Contains(uninstallEod.ToLower())) objEnv.Errors.AddError($"Wrong uninstall EOD Service command. Expected:{uninstallEod}", cmdFile);
+                  if (!content.Contains(installBatch.ToLower())) objEnv.Errors.AddError($"Wrong install Batch Service command. Expected:{installBatch}", cmdFile);
+                  if (!content.Contains(installEod.ToLower())) objEnv.Errors.AddError($"Wrong install EOD Service command. Expected:{installEod}", cmdFile);
+
+
+                  // add file to Other Files
+                  objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = Path.GetFileName(cmdFile), Path = cmdFile });
+               }
+               else
+               {
+                  objEnv.Errors.AddError($"File not found: {cmdFile}", cmdFile);
+               }
+               #endregion
+
+               #region check existence of Install_Service.bat & Uninstall_Service.bat
+               string installServiceFile = Path.Combine(objEnv.WinServicesUNC, "Install_Service.bat");
+               if (!File.Exists(installServiceFile)) objEnv.Errors.AddError($"File not found \"{installServiceFile}\"", installServiceFile);
+               string uninstallServiceFile = Path.Combine(objEnv.WinServicesUNC, "Uninstall_Service.bat");
+               if (!File.Exists(uninstallServiceFile)) objEnv.Errors.AddError($"File not found \"{uninstallServiceFile}\"", uninstallServiceFile);
+
+               #endregion
+
+               #region check subfolders of system folder and eod.ini files
+               string applicationUpdateDir = Path.Combine(objEnv.SystemFolder, "ApplicationUpdate");
+               string[] eodExecutorDirs = Directory.GetDirectories(objEnv.SystemFolder, "EOD*Executor");
+               string eodExecutorDir = string.Empty;
+               string eodExecutorEodIniFile = string.Empty;
+               if (eodExecutorDirs.Length == 1)
+               {
+                  eodExecutorDir = eodExecutorDirs[0];
+                  eodExecutorEodIniFile = Path.Combine(eodExecutorDir, "eod.ini");
+                  if (File.Exists(eodExecutorEodIniFile))
+                  {
+                     objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = "EOD Executor eod.ini", Path = eodExecutorEodIniFile });
+                  }
+                  else
+                     objEnv.Errors.AddError($"File not found \"{eodExecutorEodIniFile}\"", eodExecutorEodIniFile);
+               }
+               else
+                  objEnv.Errors.AddError($"Dir not found \"{objEnv.SystemFolder}\\EOD*Executor\"", objEnv.SystemFolder);
+
+               string applicationUpdateEodIniFile = Path.Combine(applicationUpdateDir, "eod.ini");
+               if (File.Exists(applicationUpdateEodIniFile))
+               {
+                  objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = "Application Update eod.ini", Path = applicationUpdateEodIniFile });
+               }
+               else
+                  objEnv.Errors.AddError($"File not found \"{applicationUpdateEodIniFile}\"", applicationUpdateEodIniFile);
+
+               CheckFolderExistence(applicationUpdateDir, objEnv);
+               CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Attachments"), objEnv);
+               CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Exports"), objEnv);
+               CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "ExternalAgencies"), objEnv);
+               CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Templates"), objEnv);
+               #endregion
+
+               #region check eod.ini if out of date
+               try
+               {
+                  string eodIniFileText = File.ReadAllText(eodExecutorEodIniFile);
+                  foreach (string name in eodFlows)
+                  {
+                     if (!eodIniFileText.Contains(name))
+                     {
+                        objEnv.Errors.AddError($"eod.ini out of date, flow \"{name}\" is missing (\"{eodExecutorEodIniFile}\"))", eodExecutorEodIniFile);
+                     }
+                  }
+               }
+               catch (Exception ex)
+               {
+                  objEnv.Errors.AddError($"Error while reading \"{eodExecutorEodIniFile}\" ({ex.Message})", eodExecutorEodIniFile);
+               }
+               try
+               {
+                  string applicationUpdateEodIniFileText = File.ReadAllText(applicationUpdateEodIniFile);
+                  foreach (string name in eodFlows)
+                  {
+                     if (!applicationUpdateEodIniFileText.Contains(name))
+                     {
+                        objEnv.Errors.AddError($"eod.ini out of date, flow \"{name}\" is missing (\"{applicationUpdateEodIniFile}\"))", applicationUpdateEodIniFile);
+                     }
+                  }
+               }
+               catch (Exception ex)
+               {
+                  objEnv.Errors.AddError($"Error while reading \"{applicationUpdateEodIniFile}\" ({ex.Message})", applicationUpdateEodIniFile);
+               }
+
+               #endregion
+
+               #region Validate cfs
+               CfValidator cfValidator = new CfValidator();
+
+               List<string> keys = adminCf.GetKeys(objEnv.DBCollectionPlusServer, objEnv.DBCollectionPlusName);
+               if (keys.Count == 0)
+               {
+                  objEnv.Errors.AddError($"Info not found {objEnv.DBCollectionPlusServer}.{objEnv.DBCollectionPlusName}", "");
+               }
+               foreach (QEnvironment.CfInfo cfInfo in objEnv.CFs)
+               {
+                  objEnv.Errors.AddRange(cfValidator.Validate(cfInfo.Path, keys));
+               }
+               #endregion
+
+               #endregion
+
             };
             return objEnv;
          }, env, tokenSource.Token);
