@@ -494,7 +494,7 @@ namespace QToolbar.Plugins.Environments
                }
                #endregion
 
-               #region check environment's files & folders
+               #region Check environment's files & folders
 
                #region add cfs from local checkout
                if (!cancelToken.IsCancellationRequested)
@@ -757,36 +757,46 @@ namespace QToolbar.Plugins.Environments
 
                #region check subfolders of system folder and eod.ini files
                string applicationUpdateDir = Path.Combine(objEnv.SystemFolder, "ApplicationUpdate");
-               string[] eodExecutorDirs = Directory.GetDirectories(objEnv.SystemFolder, "EOD*Executor");
-               string eodExecutorDir = string.Empty;
                string eodExecutorEodIniFile = string.Empty;
-               if (eodExecutorDirs.Length == 1)
+               string applicationUpdateEodIniFile = string.Empty;
+               if (!string.IsNullOrEmpty(objEnv.SystemFolder) && Directory.Exists(objEnv.SystemFolder))
                {
-                  eodExecutorDir = eodExecutorDirs[0];
-                  eodExecutorEodIniFile = Path.Combine(eodExecutorDir, "eod.ini");
-                  if (File.Exists(eodExecutorEodIniFile))
+                  string[] eodExecutorDirs = Directory.GetDirectories(objEnv.SystemFolder, "EOD*Executor");
+                  string eodExecutorDir = string.Empty;
+                  
+                  if (eodExecutorDirs.Length == 1)
                   {
-                     objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = "EOD Executor eod.ini", Path = eodExecutorEodIniFile });
+                     eodExecutorDir = eodExecutorDirs[0];
+                     eodExecutorEodIniFile = Path.Combine(eodExecutorDir, "eod.ini");
+                     if (File.Exists(eodExecutorEodIniFile))
+                     {
+                        objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = "EOD Executor eod.ini", Path = eodExecutorEodIniFile });
+                     }
+                     else
+                        objEnv.Errors.AddError($"File not found \"{eodExecutorEodIniFile}\"", eodExecutorEodIniFile);
                   }
                   else
-                     objEnv.Errors.AddError($"File not found \"{eodExecutorEodIniFile}\"", eodExecutorEodIniFile);
+                     objEnv.Errors.AddError($"Dir not found \"{objEnv.SystemFolder}\\EOD*Executor\"", objEnv.SystemFolder);
+
+                  applicationUpdateEodIniFile = Path.Combine(applicationUpdateDir, "eod.ini");
+                  if (File.Exists(applicationUpdateEodIniFile))
+                  {
+                     objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = "Application Update eod.ini", Path = applicationUpdateEodIniFile });
+                  }
+                  else
+                     objEnv.Errors.AddError($"File not found \"{applicationUpdateEodIniFile}\"", applicationUpdateEodIniFile);
+
+                  CheckFolderExistence(applicationUpdateDir, objEnv);
+                  CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Attachments"), objEnv);
+                  CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Exports"), objEnv);
+                  CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "ExternalAgencies"), objEnv);
+                  CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Templates"), objEnv);
                }
                else
-                  objEnv.Errors.AddError($"Dir not found \"{objEnv.SystemFolder}\\EOD*Executor\"", objEnv.SystemFolder);
-
-               string applicationUpdateEodIniFile = Path.Combine(applicationUpdateDir, "eod.ini");
-               if (File.Exists(applicationUpdateEodIniFile))
                {
-                  objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = "Application Update eod.ini", Path = applicationUpdateEodIniFile });
+                  objEnv.Errors.AddError($"System Folder is empty or does not exist ({objEnv.SystemFolder}).", objEnv.SystemFolder);
                }
-               else
-                  objEnv.Errors.AddError($"File not found \"{applicationUpdateEodIniFile}\"", applicationUpdateEodIniFile);
 
-               CheckFolderExistence(applicationUpdateDir, objEnv);
-               CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Attachments"), objEnv);
-               CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Exports"), objEnv);
-               CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "ExternalAgencies"), objEnv);
-               CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Templates"), objEnv);
                #endregion
 
                #region check eod.ini if out of date
@@ -839,6 +849,9 @@ namespace QToolbar.Plugins.Environments
 
                #endregion
 
+               #region Check Analytics DB
+
+               #endregion
             };
             return objEnv;
          }, env, tokenSource.Token);

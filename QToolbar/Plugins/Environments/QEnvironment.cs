@@ -169,7 +169,70 @@ namespace QToolbar.Plugins.Environments
 
          #endregion
       }
-      
+
+      public class BIGlmInstallation
+      {
+         #region properties
+         // QBCollectionPlus
+         public string InstName { get; set; }
+         public string InstStemName { get; set; }
+         public string InstServer { get; set; }
+         public string InstDbName { get; set; }
+         public string InstDbUser { get; set; }
+         public string InstDbPassword { get; set; }
+         // Analytics
+         public string QBAServer { get; set; }
+         public string QBADbName { get; set; }
+         public string QBAUser { get; set; }
+         public string QBAPassword { get; set; }
+         // Dialer
+         public string DWHServer { get; set; }
+         public string DWHDbName { get; set; }
+         public string DWHUser { get; set; }
+         public string DWHPassword { get; set; }
+         // D3F
+         public string QD3FServer { get; set; }
+         public string QD3FDbName { get; set; }
+         public string QD3FUser { get; set; }
+         public string QD3FPassword { get; set; }
+         #endregion
+
+
+         public BIGlmInstallation()
+         {
+            InitProperties();
+         }
+
+         public void Clear()
+         {
+            InitProperties();
+         }
+
+         private void InitProperties()
+         {
+            InstName = string.Empty;
+            InstStemName = string.Empty;
+            InstServer = string.Empty;
+            InstDbName = string.Empty;
+            InstDbUser = string.Empty;
+            InstDbPassword = string.Empty;
+            // Analytics
+            QBAServer = string.Empty;
+            QBADbName = string.Empty;
+            QBAUser = string.Empty;
+            QBAPassword = string.Empty;
+            // Dialer
+            DWHServer = string.Empty;
+            DWHDbName = string.Empty;
+            DWHUser = string.Empty;
+            DWHPassword = string.Empty;
+            // D3F
+            QD3FServer = string.Empty;
+            QD3FDbName = string.Empty;
+            QD3FUser = string.Empty;
+            QD3FPassword = string.Empty;
+         }
+      }
 
       #region fields
       private string _Status = string.Empty;

@@ -39,6 +39,37 @@ namespace QToolbar.Helpers
                   retVal.AddError($"Key {key} does not exist in [Passwords] section",cfFile);
             }
 
+
+            // check that keys in servers are unique
+            var duplSrvs = servers.GroupBy(x => x.Item1).Where(g => g.Count() > 1).Select(y => y.Key).ToList();
+            if (duplSrvs != null)
+            {
+               foreach (var srv in duplSrvs)
+               {
+                  retVal.AddError($"Duplicate found {srv} in [Servers] section", cfFile);
+               }
+            }
+            // check that keys in dbs are unique
+            var duplDbs = dbs.GroupBy(x => x.Item1).Where(g => g.Count() > 1).Select(y => y.Key).ToList();
+            if (duplDbs != null)
+            {
+               foreach(var db in duplDbs)
+               {
+                  retVal.AddError($"Duplicate found {db} in [DatabaseName] section", cfFile);
+               }
+            }
+            // check that keys in passwords are unique
+            var duplPwds = pwds.GroupBy(x => x.Item1).Where(g => g.Count() > 1).Select(y => y.Key).ToList();
+            if (duplPwds != null)
+            {
+               foreach (var db in duplPwds)
+               {
+                  retVal.AddError($"Duplicate found {db} in [Passwords] section", cfFile);
+               }
+            }
+
+
+
             Dictionary<string, int> info = new Dictionary<string, int>();
             foreach (var item in dbs)
             {

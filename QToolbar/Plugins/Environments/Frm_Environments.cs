@@ -294,5 +294,6 @@ namespace QToolbar.Plugins.Environments
             e.Handled = true;
          }
       }
+      
    }
 }
