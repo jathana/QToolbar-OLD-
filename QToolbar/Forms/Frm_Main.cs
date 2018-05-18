@@ -203,5 +203,14 @@ namespace QToolbar
          Frm_ScriptCriteria f = new Frm_ScriptCriteria();
          f.Show();
       }
+
+      private void btnCloseAllWindows_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         Form[] formsList = Application.OpenForms.Cast<Form>().Where(x => x.Name != this.Name).ToArray();
+         foreach (Form openForm in formsList)
+         {
+            openForm.Close();
+         }
+      }
    }
 }

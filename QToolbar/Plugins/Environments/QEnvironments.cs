@@ -345,6 +345,14 @@ namespace QToolbar.Plugins.Environments
                                  if (pathrow["SPR_TYPE"].ToString().Equals("LEGAL_APP_PROCESS_MAPPING_WS_URL"))
                                  {
                                     objEnv.Errors.AddInfo($"Check AT_SYSTEM_PREF.SPR_TYPE = LEGAL_APP_PROCESS_MAPPING_WS_URL  ({pathrow["SPR_VALUE"].ToString()}) ", "");
+
+                                    // set LegalAppProcessMappingWSUrl & LegalAppProcessMappingWSHost
+                                    if(!string.IsNullOrEmpty(pathrow["SPR_VALUE"].ToString()))
+                                    {
+                                       Uri uri = new Uri(pathrow["SPR_VALUE"].ToString());
+                                       objEnv.LegalAppProcessMappingWSUrl = uri.AbsoluteUri;
+                                       objEnv.LegalAppProcessMappingWSHost = uri.Host;
+                                    }
                                  }
                                  else
                                  {
@@ -525,7 +533,7 @@ namespace QToolbar.Plugins.Environments
                }
                #endregion
 
-               #region add cfs from web server
+               #region add cfs from qc web server
                if (!cancelToken.IsCancellationRequested)
                {
 
@@ -577,6 +585,72 @@ namespace QToolbar.Plugins.Environments
                   catch (Exception ex)
                   {
                      objEnv.Errors.AddError($"Error while fetching web server's cf information. IIS Management Console is needed to install. ({ex.Message})", "");
+                  }
+               }
+               #endregion
+
+               #region add cfs from legal web server
+               if (!cancelToken.IsCancellationRequested)
+               {
+                  if (!string.IsNullOrEmpty(objEnv.LegalAppProcessMappingWSHost))
+                  {
+                     try
+                     {
+                        string envNameInWeb = $"LegalApp_{string.Join("_", Path.GetFileName(env.CheckoutPath).Split('.'))}";
+
+                        // add cfs from legal web server
+                        using (ServerManager mgr = ServerManager.OpenRemote(env.LegalAppProcessMappingWSHost))
+                        {
+                           foreach (var s in mgr.Sites)
+                           {
+                              if (s.Name.Equals(envNameInWeb))
+                              {
+                                 string wsPhysicalPath = null;
+                                 foreach (var a in s.Applications)
+                                 {
+                                    var qcBackOfficeVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\QCSBackOfficeWS"));
+                                    if (qcBackOfficeVDir != null)
+                                    {
+                                       wsPhysicalPath = qcBackOfficeVDir.PhysicalPath;
+                                       QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
+                                       cfInfo.Name = "qbc.cf";
+                                       cfInfo.Repository = "PROTEUS";
+                                       cfInfo.Path = $"\\\\{env.LegalAppProcessMappingWSHost}\\{wsPhysicalPath.Replace(":", "$")}\\qbc.cf";
+                                       objEnv.CFs.Add(cfInfo);
+                                    }
+
+                                    var qcWebCollectionWSVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\QCWebCollectionWS"));
+                                    if (qcWebCollectionWSVDir != null)
+                                    {
+                                       wsPhysicalPath = qcWebCollectionWSVDir.PhysicalPath;
+                                       QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
+                                       cfInfo.Name = "qbc.cf";
+                                       cfInfo.Repository = "PROTEUS";
+                                       cfInfo.Path = $"\\\\{env.LegalAppProcessMappingWSHost}\\{wsPhysicalPath.Replace(":", "$")}\\qbc.cf";
+                                       objEnv.CFs.Add(cfInfo);
+                                    }
+
+                                    var SCToolkit2WSVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\SCToolkit2WS"));
+                                    if (SCToolkit2WSVDir != null)
+                                    {
+                                       wsPhysicalPath = SCToolkit2WSVDir.PhysicalPath;
+                                       QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
+                                       cfInfo.Name = "qbc.cf";
+                                       cfInfo.Repository = "PROTEUS";
+                                       cfInfo.Path = $"\\\\{env.LegalAppProcessMappingWSHost}\\{wsPhysicalPath.Replace(":", "$")}\\qbc.cf";
+                                       objEnv.CFs.Add(cfInfo);
+                                    }
+
+
+                                 }
+                              }
+                           }
+                        }
+                     }
+                     catch (Exception ex)
+                     {
+                        objEnv.Errors.AddError($"Error while fetching web server's cf information. IIS Management Console is needed to install. ({ex.Message})", "");
+                     }
                   }
                }
                #endregion

@@ -265,6 +265,9 @@ namespace QToolbar.Plugins.Environments
       private List<CfInfo> _CFs= new List<CfInfo>();
       private Errors _Errors = new Errors();
       private List<OtherFile> _OtherFiles = new List<OtherFile>();
+      private string _LegalAppProcessMappingWSUrl = string.Empty;
+      private string _LegalAppProcessMappingWSHost = string.Empty;
+
 
       #endregion
 
@@ -622,6 +625,32 @@ namespace QToolbar.Plugins.Environments
          set
          {
             _GLMInstStemName = value;
+         }
+      }
+
+      public string LegalAppProcessMappingWSUrl
+      {
+         get
+         {
+            return _LegalAppProcessMappingWSUrl;
+         }
+
+         set
+         {
+            _LegalAppProcessMappingWSUrl = value;
+         }
+      }
+
+      public string LegalAppProcessMappingWSHost
+      {
+         get
+         {
+            return _LegalAppProcessMappingWSHost;
+         }
+
+         set
+         {
+            _LegalAppProcessMappingWSHost = value;
          }
       }
 
