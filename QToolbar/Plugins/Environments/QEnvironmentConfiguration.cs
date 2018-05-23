@@ -1,5 +1,9 @@
-﻿using System;
+﻿using QToolbar.Helpers;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,6 +46,8 @@ namespace QToolbar.Plugins.Environments
       private string _STDConnector = "";
       //
       private string _CheckoutPath = "";
+
+      private string _EnvironmentsConfigurationFile = "";
       #endregion
 
       #region properties
@@ -396,6 +402,19 @@ namespace QToolbar.Plugins.Environments
          }
       }
 
+      public string EnvironmentsConfigurationFile
+      {
+         get
+         {
+            return _EnvironmentsConfigurationFile;
+         }
+
+         set
+         {
+            _EnvironmentsConfigurationFile = value;
+         }
+      }
+
       #endregion
 
       #region methods
@@ -442,6 +461,62 @@ namespace QToolbar.Plugins.Environments
             throw new Exception($"xml element not read");
          }
       }
+
+      public Errors Validate()
+      {
+         Errors retVal = new Errors();
+         ValidationHelper helper = new ValidationHelper();
+         // check folders
+         helper.CheckFolderExistence(BatchServiceUNCPath, retVal, _EnvironmentsConfigurationFile, $"Environment {_Name}, tag BatchServiceUNCPath");
+         helper.CheckFolderExistence(EODServiceUNCPath, retVal, _EnvironmentsConfigurationFile, $"Environment {_Name}, tag EODServiceUNCPath");
+
+         helper.CheckIfServerIsAccessible(BatchServiceServer, retVal, _EnvironmentsConfigurationFile, $"Environment {_Name}, tag BatchServiceServer");
+         helper.CheckIfServerIsAccessible(EODServiceServer, retVal, _EnvironmentsConfigurationFile, $"Environment {_Name}, tag EODServiceServer");
+
+         // check BatchServicePath
+         int permissions;
+         bool unresolved;
+         string localBatchServiceUNCPath = Utils.GetPath(BatchServiceUNCPath, out permissions, out unresolved);
+         if(!string.IsNullOrEmpty(localBatchServiceUNCPath))
+         {
+            // check if BatchServiceUNCPath resolves to BatchServicePath
+            if (!localBatchServiceUNCPath.ToLower().Equals(Path.GetDirectoryName(BatchServicePath).ToLower()))
+            {
+               retVal.AddError($"BatchServiceUNCPath resolves to {localBatchServiceUNCPath} that is different than BatchServicePath {BatchServicePath}.", _EnvironmentsConfigurationFile);
+            }
+            else
+            {
+               // check if BatchServicePath exists as network path
+               string path = BatchServicePath.Replace(Path.GetDirectoryName(BatchServicePath), BatchServiceUNCPath);
+               helper.CheckFileExistence(path, retVal, _EnvironmentsConfigurationFile, $"Environment {_Name}, tag BatchServicePath");
+            }
+         }
+
+         // check EODServicePath
+         string localEODServicePath = Utils.GetPath(EODServiceUNCPath, out permissions, out unresolved);
+         if (!string.IsNullOrEmpty(localEODServicePath))
+         {
+            // check if EODServiceUNCPath resolves to EODServicePath
+            if (!localEODServicePath.ToLower().Equals(Path.GetDirectoryName(EODServicePath).ToLower()))
+            {
+               retVal.AddError($"EODServiceUNCPath resolves to {localEODServicePath} that is different than BatchServicePath {EODServicePath}.", _EnvironmentsConfigurationFile);
+            }
+            else
+            {
+               // check if EODServicePath exists as network path
+               string path = EODServicePath.Replace(Path.GetDirectoryName(EODServicePath), EODServiceUNCPath);
+               helper.CheckFileExistence(path, retVal, _EnvironmentsConfigurationFile, $"Environment {_Name}, tag EODServicePath");
+            }
+         }
+
+         // check dbs
+         helper.CheckDBConnection(Server, Database, retVal, _EnvironmentsConfigurationFile, $"Environment {_Name}, tags Server,Database");
+         helper.CheckDBConnection(AnalyticsServer, AnalyticsDatabase, retVal, _EnvironmentsConfigurationFile, $"Environment {_Name}, tags AnalyticsServer AnalyticsDatabase");
+         return retVal;
+      }
+
+      
+
       #endregion
    }
 }

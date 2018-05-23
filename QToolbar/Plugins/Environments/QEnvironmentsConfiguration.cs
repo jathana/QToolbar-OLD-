@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QToolbar.Helpers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -50,6 +51,7 @@ namespace QToolbar.Plugins.Environments
       
       public void Load()
       {
+         
          Clear();
          if(File.Exists(_ConfigurationFile))
          {
@@ -61,6 +63,7 @@ namespace QToolbar.Plugins.Environments
                foreach(XmlNode env in envNodes)
                {
                   QEnvironmentConfiguration newEnv = new QEnvironmentConfiguration();
+                  newEnv.EnvironmentsConfigurationFile = _ConfigurationFile;
                   newEnv.FromXml(env);
                   Add(newEnv);                  
                }               

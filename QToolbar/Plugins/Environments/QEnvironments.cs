@@ -157,6 +157,8 @@ namespace QToolbar.Plugins.Environments
                      SqlCommand com = new SqlCommand();
                      com.Connection = con;
 
+                     
+
                      #region get version from database 
                      if (!cancelToken.IsCancellationRequested)
                      {
@@ -448,6 +450,21 @@ namespace QToolbar.Plugins.Environments
                      #region check AT_EXTERNAL_COMPANIES.EXTC_IO_DIR field with the appropriate path per external company                      
                      if (!cancelToken.IsCancellationRequested)
                      {
+                        StringBuilder b = new StringBuilder();
+                        // missing agencies bat file
+                        string missingExtfile = Path.Combine(AppInstance.CacheDirectory, $"{objEnv.Name}_ext_agencies_missing.bat");
+                        if (File.Exists(missingExtfile))
+                        {
+                           try
+                           {
+                              File.Delete(missingExtfile);
+                           }
+                           catch(Exception ex)
+                           {
+                              objEnv.Errors.AddWarning($"Cannot delete {missingExtfile}", missingExtfile);
+                           }
+                        }
+
                         try
                         {
                            com.CommandText = @"SELECT EXTC_IO_DIR FROM AT_EXTERNAL_COMPANIES";
@@ -466,7 +483,12 @@ namespace QToolbar.Plugins.Environments
                                     if (!Directory.Exists(extcIODir))
                                     {
                                        objEnv.Errors.AddError($"AT_EXTERNAL_COMPANIES.EXTC_IO_DIR \"{extcIODir}\" not found", extcIODir);
+                                       b.AppendLine($"mkdir {extcIODir}");
                                     }
+                                    if (!Directory.Exists($"{extcIODir}\\HISTORY")) b.AppendLine($"mkdir {extcIODir}\\HISTORY");
+                                    if (!Directory.Exists($"{extcIODir}\\IN")) b.AppendLine($"mkdir {extcIODir}\\IN");
+                                    if (!Directory.Exists($"{extcIODir}\\OUT")) b.AppendLine($"mkdir {extcIODir}\\OUT");
+                                    if ((objEnv.Name.ToLower().Contains("etbn") || objEnv.Name.ToLower().Contains("nbg")) && !Directory.Exists($"{extcIODir}\\REJECT")) b.AppendLine($"mkdir {extcIODir}\\REJECT");
                                  }
                               }
                               catch (Exception ex)
@@ -478,6 +500,12 @@ namespace QToolbar.Plugins.Environments
                         catch (Exception ex)
                         {
 
+                        }
+                        if(b.Length>0)
+                        {
+                           
+                           File.AppendAllText(missingExtfile, b.ToString());
+                           objEnv.Errors.AddInfo($"External Companies Folders are missing, bat file created {missingExtfile}", missingExtfile);
                         }
                      }
                      #endregion
@@ -668,7 +696,7 @@ namespace QToolbar.Plugins.Environments
                      var envFound = ec.FirstOrDefault(e => e.Database.ToLower() == env.DBCollectionPlusName.ToLower() && e.Server.ToLower() == env.DBCollectionPlusServer.ToLower());
                      if (envFound != null)
                      {
-
+                        objEnv.Errors.AddRange(envFound.Validate());
                         // check bi_glm_installetion.inst_stem_name
                         if (!string.IsNullOrEmpty(envFound.GLMPrefix))
                         {

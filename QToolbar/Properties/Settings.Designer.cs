@@ -277,13 +277,74 @@ namespace QToolbar.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<DocumentElement>
+  <table>
+    <Repository>PROTEUS</Repository>
+    <Path>QC.WebCollection.WebServices\qbc.cf</Path>
+  </table>
+  <table>
+    <Repository>PROTEUS</Repository>
+    <Path>QCS.BackOffice.WebServices\qbc.cf</Path>
+  </table>
+  <table>
+    <Repository>PROTEUS</Repository>
+    <Path>SCToolkit2.Designers.Client.WPF\qbc.cf</Path>
+  </table>
+  <table>
+    <Repository>PROTEUS</Repository>
+    <Path>SCToolkit2.Designers.WebServices\qbc.cf</Path>
+  </table>
+  <table>
+    <Repository>PROTEUS</Repository>
+    <Path>SCToolkit2.WebServices\qbc.cf</Path>
+  </table>
+  <table>
+    <Repository>QC</Repository>
+    <Path>VS Projects\CollectionAgentSystem\CollectionAgentSystemClient.BranchUI\qbc.cf</Path>
+  </table>
+  <table>
+    <Repository>QC</Repository>
+    <Path>VS Projects\CollectionAgentSystem\CollectionAgentSystemClient\qbc.cf</Path>
+  </table>
+  <table>
+    <Repository>QC</Repository>
+    <Path>VS Projects\QC.DataArchive\QC.DataArchive.Client\QC_DataArchive.cf</Path>
+  </table>
+  <table>
+    <Repository>QC</Repository>
+    <Path>VS Projects\QCS\MicroQCClient\qbc_admin.cf</Path>
+  </table>
+  <table>
+    <Repository>QC</Repository>
+    <Path>VS Projects\QCS\QCSClient\qbc_admin.cf</Path>
+  </table>
+  <table>
+    <Repository>QC</Repository>
+    <Path>VS Projects\QCS\QCSWS\qbc.cf</Path>
+  </table>
+  <table>
+    <Repository>QC</Repository>
+    <Path>VS Projects\SCToolkit\SCToolkitWS\qbc.cf</Path>
+  </table>
+</DocumentElement>")]
         public string EnvCFs {
             get {
                 return ((string)(this["EnvCFs"]));
             }
             set {
                 this["EnvCFs"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Q-SRV-SQL2K12")]
+        public string QCWebServers {
+            get {
+                return ((string)(this["QCWebServers"]));
+            }
+            set {
+                this["QCWebServers"] = value;
             }
         }
     }

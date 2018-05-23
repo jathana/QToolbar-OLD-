@@ -57,7 +57,7 @@ namespace QToolbar
          return retVal;
       }
 
-
+      
 
       public static string GetPath(string uncPath, out int permissions, out bool unresolved)
       {

@@ -52,8 +52,9 @@ namespace QToolbar
       private void EnableEditButton(bool enable)
       {
          btnEditFile.Enabled = enable  && !Path.GetExtension(_File).ToLower().Equals(".deploy") 
-                                       &&  !Path.GetFileName(_File).ToLower().Equals("environmentsconfiguration.xml");
-         
+                                       && !Path.GetFileName(_File).ToLower().Equals("environmentsconfiguration.xml")
+                                       && !Path.GetExtension(_File).ToLower().Equals(".bat");
+
       }
 
       public void ViewFile(string file, Language lang)

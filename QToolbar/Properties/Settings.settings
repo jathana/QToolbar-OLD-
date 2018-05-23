@@ -94,7 +94,59 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="EnvCFs" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">&lt;DocumentElement&gt;
+  &lt;table&gt;
+    &lt;Repository&gt;PROTEUS&lt;/Repository&gt;
+    &lt;Path&gt;QC.WebCollection.WebServices\qbc.cf&lt;/Path&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;Repository&gt;PROTEUS&lt;/Repository&gt;
+    &lt;Path&gt;QCS.BackOffice.WebServices\qbc.cf&lt;/Path&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;Repository&gt;PROTEUS&lt;/Repository&gt;
+    &lt;Path&gt;SCToolkit2.Designers.Client.WPF\qbc.cf&lt;/Path&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;Repository&gt;PROTEUS&lt;/Repository&gt;
+    &lt;Path&gt;SCToolkit2.Designers.WebServices\qbc.cf&lt;/Path&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;Repository&gt;PROTEUS&lt;/Repository&gt;
+    &lt;Path&gt;SCToolkit2.WebServices\qbc.cf&lt;/Path&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;Repository&gt;QC&lt;/Repository&gt;
+    &lt;Path&gt;VS Projects\CollectionAgentSystem\CollectionAgentSystemClient.BranchUI\qbc.cf&lt;/Path&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;Repository&gt;QC&lt;/Repository&gt;
+    &lt;Path&gt;VS Projects\CollectionAgentSystem\CollectionAgentSystemClient\qbc.cf&lt;/Path&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;Repository&gt;QC&lt;/Repository&gt;
+    &lt;Path&gt;VS Projects\QC.DataArchive\QC.DataArchive.Client\QC_DataArchive.cf&lt;/Path&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;Repository&gt;QC&lt;/Repository&gt;
+    &lt;Path&gt;VS Projects\QCS\MicroQCClient\qbc_admin.cf&lt;/Path&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;Repository&gt;QC&lt;/Repository&gt;
+    &lt;Path&gt;VS Projects\QCS\QCSClient\qbc_admin.cf&lt;/Path&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;Repository&gt;QC&lt;/Repository&gt;
+    &lt;Path&gt;VS Projects\QCS\QCSWS\qbc.cf&lt;/Path&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;Repository&gt;QC&lt;/Repository&gt;
+    &lt;Path&gt;VS Projects\SCToolkit\SCToolkitWS\qbc.cf&lt;/Path&gt;
+  &lt;/table&gt;
+&lt;/DocumentElement&gt;</Value>
+    </Setting>
+    <Setting Name="QCWebServers" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Q-SRV-SQL2K12</Value>
     </Setting>
   </Settings>
 </SettingsFile>

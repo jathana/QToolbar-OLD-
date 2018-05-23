@@ -23,6 +23,11 @@ namespace QToolbar.Helpers
          Add(new Error() { Message = msg, ErrorType = ErrorType.Info, Path = file });
       }
 
+      public void AddSuccess(string msg, string file)
+      {
+         Add(new Error() { Message = msg, ErrorType = ErrorType.Success, Path = file });
+      }
+
 
       public string GetStrongestDesc()
       {
