@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -512,6 +513,14 @@ namespace QToolbar.Plugins.Environments
          // check dbs
          helper.CheckDBConnection(Server, Database, retVal, _EnvironmentsConfigurationFile, $"Environment {_Name}, tags Server,Database");
          helper.CheckDBConnection(AnalyticsServer, AnalyticsDatabase, retVal, _EnvironmentsConfigurationFile, $"Environment {_Name}, tags AnalyticsServer AnalyticsDatabase");
+
+         // validate name suffix
+         Regex reg = new Regex(@"\s*[1]$");
+         if (reg.IsMatch(_Name))
+         {
+            retVal.AddError($"First environment of a specific installation should not end with number {_Name}", _EnvironmentsConfigurationFile);
+         }
+
          return retVal;
       }
 

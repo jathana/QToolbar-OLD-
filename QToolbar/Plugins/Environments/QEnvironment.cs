@@ -267,6 +267,13 @@ namespace QToolbar.Plugins.Environments
       private List<OtherFile> _OtherFiles = new List<OtherFile>();
       private string _LegalAppProcessMappingWSUrl = string.Empty;
       private string _LegalAppProcessMappingWSHost = string.Empty;
+      private string _AnalyticsServer = string.Empty;
+      private string _AnalyticsDBName = string.Empty;
+      private string _D3FServer = string.Empty;
+      private string _D3FDBName = string.Empty;
+      private string _DialerServer = string.Empty;
+      private string _DialerDBName = string.Empty;
+
 
 
       #endregion
@@ -651,6 +658,84 @@ namespace QToolbar.Plugins.Environments
          set
          {
             _LegalAppProcessMappingWSHost = value;
+         }
+      }
+
+      public string AnalyticsServer
+      {
+         get
+         {
+            return _AnalyticsServer;
+         }
+
+         set
+         {
+            _AnalyticsServer = value;
+         }
+      }
+
+      public string AnalyticsDBName
+      {
+         get
+         {
+            return _AnalyticsDBName;
+         }
+
+         set
+         {
+            _AnalyticsDBName = value;
+         }
+      }
+
+      public string D3FServer
+      {
+         get
+         {
+            return _D3FServer;
+         }
+
+         set
+         {
+            _D3FServer = value;
+         }
+      }
+
+      public string D3FDBName
+      {
+         get
+         {
+            return _D3FDBName;
+         }
+
+         set
+         {
+            _D3FDBName = value;
+         }
+      }
+
+      public string DialerServer
+      {
+         get
+         {
+            return _DialerServer;
+         }
+
+         set
+         {
+            _DialerServer = value;
+         }
+      }
+
+      public string DialerDBName
+      {
+         get
+         {
+            return _DialerDBName;
+         }
+
+         set
+         {
+            _DialerDBName = value;
          }
       }
 

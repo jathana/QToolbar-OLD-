@@ -192,6 +192,23 @@ namespace QToolbar.Plugins.Environments
                      }
                      #endregion
 
+                     #region get system params
+                     try
+                     {
+                        com.CommandText = "select SPRA_VALUE from AT_SYSTEM_PARAMS where SPRA_TYPE = 'DIALER_DB_NAME'";
+                        objEnv.DialerDBName= com.ExecuteScalar().ToString();
+                        if (!string.IsNullOrEmpty(objEnv.DialerDBName))
+                        {
+                           objEnv.DialerServer = objEnv.DBCollectionPlusServer;
+                        }
+                     }
+                     catch(Exception ex)
+                     {
+                        env.Errors.AddError($"Error retrieving 'DIALER_DB_NAME' from AT_SYSTEM_PARAMS ({ex.Message})", "");
+                     }
+                     #endregion
+
+
                      #region get location of the GLM folder
                      if (!cancelToken.IsCancellationRequested)
                      {
@@ -208,6 +225,20 @@ namespace QToolbar.Plugins.Environments
                               DataRow glmRow = glmTable.Rows[0];
                               #region check GLM folder
                               objEnv.GLMInstStemName = glmRow["inst_stem_name"].ToString();
+                              objEnv.AnalyticsServer = glmRow["qba_server"].ToString();
+                              objEnv.AnalyticsDBName = glmRow["qba_db_name"].ToString();
+                              objEnv.D3FServer = glmRow["qd3f_server"].ToString();
+                              objEnv.D3FDBName = glmRow["qd3f_db_name"].ToString();
+
+                              if (string.IsNullOrEmpty(objEnv.AnalyticsServer))
+                              {
+                                 objEnv.Errors.AddWarning($"Analytics Server not set (bi_glm_installation table)", "");
+                              }
+                              if (string.IsNullOrEmpty(objEnv.AnalyticsDBName))
+                              {
+                                 objEnv.Errors.AddWarning($"Analytics Database not set (bi_glm_installation table)", "");
+                              }
+
                               string glmDir = glmRow["inst_root"].ToString();
                               objEnv.GLMDir = glmDir;
                               int permissions = -1;
@@ -512,7 +543,7 @@ namespace QToolbar.Plugins.Environments
                   }
                   catch (Exception ex)
                   {
-                     objEnv.Errors.AddError($"Generic Error ({ex.Message})", "");
+                     objEnv.Errors.AddError($"QBCollection Plus Error ({ex.Message})", "");
                   }
                   finally
                   {
@@ -566,8 +597,8 @@ namespace QToolbar.Plugins.Environments
                {
 
                   try
-                  {
-                     string envNameInWeb = $"QCS_{string.Join("_", Path.GetFileName(env.CheckoutPath).Split('.'))}";
+                  {                     
+                     string envNameInWeb = $"QCS_{objEnv.DBCollectionPlusMajorVersion}_{objEnv.DBCollectionPlusMinorVersion}";
 
                      // add cfs from web server
 
@@ -624,7 +655,7 @@ namespace QToolbar.Plugins.Environments
                   {
                      try
                      {
-                        string envNameInWeb = $"LegalApp_{string.Join("_", Path.GetFileName(env.CheckoutPath).Split('.'))}";
+                        string envNameInWeb = $"LegalApp_{objEnv.DBCollectionPlusMajorVersion}_{objEnv.DBCollectionPlusMinorVersion}";
 
                         // add cfs from legal web server
                         using (ServerManager mgr = ServerManager.OpenRemote(env.LegalAppProcessMappingWSHost))
@@ -952,8 +983,169 @@ namespace QToolbar.Plugins.Environments
                #endregion
 
                #region Check Analytics DB
+               if (!cancelToken.IsCancellationRequested)
+               {
+                  if (!string.IsNullOrEmpty(objEnv.AnalyticsServer) && !string.IsNullOrEmpty(objEnv.AnalyticsServer))
+                  {
+                     using (SqlConnection con = new SqlConnection())
+                     {
+                        con.ConnectionString = Utils.GetConnectionString(objEnv.AnalyticsServer, objEnv.AnalyticsDBName);
 
+                        try
+                        {
+                           con.Open();
+                           SqlCommand com = new SqlCommand();
+                           com.Connection = con;
+
+                           #region  check ADMIN_WRAPPER_SETTINGS. Fields containing server names must always have brackets
+                           if (!cancelToken.IsCancellationRequested)
+                           {
+                              //The location of the GLM folder can be found from the following query:
+                              //select inst_root from bi_glm_installation
+                              try
+                              {
+                                 com.CommandText = @"SELECT * FROM ADMIN_WRAPPER_SETTINGS";
+                                 SqlDataAdapter adapter = new SqlDataAdapter(com);
+                                 DataTable glmTable = new DataTable();
+                                 adapter.Fill(glmTable);
+                                 if (glmTable.Rows.Count == 1)
+                                 {
+                                    #region check brackets at fields storing server name    
+                                    CheckBrackets("QBC_SERVER_NAME", glmTable.Rows[0], objEnv, objEnv.AnalyticsServer, objEnv.AnalyticsDBName);
+                                    CheckBrackets("DIALER_SERVER_NAME", glmTable.Rows[0], objEnv, objEnv.AnalyticsServer, objEnv.AnalyticsDBName);
+                                    CheckBrackets("QBA_LINKED_SERVER_NAME", glmTable.Rows[0], objEnv, objEnv.AnalyticsServer, objEnv.AnalyticsDBName);
+                                    #endregion
+
+                                    #region check fields are not empty and correct                                 
+                                    CheckDBValue("QBC_SERVER_NAME", glmTable.Rows[0], objEnv, objEnv.AnalyticsServer, objEnv.AnalyticsDBName, objEnv.DBCollectionPlusServer);
+                                    CheckDBValue("QBC_DB_NAME", glmTable.Rows[0], objEnv, objEnv.AnalyticsServer, objEnv.AnalyticsDBName, objEnv.DBCollectionPlusName);
+
+                                    CheckDBValue("DIALER_SERVER_NAME", glmTable.Rows[0], objEnv, objEnv.AnalyticsServer, objEnv.AnalyticsDBName, objEnv.DialerServer);
+                                    CheckDBValue("DIALER_DB_NAME", glmTable.Rows[0], objEnv, objEnv.AnalyticsServer, objEnv.AnalyticsDBName, objEnv.DialerDBName);
+
+                                    CheckDBValue("QBA_LINKED_SERVER_NAME", glmTable.Rows[0], objEnv, objEnv.AnalyticsServer, objEnv.AnalyticsDBName, objEnv.AnalyticsServer);
+                                    CheckDBValue("QBA_LINKED_DB_NAME", glmTable.Rows[0], objEnv, objEnv.AnalyticsServer, objEnv.AnalyticsDBName, objEnv.AnalyticsDBName);
+
+                                    #endregion
+
+                                 }
+                                 else if (glmTable.Rows.Count == 0)
+                                 {
+                                    objEnv.Errors.AddError($"bi_glm_installation table is empty.", "");
+                                 }
+                                 else
+                                 {
+                                    objEnv.Errors.AddError($"More than one rows found in bi_glm_installation table.", "");
+                                 }
+                              }
+                              catch (Exception ex)
+                              {
+                                 objEnv.Errors.AddError($"Error while fetching glm information ({ex.Message})", "");
+                              }
+                           }
+                           #endregion
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                           objEnv.Errors.AddError($"Analytics Error ({ex.Message})", "");
+                        }
+                        finally
+                        {
+                           if (con.State == ConnectionState.Open)
+                           {
+                              con.Close();
+                           }
+                        }
+                     }
+                  }
+               }
                #endregion
+
+               #region Check D3F DB
+               if (!cancelToken.IsCancellationRequested)
+               {
+                  if (!string.IsNullOrEmpty(objEnv.D3FServer) && !string.IsNullOrEmpty(objEnv.D3FDBName))
+                  {
+                     using (SqlConnection con = new SqlConnection())
+                     {
+                        con.ConnectionString = Utils.GetConnectionString(objEnv.D3FServer, objEnv.D3FDBName);
+
+                        try
+                        {
+                           con.Open();
+                           SqlCommand com = new SqlCommand();
+                           com.Connection = con;
+
+                           #region  check ADMIN_WRAPPER_SETTINGS. Fields containing server names must always have brackets
+                           if (!cancelToken.IsCancellationRequested)
+                           {
+                              //The location of the GLM folder can be found from the following query:
+                              //select inst_root from bi_glm_installation
+                              try
+                              {
+                                 com.CommandText = @"SELECT * FROM ADMIN_WRAPPER_SETTINGS";
+                                 SqlDataAdapter adapter = new SqlDataAdapter(com);
+                                 DataTable glmTable = new DataTable();
+                                 adapter.Fill(glmTable);
+                                 if (glmTable.Rows.Count == 1)
+                                 {
+                                    #region check brackets at fields storing server name    
+                                    CheckBrackets("QBC_SERVER_NAME", glmTable.Rows[0], objEnv, objEnv.D3FServer, objEnv.D3FDBName);
+                                    CheckBrackets("D3F_LINKED_SERVER_NAME", glmTable.Rows[0], objEnv, objEnv.D3FServer, objEnv.D3FDBName);
+                                    CheckBrackets("DIALER_SERVER_NAME", glmTable.Rows[0], objEnv, objEnv.D3FServer, objEnv.D3FDBName);
+                                    CheckBrackets("QBA_LINKED_SERVER_NAME", glmTable.Rows[0], objEnv, objEnv.D3FServer, objEnv.D3FDBName);
+                                    #endregion
+
+                                    #region check fields are not empty and correct                                 
+                                    CheckDBValue("QBC_SERVER_NAME", glmTable.Rows[0], objEnv, objEnv.D3FServer, objEnv.D3FDBName, objEnv.DBCollectionPlusServer);
+                                    CheckDBValue("QBC_DB_NAME", glmTable.Rows[0], objEnv, objEnv.D3FServer, objEnv.D3FDBName, objEnv.DBCollectionPlusName);
+                                    CheckDBValue("QBA_LINKED_SERVER_NAME", glmTable.Rows[0], objEnv, objEnv.D3FServer, objEnv.D3FDBName, objEnv.AnalyticsServer);
+                                    CheckDBValue("QBA_LINKED_DB_NAME", glmTable.Rows[0], objEnv, objEnv.D3FServer, objEnv.D3FDBName, objEnv.AnalyticsDBName);
+                                    CheckDBValue("DIALER_SERVER_NAME", glmTable.Rows[0], objEnv, objEnv.D3FServer, objEnv.D3FDBName, objEnv.DialerServer);
+                                    CheckDBValue("DIALER_DB_NAME", glmTable.Rows[0], objEnv, objEnv.D3FServer, objEnv.D3FDBName, objEnv.DialerDBName);
+                                    CheckDBValue("D3F_LINKED_SERVER_NAME", glmTable.Rows[0], objEnv, objEnv.D3FServer, objEnv.D3FDBName, objEnv.D3FServer);
+                                    CheckDBValue("D3F_LINKED_DB_NAME", glmTable.Rows[0], objEnv, objEnv.D3FServer, objEnv.D3FDBName, objEnv.D3FDBName);
+
+                                    #endregion
+
+                                 }
+                                 else if (glmTable.Rows.Count == 0)
+                                 {
+                                    objEnv.Errors.AddError($"bi_glm_installation table is empty.", "");
+                                 }
+                                 else
+                                 {
+                                    objEnv.Errors.AddError($"More than one rows found in bi_glm_installation table.", "");
+                                 }
+                              }
+                              catch (Exception ex)
+                              {
+                                 objEnv.Errors.AddError($"Error while fetching glm information ({ex.Message})", "");
+                              }
+                           }
+                           #endregion
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                           objEnv.Errors.AddError($"Analytics Error ({ex.Message})", "");
+                        }
+                        finally
+                        {
+                           if (con.State == ConnectionState.Open)
+                           {
+                              con.Close();
+                           }
+                        }
+                     }
+                  }
+               }
+               #endregion
+
+
             };
             return objEnv;
          }, env, tokenSource.Token);
@@ -975,8 +1167,41 @@ namespace QToolbar.Plugins.Environments
                AllInfoCollected(this, new EventArgs());
             });
       }
+      #region validation
+      private void CheckBrackets(string fieldName, DataRow glmRow, QEnvironment env, string server, string db)
+      {
+         if (!string.IsNullOrEmpty(glmRow[fieldName].ToString()))
+         {
+            if (!glmRow[fieldName].ToString().StartsWith("[") || !glmRow[fieldName].ToString().EndsWith("]"))
+            {
+               env.Errors.AddError($"{server}.{server} field \"{fieldName}\" should be enclosed in brackets", "");
+            }
+         }
+      }
 
-      private void CheckFolderExistence(string path, QEnvironment env)
+      private void CheckDBValue(string fieldName, DataRow glmRow, QEnvironment env, string server, string db, string comparissonValue)
+      {
+         if (!string.IsNullOrEmpty(glmRow[fieldName].ToString()))
+         {
+            
+            if (!glmRow[fieldName].ToString().ToLower().Replace("[", "").Replace("]", "").Equals(comparissonValue.ToLower()))
+            {               
+               env.Errors.AddError($"{server}.{db} field \"{fieldName}\" ({glmRow[fieldName].ToString().Replace("[", "").Replace("]","")}) should be {comparissonValue}", "");
+            }
+         }
+         else
+         {
+            if (!string.IsNullOrEmpty(comparissonValue))
+            {
+               env.Errors.AddError($"{server}.{db} field \"{fieldName}\" is empty", "");
+            }
+         }
+
+      }
+
+#endregion
+
+private void CheckFolderExistence(string path, QEnvironment env)
       {
          if(!Directory.Exists(path))
          {
