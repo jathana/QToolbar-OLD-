@@ -23,6 +23,8 @@ namespace QToolbar.Plugins.Environments
 
       private List<Task> _Tasks = new List<Task>();
       private Dictionary<string, CancellationTokenSource> _CancellationTokenSourceList = new Dictionary<string, CancellationTokenSource>();
+
+      private QEnvironmentParameters _EnvParams = new QEnvironmentParameters();
       #endregion
 
       #region events
@@ -155,9 +157,7 @@ namespace QToolbar.Plugins.Environments
                   {
                      con.Open();
                      SqlCommand com = new SqlCommand();
-                     com.Connection = con;
-
-                     
+                     com.Connection = con;                     
 
                      #region get version from database 
                      if (!cancelToken.IsCancellationRequested)
@@ -207,7 +207,6 @@ namespace QToolbar.Plugins.Environments
                         env.Errors.AddError($"Error retrieving 'DIALER_DB_NAME' from AT_SYSTEM_PARAMS ({ex.Message})", "");
                      }
                      #endregion
-
 
                      #region get location of the GLM folder
                      if (!cancelToken.IsCancellationRequested)
@@ -281,12 +280,6 @@ namespace QToolbar.Plugins.Environments
                                  objEnv.Errors.AddError($"bi_glm_installation table : found INST_DB_NAME={glmRow["INST_DB_NAME"].ToString()} while expecting {objEnv.DBCollectionPlusName}.", "");
                               }
 
-                              // QBA
-                              objEnv.Errors.AddInfo($"Check validity of bi_glm_installation QBA_SERVER.QBA_DB_NAME = {glmRow["QBA_SERVER"].ToString()}.{glmRow["QBA_DB_NAME"].ToString()}.", "");
-
-                              // D3F
-                              objEnv.Errors.AddInfo($"Check validity of bi_glm_installation QD3F_SERVER.QD3F_DB_NAME = {glmRow["QD3F_SERVER"].ToString()}.{glmRow["QD3F_DB_NAME"].ToString()}.", "");
-
                               #endregion
 
 
@@ -351,7 +344,7 @@ namespace QToolbar.Plugins.Environments
                      }
                      #endregion
 
-                     #region get system shared folders
+                     #region check system prefs
                      if (!cancelToken.IsCancellationRequested)
                      {
 
@@ -362,6 +355,7 @@ namespace QToolbar.Plugins.Environments
                                                          'ATTACHMENTS_DIRECTORY',
                                                          'BULK_OUTPUT_EXPORT_DIRECTORY', 
                                                          'CRITERIA_PUBLISHED_PATH',
+                                                         'FIELD_AGENT_INTEGRATION_APPLICATION_WS_URL',
                                                          'LEGAL_APP_PROCESS_MAPPING_WS_URL')";
                            SqlDataAdapter adapter = new SqlDataAdapter(com);
                            DataTable pathsTable = new DataTable();
@@ -375,6 +369,7 @@ namespace QToolbar.Plugins.Environments
                               #region check shared folders
                               try
                               {
+                                 // LEGAL_APP_PROCESS_MAPPING_WS_URL
                                  if (pathrow["SPR_TYPE"].ToString().Equals("LEGAL_APP_PROCESS_MAPPING_WS_URL"))
                                  {
                                     objEnv.Errors.AddInfo($"Check AT_SYSTEM_PREF.SPR_TYPE = LEGAL_APP_PROCESS_MAPPING_WS_URL  ({pathrow["SPR_VALUE"].ToString()}) ", "");
@@ -387,7 +382,15 @@ namespace QToolbar.Plugins.Environments
                                        objEnv.LegalAppProcessMappingWSHost = uri.Host;
                                     }
                                  }
-                                 else
+                                 // FIELD_AGENT_INTEGRATION_APPLICATION_WS_URL
+                                 else if (pathrow["SPR_TYPE"].ToString().Equals("FIELD_AGENT_INTEGRATION_APPLICATION_WS_URL"))
+                                 {
+                                    if(!objEnv.AppWSUrl.ToLower().Equals(pathrow["SPR_VALUE"].ToString().ToLower()))
+                                    {
+                                       objEnv.Errors.AddError($"AT_SYSTEM_PREF.SPR_TYPE = FIELD_AGENT_INTEGRATION_APPLICATION_WS_URL  [{pathrow["SPR_VALUE"].ToString()}] not equals to  objEnv.AppWSUrl", "");
+                                    }
+                                 }
+                                 else // shared folders
                                  {
                                     int permissions = -1;
                                     bool unresolved = false;
@@ -727,11 +730,12 @@ namespace QToolbar.Plugins.Environments
                      var envFound = ec.FirstOrDefault(e => e.Database.ToLower() == env.DBCollectionPlusName.ToLower() && e.Server.ToLower() == env.DBCollectionPlusServer.ToLower());
                      if (envFound != null)
                      {
+                        // validate environment configuration
                         objEnv.Errors.AddRange(envFound.Validate());
                         // check bi_glm_installetion.inst_stem_name
                         if (!string.IsNullOrEmpty(envFound.GLMPrefix))
                         {
-                           if (!envFound.GLMPrefix.Equals(objEnv.GLMInstStemName))
+                           if (!envFound.GLMPrefix.ToLower().Equals(objEnv.GLMInstStemName.ToLower()))
                            {
                               objEnv.Errors.AddError($"BI_GLM_INSTALLATION.INST_STEM_NAME({objEnv.GLMInstStemName}) must equals to <GLMPrefix>({envFound.GLMPrefix}) of EnvironmentsConfiguration.xml", envConfFile);
                            }
@@ -1167,6 +1171,7 @@ namespace QToolbar.Plugins.Environments
                AllInfoCollected(this, new EventArgs());
             });
       }
+
       #region validation
       private void CheckBrackets(string fieldName, DataRow glmRow, QEnvironment env, string server, string db)
       {
@@ -1201,7 +1206,7 @@ namespace QToolbar.Plugins.Environments
 
 #endregion
 
-private void CheckFolderExistence(string path, QEnvironment env)
+      private void CheckFolderExistence(string path, QEnvironment env)
       {
          if(!Directory.Exists(path))
          {
