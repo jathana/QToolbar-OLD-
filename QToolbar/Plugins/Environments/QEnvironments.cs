@@ -44,10 +44,11 @@ namespace QToolbar.Plugins.Environments
 
       #endregion
 
-
+      #region contructors
       public QEnvironments()
       {
       }
+      #endregion
 
       #region methods
 
@@ -1519,7 +1520,6 @@ namespace QToolbar.Plugins.Environments
          }
       }
       #endregion
-
 
       #region events
       #endregion
