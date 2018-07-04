@@ -21,6 +21,10 @@ namespace QToolbar.Plugins.Environments
       public const string QBC_ADMIN_CF_REMOTE = "QBC_ADMIN_CF_REMOTE";
       public const string QBC_ADMIN_CF_ENVIRONMENT_KEY = "QBC_ADMIN_CF_ENVIRONMENT_KEY";
 
+      // web services ports
+      public const string QCS_APP_WS_URL_PORT = "QCS_APP_WS_URL_PORT";
+      public const string LEGAL_APP_WS_URL_PORT = "LEGAL_APP_WS_URL_PORT";
+
       // QBCOLLECTION PLUS db
       public const string QBCOLLECTION_PLUS_MAJOR_VERSION = "QBCOLLECTION_PLUS_MAJOR_VERSION";
       public const string QBCOLLECTION_PLUS_MINOR_VERSION = "QBCOLLECTION_PLUS_MINOR_VERSION";

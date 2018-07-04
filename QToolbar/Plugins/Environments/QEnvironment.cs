@@ -263,6 +263,7 @@ namespace QToolbar.Plugins.Environments
       private string _GLMInstStemName = string.Empty;  // from bi_glm_installation
       private List<SharedDir> _QCSystemSharedDirs = new List<SharedDir>();
       private List<CfInfo> _CFs= new List<CfInfo>();
+      private List<string> _EODFlows = new List<string>();
       private Errors _Errors = new Errors();
       private List<OtherFile> _OtherFiles = new List<OtherFile>();
       private string _LegalAppProcessMappingWSUrl = string.Empty;
@@ -573,6 +574,13 @@ namespace QToolbar.Plugins.Environments
          }
       }
 
+      public List<string> EODFlows
+      {
+         get
+         {
+            return _EODFlows;
+         }
+      }
 
       // keep error as the last collection 
       public Errors Errors
@@ -765,6 +773,8 @@ namespace QToolbar.Plugins.Environments
          }
       }
 
+      
+
 
 
       #endregion
@@ -808,6 +818,7 @@ namespace QToolbar.Plugins.Environments
          _Errors.Clear();
          _QCSystemSharedDirs.Clear();
          _OtherFiles.Clear();
+         _EODFlows.Clear();
       }
 
       #endregion

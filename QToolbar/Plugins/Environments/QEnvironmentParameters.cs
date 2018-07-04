@@ -73,6 +73,25 @@ namespace QToolbar.Plugins.Environments
             ParamType = QEnvironmentParameterTypeEnum.DatabaseName
          });
 
+         // QCS_APP_WS_URL_PORT
+         Add(EnvironmentConsts.QCS_APP_WS_URL_PORT, new QEnvironmentParameter()
+         {
+            Name = EnvironmentConsts.QCS_APP_WS_URL_PORT,
+            Desc = "QCS Application Web Service Port (ApplicationWSURL).",
+            Mandatory = true,
+            ParamType = QEnvironmentParameterTypeEnum.SimpleValue
+         });
+
+         // LEGAL_APP_WS_URL_PORT
+         Add(EnvironmentConsts.LEGAL_APP_WS_URL_PORT, new QEnvironmentParameter()
+         {
+            Name = EnvironmentConsts.LEGAL_APP_WS_URL_PORT,
+            Desc = "Legal Application Web Service Port.",
+            Mandatory = true,
+            ParamType = QEnvironmentParameterTypeEnum.SimpleValue
+         });
+
+
          // QBCOLLECTION_PLUS_MAJOR_VERSION
          Add(EnvironmentConsts.QBCOLLECTION_PLUS_MAJOR_VERSION, new QEnvironmentParameter()
          {

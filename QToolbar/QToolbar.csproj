@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\q-wks-jathan\Shared\QToolbar\</InstallUrl>
-    <ApplicationRevision>120</ApplicationRevision>
+    <ApplicationRevision>121</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -130,6 +130,7 @@
     <Compile Include="Builds\CheckResult.cs" />
     <Compile Include="Helpers\CfFile.cs" />
     <Compile Include="Helpers\CfValidator.cs" />
+    <Compile Include="Helpers\DBUtils.cs" />
     <Compile Include="Helpers\Error.cs" />
     <Compile Include="Helpers\Errors.cs" />
     <Compile Include="Helpers\ErrorType.cs" />
