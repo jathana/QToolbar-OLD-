@@ -24,7 +24,6 @@ namespace QToolbar.Plugins.Environments
       private List<Task> _Tasks = new List<Task>();
       private Dictionary<string, CancellationTokenSource> _CancellationTokenSourceList = new Dictionary<string, CancellationTokenSource>();
 
-      private QEnvironmentParameters _EnvParams = new QEnvironmentParameters();
       #endregion
 
       #region events

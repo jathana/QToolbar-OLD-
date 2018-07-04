@@ -207,17 +207,9 @@
       <DependentUpon>Frm_FileViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Plugins\Environments\QEnvironment.cs" />
-    <Compile Include="Plugins\Environments\QEnvironmentParameter.cs" />
     <Compile Include="Plugins\Environments\EnvironmentConsts.cs" />
-    <Compile Include="Plugins\Environments\QEnvironmentParameters.cs" />
-    <Compile Include="Plugins\Environments\QEnvironmentParametersSet.cs" />
-    <Compile Include="Plugins\Environments\QEnvironmentParametersSets.cs" />
-    <Compile Include="Plugins\Environments\QEnvironmentParametersSetType.cs" />
-    <Compile Include="Plugins\Environments\QEnvironmentParameterTypeEnum.cs" />
     <Compile Include="Plugins\Environments\QEnvironments.cs" />
     <Compile Include="Plugins\Environments\QEnvironmentsConfiguration.cs" />
-    <Compile Include="Plugins\Environments\QEnvironmentUrlParameter.cs" />
-    <Compile Include="Plugins\Environments\QEnvironmentValidator.cs" />
     <Compile Include="Plugins\NextBuildScript\AddFullEODMetadataPlugin.cs" />
     <Compile Include="Plugins\NextBuildScript\AddEODMetadataPlugin.cs" />
     <Compile Include="Plugins\NextBuildScript\Frm_NextBuildScript.cs">
