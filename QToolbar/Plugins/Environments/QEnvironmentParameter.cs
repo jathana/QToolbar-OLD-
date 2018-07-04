@@ -33,17 +33,17 @@ namespace QToolbar.Plugins.Environments
       }
 
       public QEnvironmentParameterTypeEnum ParamType
-            {
-               get
-               {
-                  return _ParamType;
-               }
+      {
+         get
+         {
+            return _ParamType;
+         }
 
-               set
-               {
-                  _ParamType = value;
-               }
-            }
+         set
+         {
+            _ParamType = value;
+         }
+      }
       public string Desc
       {
          get

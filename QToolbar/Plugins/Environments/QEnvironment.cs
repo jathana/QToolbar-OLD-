@@ -273,9 +273,9 @@ namespace QToolbar.Plugins.Environments
       private string _D3FDBName = string.Empty;
       private string _DialerServer = string.Empty;
       private string _DialerDBName = string.Empty;
-
-
-
+      private string _QCWebServerPort = string.Empty;
+      private string _AppWSUrlPort = string.Empty;
+      private string _LegalAppWSUrlPort = string.Empty;
       #endregion
 
       #region properties
@@ -739,6 +739,32 @@ namespace QToolbar.Plugins.Environments
          }
       }
 
+      public string AppWSUrlPort
+      {
+         get
+         {
+            return _AppWSUrlPort;
+         }
+
+         set
+         {
+            _AppWSUrlPort = value;
+         }
+      }
+
+      public string LegalAppWSUrlPort
+      {
+         get
+         {
+            return _LegalAppWSUrlPort;
+         }
+
+         set
+         {
+            _LegalAppWSUrlPort = value;
+         }
+      }
+
 
 
       #endregion
@@ -775,6 +801,9 @@ namespace QToolbar.Plugins.Environments
          _GLMInstStemName = string.Empty;
          _DBCollectionPlusMajorVersion = string.Empty;
          _DBCollectionPlusMinorVersion = string.Empty;
+         _AppWSUrlPort = string.Empty;
+         _LegalAppWSUrlPort = string.Empty;
+
          _CFs.Clear();
          _Errors.Clear();
          _QCSystemSharedDirs.Clear();

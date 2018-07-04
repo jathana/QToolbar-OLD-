@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace QToolbar.Plugins.Environments
 {
-   public enum QEnvironmentParameterTypeEnum
+   public enum QEnvironmentParametersSetType
    {
-      SimpleValue,
-      Directory,
-      File,
-      Url,
-      DatabaseServer,
-      DatabaseName,
-
+      None,
+      ParametersShouldHaveEqualValues,
+      ParametersAreDBConnection
    }
 }

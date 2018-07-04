@@ -9,13 +9,11 @@ namespace QToolbar.Plugins.Environments
 {
    public class QEnvironmentParameters : Dictionary<string, QEnvironmentParameter>
    {
-      private Dictionary<string, List<string>> _EQIslands = new Dictionary<string, List<string>>();
-
+      private List<QEnvironmentParametersSet> _ParametersSets = new List<QEnvironmentParametersSet>();
 
       public QEnvironmentParameters()
       {
          CreateParameters();
-         CreateEQISlands();
       }
 
 
@@ -26,9 +24,6 @@ namespace QToolbar.Plugins.Environments
          {
             ret.AddRange(param.Validate());
          }
-
-         ret.AddRange(ValidateEQIslands());
-
          return ret;
       }
 
@@ -65,7 +60,8 @@ namespace QToolbar.Plugins.Environments
          {
             Name = EnvironmentConsts.QBC_ADMIN_CF_QBCOLLECTION_PLUS_SERVER,
             Desc = "Environment's Sql server instance of QBCollection plus database in qbc_admin.cf.",
-            Mandatory = true
+            Mandatory = true,
+            ParamType=QEnvironmentParameterTypeEnum.DatabaseServer
          });
 
          // QBC_ADMIN_CF_QBCOLLECTION_PLUS_DBNAME
@@ -73,7 +69,8 @@ namespace QToolbar.Plugins.Environments
          {
             Name = EnvironmentConsts.QBC_ADMIN_CF_QBCOLLECTION_PLUS_DBNAME,
             Desc = "Environment's QBCollection plus database in qbc_admin.cf.",
-            Mandatory = true
+            Mandatory = true,
+            ParamType = QEnvironmentParameterTypeEnum.DatabaseName
          });
 
          // QBCOLLECTION_PLUS_MAJOR_VERSION
@@ -122,7 +119,8 @@ namespace QToolbar.Plugins.Environments
          {
             Name = EnvironmentConsts.AT_SYSTEM_PARAMS_DIALER_DB_NAME,
             Desc = "AT_SYSTEM_PARAMS table SPRA_TYPE='DIALER_DB_NAME'.",
-            Mandatory = true
+            Mandatory = true,
+            ParamType = QEnvironmentParameterTypeEnum.DatabaseName
          });
 
          // AT_SYSTEM_PARAMS_QBC_NAME
@@ -130,7 +128,8 @@ namespace QToolbar.Plugins.Environments
          {
             Name = EnvironmentConsts.AT_SYSTEM_PARAMS_QBC_NAME,
             Desc = "AT_SYSTEM_PARAMS table SPRA_TYPE='AT_SYSTEM_PARAMS_QBC_NAME'.",
-            Mandatory = true
+            Mandatory = true,
+            ParamType = QEnvironmentParameterTypeEnum.DatabaseName
          });
 
          // AT_SYSTEM_PARAMS_QBC_SERVER
@@ -138,7 +137,8 @@ namespace QToolbar.Plugins.Environments
          {
             Name = EnvironmentConsts.AT_SYSTEM_PARAMS_QBC_SERVER,
             Desc = "AT_SYSTEM_PARAMS table SPRA_TYPE='AT_SYSTEM_PARAMS_QBC_SERVER'.",
-            Mandatory = true
+            Mandatory = true,
+            ParamType = QEnvironmentParameterTypeEnum.DatabaseServer
          });
 
          // AT_SYSTEM_PARAMS_FILE_SERVER_NAME
@@ -162,7 +162,8 @@ namespace QToolbar.Plugins.Environments
          {
             Name = EnvironmentConsts.AT_SYSTEM_PARAMS_QBA_NAME,
             Desc = "AT_SYSTEM_PARAMS table SPRA_TYPE='AT_SYSTEM_PARAMS_QBA_NAME'.",
-            Mandatory = true
+            Mandatory = true,
+            ParamType = QEnvironmentParameterTypeEnum.DatabaseName
          });
 
          // AT_SYSTEM_PARAMS_QBA_SERVER
@@ -170,7 +171,8 @@ namespace QToolbar.Plugins.Environments
          {
             Name = EnvironmentConsts.AT_SYSTEM_PARAMS_QBA_SERVER,
             Desc = "AT_SYSTEM_PARAMS table SPRA_TYPE='AT_SYSTEM_PARAMS_QBA_SERVER'.",
-            Mandatory = true
+            Mandatory = true,
+            ParamType = QEnvironmentParameterTypeEnum.DatabaseServer
          });
 
          // AT_SYSTEM_PARAMS_DB_NAME_ANALYTICS
@@ -178,7 +180,8 @@ namespace QToolbar.Plugins.Environments
          {
             Name = EnvironmentConsts.AT_SYSTEM_PARAMS_DB_NAME_ANALYTICS,
             Desc = "AT_SYSTEM_PARAMS table SPRA_TYPE='AT_SYSTEM_PARAMS_DB_NAME_ANALYTICS'.",
-            Mandatory = true
+            Mandatory = true,
+            ParamType = QEnvironmentParameterTypeEnum.DatabaseName
          });
 
          // AT_SYSTEM_PARAMS_PATH_DATA_TRANSFORMATION_EXECUTABLE
@@ -218,7 +221,8 @@ namespace QToolbar.Plugins.Environments
          {
             Name = EnvironmentConsts.BI_GLM_INSTALLATION_INST_SERVER,
             Desc = "BI_GLM_INSTALLATION table, field INST_SERVER.",
-            Mandatory = true
+            Mandatory = true,
+            ParamType = QEnvironmentParameterTypeEnum.DatabaseServer
          });
 
          // BI_GLM_INSTALLATION_INST_DB_NAME
@@ -226,7 +230,8 @@ namespace QToolbar.Plugins.Environments
          {
             Name = EnvironmentConsts.BI_GLM_INSTALLATION_INST_DB_NAME,
             Desc = "BI_GLM_INSTALLATION table, field INST_DB_NAME.",
-            Mandatory = true
+            Mandatory = true,
+            ParamType = QEnvironmentParameterTypeEnum.DatabaseName
          });
 
          // BI_GLM_INSTALLATION_INST_DBUSER
@@ -254,7 +259,8 @@ namespace QToolbar.Plugins.Environments
          {
             Name = EnvironmentConsts.BI_GLM_INSTALLATION_QBA_SERVER,
             Desc = "BI_GLM_INSTALLATION table, field QBA_SERVER.",
-            Mandatory = true
+            Mandatory = true,
+            ParamType = QEnvironmentParameterTypeEnum.DatabaseServer
          });
 
          // BI_GLM_INSTALLATION_QBA_DB_NAME
@@ -262,7 +268,8 @@ namespace QToolbar.Plugins.Environments
          {
             Name = EnvironmentConsts.BI_GLM_INSTALLATION_QBA_DB_NAME,
             Desc = "BI_GLM_INSTALLATION table, field QBA_DB_NAME.",
-            Mandatory = true
+            Mandatory = true,
+            ParamType = QEnvironmentParameterTypeEnum.DatabaseName
          });
 
          // BI_GLM_INSTALLATION_QBA_DBUSER
@@ -290,7 +297,8 @@ namespace QToolbar.Plugins.Environments
          {
             Name = EnvironmentConsts.BI_GLM_INSTALLATION_QD3F_SERVER,
             Desc = "BI_GLM_INSTALLATION table, field QD3F_SERVER.",
-            Mandatory = true
+            Mandatory = true,
+            ParamType = QEnvironmentParameterTypeEnum.DatabaseServer
          });
 
          // BI_GLM_INSTALLATION_QD3F_DB_NAME
@@ -298,7 +306,8 @@ namespace QToolbar.Plugins.Environments
          {
             Name = EnvironmentConsts.BI_GLM_INSTALLATION_QD3F_DB_NAME,
             Desc = "BI_GLM_INSTALLATION table, field QD3F_DB_NAME.",
-            Mandatory = true
+            Mandatory = true,
+            ParamType = QEnvironmentParameterTypeEnum.DatabaseName
          });
 
          // BI_GLM_INSTALLATION_QD3F_DBUSER
@@ -371,63 +380,16 @@ namespace QToolbar.Plugins.Environments
 
       }
 
-      private void CreateEQISlands()
+      
+      public void SetParamValue(string paramKey, string paramValue)
       {
-         // collection plus
-         _EQIslands.Add("QBCollectionPlus Server", new List<string>() {
-                                                            EnvironmentConsts.QBC_ADMIN_CF_QBCOLLECTION_PLUS_SERVER,
-                                                            EnvironmentConsts.AT_SYSTEM_PARAMS_QBC_SERVER,
-                                                            EnvironmentConsts.BI_GLM_INSTALLATION_INST_SERVER
-         });
-
-         _EQIslands.Add("QBCollectionPlus Database", new List<string>() {
-                                                            EnvironmentConsts.QBC_ADMIN_CF_QBCOLLECTION_PLUS_DBNAME,
-                                                            EnvironmentConsts.AT_SYSTEM_PARAMS_QBC_NAME,
-                                                            EnvironmentConsts.BI_GLM_INSTALLATION_INST_DB_NAME
-         });
-
-         // analytics
-         _EQIslands.Add("QBCollectionPlus Server", new List<string>() {
-                                                            EnvironmentConsts.AT_SYSTEM_PARAMS_QBA_SERVER,
-                                                            EnvironmentConsts.BI_GLM_INSTALLATION_QBA_SERVER
-         });
-
-         _EQIslands.Add("QBCollectionPlus Database", new List<string>() {
-                                                            EnvironmentConsts.AT_SYSTEM_PARAMS_QBA_NAME,
-                                                            EnvironmentConsts.AT_SYSTEM_PARAMS_DB_NAME_ANALYTICS,
-                                                            EnvironmentConsts.BI_GLM_INSTALLATION_QBA_DB_NAME
-         });
+         this[paramKey].Value = paramValue;
       }
 
-      private Errors ValidateEQIslands()
+      public string GetParamValue(string paramKey)
       {
-         Errors ret = new Errors();
-
-         foreach(KeyValuePair<string, List<string>> eqIsland in _EQIslands)
-         {
-            string val = this[eqIsland.Value[0]].Value;
-            bool allEqual = true;
-            StringBuilder b = new StringBuilder();
-            b.AppendLine($"Found different values among {eqIsland.Key} parameters.");
-            b.AppendLine($"Param {this[eqIsland.Value[0]].Name.ToString()} = {val}");
-
-            for (int i=1;i< eqIsland.Value.Count;i++)
-            {
-               if(!val.ToLower().Equals(this[eqIsland.Value[i]].Value.ToLower()) && allEqual)
-               {
-                  allEqual = false;
-               }
-               b.AppendLine($"param {this[eqIsland.Value[i]].Name.ToString()} = {this[eqIsland.Value[i]].Value}");
-            }
-
-            if(!allEqual)
-            {
-               ret.AddError(b.ToString(), "");
-            }
-         }
-         return ret;
+         return this[paramKey].Value;
       }
-
 
    }
 }

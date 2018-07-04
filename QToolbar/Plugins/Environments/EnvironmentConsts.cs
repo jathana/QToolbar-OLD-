@@ -62,5 +62,23 @@ namespace QToolbar.Plugins.Environments
       public const string AT_SYSTEM_PREF_FIELD_AGENT_INTEGRATION_APPLICATION_WS_URL = "AT_SYSTEM_PREF_FIELD_AGENT_INTEGRATION_APPLICATION_WS_URL";
       public const string AT_SYSTEM_PREF_LEGAL_APP_PROCESS_MAPPING_WS_URL = "AT_SYSTEM_PREF_LEGAL_APP_PROCESS_MAPPING_WS_URL";
 
+      // PARAMETER SETS NAMES
+      public const string PARAM_SET_EQ_COLLECTION_PLUS_SERVER = "EQ:QBCollectionPlus Server";
+      public const string PARAM_SET_EQ_COLLECTION_PLUS_DBNAME = "EQ:QBCollectionPlus Database";
+
+      public const string PARAM_SET_EQ_ANALYTICS_SERVER = "EQ:Analytics Server";
+      public const string PARAM_SET_EQ_ANALYTICS_DBNAME = "EQ:Analytics Database";
+
+      public const string PARAM_SET_CONNECTION_QBC_ADMIN_CF_QBCOLLECTION_PLUS = "qbc_admin:Connection to QBCollectionPlus";
+      public const string PARAM_SET_CONNECTION_AT_SYSTEM_PARAMS_DIALER = "AT_SYSTEM_PARAMS:Connection to Dialer db";
+      public const string PARAM_SET_CONNECTION_AT_SYSTEM_PARAMS_QBCOLLECTION_PLUS = "AT_SYSTEM_PARAMS:Connection to QBCollectionPlus";
+      public const string PARAM_SET_CONNECTION_AT_SYSTEM_PARAMS_ANALYTICS = "AT_SYSTEM_PARAMS:Connection to Analytics";
+      public const string PARAM_SET_CONNECTION_AT_SYSTEM_PARAMS_ANALYTICS2 = "AT_SYSTEM_PARAMS:Connection2 to Analytics";
+
+      public const string PARAM_SET_CONNECTION_BI_GLM_INSTALLATION_QBCOLLECTION_PLUS = "BI_GLM_INSTALLATION:Connection to QBCollectionPlus";
+      public const string PARAM_SET_CONNECTION_BI_GLM_INSTALLATION_ANALYTICS = "BI_GLM_INSTALLATION:Connection to Analytics";
+      public const string PARAM_SET_CONNECTION_BI_GLM_INSTALLATION_D3F = "BI_GLM_INSTALLATION:Connection to D3F";
+
+
    }
 }

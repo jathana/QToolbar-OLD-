@@ -83,6 +83,11 @@ namespace QToolbar.Plugins.Environments
             envObj.DBCollectionPlusName = qbcAdminCf.GetDatabase(envName);
             envObj.ToolkitWSUrl = qbcAdminCf.GetValue("General", "ToolkitWSURL");
             envObj.AppWSUrl = qbcAdminCf.GetValue("General", "ApplicationWSURL");
+            if (!string.IsNullOrEmpty(envObj.AppWSUrl))
+            {
+               Uri AppWSUri = new Uri(envObj.AppWSUrl);
+               envObj.AppWSUrlPort = AppWSUri.Port.ToString();
+            }
             envObj.QBCAdminCfPath = qbcAdminCf.File;
          }
 
@@ -379,6 +384,11 @@ namespace QToolbar.Plugins.Environments
                                     {
                                        Uri uri = new Uri(pathrow["SPR_VALUE"].ToString());
                                        objEnv.LegalAppProcessMappingWSUrl = uri.AbsoluteUri;
+                                       if (!string.IsNullOrEmpty(objEnv.LegalAppProcessMappingWSUrl))
+                                       {
+                                          Uri legalAppWSUri = new Uri(objEnv.LegalAppProcessMappingWSUrl);
+                                          objEnv.LegalAppWSUrlPort = legalAppWSUri.Port.ToString();
+                                       }
                                        objEnv.LegalAppProcessMappingWSHost = uri.Host;
                                     }
                                  }
@@ -610,38 +620,46 @@ namespace QToolbar.Plugins.Environments
                      {
                         foreach (var s in mgr.Sites)
                         {
-                           if (s.Name.Equals(envNameInWeb))
+                           try
                            {
-                              string qcwsPhPath = null;
-                              string toolkitPhPath = null;
-                              foreach (var a in s.Applications)
+                              if (s.Bindings != null && s.Bindings.Count > 0 && (s.Bindings[0]).EndPoint != null && (s.Bindings[0]).EndPoint.Port.ToString().Equals(objEnv.AppWSUrlPort) && s.Name.StartsWith(envNameInWeb))
                               {
-                                 var qcwsVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\Qualco\\QCSWS"));
-                                 if (qcwsVDir != null)
+                                 string qcwsPhPath = null;
+                                 string toolkitPhPath = null;
+                                 foreach (var a in s.Applications)
                                  {
-                                    qcwsPhPath = qcwsVDir.PhysicalPath;
-                                    QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
-                                    cfInfo.Name = "qbc.cf";
-                                    cfInfo.Repository = "QC";
-                                    cfInfo.Path = $"\\\\{webServer.Host}\\{qcwsPhPath.Replace(":", "$")}\\qbc.cf";
-                                    objEnv.CFs.Add(cfInfo);
-                                 }
+                                    var qcwsVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\Qualco\\QCSWS"));
+                                    if (qcwsVDir != null)
+                                    {
+                                       qcwsPhPath = qcwsVDir.PhysicalPath;
+                                       QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
+                                       cfInfo.Name = "qbc.cf";
+                                       cfInfo.Repository = "QC";
+                                       cfInfo.Path = $"\\\\{webServer.Host}\\{qcwsPhPath.Replace(":", "$")}\\qbc.cf";
+                                       objEnv.CFs.Add(cfInfo);
+                                    }
 
 
-                                 var toolkitVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\Qualco\\SCToolkitWS"));
-                                 if (toolkitVDir != null)
-                                 {
-                                    toolkitPhPath = toolkitVDir.PhysicalPath;
-                                    QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
-                                    cfInfo.Name = "qbc.cf";
-                                    cfInfo.Repository = "QC";
-                                    cfInfo.Path = $"\\\\{webServer.Host}\\{toolkitPhPath.Replace(":", "$")}\\qbc.cf";
-                                    objEnv.CFs.Add(cfInfo);
+                                    var toolkitVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\Qualco\\SCToolkitWS"));
+                                    if (toolkitVDir != null)
+                                    {
+                                       toolkitPhPath = toolkitVDir.PhysicalPath;
+                                       QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
+                                       cfInfo.Name = "qbc.cf";
+                                       cfInfo.Repository = "QC";
+                                       cfInfo.Path = $"\\\\{webServer.Host}\\{toolkitPhPath.Replace(":", "$")}\\qbc.cf";
+                                       objEnv.CFs.Add(cfInfo);
 
+                                    }
                                  }
                               }
                            }
+                           catch(Exception ex)
+                           {
+
+                           }
                         }
+
                      }
                   }
                   catch (Exception ex)
@@ -665,46 +683,53 @@ namespace QToolbar.Plugins.Environments
                         {
                            foreach (var s in mgr.Sites)
                            {
-                              if (s.Name.Equals(envNameInWeb))
+                              try
                               {
-                                 string wsPhysicalPath = null;
-                                 foreach (var a in s.Applications)
+                                 if (s.Bindings != null && s.Bindings.Count > 0 && (s.Bindings[0]).EndPoint != null && (s.Bindings[0]).EndPoint.Port.ToString().Equals(objEnv.LegalAppWSUrlPort) && s.Name.StartsWith(envNameInWeb))
                                  {
-                                    var qcBackOfficeVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\QCSBackOfficeWS"));
-                                    if (qcBackOfficeVDir != null)
+                                    string wsPhysicalPath = null;
+                                    foreach (var a in s.Applications)
                                     {
-                                       wsPhysicalPath = qcBackOfficeVDir.PhysicalPath;
-                                       QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
-                                       cfInfo.Name = "qbc.cf";
-                                       cfInfo.Repository = "PROTEUS";
-                                       cfInfo.Path = $"\\\\{env.LegalAppProcessMappingWSHost}\\{wsPhysicalPath.Replace(":", "$")}\\qbc.cf";
-                                       objEnv.CFs.Add(cfInfo);
+                                       var qcBackOfficeVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\QCSBackOfficeWS"));
+                                       if (qcBackOfficeVDir != null)
+                                       {
+                                          wsPhysicalPath = qcBackOfficeVDir.PhysicalPath;
+                                          QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
+                                          cfInfo.Name = "qbc.cf";
+                                          cfInfo.Repository = "PROTEUS";
+                                          cfInfo.Path = $"\\\\{env.LegalAppProcessMappingWSHost}\\{wsPhysicalPath.Replace(":", "$")}\\qbc.cf";
+                                          objEnv.CFs.Add(cfInfo);
+                                       }
+
+                                       var qcWebCollectionWSVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\QCWebCollectionWS"));
+                                       if (qcWebCollectionWSVDir != null)
+                                       {
+                                          wsPhysicalPath = qcWebCollectionWSVDir.PhysicalPath;
+                                          QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
+                                          cfInfo.Name = "qbc.cf";
+                                          cfInfo.Repository = "PROTEUS";
+                                          cfInfo.Path = $"\\\\{env.LegalAppProcessMappingWSHost}\\{wsPhysicalPath.Replace(":", "$")}\\qbc.cf";
+                                          objEnv.CFs.Add(cfInfo);
+                                       }
+
+                                       var SCToolkit2WSVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\SCToolkit2WS"));
+                                       if (SCToolkit2WSVDir != null)
+                                       {
+                                          wsPhysicalPath = SCToolkit2WSVDir.PhysicalPath;
+                                          QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
+                                          cfInfo.Name = "qbc.cf";
+                                          cfInfo.Repository = "PROTEUS";
+                                          cfInfo.Path = $"\\\\{env.LegalAppProcessMappingWSHost}\\{wsPhysicalPath.Replace(":", "$")}\\qbc.cf";
+                                          objEnv.CFs.Add(cfInfo);
+                                       }
+
+
                                     }
-
-                                    var qcWebCollectionWSVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\QCWebCollectionWS"));
-                                    if (qcWebCollectionWSVDir != null)
-                                    {
-                                       wsPhysicalPath = qcWebCollectionWSVDir.PhysicalPath;
-                                       QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
-                                       cfInfo.Name = "qbc.cf";
-                                       cfInfo.Repository = "PROTEUS";
-                                       cfInfo.Path = $"\\\\{env.LegalAppProcessMappingWSHost}\\{wsPhysicalPath.Replace(":", "$")}\\qbc.cf";
-                                       objEnv.CFs.Add(cfInfo);
-                                    }
-
-                                    var SCToolkit2WSVDir = a.VirtualDirectories.FirstOrDefault(v => v.PhysicalPath.Contains("\\SCToolkit2WS"));
-                                    if (SCToolkit2WSVDir != null)
-                                    {
-                                       wsPhysicalPath = SCToolkit2WSVDir.PhysicalPath;
-                                       QEnvironment.CfInfo cfInfo = new QEnvironment.CfInfo();
-                                       cfInfo.Name = "qbc.cf";
-                                       cfInfo.Repository = "PROTEUS";
-                                       cfInfo.Path = $"\\\\{env.LegalAppProcessMappingWSHost}\\{wsPhysicalPath.Replace(":", "$")}\\qbc.cf";
-                                       objEnv.CFs.Add(cfInfo);
-                                    }
-
-
                                  }
+                              }
+                              catch(Exception ex)
+                              {
+
                               }
                            }
                         }
@@ -893,7 +918,7 @@ namespace QToolbar.Plugins.Environments
                #endregion
 
                #region check subfolders of system folder and eod.ini files
-               string applicationUpdateDir = Path.Combine(objEnv.SystemFolder, "ApplicationUpdate");
+               
                string eodExecutorEodIniFile = string.Empty;
                string applicationUpdateEodIniFile = string.Empty;
                if (!string.IsNullOrEmpty(objEnv.SystemFolder) && Directory.Exists(objEnv.SystemFolder))
@@ -901,6 +926,7 @@ namespace QToolbar.Plugins.Environments
                   string[] eodExecutorDirs = Directory.GetDirectories(objEnv.SystemFolder, "EOD*Executor");
                   string eodExecutorDir = string.Empty;
                   
+                  // EODExecutor dir
                   if (eodExecutorDirs.Length == 1)
                   {
                      eodExecutorDir = eodExecutorDirs[0];
@@ -911,17 +937,43 @@ namespace QToolbar.Plugins.Environments
                      }
                      else
                         objEnv.Errors.AddError($"File not found \"{eodExecutorEodIniFile}\"", eodExecutorEodIniFile);
+
+                     // add ...QCS_SystemFolders\INST_X_Y\EODExecutor\qbc.cf
+                     if (!string.IsNullOrEmpty(eodExecutorDir))
+                     {
+                        QEnvironment.CfInfo eodExecutorUpdateCfInfo = new QEnvironment.CfInfo();
+                        eodExecutorUpdateCfInfo.Name = "qbc.cf";
+                        eodExecutorUpdateCfInfo.Repository = "QC";
+                        eodExecutorUpdateCfInfo.Path = $"{eodExecutorDir}\\qbc.cf";
+                        objEnv.CFs.Add(eodExecutorUpdateCfInfo);
+                     }
                   }
                   else
                      objEnv.Errors.AddError($"Dir not found \"{objEnv.SystemFolder}\\EOD*Executor\"", objEnv.SystemFolder);
 
+                  // ApplicationUpdate dir
+                  string applicationUpdateDir = Path.Combine(objEnv.SystemFolder, "ApplicationUpdate");
                   applicationUpdateEodIniFile = Path.Combine(applicationUpdateDir, "eod.ini");
                   if (File.Exists(applicationUpdateEodIniFile))
                   {
                      objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = "Application Update eod.ini", Path = applicationUpdateEodIniFile });
                   }
                   else
+                  {
                      objEnv.Errors.AddError($"File not found \"{applicationUpdateEodIniFile}\"", applicationUpdateEodIniFile);
+                  }
+
+                  // add ...QCS_SystemFolders\INST_X_Y\ApplicationUpdate\qbc.cf
+                  if (!string.IsNullOrEmpty(applicationUpdateDir))
+                  {
+                     QEnvironment.CfInfo applicationUpdateCfInfo = new QEnvironment.CfInfo();
+                     applicationUpdateCfInfo.Name = "qbc.cf";
+                     applicationUpdateCfInfo.Repository = "QC";
+                     applicationUpdateCfInfo.Path = $"{applicationUpdateDir}\\qbc.cf";
+                     objEnv.CFs.Add(applicationUpdateCfInfo);
+                  }
+                  
+
 
                   CheckFolderExistence(applicationUpdateDir, objEnv);
                   CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Attachments"), objEnv);
