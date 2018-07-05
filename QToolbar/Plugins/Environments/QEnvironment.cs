@@ -234,49 +234,87 @@ namespace QToolbar.Plugins.Environments
          }
       }
 
+
+      public class SimpleProperty
+      {
+         #region fields
+         private string _Name;
+         private string _Value;
+         #endregion
+
+         #region properties
+         public string Name
+         {
+            get
+            {
+               return _Name;
+            }
+
+            set
+            {
+               _Name = value;
+            }
+         }
+         public string Value
+         {
+            get
+            {
+               return _Value;
+            }
+
+            set
+            {
+               _Value = value;
+            }
+         }
+         #endregion
+      }
+
       #region fields
-      private string _Status = string.Empty;
-      private string _Name = string.Empty;
-      private string _CheckoutPath = string.Empty;
-      private string _ProteusCheckoutPath = string.Empty;
-      private string _QBCAdminCfPath = string.Empty;
-      private string _DBCollectionPlusMinorVersion = string.Empty;
-      private string _DBCollectionPlusMajorVersion = string.Empty;
-      private string _DBCollectionPlusVersion = string.Empty;
-      private string _DBCollectionPlusServer = string.Empty;
-      private string _DBCollectionPlusName = string.Empty;
-      private string _ToolkitWSUrl = string.Empty;
-      private string _AppWSUrl = string.Empty;
-      private string _BatchWinServiceUNC = string.Empty;
-      private string _BatchWinServicePath = string.Empty;
-      private string _EodWinServiceUNC = string.Empty;
-      private string _EodWinServicePath = string.Empty;
-      private string _WinServicesUNC = string.Empty;
-      private string _WinServicesPath = string.Empty;
-      private string _GLMDir = string.Empty;
-      private string _GLMDirPermissions = string.Empty;
-      private string _GLMLocalDir = string.Empty;
-      private string _GLMLogDir = string.Empty;
-      private string _GLMLogDirPermissions = string.Empty;
-      private string _GLMLocalLogDir = string.Empty;
-      private string _SystemFolder = string.Empty;
-      private string _GLMInstStemName = string.Empty;  // from bi_glm_installation
+
+      private Dictionary<string, string> _Properties = new Dictionary<string, string>();
+      //private string _Status = string.Empty;
+      //private string _Name = string.Empty;
+      //private string _CheckoutPath = string.Empty;
+      //private string _ProteusCheckoutPath = string.Empty;
+      //private string _QBCAdminCfPath = string.Empty;
+      //private string _DBCollectionPlusMinorVersion = string.Empty;
+      //private string _DBCollectionPlusMajorVersion = string.Empty;
+      //private string _DBCollectionPlusVersion = string.Empty;
+      //private string _DBCollectionPlusServer = string.Empty;
+      //private string _DBCollectionPlusName = string.Empty;
+      //private string _ToolkitWSUrl = string.Empty;
+      //private string _AppWSUrl = string.Empty;
+      //private string _BatchWinServiceUNC = string.Empty;
+      //private string _BatchWinServicePath = string.Empty;
+      //private string _EodWinServiceUNC = string.Empty;
+      //private string _EodWinServicePath = string.Empty;
+      //private string _WinServicesUNC = string.Empty;
+      //private string _WinServicesPath = string.Empty;
+      //private string _GLMDir = string.Empty;
+      //private string _GLMDirPermissions = string.Empty;
+      //private string _GLMLocalDir = string.Empty;
+      //private string _GLMLogDir = string.Empty;
+      //private string _GLMLogDirPermissions = string.Empty;
+      //private string _GLMLocalLogDir = string.Empty;
+      //private string _SystemFolder = string.Empty;
+      //private string _GLMInstStemName = string.Empty;  // from bi_glm_installation
       private List<SharedDir> _QCSystemSharedDirs = new List<SharedDir>();
       private List<CfInfo> _CFs= new List<CfInfo>();
       private List<string> _EODFlows = new List<string>();
       private Errors _Errors = new Errors();
       private List<OtherFile> _OtherFiles = new List<OtherFile>();
-      private string _LegalAppProcessMappingWSUrl = string.Empty;
-      private string _LegalAppProcessMappingWSHost = string.Empty;
-      private string _AnalyticsServer = string.Empty;
-      private string _AnalyticsDBName = string.Empty;
-      private string _D3FServer = string.Empty;
-      private string _D3FDBName = string.Empty;
-      private string _DialerServer = string.Empty;
-      private string _DialerDBName = string.Empty;
-      private string _QCWebServerPort = string.Empty;
-      private string _AppWSUrlPort = string.Empty;
-      private string _LegalAppWSUrlPort = string.Empty;
+      //private string _LegalAppProcessMappingWSUrl = string.Empty;
+      //private string _LegalAppProcessMappingWSHost = string.Empty;
+      //private string _AnalyticsServer = string.Empty;
+      //private string _AnalyticsDBName = string.Empty;
+      //private string _D3FServer = string.Empty;
+      //private string _D3FDBName = string.Empty;
+      //private string _DialerServer = string.Empty;
+      //private string _DialerDBName = string.Empty;
+      //private string _QCWebServerPort = string.Empty;
+      //private string _AppWSUrlPort = string.Empty;
+      //private string _LegalAppWSUrlPort = string.Empty;
       #endregion
 
       #region properties
@@ -284,12 +322,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _Status;
+            return _Properties["Status"];
          }
 
          set
          {
-            _Status = value;
+            _Properties["Status"] = value;
          }
       }
 
@@ -297,192 +335,192 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _Name;
+            return _Properties["Name"];
          }
 
          set
          {
-            _Name = value;
+            _Properties["Name"] = value;
          }
       }
       public string CheckoutPath
       {
          get
          {
-            return _CheckoutPath;
+            return _Properties["CheckoutPath"];
          }
 
          set
          {
-            _CheckoutPath = value;
+            _Properties["CheckoutPath"] = value;
          }
       }
       public string ProteusCheckoutPath
       {
          get
          {
-            return _ProteusCheckoutPath;
+            return _Properties["ProteusCheckoutPath"];
          }
 
          set
          {
-            _ProteusCheckoutPath = value;
+            _Properties["ProteusCheckoutPath"] = value;
          }
       }
       public string QBCAdminCfPath
       {
          get
          {
-            return _QBCAdminCfPath;
+            return _Properties["QBCAdminCfPath"];
          }
 
          set
          {
-            _QBCAdminCfPath = value;
+            _Properties["QBCAdminCfPath"] = value;
          }
       }
       public string DBCollectionPlusVersion
       {
          get
          {
-            return _DBCollectionPlusVersion;
+            return _Properties["DBCollectionPlusVersion"];
          }
 
          set
          {
-            _DBCollectionPlusVersion = value;
+            _Properties["DBCollectionPlusVersion"] = value;
          }
       }
       public string DBCollectionPlusServer
       {
          get
          {
-            return _DBCollectionPlusServer;
+            return _Properties["DBCollectionPlusServer"];
          }
 
          set
          {
-            _DBCollectionPlusServer = value;
+            _Properties["DBCollectionPlusServer"] = value;
          }
       }
       public string DBCollectionPlusName
       {
          get
          {
-            return _DBCollectionPlusName;
+            return _Properties["DBCollectionPlusName"];
          }
 
          set
          {
-            _DBCollectionPlusName = value;
+            _Properties["DBCollectionPlusName"] = value;
          }
       }
       public string ToolkitWSUrl
       {
          get
          {
-            return _ToolkitWSUrl;
+            return _Properties["ToolkitWSUrl"];
          }
 
          set
          {
-            _ToolkitWSUrl = value;
+            _Properties["ToolkitWSUrl"] = value;
          }
       }
       public string AppWSUrl
       {
          get
          {
-            return _AppWSUrl;
+            return _Properties["AppWSUrl"];
          }
 
          set
          {
-            _AppWSUrl = value;
+            _Properties["AppWSUrl"] = value;
          }
       }
       public string BatchWinServiceUNC
       {
          get
          {
-            return _BatchWinServiceUNC;
+            return _Properties["BatchWinServiceUNC"];
          }
 
          set
          {
-            _BatchWinServiceUNC = value;
+            _Properties["BatchWinServiceUNC"] = value;
          }
       }
       public string EodWinServiceUNC
       {
          get
          {
-            return _EodWinServiceUNC;
+            return _Properties["EodWinServiceUNC"];
          }
 
          set
          {
-            _EodWinServiceUNC = value;
+            _Properties["EodWinServiceUNC"] = value;
          }
       }
       public string WinServicesUNC
       {
          get
          {
-            return _WinServicesUNC;
+            return _Properties["WinServicesUNC"];
          }
 
          set
          {
-            _WinServicesUNC = value;
+            _Properties["WinServicesUNC"] = value;
          }
       }
       public string GLMDir
       {
          get
          {
-            return _GLMDir;
+            return _Properties["GLMDir"];
          }
 
          set
          {
-            _GLMDir = value;
+            _Properties["GLMDir"] = value;
          }
       }
       public string GLMDirPermissions
       {
          get
          {
-            return _GLMDirPermissions;
+            return _Properties["GLMDirPermissions"];
          }
 
          set
          {
-            _GLMDirPermissions = value;
+            _Properties["GLMDirPermissions"] = value;
          }
       }
       public string GLMLocalDir
       {
          get
          {
-            return _GLMLocalDir;
+            return _Properties["GLMLocalDir"];
          }
 
          set
          {
-            _GLMLocalDir = value;
+            _Properties["GLMLocalDir"] = value;
          }
       }
       public string GLMLogDir
       {
          get
          {
-            return _GLMLogDir;
+            return _Properties["GLMLogDir"];
          }
 
          set
          {
-            _GLMLogDir = value;
+            _Properties["GLMLogDir"] = value;
          }
       }
 
@@ -490,12 +528,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _GLMLogDirPermissions;
+            return _Properties["GLMLogDirPermissions"];
          }
 
          set
          {
-            _GLMLogDirPermissions = value;
+            _Properties["GLMLogDirPermissions"] = value;
          }
       }
 
@@ -503,12 +541,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _GLMLocalLogDir;
+            return _Properties["GLMLocalLogDir"];
          }
 
          set
          {
-            _GLMLocalLogDir = value;
+            _Properties["GLMLocalLogDir"] = value;
          }
       }
       public List<SharedDir> QCSystemSharedDirs
@@ -531,12 +569,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _BatchWinServicePath;
+            return _Properties["BatchWinServicePath"];
          }
 
          set
          {
-            _BatchWinServicePath = value;
+            _Properties["BatchWinServicePath"] = value;
          }
       }
 
@@ -544,12 +582,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _EodWinServicePath;
+            return _Properties["EodWinServicePath"];
          }
 
          set
          {
-            _EodWinServicePath = value;
+            _Properties["EodWinServicePath"] = value;
          }
       }
 
@@ -557,12 +595,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _WinServicesPath;
+            return _Properties["WinServicesPath"];
          }
 
          set
          {
-            _WinServicesPath = value;
+            _Properties["WinServicesPath"] = value;
          }
       }
 
@@ -595,12 +633,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _SystemFolder;
+            return _Properties["SystemFolder"];
          }
 
          set
          {
-            _SystemFolder = value;
+            _Properties["SystemFolder"] = value;
          }
       }
 
@@ -608,12 +646,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _DBCollectionPlusMinorVersion;
+            return _Properties["DBCollectionPlusMinorVersion"];
          }
 
          set
          {
-            _DBCollectionPlusMinorVersion = value;
+            _Properties["DBCollectionPlusMinorVersion"] = value;
          }
       }
 
@@ -621,12 +659,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _DBCollectionPlusMajorVersion;
+            return _Properties["DBCollectionPlusMajorVersion"];
          }
 
          set
          {
-            _DBCollectionPlusMajorVersion = value;
+            _Properties["DBCollectionPlusMajorVersion"] = value;
          }
       }
 
@@ -634,12 +672,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _GLMInstStemName;
+            return _Properties["GLMInstStemName"];
          }
 
          set
          {
-            _GLMInstStemName = value;
+            _Properties["GLMInstStemName"] = value;
          }
       }
 
@@ -647,12 +685,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _LegalAppProcessMappingWSUrl;
+            return _Properties["LegalAppProcessMappingWSUrl"];
          }
 
          set
          {
-            _LegalAppProcessMappingWSUrl = value;
+            _Properties["LegalAppProcessMappingWSUrl"] = value;
          }
       }
 
@@ -660,12 +698,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _LegalAppProcessMappingWSHost;
+            return _Properties["LegalAppProcessMappingWSHost"];
          }
 
          set
          {
-            _LegalAppProcessMappingWSHost = value;
+            _Properties["LegalAppProcessMappingWSHost"] = value;
          }
       }
 
@@ -673,12 +711,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _AnalyticsServer;
+            return _Properties["AnalyticsServer"];
          }
 
          set
          {
-            _AnalyticsServer = value;
+            _Properties["AnalyticsServer"] = value;
          }
       }
 
@@ -686,12 +724,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _AnalyticsDBName;
+            return _Properties["AnalyticsDBName"];
          }
 
          set
          {
-            _AnalyticsDBName = value;
+            _Properties["AnalyticsDBName"] = value;
          }
       }
 
@@ -699,12 +737,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _D3FServer;
+            return _Properties["D3FServer"];
          }
 
          set
          {
-            _D3FServer = value;
+            _Properties["D3FServer"] = value;
          }
       }
 
@@ -712,12 +750,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _D3FDBName;
+            return _Properties["D3FDBName"];
          }
 
          set
          {
-            _D3FDBName = value;
+            _Properties["D3FDBName"] = value;
          }
       }
 
@@ -725,12 +763,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _DialerServer;
+            return _Properties["DialerServer"];
          }
 
          set
          {
-            _DialerServer = value;
+            _Properties["DialerServer"] = value;
          }
       }
 
@@ -738,12 +776,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _DialerDBName;
+            return _Properties["DialerDBName"];
          }
 
          set
          {
-            _DialerDBName = value;
+            _Properties["DialerDBName"] = value;
          }
       }
 
@@ -751,12 +789,12 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _AppWSUrlPort;
+            return _Properties["AppWSUrlPort"];
          }
 
          set
          {
-            _AppWSUrlPort = value;
+            _Properties["AppWSUrlPort"] = value;
          }
       }
 
@@ -764,16 +802,30 @@ namespace QToolbar.Plugins.Environments
       {
          get
          {
-            return _LegalAppWSUrlPort;
+            return _Properties["LegalAppWSUrlPort"];
          }
 
          set
          {
-            _LegalAppWSUrlPort = value;
+            _Properties["LegalAppWSUrlPort"] = value;
          }
       }
 
-      
+      internal Dictionary<string,string> Properties
+      {
+         get
+         {
+            return _Properties;
+         }
+      }
+
+      public List<SimpleProperty> VisibleProperties
+      {
+         get
+         {
+            return _Properties.Select(i => new SimpleProperty() { Name = i.Key, Value = i.Value }).ToList();
+         }
+      }
 
 
 
@@ -781,38 +833,54 @@ namespace QToolbar.Plugins.Environments
 
       #region constructor
       public QEnvironment()
-      {
-      }
+      {         
+      _Properties.Add("Status",  string.Empty);
+      _Properties.Add("Name",  string.Empty);
+      _Properties.Add("CheckoutPath",  string.Empty);
+      _Properties.Add("ProteusCheckoutPath",  string.Empty);
+      _Properties.Add("QBCAdminCfPath",  string.Empty);
+      _Properties.Add("DBCollectionPlusMinorVersion",  string.Empty);
+      _Properties.Add("DBCollectionPlusMajorVersion",  string.Empty);
+      _Properties.Add("DBCollectionPlusVersion",  string.Empty);
+      _Properties.Add("DBCollectionPlusServer",  string.Empty);
+      _Properties.Add("DBCollectionPlusName",  string.Empty);
+      _Properties.Add("ToolkitWSUrl",  string.Empty);
+      _Properties.Add("AppWSUrl",  string.Empty);
+      _Properties.Add("BatchWinServiceUNC",  string.Empty);
+      _Properties.Add("BatchWinServicePath",  string.Empty);
+      _Properties.Add("EodWinServiceUNC",  string.Empty);
+      _Properties.Add("EodWinServicePath",  string.Empty);
+      _Properties.Add("WinServicesUNC",  string.Empty);
+      _Properties.Add("WinServicesPath",  string.Empty);
+      _Properties.Add("GLMDir",  string.Empty);
+      _Properties.Add("GLMDirPermissions",  string.Empty);
+      _Properties.Add("GLMLocalDir",  string.Empty);
+      _Properties.Add("GLMLogDir",  string.Empty);
+      _Properties.Add("GLMLogDirPermissions",  string.Empty);
+      _Properties.Add("GLMLocalLogDir",  string.Empty);
+      _Properties.Add("SystemFolder",  string.Empty);
+      _Properties.Add("GLMInstStemName",  string.Empty);  // from bi_glm_installation
+      _Properties.Add("LegalAppProcessMappingWSUrl",  string.Empty);
+      _Properties.Add("LegalAppProcessMappingWSHost",  string.Empty);
+      _Properties.Add("AnalyticsServer",  string.Empty);
+      _Properties.Add("AnalyticsDBName",  string.Empty);
+      _Properties.Add("D3FServer",  string.Empty);
+      _Properties.Add("D3FDBName",  string.Empty);
+      _Properties.Add("DialerServer",  string.Empty);
+      _Properties.Add("DialerDBName",  string.Empty);
+      _Properties.Add("AppWSUrlPort",  string.Empty);
+      _Properties.Add("LegalAppWSUrlPort",  string.Empty);
+   }
       #endregion
 
       #region methods
       public void Clear()
       {
-         _Name = string.Empty;
-         _Status = string.Empty;
-         _CheckoutPath = string.Empty;
-         _ProteusCheckoutPath = string.Empty;
-         _QBCAdminCfPath = string.Empty;
-         _DBCollectionPlusVersion = string.Empty;
-         _DBCollectionPlusServer = string.Empty;
-         _DBCollectionPlusName = string.Empty;
-         _ToolkitWSUrl = string.Empty;
-         _AppWSUrl = string.Empty;
-         _BatchWinServiceUNC = string.Empty;
-         _EodWinServiceUNC = string.Empty;
-         _WinServicesUNC = string.Empty;
-         _GLMDir = string.Empty;
-         _GLMDirPermissions = string.Empty;
-         _GLMLocalDir = string.Empty;
-         _GLMLogDir = string.Empty;
-         _GLMLogDirPermissions = string.Empty;
-         _GLMLocalLogDir = string.Empty;
-         _SystemFolder = string.Empty;
-         _GLMInstStemName = string.Empty;
-         _DBCollectionPlusMajorVersion = string.Empty;
-         _DBCollectionPlusMinorVersion = string.Empty;
-         _AppWSUrlPort = string.Empty;
-         _LegalAppWSUrlPort = string.Empty;
+
+         foreach(var key in _Properties.Keys.ToList())
+         {
+            _Properties[key] = string.Empty;
+         }
 
          _CFs.Clear();
          _Errors.Clear();

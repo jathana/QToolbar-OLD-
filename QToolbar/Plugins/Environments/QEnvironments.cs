@@ -94,28 +94,7 @@ namespace QToolbar.Plugins.Environments
             {
                envObj.Errors.AddWarning($"Proteus checkout path is empty.", "");
             }
-            // read ApplicationWSURL from OptionsInstance.QCSAdminFolder Folder if it is not in local qbc_admin.cf
-            if (string.IsNullOrEmpty(envObj.AppWSUrl))
-            {
-               string remoteQBCAdminCf = GetRemoteQBCAdminFile(Path.GetFileName(envObj.CheckoutPath));
-               envObj.AppWSUrl = IniFile2.ReadValue("General", "ApplicationWSURL", remoteQBCAdminCf);
-               if (!string.IsNullOrEmpty(envObj.AppWSUrl))
-                  envObj.Errors.AddWarning($"ApplicationWSURL was not found in local file ({envObj.QBCAdminCfPath}).Read from remote ({remoteQBCAdminCf}).", envObj.QBCAdminCfPath);
-            }
-            // read ToolkitWSURL from OptionsInstance.QCSAdminFolder Folder if it is not in local qbc_admin.cf
-            if (string.IsNullOrEmpty(envObj.ToolkitWSUrl))
-            {
-               string remoteQBCAdminCf = GetRemoteQBCAdminFile(Path.GetFileName(envObj.CheckoutPath));
-               envObj.ToolkitWSUrl = IniFile2.ReadValue("General", "ToolkitWSURL", remoteQBCAdminCf);
-               if (!string.IsNullOrEmpty(envObj.ToolkitWSUrl))
-                  envObj.Errors.AddWarning($"ToolkitWSURL was not found in local file ({envObj.QBCAdminCfPath}).Read from remote ({remoteQBCAdminCf}).", envObj.QBCAdminCfPath);
-            }
-
-            if (!string.IsNullOrEmpty(envObj.AppWSUrl))
-            {
-               Uri AppWSUri = new Uri(envObj.AppWSUrl);
-               envObj.AppWSUrlPort = AppWSUri.Port.ToString();
-            }
+            
          }
          if (adding)
          {
@@ -475,6 +454,11 @@ namespace QToolbar.Plugins.Environments
             objEnv.AppWSUrl = IniFile2.ReadValue("General", "ApplicationWSURL", remoteQBCAdminCf);
             objEnv.Errors.AddWarning($"ApplicationWSURL was not found in local file ({objEnv.QBCAdminCfPath}).Read from remote ({remoteQBCAdminCf}).", objEnv.QBCAdminCfPath);
          }
+         if (!string.IsNullOrEmpty(objEnv.AppWSUrl))
+         {
+            Uri AppWSUri = new Uri(objEnv.AppWSUrl);
+            objEnv.AppWSUrlPort = AppWSUri.Port.ToString();
+         }
          // read ToolkitWSURL from OptionsInstance.QCSAdminFolder Folder if it is not in local qbc_admin.cf
          if (string.IsNullOrEmpty(objEnv.ToolkitWSUrl))
          {
@@ -482,6 +466,8 @@ namespace QToolbar.Plugins.Environments
             objEnv.ToolkitWSUrl = IniFile2.ReadValue("General", "ToolkitWSURL", remoteQBCAdminCf);
             objEnv.Errors.AddWarning($"ToolkitWSURL was not found in local file ({objEnv.QBCAdminCfPath}).Read from remote ({remoteQBCAdminCf}).", objEnv.QBCAdminCfPath);
          }
+
+
       }
 
       private void SetDialerDBNameFromSysPref(QEnvironment objEnv, SqlCommand com, CancellationToken cancelToken)
