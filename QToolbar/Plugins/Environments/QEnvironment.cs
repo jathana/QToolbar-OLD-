@@ -273,48 +273,10 @@ namespace QToolbar.Plugins.Environments
       #region fields
 
       private Dictionary<string, string> _Properties = new Dictionary<string, string>();
-      //private string _Status = string.Empty;
-      //private string _Name = string.Empty;
-      //private string _CheckoutPath = string.Empty;
-      //private string _ProteusCheckoutPath = string.Empty;
-      //private string _QBCAdminCfPath = string.Empty;
-      //private string _DBCollectionPlusMinorVersion = string.Empty;
-      //private string _DBCollectionPlusMajorVersion = string.Empty;
-      //private string _DBCollectionPlusVersion = string.Empty;
-      //private string _DBCollectionPlusServer = string.Empty;
-      //private string _DBCollectionPlusName = string.Empty;
-      //private string _ToolkitWSUrl = string.Empty;
-      //private string _AppWSUrl = string.Empty;
-      //private string _BatchWinServiceUNC = string.Empty;
-      //private string _BatchWinServicePath = string.Empty;
-      //private string _EodWinServiceUNC = string.Empty;
-      //private string _EodWinServicePath = string.Empty;
-      //private string _WinServicesUNC = string.Empty;
-      //private string _WinServicesPath = string.Empty;
-      //private string _GLMDir = string.Empty;
-      //private string _GLMDirPermissions = string.Empty;
-      //private string _GLMLocalDir = string.Empty;
-      //private string _GLMLogDir = string.Empty;
-      //private string _GLMLogDirPermissions = string.Empty;
-      //private string _GLMLocalLogDir = string.Empty;
-      //private string _SystemFolder = string.Empty;
-      //private string _GLMInstStemName = string.Empty;  // from bi_glm_installation
       private List<SharedDir> _QCSystemSharedDirs = new List<SharedDir>();
       private List<CfInfo> _CFs= new List<CfInfo>();
-      private List<string> _EODFlows = new List<string>();
       private Errors _Errors = new Errors();
       private List<OtherFile> _OtherFiles = new List<OtherFile>();
-      //private string _LegalAppProcessMappingWSUrl = string.Empty;
-      //private string _LegalAppProcessMappingWSHost = string.Empty;
-      //private string _AnalyticsServer = string.Empty;
-      //private string _AnalyticsDBName = string.Empty;
-      //private string _D3FServer = string.Empty;
-      //private string _D3FDBName = string.Empty;
-      //private string _DialerServer = string.Empty;
-      //private string _DialerDBName = string.Empty;
-      //private string _QCWebServerPort = string.Empty;
-      //private string _AppWSUrlPort = string.Empty;
-      //private string _LegalAppWSUrlPort = string.Empty;
       #endregion
 
       #region properties
@@ -612,14 +574,6 @@ namespace QToolbar.Plugins.Environments
          }
       }
 
-      public List<string> EODFlows
-      {
-         get
-         {
-            return _EODFlows;
-         }
-      }
-
       // keep error as the last collection 
       public Errors Errors
       {
@@ -811,6 +765,19 @@ namespace QToolbar.Plugins.Environments
          }
       }
 
+      public string AT_SYSTEM_PREF_FIELD_AGENT_INTEGRATION_APPLICATION_URL
+      {
+         get
+         {
+            return _Properties["AT_SYSTEM_PREF_FIELD_AGENT_INTEGRATION_APPLICATION_URL"];
+         }
+
+         set
+         {
+            _Properties["AT_SYSTEM_PREF_FIELD_AGENT_INTEGRATION_APPLICATION_URL"] = value;
+         }
+      }
+
       internal Dictionary<string,string> Properties
       {
          get
@@ -833,44 +800,45 @@ namespace QToolbar.Plugins.Environments
 
       #region constructor
       public QEnvironment()
-      {         
-      _Properties.Add("Status",  string.Empty);
-      _Properties.Add("Name",  string.Empty);
-      _Properties.Add("CheckoutPath",  string.Empty);
-      _Properties.Add("ProteusCheckoutPath",  string.Empty);
-      _Properties.Add("QBCAdminCfPath",  string.Empty);
-      _Properties.Add("DBCollectionPlusMinorVersion",  string.Empty);
-      _Properties.Add("DBCollectionPlusMajorVersion",  string.Empty);
-      _Properties.Add("DBCollectionPlusVersion",  string.Empty);
-      _Properties.Add("DBCollectionPlusServer",  string.Empty);
-      _Properties.Add("DBCollectionPlusName",  string.Empty);
-      _Properties.Add("ToolkitWSUrl",  string.Empty);
-      _Properties.Add("AppWSUrl",  string.Empty);
-      _Properties.Add("BatchWinServiceUNC",  string.Empty);
-      _Properties.Add("BatchWinServicePath",  string.Empty);
-      _Properties.Add("EodWinServiceUNC",  string.Empty);
-      _Properties.Add("EodWinServicePath",  string.Empty);
-      _Properties.Add("WinServicesUNC",  string.Empty);
-      _Properties.Add("WinServicesPath",  string.Empty);
-      _Properties.Add("GLMDir",  string.Empty);
-      _Properties.Add("GLMDirPermissions",  string.Empty);
-      _Properties.Add("GLMLocalDir",  string.Empty);
-      _Properties.Add("GLMLogDir",  string.Empty);
-      _Properties.Add("GLMLogDirPermissions",  string.Empty);
-      _Properties.Add("GLMLocalLogDir",  string.Empty);
-      _Properties.Add("SystemFolder",  string.Empty);
-      _Properties.Add("GLMInstStemName",  string.Empty);  // from bi_glm_installation
-      _Properties.Add("LegalAppProcessMappingWSUrl",  string.Empty);
-      _Properties.Add("LegalAppProcessMappingWSHost",  string.Empty);
-      _Properties.Add("AnalyticsServer",  string.Empty);
-      _Properties.Add("AnalyticsDBName",  string.Empty);
-      _Properties.Add("D3FServer",  string.Empty);
-      _Properties.Add("D3FDBName",  string.Empty);
-      _Properties.Add("DialerServer",  string.Empty);
-      _Properties.Add("DialerDBName",  string.Empty);
-      _Properties.Add("AppWSUrlPort",  string.Empty);
-      _Properties.Add("LegalAppWSUrlPort",  string.Empty);
-   }
+      {
+         _Properties.Add("Status", string.Empty);
+         _Properties.Add("Name", string.Empty);
+         _Properties.Add("CheckoutPath", string.Empty);
+         _Properties.Add("ProteusCheckoutPath", string.Empty);
+         _Properties.Add("QBCAdminCfPath", string.Empty);
+         _Properties.Add("DBCollectionPlusMinorVersion", string.Empty);
+         _Properties.Add("DBCollectionPlusMajorVersion", string.Empty);
+         _Properties.Add("DBCollectionPlusVersion", string.Empty);
+         _Properties.Add("DBCollectionPlusServer", string.Empty);
+         _Properties.Add("DBCollectionPlusName", string.Empty);
+         _Properties.Add("ToolkitWSUrl", string.Empty);
+         _Properties.Add("AppWSUrl", string.Empty);
+         _Properties.Add("BatchWinServiceUNC", string.Empty);
+         _Properties.Add("BatchWinServicePath", string.Empty);
+         _Properties.Add("EodWinServiceUNC", string.Empty);
+         _Properties.Add("EodWinServicePath", string.Empty);
+         _Properties.Add("WinServicesUNC", string.Empty);
+         _Properties.Add("WinServicesPath", string.Empty);
+         _Properties.Add("GLMDir", string.Empty);
+         _Properties.Add("GLMDirPermissions", string.Empty);
+         _Properties.Add("GLMLocalDir", string.Empty);
+         _Properties.Add("GLMLogDir", string.Empty);
+         _Properties.Add("GLMLogDirPermissions", string.Empty);
+         _Properties.Add("GLMLocalLogDir", string.Empty);
+         _Properties.Add("SystemFolder", string.Empty);
+         _Properties.Add("GLMInstStemName", string.Empty);  // from bi_glm_installation
+         _Properties.Add("LegalAppProcessMappingWSUrl", string.Empty);
+         _Properties.Add("LegalAppProcessMappingWSHost", string.Empty);
+         _Properties.Add("AnalyticsServer", string.Empty);
+         _Properties.Add("AnalyticsDBName", string.Empty);
+         _Properties.Add("D3FServer", string.Empty);
+         _Properties.Add("D3FDBName", string.Empty);
+         _Properties.Add("DialerServer", string.Empty);
+         _Properties.Add("DialerDBName", string.Empty);
+         _Properties.Add("AppWSUrlPort", string.Empty);
+         _Properties.Add("LegalAppWSUrlPort", string.Empty);
+         _Properties.Add("AT_SYSTEM_PREF_FIELD_AGENT_INTEGRATION_APPLICATION_URL", string.Empty);
+      }
       #endregion
 
       #region methods
@@ -886,7 +854,6 @@ namespace QToolbar.Plugins.Environments
          _Errors.Clear();
          _QCSystemSharedDirs.Clear();
          _OtherFiles.Clear();
-         _EODFlows.Clear();
       }
 
       #endregion

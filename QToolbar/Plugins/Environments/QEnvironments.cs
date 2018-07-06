@@ -127,15 +127,17 @@ namespace QToolbar.Plugins.Environments
 
             CancellationToken cancelToken = tokenSource.Token;
 
+            List<string> eodFlows = new List<string>();
+
             CfFile adminCf = new CfFile(env.QBCAdminCfPath);
 
             if (!cancelToken.IsCancellationRequested)
             {
                // Check QBCollection Plus DB
-               CheckQBCollectionPlusDB(objEnv, cancelToken);
+               CheckQBCollectionPlusDB(objEnv, eodFlows, cancelToken);
 
                // Check environment's files & folders
-               CheckEnvFilesAndFolders(objEnv, adminCf, cancelToken);
+               CheckEnvFilesAndFolders(objEnv, adminCf, eodFlows,  cancelToken);
 
                // Check Analytics DB
                CheckAnalyticsDB(objEnv, cancelToken);
@@ -368,7 +370,7 @@ namespace QToolbar.Plugins.Environments
 
       #region Check QBCollection Plus DB
 
-      private void CheckQBCollectionPlusDB(QEnvironment objEnv, CancellationToken cancelToken)
+      private void CheckQBCollectionPlusDB(QEnvironment objEnv, List<string> eodFlows, CancellationToken cancelToken)
       {
          using (SqlConnection con = new SqlConnection())
          {
@@ -400,7 +402,7 @@ namespace QToolbar.Plugins.Environments
                CheckSystemPrefs(objEnv, com, cancelToken);
 
                // GetFlowsForEodIni
-               GetFlowsForEodIni(objEnv, com, cancelToken);
+               GetFlowsForEodIni(objEnv, com, eodFlows, cancelToken);
 
                // check AT_EXTERNAL_COMPANIES.EXTC_IO_DIR field with the appropriate path per external company                      
                CheckExternalCompaniesEXTC_IO_DIR(objEnv, com, cancelToken);
@@ -670,9 +672,10 @@ namespace QToolbar.Plugins.Environments
                   // FIELD_AGENT_INTEGRATION_APPLICATION_WS_URL
                   else if (pathrow["SPR_TYPE"].ToString().Equals("FIELD_AGENT_INTEGRATION_APPLICATION_WS_URL"))
                   {
+                     objEnv.AT_SYSTEM_PREF_FIELD_AGENT_INTEGRATION_APPLICATION_URL = pathrow["SPR_VALUE"].ToString();
                      if (!objEnv.AppWSUrl.ToLower().Equals(pathrow["SPR_VALUE"].ToString().ToLower()))
                      {
-                        objEnv.Errors.AddError($"AT_SYSTEM_PREF.SPR_TYPE = FIELD_AGENT_INTEGRATION_APPLICATION_WS_URL  [{pathrow["SPR_VALUE"].ToString()}] not equals to  objEnv.AppWSUrl", "");
+                        objEnv.Errors.AddError($"AT_SYSTEM_PREF.SPR_TYPE = FIELD_AGENT_INTEGRATION_APPLICATION_WS_URL ({pathrow["SPR_VALUE"].ToString()}) not equals to  objEnv.AppWSUrl ({objEnv.AppWSUrl})", "");
                      }
                   }
                   else // shared folders
@@ -732,7 +735,7 @@ namespace QToolbar.Plugins.Environments
          }
       }
 
-      private void GetFlowsForEodIni(QEnvironment objEnv, SqlCommand com, CancellationToken cancelToken)
+      private void GetFlowsForEodIni(QEnvironment objEnv, SqlCommand com, List<string> eodFlows, CancellationToken cancelToken)
       {
          if (!cancelToken.IsCancellationRequested)
          {
@@ -755,7 +758,7 @@ namespace QToolbar.Plugins.Environments
                StringBuilder locbuilder = new StringBuilder();
                foreach (DataRow row in table.Rows)
                {
-                  objEnv.EODFlows.Add(row["EOFC_FLOW_NAME"].ToString());
+                  eodFlows.Add(row["EOFC_FLOW_NAME"].ToString());
                }
             }
             catch (Exception ex)
@@ -831,7 +834,7 @@ namespace QToolbar.Plugins.Environments
       #endregion
 
       #region Check environment's files & folders
-      private void CheckEnvFilesAndFolders(QEnvironment objEnv, CfFile adminCf, CancellationToken cancelToken)
+      private void CheckEnvFilesAndFolders(QEnvironment objEnv, CfFile adminCf, List<string> eodFlows, CancellationToken cancelToken)
       {
          // add cfs from local checkout
          AddCFsFromLocalCheckout(objEnv, cancelToken);
@@ -858,7 +861,7 @@ namespace QToolbar.Plugins.Environments
          CheckExistenceOfWinServicesBatFiles(objEnv, cancelToken);
 
          // check subfolders of system folder and eod.ini files
-         CheckSystemFolderSubfoldersAndEodIniFiles(objEnv, cancelToken);
+         CheckSystemFolderSubfoldersAndEodIniFiles(objEnv, eodFlows, cancelToken);
 
          // Validate cfs
          ValidateCFs(objEnv, adminCf, cancelToken);
@@ -1213,7 +1216,7 @@ namespace QToolbar.Plugins.Environments
          if (!File.Exists(uninstallServiceFile)) objEnv.Errors.AddError($"File not found \"{uninstallServiceFile}\"", uninstallServiceFile);
       }
 
-      private void CheckSystemFolderSubfoldersAndEodIniFiles(QEnvironment objEnv, CancellationToken cancelToken)
+      private void CheckSystemFolderSubfoldersAndEodIniFiles(QEnvironment objEnv, List<string> eodFlows, CancellationToken cancelToken)
       {
          string eodExecutorEodIniFile = string.Empty;
          string applicationUpdateEodIniFile = string.Empty;
@@ -1286,7 +1289,7 @@ namespace QToolbar.Plugins.Environments
          try
          {
             string eodIniFileText = File.ReadAllText(eodExecutorEodIniFile);
-            foreach (string name in objEnv.EODFlows)
+            foreach (string name in eodFlows)
             {
                if (!eodIniFileText.Contains(name))
                {
@@ -1301,7 +1304,7 @@ namespace QToolbar.Plugins.Environments
          try
          {
             string applicationUpdateEodIniFileText = File.ReadAllText(applicationUpdateEodIniFile);
-            foreach (string name in objEnv.EODFlows)
+            foreach (string name in eodFlows)
             {
                if (!applicationUpdateEodIniFileText.Contains(name))
                {
@@ -1320,7 +1323,8 @@ namespace QToolbar.Plugins.Environments
       private void ValidateCFs(QEnvironment objEnv, CfFile adminCf, CancellationToken cancelToken)
       {
          CfValidator cfValidator = new CfValidator();
-
+         
+         // validate against qbc_admin.cf
          List<string> keys = adminCf.GetKeys(objEnv.DBCollectionPlusServer, objEnv.DBCollectionPlusName);
          if (keys.Count == 0)
          {
@@ -1330,6 +1334,21 @@ namespace QToolbar.Plugins.Environments
          {
             objEnv.Errors.AddRange(cfValidator.Validate(cfInfo.Path, keys));
          }
+         // validate against agent qbc.cf
+         // get agent client cf
+         string path = objEnv.QBCAdminCfPath.Replace(@"QCS\QCSClient\QBC_Admin.cf", @"CollectionAgentSystem\CollectionAgentSystemClient\QBC.cf");
+         CfFile agentCf = new CfFile(path);
+         keys = agentCf.GetKeys(objEnv.DBCollectionPlusServer, objEnv.DBCollectionPlusName);
+         if (keys.Count == 0)
+         {
+            objEnv.Errors.AddError($"Info not found {objEnv.DBCollectionPlusServer}.{objEnv.DBCollectionPlusName}", "");
+         }
+         foreach (QEnvironment.CfInfo cfInfo in objEnv.CFs)
+         {
+            objEnv.Errors.AddRange(cfValidator.Validate(cfInfo.Path, keys));
+         }
+
+
       }
       #endregion
 
@@ -1507,7 +1526,7 @@ namespace QToolbar.Plugins.Environments
       }
       #endregion
 
-      #region events
+      #region event handlers
       #endregion
    }
 }
