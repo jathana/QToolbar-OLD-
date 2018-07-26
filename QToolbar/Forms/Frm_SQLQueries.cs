@@ -16,6 +16,7 @@ using DevExpress.XtraBars.Docking2010.Views;
 using DevExpress.XtraTreeList;
 using System.Threading;
 using QToolbar.Tools;
+using QToolbar.Forms;
 
 namespace QToolbar
 {
@@ -116,7 +117,7 @@ namespace QToolbar
                }
                catch (Exception ex)
                {
-                  XtraMessageBox.Show(string.Format("Failed to retrieve subfolders of  {0}", folder));
+                  XtraMessageBox.Show(string.Format($"Failed to retrieve subfolders of  {0} ({ex.Message})", folder));
                }
             }
          }
@@ -163,14 +164,21 @@ namespace QToolbar
             {
                foreach (KeyValuePair<string, string> server in servers)
                {
-                  ConnectionInfo info = new ConnectionInfo()
+                  try
                   {
-                     Environment = server.Key,
-                     Server = server.Value,
-                     Database = dbnames[server.Key],
-                     CFPath = destDir
-                  };
-                  retVal.Add(info);
+                     ConnectionInfo info = new ConnectionInfo()
+                     {
+                        Environment = server.Key,
+                        Server = server.Value,
+                        Database = dbnames[server.Key],
+                        CFPath = destDir
+                     };
+                     retVal.Add(info);
+                  }
+                  catch(Exception ex)
+                  {
+                     //throw new Exception($"Not found server key {server.Key} in [Databases] in {file} .");
+                  }
                }
             }
          }
@@ -279,6 +287,12 @@ namespace QToolbar
                mnuItemScriptCriteria.Tag = obj.Data;
                e.Menu.Items.Add(mnuItemScriptCriteria);
 
+               // create criteria
+               DevExpress.Utils.Menu.DXMenuItem mnuItemCreateCriteria = new DevExpress.Utils.Menu.DXMenuItem("Create Criteria", createCriteria_ItemClick);
+               mnuItemScriptCriteria.Tag = obj.Data;
+               e.Menu.Items.Add(mnuItemCreateCriteria);
+
+
             }
 
 
@@ -330,6 +344,16 @@ namespace QToolbar
          Frm_ScriptCriteria f = new Frm_ScriptCriteria();
          f.Show(data);
       }
+
+      private void createCriteria_ItemClick(object sender, EventArgs e)
+      {
+         TreeNode<ConnectionInfo> obj = (TreeNode<ConnectionInfo>)treeDatabases.GetDataRecordByNode(treeDatabases.FocusedNode);
+         ConnectionInfo data = obj.Data;
+         Frm_CriteriaHelper f = new Frm_CriteriaHelper();
+         f.Show(data);
+      }
+
+
 
       private void treeDatabases_GetStateImage(object sender, DevExpress.XtraTreeList.GetStateImageEventArgs e)
       {

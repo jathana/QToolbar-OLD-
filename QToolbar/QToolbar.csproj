@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\q-wks-jathan\Shared\QToolbar\</InstallUrl>
-    <ApplicationRevision>124</ApplicationRevision>
+    <ApplicationRevision>125</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -128,6 +128,12 @@
     <Compile Include="Buttons\InternalBuildsButton.cs" />
     <Compile Include="Buttons\NextBuildButton.cs" />
     <Compile Include="Builds\CheckResult.cs" />
+    <Compile Include="Forms\Frm_CriteriaHelper.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Frm_CriteriaHelper.Designer.cs">
+      <DependentUpon>Frm_CriteriaHelper.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\CfFile.cs" />
     <Compile Include="Helpers\CfValidator.cs" />
     <Compile Include="Helpers\DBUtils.cs" />
@@ -259,6 +265,9 @@
     </Compile>
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Helpers\XmlNodeExtensions.cs" />
+    <EmbeddedResource Include="Forms\Frm_CriteriaHelper.resx">
+      <DependentUpon>Frm_CriteriaHelper.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Plugins\CFsValidator\Frm_CFsValidator.resx">
       <DependentUpon>Frm_CFsValidator.cs</DependentUpon>
     </EmbeddedResource>
