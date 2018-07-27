@@ -24,6 +24,8 @@ namespace QToolbar.Forms
       private const int CRITERIA_UNIQUE_IDS = 5;
       private const int CRITERIA_WHERE_TABLES = 6;
       private const int CRITERIA_TABLES = 7;
+      private const int CRITERIA_SQL_TYPES = 8;
+
 
       private ConnectionInfo _Info;
       private StringBuilder connectionMsg = new StringBuilder();
@@ -34,8 +36,10 @@ namespace QToolbar.Forms
       RepositoryItemGridLookUpEdit repoLookupCriterioDependentUniqueId = new RepositoryItemGridLookUpEdit();
       RepositoryItemGridLookUpEdit repoLookupCriterioTable = new RepositoryItemGridLookUpEdit();
       RepositoryItemGridLookUpEdit repoLookupCriterioJoin = new RepositoryItemGridLookUpEdit();
+      RepositoryItemGridLookUpEdit repoLookupSQLTypes = new RepositoryItemGridLookUpEdit();
 
-      DataSet _Data = new DataSet();
+      DataSet _SelectData = new DataSet();
+      DataSet _CreateData = new DataSet();
 
       public Frm_CriteriaHelper()
       {
@@ -55,19 +59,13 @@ namespace QToolbar.Forms
       private void SetSQL()
       {
          txtSelectSQL.Text = "SELECT * FROM AT_CRITERIA WHERE CRI_USER_DEFINED_FLAG=0 ORDER BY CRI_CREATED DESC";
-         txtCreateSQL.Text = "SELECT * FROM AT_CRITERIA WHERE 1 = 2";
       }
-
       
-      private void CreateDataset()
-      {
-
-      }
 
       void InitGrid()
       {
          //repoLookupCriterioCategory.BeginInit();
-         repoLookupCriterioCategory.DataSource = _Data.Tables[CRITERIA_CATEGORIES];
+         repoLookupCriterioCategory.DataSource = _SelectData.Tables[CRITERIA_CATEGORIES];
          repoLookupCriterioCategory.DisplayMember = "LOV_DESC";
          repoLookupCriterioCategory.Name = "repoLookupCriterioCategory";
          repoLookupCriterioCategory.ValueMember = "LOV_CODE";
@@ -78,7 +76,7 @@ namespace QToolbar.Forms
          //repoLookupCriterioCategory.EndInit();
 
          //repoLookupCriterioType.BeginInit();
-         repoLookupCriterioType.DataSource = _Data.Tables[CRITERIA_TYPES];
+         repoLookupCriterioType.DataSource = _SelectData.Tables[CRITERIA_TYPES];
          repoLookupCriterioType.DisplayMember = "LOV_DESC";
          repoLookupCriterioType.Name = "repoLookupCriterioType";
          repoLookupCriterioType.ValueMember = "LOV_CODE";
@@ -88,7 +86,7 @@ namespace QToolbar.Forms
          //repoLookupCriterioType.EndInit();
 
          //repoLookupCriterioUniqueId.BeginInit();
-         repoLookupCriterioUniqueId.DataSource = _Data.Tables[CRITERIA_UNIQUE_IDS];
+         repoLookupCriterioUniqueId.DataSource = _SelectData.Tables[CRITERIA_UNIQUE_IDS];
          repoLookupCriterioUniqueId.DisplayMember = "CRI_UNIQUE_ID";
          repoLookupCriterioUniqueId.Name = "repoLookupCriterioNewId";
          repoLookupCriterioUniqueId.ValueMember = "CRI_UNIQUE_ID";
@@ -100,7 +98,7 @@ namespace QToolbar.Forms
 
          //repoLookupCriterioWhereTable
          //repoLookupCriterioWhereTable.BeginInit();
-         repoLookupCriterioWhereTable.DataSource = _Data.Tables[CRITERIA_WHERE_TABLES];
+         repoLookupCriterioWhereTable.DataSource = _SelectData.Tables[CRITERIA_WHERE_TABLES];
          repoLookupCriterioWhereTable.DisplayMember = "TABLE_NAME";
          repoLookupCriterioWhereTable.Name = "repoLookupCriterioWhereTable";
          repoLookupCriterioWhereTable.ValueMember = "TABLE_NAME";
@@ -112,7 +110,7 @@ namespace QToolbar.Forms
 
          //repoLookupCriterioDependentUniqueId
          //repoLookupCriterioDependentUniqueId.BeginInit();
-         repoLookupCriterioDependentUniqueId.DataSource = _Data.Tables[CRITERIA_UNIQUE_IDS];
+         repoLookupCriterioDependentUniqueId.DataSource = _SelectData.Tables[CRITERIA_UNIQUE_IDS];
          repoLookupCriterioDependentUniqueId.DisplayMember = "CRI_UNIQUE_ID";
          repoLookupCriterioDependentUniqueId.Name = "repoLookupCriterioDependentUniqueId";
          repoLookupCriterioDependentUniqueId.ValueMember = "CRI_UNIQUE_ID";
@@ -124,7 +122,7 @@ namespace QToolbar.Forms
 
          //repoLookupCriterioTable
          //repoLookupCriterioTable.BeginInit();
-         repoLookupCriterioTable.DataSource = _Data.Tables[CRITERIA_TABLES];
+         repoLookupCriterioTable.DataSource = _SelectData.Tables[CRITERIA_TABLES];
          repoLookupCriterioTable.DisplayMember = "CRI_TABLE";
          repoLookupCriterioTable.Name = "repoLookupCriterioTable";
          repoLookupCriterioTable.ValueMember = "CRI_TABLE";
@@ -136,18 +134,25 @@ namespace QToolbar.Forms
 
          //repoLookupCriterioJoin
          //repoLookupCriterioJoin.BeginInit();
-         repoLookupCriterioJoin.DataSource = _Data.Tables[CRITERIA_JOINS];
+         repoLookupCriterioJoin.DataSource = _SelectData.Tables[CRITERIA_JOINS];
          repoLookupCriterioJoin.DisplayMember = "CRJ_CODE";
          repoLookupCriterioJoin.Name = "repoLookupCriterioJoin";
-         repoLookupCriterioJoin.ValueMember = "CRJ_CODE";
-         
-         repoLookupCriterioJoin.PopupFormSize = new Size(1000, 500);
-         
+         repoLookupCriterioJoin.ValueMember = "CRJ_CODE";         
+         repoLookupCriterioJoin.PopupFormSize = new Size(1000, 500);         
          grdCreateCriteria.RepositoryItems.Add(repoLookupCriterioJoin);
          grdviewCreateCriteria.Columns["CRJ_CODE"].ColumnEdit = repoLookupCriterioJoin;
          //repoLookupCriterioJoin.EndInit();
 
-
+         //repoLookupSQLTypes
+         //repoLookupSQLTypes.BeginInit();
+         repoLookupSQLTypes.DataSource = _SelectData.Tables[CRITERIA_SQL_TYPES];
+         repoLookupSQLTypes.DisplayMember = "CRI_WHERE_FIELD_SQL_TYPE";
+         repoLookupSQLTypes.Name = "repoLookupSQLTypes";
+         repoLookupSQLTypes.ValueMember = "CRI_WHERE_FIELD_SQL_TYPE";
+         repoLookupSQLTypes.PopupFormSize = new Size(1000, 500);
+         grdCreateCriteria.RepositoryItems.Add(repoLookupSQLTypes);
+         grdviewCreateCriteria.Columns["CRI_WHERE_FIELD_SQL_TYPE"].ColumnEdit = repoLookupSQLTypes;
+         //repoLookupSQLTypes.EndInit();
 
 
       }
@@ -169,7 +174,7 @@ namespace QToolbar.Forms
                StringBuilder builder = new StringBuilder();
                builder.Append(txtSelectSQL.Text);
                builder.Append(';');
-               builder.Append(txtCreateSQL.Text);
+               builder.Append("SELECT * FROM AT_CRITERIA WHERE 1 = 2");
                // criteria categories
                builder.Append(';');
                builder.Append("SELECT LOV_CODE, LOV_DESC, LOV_INTERNAL_DESC, LOV_ACTIVE FROM VW_AT_LST_OF_VAL WHERE LOV_TYPE='CRITERIA_CATEGORIES' ORDER BY LOV_DESC");
@@ -207,6 +212,10 @@ namespace QToolbar.Forms
                builder.Append(';');
                builder.Append(@"SELECT 'VW_AT_LST_OF_VAL' AS CRI_TABLE");
 
+               // SQL Types
+               builder.Append(';');
+               builder.Append(@"SELECT CRI_WHERE_FIELD_SQL_TYPE  FROM AT_CRITERIA GROUP BY CRI_WHERE_FIELD_SQL_TYPE ORDER BY CRI_WHERE_FIELD_SQL_TYPE");
+
                SqlDataAdapter adapter = new SqlDataAdapter(builder.ToString(), con);
 
                DataSet dataset = new DataSet();
@@ -227,16 +236,15 @@ namespace QToolbar.Forms
          {
             if (e.Result is DataSet)
             {
-               _Data = (DataSet)e.Result;
+               _SelectData = (DataSet)e.Result;
                grdviewSelectCriteria.Columns.Clear();
-               grdSelectCriteria.DataSource = _Data.Tables[SELECT_CRITERIA];
+               grdSelectCriteria.DataSource = _SelectData.Tables[SELECT_CRITERIA];
 
-               if(grdCreateCriteria.DataSource == null)
+               if(_CreateData.Tables.Count==0)
                {
-                  grdCreateCriteria.DataSource = _Data.Tables[CREATE_CRITERIA];
+                  _CreateData.Tables.Add(_SelectData.Tables[CREATE_CRITERIA].Clone());
+                  grdCreateCriteria.DataSource = _CreateData.Tables[0];
                }
-
-
             }
             else if (e.Result is Exception)
             {
@@ -256,7 +264,6 @@ namespace QToolbar.Forms
       {
          try
          {
-
             btnLoadCriteria.Enabled = false;
             bool loadCriteriaSchema = grdviewCreateCriteria.DataSource == null;
             backgroundWorker1.RunWorkerAsync(loadCriteriaSchema);
@@ -286,7 +293,6 @@ namespace QToolbar.Forms
          grdviewCreateCriteria.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
          grdviewCreateCriteria.InitNewRow += GrdviewCreateCriteria_InitNewRow;
 
-
       }
 
       private void GrdviewCreateCriteria_InitNewRow(object sender, InitNewRowEventArgs e)
@@ -304,20 +310,34 @@ namespace QToolbar.Forms
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_FIELDS"], "");
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_WHERE_SHOW"], "");
          view.SetRowCellValue(e.RowHandle, view.Columns["WLT_INTDESC"], "");
-
-
-         //////////////////////////
-         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_DESC"], "Test");
-         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_TYPE"], 430);
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_IS_CUSTOMER_LEVEL"], 0);
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_STRATEGY"], 1);
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_QUEUE"], 1);
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_DYNAMIC_QUEUE"], 1);
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_WORKLIST"], 1);
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_REVOCATION"], 1);
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_ORDER"], 0);
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_RETURN_DUPLICATE_FLAG"], 0);
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_IS_TERRITORIAL"], 0);
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_USER_DEFINED_FLAG"], 0);
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_DEPLOYED_FLAG"], 1);
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_CLOSED_CASES"], 0);
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_SETTLEMENT_FLAG"], 0);
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_SINGLE_VALUE_SELECTION_FLAG"], 0);
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_PROCESS_INSTANCES_FLAG"], 0);
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_DECISION_TREE_ENTRY"], 1);
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_DECISION_TREE"], 1);
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_SCORING"], 1);
+
+
+
+         //////////////////////////
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_DESC"], "Test");
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_TYPE"], 430);
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_CATEGORY"], 244);
          view.SetRowCellValue(e.RowHandle, view.Columns["CRJ_CODE"], 1);
-         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_IS_CUSTOMER_LEVEL"], 0);
-         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_STRATEGY"], 1);
+         
+         
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_WHERE_TABLE"], "AT_CASE_EXTRA");
 
 
@@ -338,6 +358,9 @@ namespace QToolbar.Forms
          {
 
             btnCreateSQL.Enabled = false;
+            grdviewCreateCriteria.CloseEditor();
+            grdviewCreateCriteria.UpdateCurrentRow();
+
             backgroundWorker2.RunWorkerAsync();
          }
          catch (Exception ex)
@@ -350,28 +373,83 @@ namespace QToolbar.Forms
          }
       }
 
+      private Dictionary<string,int> GetLengths()
+      {
+         Dictionary<string, int> ret = new Dictionary<string, int>();
+         
+         foreach (DataColumn col in _CreateData.Tables[0].Columns)
+         {
+            int len = col.ColumnName.Length+2;
+            foreach (DataRow row in _CreateData.Tables[0].Rows)
+            {
+               len = Math.Max(GetValue(col, row).Length+2, len);
+            }
+            ret.Add(col.ColumnName, len);
+         }
+         return ret;
+      }
+
+      private string Pad(Dictionary<string, int> lens, string columnName, string value)
+      {
+         int len = lens[columnName];
+         return value.PadRight(len);
+      }
 
       private void CreateSQL()
       {
          StringBuilder b = new StringBuilder();
          StringBuilder b2 = new StringBuilder();
          bool first = true;
-         foreach (DataRow row in _Data.Tables[CREATE_CRITERIA].Rows)
+         bool last = false;
+         Dictionary<string, int> lens = GetLengths();
+         b2.Clear();
+         b.AppendLine($"--     Database :: {_Info.Server}.{_Info.Database}");
+         b.AppendLine("--");
+         b.AppendLine($"-- New Criteria :: ");
+         b.AppendLine("--");
+         foreach (DataRow row in _CreateData.Tables[0].Rows)
+         {
+            b.AppendLine($"--    {CriterioToString(row, lens)}");
+         }
+         b.AppendLine();
+         
+         b.Append("-- New Criteria         ");
+
+         foreach (DataColumn col in _CreateData.Tables[0].Columns)
+         {
+            if (!col.ColumnName.Equals("CRI_CODE"))
+            {
+               if (!first) b.Append(", ");
+               b.Append(col.ColumnName);
+
+               b2.Append(Pad(lens, col.ColumnName, col.ColumnName+"  "));
+               first = false;
+            }
+            
+         }
+         b.Append(" ".PadLeft(10));
+         b.AppendLine(b2.ToString());
+         b.AppendLine(new string('-', b.ToString().Length));
+
+         foreach (DataRow row in _CreateData.Tables[0].Rows)
          {
             first = true;
+            last = false;
             b2.Clear();
             b.Append("INSERT INTO AT_CRITERIA(");
-            foreach (DataColumn col in _Data.Tables[CREATE_CRITERIA].Columns)
+            int index = 0;
+            foreach (DataColumn col in _CreateData.Tables[0].Columns)
             {
                if (!col.ColumnName.Equals("CRI_CODE"))
                {
+                  last = (index == _CreateData.Tables[0].Columns.Count - 2);  // crj_code is excluded
                   if (!first) b.Append(", ");
                   b.Append(col.ColumnName);
 
-                  if (!first) b2.Append(", ");
-                  b2.Append(GetValue(col, row));
+                  b2.Append(Pad(lens, col.ColumnName, GetValue(col, row) + (last ? "  " : ", ")));
 
                   first = false;
+                  index++;
                }
             }
             b.Append(") VALUES (");
@@ -387,12 +465,12 @@ namespace QToolbar.Forms
       {
          string ret = string.Empty;
          if(DBNull.Value.Equals(row[col]))
-         {
+         {            
             ret = "''";
          }
          else if (col.DataType == typeof(string))
          {
-            ret = $"'{row[col].ToString()}'";
+            ret = DBNull.Value.Equals(row[col]) ? "" : ret=$"'{row[col].ToString().Replace("'","''")}'";
          }
          else if (col.DataType == typeof(bool))
          {
@@ -447,12 +525,13 @@ namespace QToolbar.Forms
             if (e.Result is string)
             {
                int newCriUniqueId = Convert.ToInt32(e.Result);
-               for(int i=0;i<_Data.Tables[CREATE_CRITERIA].Rows.Count;i++)
-               {                  
-                  _Data.Tables[CREATE_CRITERIA].Rows[i]["CRI_UNIQUE_ID"] = $"CRITERIO_{newCriUniqueId}";
+               for(int i=0;i< _CreateData.Tables[0].Rows.Count;i++)
+               {
+                  _CreateData.Tables[0].Rows[i]["CRI_UNIQUE_ID"] = $"CRITERIO_{newCriUniqueId}";
+                  _CreateData.Tables[0].Rows[i]["CRI_SYNC_GUID"] = $"CRITERIO_{newCriUniqueId}";
                   newCriUniqueId++;
                }
-               _Data.Tables[CREATE_CRITERIA].AcceptChanges();
+               _CreateData.Tables[0].AcceptChanges();
                CreateSQL();
                btnCreateSQL.Enabled = true;
 
@@ -465,6 +544,50 @@ namespace QToolbar.Forms
             }
          }
          
+      }
+
+      private void btnCloneCriterio_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      {
+         try
+         {
+            _CreateData.Tables[0].Rows.Add(grdviewSelectCriteria.GetFocusedDataRow().ItemArray);
+         }
+         catch (ConstraintException exp)
+         {
+            MessageBox.Show("This row is already exists");
+         }
+      }
+
+      private void btnDeleteCriterio_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      {
+         if (MessageBox.Show("Delete Criterio?", "Confirmation", MessageBoxButtons.YesNo) !=
+              DialogResult.Yes)
+            return;
+         grdviewCreateCriteria.DeleteRow(grdviewCreateCriteria.FocusedRowHandle);
+      }
+
+
+      private string CriterioToString(DataRow row, Dictionary<string,int> lens)
+      {
+         StringBuilder b = new StringBuilder();
+         if(row != null)
+         {
+            b.Append($"{ row["CRI_UNIQUE_ID"]} : {Pad(lens, "CRI_DESC", row["CRI_DESC"].ToString())} ");
+
+            string categoryDesc = _SelectData.Tables[CRITERIA_CATEGORIES].Select($"LOV_CODE={row["CRI_CATEGORY"]}")[0]["LOV_DESC"].ToString();
+            b.Append($"[Category:{categoryDesc} ");
+
+            b.Append($"{((bool)row["CRI_STRATEGY"] ? ",Strategies":"")}");
+            b.Append($"{((bool)row["CRI_QUEUE"] ? ",Queues" : "")}");
+            b.Append($"{((bool)row["CRI_DYNAMIC_QUEUE"] ? ",Dynamic Queues" : "")}");
+            b.Append($"{((bool)row["CRI_WORKLIST"] ? ",Worklists" : "")}");
+            b.Append($"{((bool)row["CRI_REVOCATION"] ? ",Revocation" : "")}");
+            b.Append($"{((bool)row["CRI_DECISION_TREE"] ? ",Decision Trees" : "")}");
+            b.Append($"{((bool)row["CRI_DECISION_TREE_ENTRY"] ? ",Decision Trees Entries" : "")}");
+
+            b.Append("]");
+         }
+         return b.ToString();
       }
    }
 }

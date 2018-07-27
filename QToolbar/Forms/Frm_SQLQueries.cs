@@ -282,17 +282,15 @@ namespace QToolbar
                }
 
 
+               // create criteria
+               DevExpress.Utils.Menu.DXMenuItem mnuItemCreateCriteria = new DevExpress.Utils.Menu.DXMenuItem("Create Criteria", createCriteria_ItemClick);
+               mnuItemCreateCriteria.Tag = obj.Data;
+               e.Menu.Items.Add(mnuItemCreateCriteria);
+
                // script criteria
                DevExpress.Utils.Menu.DXMenuItem mnuItemScriptCriteria = new DevExpress.Utils.Menu.DXMenuItem("Script Criteria", scriptCriteria_ItemClick);
                mnuItemScriptCriteria.Tag = obj.Data;
                e.Menu.Items.Add(mnuItemScriptCriteria);
-
-               // create criteria
-               DevExpress.Utils.Menu.DXMenuItem mnuItemCreateCriteria = new DevExpress.Utils.Menu.DXMenuItem("Create Criteria", createCriteria_ItemClick);
-               mnuItemScriptCriteria.Tag = obj.Data;
-               e.Menu.Items.Add(mnuItemCreateCriteria);
-
-
             }
 
 
