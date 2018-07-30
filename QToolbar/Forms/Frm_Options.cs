@@ -49,6 +49,7 @@ namespace QToolbar
          Properties.Settings.Default.EnvironmentsConfigurationFolder = txtEnvironmentsConfiguration.Text;
          Properties.Settings.Default.InternalBuildsFolder = txtInternalBuildsFolder.Text;
          Properties.Settings.Default.ClearLegalMetadata = chkClearLegalMetadata.Checked;
+         Properties.Settings.Default.DevSQLInstances = txtDevSQLInstances.Text;
 
          // save folders
          SaveFolders();
@@ -82,6 +83,7 @@ namespace QToolbar
          txtEnvironmentsConfiguration.Text = Properties.Settings.Default.EnvironmentsConfigurationFolder;
          txtInternalBuildsFolder.Text = Properties.Settings.Default.InternalBuildsFolder;
          chkClearLegalMetadata.Checked = Properties.Settings.Default.ClearLegalMetadata;
+         txtDevSQLInstances.Text = Properties.Settings.Default.DevSQLInstances;
 
          // custom edit form for sql queries
          gviewSQLQueries.OptionsEditForm.CustomEditFormLayout = new uc_SQLQueriesEdit();

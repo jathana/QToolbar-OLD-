@@ -30,12 +30,14 @@
       {
          this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_CriteriaHelper));
-         DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip6 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem6 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip7 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem7 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip8 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem8 = new DevExpress.Utils.ToolTipTitleItem();
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
          this.txtGeneratedSQL = new FastColoredTextBoxNS.FastColoredTextBox();
          this.grdCreateCriteria = new DevExpress.XtraGrid.GridControl();
@@ -43,7 +45,10 @@
          this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
          this.bar1 = new DevExpress.XtraBars.Bar();
          this.btnLoadCriteria = new DevExpress.XtraBars.BarButtonItem();
+         this.btnCloneCriterio = new DevExpress.XtraBars.BarButtonItem();
+         this.btnDeleteCriterio = new DevExpress.XtraBars.BarButtonItem();
          this.btnCreateSQL = new DevExpress.XtraBars.BarButtonItem();
+         this.mnuDevDBs = new DevExpress.XtraBars.BarSubItem();
          this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -61,8 +66,7 @@
          this.splitterItem4 = new DevExpress.XtraLayout.SplitterItem();
          this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
          this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
-         this.btnCloneCriterio = new DevExpress.XtraBars.BarButtonItem();
-         this.btnDeleteCriterio = new DevExpress.XtraBars.BarButtonItem();
+         this.workerScriptForOtherDB = new System.ComponentModel.BackgroundWorker();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.txtGeneratedSQL)).BeginInit();
@@ -167,8 +171,9 @@
             this.btnLoadCriteria,
             this.btnCreateSQL,
             this.btnCloneCriterio,
-            this.btnDeleteCriterio});
-         this.barManager1.MaxItemId = 4;
+            this.btnDeleteCriterio,
+            this.mnuDevDBs});
+         this.barManager1.MaxItemId = 5;
          // 
          // bar1
          // 
@@ -180,7 +185,8 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnLoadCriteria, DevExpress.XtraBars.BarItemPaintStyle.Standard),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnCloneCriterio),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnDeleteCriterio),
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnCreateSQL)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnCreateSQL),
+            new DevExpress.XtraBars.LinkPersistInfo(this.mnuDevDBs)});
          this.bar1.Text = "Tools";
          // 
          // btnLoadCriteria
@@ -190,10 +196,34 @@
          this.btnLoadCriteria.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnLoadCriteria.ImageOptions.Image")));
          this.btnLoadCriteria.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnLoadCriteria.ImageOptions.LargeImage")));
          this.btnLoadCriteria.Name = "btnLoadCriteria";
-         toolTipTitleItem1.Text = "Loads Criteria";
-         superToolTip1.Items.Add(toolTipTitleItem1);
-         this.btnLoadCriteria.SuperTip = superToolTip1;
+         toolTipTitleItem5.Text = "Loads Criteria";
+         superToolTip5.Items.Add(toolTipTitleItem5);
+         this.btnLoadCriteria.SuperTip = superToolTip5;
          this.btnLoadCriteria.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnLoadCriteria_ItemClick);
+         // 
+         // btnCloneCriterio
+         // 
+         this.btnCloneCriterio.Caption = "Clone Criterio";
+         this.btnCloneCriterio.Id = 2;
+         this.btnCloneCriterio.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnCloneCriterio.ImageOptions.Image")));
+         this.btnCloneCriterio.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnCloneCriterio.ImageOptions.LargeImage")));
+         this.btnCloneCriterio.Name = "btnCloneCriterio";
+         toolTipTitleItem6.Text = "Clone Criterio";
+         superToolTip6.Items.Add(toolTipTitleItem6);
+         this.btnCloneCriterio.SuperTip = superToolTip6;
+         this.btnCloneCriterio.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCloneCriterio_ItemClick);
+         // 
+         // btnDeleteCriterio
+         // 
+         this.btnDeleteCriterio.Caption = "Delete Criterio";
+         this.btnDeleteCriterio.Id = 3;
+         this.btnDeleteCriterio.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteCriterio.ImageOptions.Image")));
+         this.btnDeleteCriterio.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnDeleteCriterio.ImageOptions.LargeImage")));
+         this.btnDeleteCriterio.Name = "btnDeleteCriterio";
+         toolTipTitleItem7.Text = "Delete Criterio";
+         superToolTip7.Items.Add(toolTipTitleItem7);
+         this.btnDeleteCriterio.SuperTip = superToolTip7;
+         this.btnDeleteCriterio.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDeleteCriterio_ItemClick);
          // 
          // btnCreateSQL
          // 
@@ -203,6 +233,17 @@
          this.btnCreateSQL.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnCreateSQL.ImageOptions.LargeImage")));
          this.btnCreateSQL.Name = "btnCreateSQL";
          this.btnCreateSQL.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCreateSQL_ItemClick);
+         // 
+         // mnuDevDBs
+         // 
+         this.mnuDevDBs.Caption = "Create SQL for other version";
+         this.mnuDevDBs.Id = 4;
+         this.mnuDevDBs.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuDevDBs.ImageOptions.Image")));
+         this.mnuDevDBs.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuDevDBs.ImageOptions.LargeImage")));
+         this.mnuDevDBs.Name = "mnuDevDBs";
+         toolTipTitleItem8.Text = "Create SQL for selected QBCollectionsPlus db";
+         superToolTip8.Items.Add(toolTipTitleItem8);
+         this.mnuDevDBs.SuperTip = superToolTip8;
          // 
          // barDockControlTop
          // 
@@ -379,29 +420,10 @@
          this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
          this.backgroundWorker2.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
          // 
-         // btnCloneCriterio
+         // workerScriptForOtherDB
          // 
-         this.btnCloneCriterio.Caption = "Clone Criterio";
-         this.btnCloneCriterio.Id = 2;
-         this.btnCloneCriterio.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.Image")));
-         this.btnCloneCriterio.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.LargeImage")));
-         this.btnCloneCriterio.Name = "btnCloneCriterio";
-         toolTipTitleItem2.Text = "Clone Criterio";
-         superToolTip2.Items.Add(toolTipTitleItem2);
-         this.btnCloneCriterio.SuperTip = superToolTip2;
-         this.btnCloneCriterio.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCloneCriterio_ItemClick);
-         // 
-         // btnDeleteCriterio
-         // 
-         this.btnDeleteCriterio.Caption = "Delete Criterio";
-         this.btnDeleteCriterio.Id = 3;
-         this.btnDeleteCriterio.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.Image1")));
-         this.btnDeleteCriterio.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.LargeImage1")));
-         this.btnDeleteCriterio.Name = "btnDeleteCriterio";
-         toolTipTitleItem3.Text = "Delete Criterio";
-         superToolTip3.Items.Add(toolTipTitleItem3);
-         this.btnDeleteCriterio.SuperTip = superToolTip3;
-         this.btnDeleteCriterio.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDeleteCriterio_ItemClick);
+         this.workerScriptForOtherDB.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerScriptForOtherDB_DoWork);
+         this.workerScriptForOtherDB.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerScriptForOtherDB_RunWorkerCompleted);
          // 
          // Frm_CriteriaHelper
          // 
@@ -467,5 +489,7 @@
       private System.ComponentModel.BackgroundWorker backgroundWorker2;
       private DevExpress.XtraBars.BarButtonItem btnCloneCriterio;
       private DevExpress.XtraBars.BarButtonItem btnDeleteCriterio;
+      private DevExpress.XtraBars.BarSubItem mnuDevDBs;
+      private System.ComponentModel.BackgroundWorker workerScriptForOtherDB;
    }
 }

@@ -89,6 +89,8 @@
          this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
          this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+         this.txtDevSQLInstances = new DevExpress.XtraEditors.TextEdit();
+         this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.chkClearLegalMetadata.Properties)).BeginInit();
@@ -147,10 +149,13 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.txtDevSQLInstances.Properties)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
          this.SuspendLayout();
          // 
          // layoutControl1
          // 
+         this.layoutControl1.Controls.Add(this.txtDevSQLInstances);
          this.layoutControl1.Controls.Add(this.chkClearLegalMetadata);
          this.layoutControl1.Controls.Add(this.txtInternalBuildsFolder);
          this.layoutControl1.Controls.Add(this.txtEnvironmentsConfiguration);
@@ -204,9 +209,9 @@
          // 
          // memFolders
          // 
-         this.memFolders.Location = new System.Drawing.Point(159, 295);
+         this.memFolders.Location = new System.Drawing.Point(159, 319);
          this.memFolders.Name = "memFolders";
-         this.memFolders.Size = new System.Drawing.Size(630, 144);
+         this.memFolders.Size = new System.Drawing.Size(630, 120);
          this.memFolders.StyleController = this.layoutControl1;
          this.memFolders.TabIndex = 15;
          // 
@@ -309,7 +314,8 @@
             this.layoutControlItem11,
             this.layoutControlItem12,
             this.layoutControlItem14,
-            this.layoutControlItem15});
+            this.layoutControlItem15,
+            this.layoutControlItem8});
          this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
          this.layoutControlGroup1.Name = "Root";
          this.layoutControlGroup1.Size = new System.Drawing.Size(801, 453);
@@ -446,9 +452,9 @@
          // layoutControlItem11
          // 
          this.layoutControlItem11.Control = this.memFolders;
-         this.layoutControlItem11.Location = new System.Drawing.Point(0, 283);
+         this.layoutControlItem11.Location = new System.Drawing.Point(0, 307);
          this.layoutControlItem11.Name = "layoutControlItem11";
-         this.layoutControlItem11.Size = new System.Drawing.Size(781, 148);
+         this.layoutControlItem11.Size = new System.Drawing.Size(781, 124);
          this.layoutControlItem11.Text = "My Folders";
          this.layoutControlItem11.TextSize = new System.Drawing.Size(144, 13);
          // 
@@ -768,6 +774,24 @@
          this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem3.TextVisible = false;
          // 
+         // txtDevSQLInstances
+         // 
+         this.txtDevSQLInstances.EditValue = "Q-SRV-DEVEL12,Q-SRV-DEVEL12\\MSSQL2K16";
+         this.txtDevSQLInstances.Location = new System.Drawing.Point(159, 295);
+         this.txtDevSQLInstances.Name = "txtDevSQLInstances";
+         this.txtDevSQLInstances.Size = new System.Drawing.Size(630, 20);
+         this.txtDevSQLInstances.StyleController = this.layoutControl1;
+         this.txtDevSQLInstances.TabIndex = 19;
+         // 
+         // layoutControlItem8
+         // 
+         this.layoutControlItem8.Control = this.txtDevSQLInstances;
+         this.layoutControlItem8.Location = new System.Drawing.Point(0, 283);
+         this.layoutControlItem8.Name = "layoutControlItem8";
+         this.layoutControlItem8.Size = new System.Drawing.Size(781, 24);
+         this.layoutControlItem8.Text = "Dev SQL Instances";
+         this.layoutControlItem8.TextSize = new System.Drawing.Size(144, 13);
+         // 
          // Frm_Options
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -838,6 +862,8 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.txtDevSQLInstances.Properties)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
          this.ResumeLayout(false);
 
       }
@@ -904,5 +930,7 @@
       private DevExpress.XtraTab.XtraTabPage tabEnvCFs;
       private DevExpress.XtraGrid.GridControl gridEnvCFs;
       private DevExpress.XtraGrid.Views.Grid.GridView gridView4;
+      private DevExpress.XtraEditors.TextEdit txtDevSQLInstances;
+      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
    }
 }

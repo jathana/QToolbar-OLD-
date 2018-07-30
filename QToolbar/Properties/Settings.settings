@@ -148,5 +148,8 @@
     <Setting Name="QCWebServers" Type="System.String" Scope="User">
       <Value Profile="(Default)">Q-SRV-SQL2K12</Value>
     </Setting>
+    <Setting Name="DevSQLInstances" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Q-SRV-DEVEL12,Q-SRV-DEVEL12\MSSQL2K16</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

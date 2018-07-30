@@ -347,5 +347,17 @@ namespace QToolbar.Properties {
                 this["QCWebServers"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Q-SRV-DEVEL12,Q-SRV-DEVEL12\\MSSQL2K16")]
+        public string DevSQLInstances {
+            get {
+                return ((string)(this["DevSQLInstances"]));
+            }
+            set {
+                this["DevSQLInstances"] = value;
+            }
+        }
     }
 }

@@ -74,6 +74,15 @@ namespace QToolbar.Options
          }
       }
 
+      public static string DevSQLInstances
+      {
+         get
+         {
+            return Properties.Settings.Default.DevSQLInstances;
+         }
+      }
+
+
       public static StringCollection Folders
       {
          get

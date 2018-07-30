@@ -72,5 +72,21 @@ namespace QToolbar
          }
          return retval;
       }
+
+      public List<T> ToList()
+      {
+         List<T> ret = new List<T>();
+         ToListInternal(this, ret);
+         return ret;
+      }
+
+      private void ToListInternal(TreeNode<T> node, List<T> result)
+      {
+         result.Add(node.Data);
+         foreach (var child in node.Children)
+            ToListInternal(child, result);
+      }
+
+
    }
 }

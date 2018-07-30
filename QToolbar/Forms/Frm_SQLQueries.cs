@@ -23,7 +23,7 @@ namespace QToolbar
    public partial class Frm_SQLQueries : DevExpress.XtraEditors.XtraForm
    {
       TreeNode<ConnectionInfo> tree = new TreeNode<ConnectionInfo>();
-
+      List<ConnectionInfo> _DBs = new List<ConnectionInfo>();
 
       public Frm_SQLQueries()
       {
@@ -44,22 +44,28 @@ namespace QToolbar
 
       private void LoadDatabases()
       {
-            // if cache file is present load from cache
-            if (File.Exists(AppInstance.CFsTreeCacheFile))
-            {
-               TreeNodeSerializer<ConnectionInfo> ser = new TreeNodeSerializer<ConnectionInfo>();
-               TreeNode<ConnectionInfo> tree = ser.Deserialize(AppInstance.CFsTreeCacheFile);
-               PopulateDBTree(tree);
-            }
-            else
-            {
-               btnAdd.Enabled = false;
-               treeDatabases.ClearNodes();
-               treeDatabases.Cursor = Cursors.WaitCursor;
-               EnableUI(false);
-               // get all databases from cf
-               backgroundWorker1.RunWorkerAsync();
-            }
+         // if cache file is present load from cache
+         if (File.Exists(AppInstance.CFsTreeCacheFile))
+         {
+            TreeNodeSerializer<ConnectionInfo> ser = new TreeNodeSerializer<ConnectionInfo>();
+            TreeNode<ConnectionInfo> tree = ser.Deserialize(AppInstance.CFsTreeCacheFile);
+            SetDBsInfo(tree);
+            PopulateDBTree(tree);
+         }
+         else
+         {
+            btnAdd.Enabled = false;
+            treeDatabases.ClearNodes();
+            treeDatabases.Cursor = Cursors.WaitCursor;
+            EnableUI(false);
+            // get all databases from cf
+            backgroundWorker1.RunWorkerAsync();
+         }
+      }
+
+      private void SetDBsInfo(TreeNode<ConnectionInfo> tree)
+      {
+         _DBs = tree.ToList().Where(i => i.InfoType == InfoType.Database).ToList();
       }
 
       private void Frm_SQLQueries_Load(object sender, EventArgs e)
@@ -79,6 +85,7 @@ namespace QToolbar
             {
                try
                {
+                  
                   tree = new TreeNode<ConnectionInfo>();
                   List<string> dirs = new List<string>(Directory.EnumerateDirectories(folder));
                   dirs = dirs.OrderByDescending(s => s).ToList<string>();
@@ -91,7 +98,6 @@ namespace QToolbar
                      tree.AddChild(verNode);
                      // parse cf and get dbs
                      List<ConnectionInfo> dbs = GetCFDBs(Path.GetFileName(dir));
-
                      var servers=dbs.GroupBy(i => i.Server).ToList();
                      foreach (var server in servers)
                      {
@@ -197,6 +203,7 @@ namespace QToolbar
 
           
          TreeNode<ConnectionInfo> tree = (TreeNode<ConnectionInfo>)e.Result;
+         SetDBsInfo(tree);
          PopulateDBTree(tree);
          //AppInstance.CFDatabasesTree = tree;
          TreeNodeSerializer<ConnectionInfo> ser = new TreeNodeSerializer<ConnectionInfo>();
@@ -348,7 +355,7 @@ namespace QToolbar
          TreeNode<ConnectionInfo> obj = (TreeNode<ConnectionInfo>)treeDatabases.GetDataRecordByNode(treeDatabases.FocusedNode);
          ConnectionInfo data = obj.Data;
          Frm_CriteriaHelper f = new Frm_CriteriaHelper();
-         f.Show(data);
+         f.Show(data, _DBs);
       }
 
 
