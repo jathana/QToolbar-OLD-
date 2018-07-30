@@ -289,19 +289,34 @@ namespace QToolbar
                }
 
 
-               // create criteria
-               DevExpress.Utils.Menu.DXMenuItem mnuItemCreateCriteria = new DevExpress.Utils.Menu.DXMenuItem("Create Criteria", createCriteria_ItemClick);
-               mnuItemCreateCriteria.Tag = obj.Data;
-               e.Menu.Items.Add(mnuItemCreateCriteria);
+               // create criteria if dev current
+               var devDBs = GetDevDBsConnectionInfo();
 
-               // script criteria
-               DevExpress.Utils.Menu.DXMenuItem mnuItemScriptCriteria = new DevExpress.Utils.Menu.DXMenuItem("Script Criteria", scriptCriteria_ItemClick);
-               mnuItemScriptCriteria.Tag = obj.Data;
-               e.Menu.Items.Add(mnuItemScriptCriteria);
+               if (devDBs.Count>0 && devDBs[0].Database.ToLower().Equals(obj.Data.Database.ToLower()))
+               {
+                  DevExpress.Utils.Menu.DXMenuItem mnuItemCreateCriteria = new DevExpress.Utils.Menu.DXMenuItem("Create Criteria", createCriteria_ItemClick);
+                  mnuItemCreateCriteria.Tag = obj.Data;
+                  e.Menu.Items.Add(mnuItemCreateCriteria);
+               }
+
+               // script criteria only for dev dbs
+               if (devDBs.Count > 0 && devDBs.Count(d=>d.Database==obj.Data.Database)>0)
+               {
+                  DevExpress.Utils.Menu.DXMenuItem mnuItemScriptCriteria = new DevExpress.Utils.Menu.DXMenuItem("Script Criteria", scriptCriteria_ItemClick);
+                  mnuItemScriptCriteria.Tag = obj.Data;
+                  e.Menu.Items.Add(mnuItemScriptCriteria);
+               }   
             }
 
 
          }
+      }
+
+
+      private List<ConnectionInfo> GetDevDBsConnectionInfo()
+      {
+         return _DBs.Where(d => d.Database.ToLower().StartsWith("qbcollection_plus_") &&
+                                   OptionsInstance.DevSQLInstances.ToLower().Contains(d.Server.ToLower())).OrderByDescending(d => d.Database).ToList();
       }
 
       private void query_ItemClick(object sender, EventArgs e)

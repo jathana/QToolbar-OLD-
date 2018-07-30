@@ -157,6 +157,7 @@
          // 
          this.grdviewCreateCriteria.GridControl = this.grdCreateCriteria;
          this.grdviewCreateCriteria.Name = "grdviewCreateCriteria";
+         this.grdviewCreateCriteria.RowUpdated += new DevExpress.XtraGrid.Views.Base.RowObjectEventHandler(this.grdviewCreateCriteria_RowUpdated);
          // 
          // barManager1
          // 
@@ -236,11 +237,11 @@
          // 
          // mnuDevDBs
          // 
-         this.mnuDevDBs.Caption = "Create SQL for other version";
          this.mnuDevDBs.Id = 4;
          this.mnuDevDBs.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuDevDBs.ImageOptions.Image")));
          this.mnuDevDBs.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuDevDBs.ImageOptions.LargeImage")));
          this.mnuDevDBs.Name = "mnuDevDBs";
+         this.mnuDevDBs.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
          toolTipTitleItem8.Text = "Create SQL for selected QBCollectionsPlus db";
          superToolTip8.Items.Add(toolTipTitleItem8);
          this.mnuDevDBs.SuperTip = superToolTip8;

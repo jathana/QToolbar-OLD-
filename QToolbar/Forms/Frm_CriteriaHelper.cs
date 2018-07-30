@@ -193,37 +193,44 @@ namespace QToolbar.Forms
 
       private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
       {
-         try
+         if (e.Result is Exception)
          {
-            if (e.Result != null)
+            MessageBox.Show(((Exception)e.Result).Message);
+         }
+         else
+         {
+            try
             {
-               if (e.Result is DataSet)
+               if (e.Result != null)
                {
-                  _SelectData = (DataSet)e.Result;
-                  grdviewSelectCriteria.Columns.Clear();
-                  grdSelectCriteria.DataSource = _SelectData.Tables[SELECT_CRITERIA];
-
-                  if (_CreateData.Tables.Count == 0)
+                  if (e.Result is DataSet)
                   {
-                     _CreateData.Tables.Add(_SelectData.Tables[CREATE_CRITERIA].Clone());
-                     grdCreateCriteria.DataSource = _CreateData.Tables[0];
+                     _SelectData = (DataSet)e.Result;
+                     grdviewSelectCriteria.Columns.Clear();
+                     grdSelectCriteria.DataSource = _SelectData.Tables[SELECT_CRITERIA];
+
+                     if (_CreateData.Tables.Count == 0)
+                     {
+                        _CreateData.Tables.Add(_SelectData.Tables[CREATE_CRITERIA].Clone());
+                        grdCreateCriteria.DataSource = _CreateData.Tables[0];
+                     }
+                  }
+                  else if (e.Result is Exception)
+                  {
+                     this.Focus();
+                     Exception ex = (Exception)e.Result;
+                     XtraMessageBox.Show(ex.Message);
                   }
                }
-               else if (e.Result is Exception)
-               {
-                  this.Focus();
-                  Exception ex = (Exception)e.Result;
-                  XtraMessageBox.Show(ex.Message);
-               }
+               InitGrid();
+               btnLoadCriteria.Enabled = true;
+               grdviewSelectCriteria.BestFitColumns();
+               grdviewCreateCriteria.BestFitColumns();
             }
-            InitGrid();
-            btnLoadCriteria.Enabled = true;
-            grdviewSelectCriteria.BestFitColumns();
-            grdviewCreateCriteria.BestFitColumns();
-         }
-         catch(Exception ex)
-         {
-            MessageBox.Show(ex.Message);
+            catch (Exception ex)
+            {
+               MessageBox.Show(ex.Message);
+            }
          }
          //btnRun.Enabled = true;
       }
@@ -261,7 +268,11 @@ namespace QToolbar.Forms
          grdviewCreateCriteria.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
          grdviewCreateCriteria.InitNewRow += GrdviewCreateCriteria_InitNewRow;
 
+         barManager1.AllowQuickCustomization = false;
+         barManager1.AllowCustomization = false;
+         barManager1.AllowMoveBarOnToolbar = false;
          LoadDevDBsMenu();
+         EnableScriptMenu(false);
 
       }
 
@@ -501,30 +512,36 @@ namespace QToolbar.Forms
 
       private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
       {
-         if (e.Result != null)
+         if (e.Result is Exception)
          {
-            if (e.Result is string)
+            MessageBox.Show(((Exception)e.Result).Message);
+         }
+         else
+         {
+            if (e.Result != null)
             {
-               int newCriUniqueId = Convert.ToInt32(e.Result);
-               for(int i=0;i< _CreateData.Tables[0].Rows.Count;i++)
+               if (e.Result is string)
                {
-                  _CreateData.Tables[0].Rows[i]["CRI_UNIQUE_ID"] = $"CRITERIO_{newCriUniqueId}";
-                  _CreateData.Tables[0].Rows[i]["CRI_SYNC_GUID"] = $"CRITERIO_{newCriUniqueId}";
-                  newCriUniqueId++;
+                  int newCriUniqueId = Convert.ToInt32(e.Result);
+                  for (int i = 0; i < _CreateData.Tables[0].Rows.Count; i++)
+                  {
+                     _CreateData.Tables[0].Rows[i]["CRI_UNIQUE_ID"] = $"CRITERIO_{newCriUniqueId}";
+                     _CreateData.Tables[0].Rows[i]["CRI_SYNC_GUID"] = $"CRITERIO_{newCriUniqueId}";
+                     newCriUniqueId++;
+                  }
+                  _CreateData.Tables[0].AcceptChanges();
+                  CreateSQL(_Info, _CreateData.Tables[0], _SelectData, null);
+                  btnCreateSQL.Enabled = true;
+                  EnableScriptMenu(true);
                }
-               _CreateData.Tables[0].AcceptChanges();
-               CreateSQL(_Info, _CreateData.Tables[0], _SelectData, null);
-               btnCreateSQL.Enabled = true;
-
-            }
-            else if (e.Result is Exception)
-            {
-               this.Focus();
-               Exception ex = (Exception)e.Result;
-               XtraMessageBox.Show(ex.Message);
+               else if (e.Result is Exception)
+               {
+                  this.Focus();
+                  Exception ex = (Exception)e.Result;
+                  XtraMessageBox.Show(ex.Message);
+               }
             }
          }
-         
       }
 
       private void btnCloneCriterio_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -532,6 +549,7 @@ namespace QToolbar.Forms
          try
          {
             _CreateData.Tables[0].Rows.Add(grdviewSelectCriteria.GetFocusedDataRow().ItemArray);
+            EnableScriptMenu(false);
          }
          catch (ConstraintException exp)
          {
@@ -693,89 +711,107 @@ namespace QToolbar.Forms
          return builder.ToString();
       }
 
+      private void EnableScriptMenu(bool enable)
+      {
+         mnuDevDBs.Enabled = enable;
+      }
+
       private void workerScriptForOtherDB_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
       {
-         StringBuilder b = new StringBuilder();
-
-         Tuple<DataSet, ConnectionInfo> result = (Tuple<DataSet, ConnectionInfo>)e.Result;
-         ConnectionInfo otherDBInfo = result.Item2;
-         DataSet otherDBDs = (DataSet)result.Item1;
-
-         // get table copy
-         DataTable otherCreateTable = otherDBDs.Tables[CREATE_CRITERIA];
-         DataRow[] lookupRows;
-         DataRow lookupRow;
-         String lookupDesc;
-
-         // fix criterio category
-
-         Dictionary<String, List<string>> unresolvedColumns = new Dictionary<string, List<string>>();
-
-         foreach(DataRow row in _CreateData.Tables[0].Rows)
+         if (e.Result is Exception)
+         {
+            MessageBox.Show(((Exception)e.Result).Message);
+         }
+         else
          {
 
-            unresolvedColumns.Add(row["CRI_UNIQUE_ID"].ToString(), new List<string>());
-            // add criterio row
-            DataRow newRow = otherCreateTable.NewRow();
-            foreach (DataColumn col in otherCreateTable.Columns)
-            {
-               newRow[col.ColumnName] = row[col.ColumnName];
-            }
+            StringBuilder b = new StringBuilder();
 
-            // get criterio category desc of original
-            lookupDesc = _SelectData.Tables[CRITERIA_CATEGORIES].Select($"LOV_CODE={row["CRI_CATEGORY"]}")[0]["LOV_DESC"].ToString();
-            // select category code of other db
-            lookupRows = otherDBDs.Tables[CRITERIA_CATEGORIES].Select($"LOV_DESC='{lookupDesc}'");
-            if (lookupRows.Length > 0)
-            {
-               newRow["CRI_CATEGORY"] = (int)lookupRows[0]["LOV_CODE"];
-            }
-            else
-            {
-               unresolvedColumns[row["CRI_UNIQUE_ID"].ToString()].Add("cri_category");
-               b.AppendLine($"Failed to get criterio category code for criterio {row["CRI_UNIQUE_ID"]}");
-            }
+            Tuple<DataSet, ConnectionInfo> result = (Tuple<DataSet, ConnectionInfo>)e.Result;
+            ConnectionInfo otherDBInfo = result.Item2;
+            DataSet otherDBDs = (DataSet)result.Item1;
 
-            // get criterio data type
-            lookupDesc = _SelectData.Tables[CRITERIA_TYPES].Select($"LOV_CODE={row["CRI_TYPE"]}")[0]["LOV_DESC"].ToString();
-            // select DATA TYPE code of other db
-            lookupRows = otherDBDs.Tables[CRITERIA_TYPES].Select($"LOV_DESC='{lookupDesc}'");
-            if (lookupRows.Length>0)
-            {
-               newRow["CRI_TYPE"] = (int)lookupRows[0]["LOV_CODE"];
-            }
-            else
-            {
-               unresolvedColumns[row["CRI_UNIQUE_ID"].ToString()].Add("cri_type");
-               b.AppendLine($"Failed to get criterio type code for criterio {row["CRI_UNIQUE_ID"]}");
-            }
+            // get table copy
+            DataTable otherCreateTable = otherDBDs.Tables[CREATE_CRITERIA];
+            DataRow[] lookupRows;
+            DataRow lookupRow;
+            String lookupDesc;
 
-            // get criterio join
-            lookupDesc = _SelectData.Tables[CRITERIA_JOINS].Select($"CRJ_CODE={row["CRJ_CODE"]}")[0]["CRJ_JOIN"].ToString();
-            // select CRITERIO JOIN code of other db
-            lookupRows = otherDBDs.Tables[CRITERIA_JOINS].Select($"CRJ_JOIN='{lookupDesc}'");
-            if (lookupRows.Length > 0)
-            {
-               newRow["CRJ_CODE"] = (int)lookupRows[0]["CRJ_CODE"];
-            }
-            else
-            {
-               unresolvedColumns[row["CRI_UNIQUE_ID"].ToString()].Add("crj_code");
-               b.AppendLine($"Failed to get criterio join code for criterio {row["CRI_UNIQUE_ID"]}");
-            }
+            // fix criterio category
 
-            // add to table
-            otherCreateTable.Rows.Add(newRow);
+            Dictionary<String, List<string>> unresolvedColumns = new Dictionary<string, List<string>>();
 
+            foreach (DataRow row in _CreateData.Tables[0].Rows)
+            {
+
+               unresolvedColumns.Add(row["CRI_UNIQUE_ID"].ToString(), new List<string>());
+               // add criterio row
+               DataRow newRow = otherCreateTable.NewRow();
+               foreach (DataColumn col in otherCreateTable.Columns)
+               {
+                  newRow[col.ColumnName] = row[col.ColumnName];
+               }
+
+               // get criterio category desc of original
+               lookupDesc = _SelectData.Tables[CRITERIA_CATEGORIES].Select($"LOV_CODE={row["CRI_CATEGORY"]}")[0]["LOV_DESC"].ToString();
+               // select category code of other db
+               lookupRows = otherDBDs.Tables[CRITERIA_CATEGORIES].Select($"LOV_DESC='{lookupDesc}'");
+               if (lookupRows.Length > 0)
+               {
+                  newRow["CRI_CATEGORY"] = (int)lookupRows[0]["LOV_CODE"];
+               }
+               else
+               {
+                  unresolvedColumns[row["CRI_UNIQUE_ID"].ToString()].Add("cri_category");
+                  b.AppendLine($"Failed to get criterio category code for criterio {row["CRI_UNIQUE_ID"]}");
+               }
+
+               // get criterio data type
+               lookupDesc = _SelectData.Tables[CRITERIA_TYPES].Select($"LOV_CODE={row["CRI_TYPE"]}")[0]["LOV_DESC"].ToString();
+               // select DATA TYPE code of other db
+               lookupRows = otherDBDs.Tables[CRITERIA_TYPES].Select($"LOV_DESC='{lookupDesc}'");
+               if (lookupRows.Length > 0)
+               {
+                  newRow["CRI_TYPE"] = (int)lookupRows[0]["LOV_CODE"];
+               }
+               else
+               {
+                  unresolvedColumns[row["CRI_UNIQUE_ID"].ToString()].Add("cri_type");
+                  b.AppendLine($"Failed to get criterio type code for criterio {row["CRI_UNIQUE_ID"]}");
+               }
+
+               // get criterio join
+               lookupDesc = _SelectData.Tables[CRITERIA_JOINS].Select($"CRJ_CODE={row["CRJ_CODE"]}")[0]["CRJ_JOIN"].ToString();
+               // select CRITERIO JOIN code of other db
+               lookupRows = otherDBDs.Tables[CRITERIA_JOINS].Select($"CRJ_JOIN='{lookupDesc}'");
+               if (lookupRows.Length > 0)
+               {
+                  newRow["CRJ_CODE"] = (int)lookupRows[0]["CRJ_CODE"];
+               }
+               else
+               {
+                  unresolvedColumns[row["CRI_UNIQUE_ID"].ToString()].Add("crj_code");
+                  b.AppendLine($"Failed to get criterio join code for criterio {row["CRI_UNIQUE_ID"]}");
+               }
+
+               // add to table
+               otherCreateTable.Rows.Add(newRow);
+
+            }
+            otherCreateTable.AcceptChanges();
+            CreateSQL(otherDBInfo, otherCreateTable, otherDBDs, unresolvedColumns);
+
+            if (b.Length > 0)
+            {
+               txtGeneratedSQL.Text += "\r\n" + b.ToString();
+            }
          }
-         otherCreateTable.AcceptChanges();
-         CreateSQL(otherDBInfo, otherCreateTable, otherDBDs, unresolvedColumns);
 
-         if (b.Length > 0)
-         {
-            txtGeneratedSQL.Text += "\r\n" + b.ToString();
-         }
+      }
 
+      private void grdviewCreateCriteria_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
+      {
+         EnableScriptMenu(false);
       }
    }
 }
