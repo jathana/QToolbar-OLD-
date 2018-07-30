@@ -443,10 +443,10 @@ namespace QToolbar.Forms
          if (col.DataType == typeof(string))
          {
             ret = DBNull.Value.Equals(row[col]) ? "" : ret=$"'{row[col].ToString().Replace("'","''")}'";
-
-            // set null when cri_dependendent_unique_id
+            
             if (DBNull.Value.Equals(row[col]))
             {
+               // set null when cri_dependendent_unique_id, we store null in db
                if (col.ColumnName.ToUpper().Equals("CRI_DEPENDENT_UNIQUE_ID"))
                {
                   ret = "NULL";
