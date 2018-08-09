@@ -305,7 +305,17 @@ namespace QToolbar
                   DevExpress.Utils.Menu.DXMenuItem mnuItemScriptCriteria = new DevExpress.Utils.Menu.DXMenuItem("Script Criteria", scriptCriteria_ItemClick);
                   mnuItemScriptCriteria.Tag = obj.Data;
                   e.Menu.Items.Add(mnuItemScriptCriteria);
-               }   
+               }
+
+
+               // fields helper only for current
+               if (devDBs.Count > 0 && devDBs[0].Database.ToLower().Equals(obj.Data.Database.ToLower()))
+               {
+                  DevExpress.Utils.Menu.DXMenuItem mnuItemFieldsHelper = new DevExpress.Utils.Menu.DXMenuItem("Fields Helper", fieldsHelper_ItemClick);
+                  mnuItemFieldsHelper.Tag = obj.Data;
+                  e.Menu.Items.Add(mnuItemFieldsHelper);
+               }
+
             }
 
 
@@ -373,6 +383,13 @@ namespace QToolbar
          f.Show(data, _DBs);
       }
 
+      private void fieldsHelper_ItemClick(object sender, EventArgs e)
+      {
+         TreeNode<ConnectionInfo> obj = (TreeNode<ConnectionInfo>)treeDatabases.GetDataRecordByNode(treeDatabases.FocusedNode);
+         ConnectionInfo data = obj.Data;
+         Frm_FieldsHelper f = new Frm_FieldsHelper();
+         f.Show(data, _DBs);
+      }
 
 
       private void treeDatabases_GetStateImage(object sender, DevExpress.XtraTreeList.GetStateImageEventArgs e)

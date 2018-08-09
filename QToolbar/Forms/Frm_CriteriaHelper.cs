@@ -154,6 +154,7 @@ namespace QToolbar.Forms
          repoLookupSQLTypes.Name = "repoLookupSQLTypes";
          repoLookupSQLTypes.ValueMember = "CRI_WHERE_FIELD_SQL_TYPE";
          repoLookupSQLTypes.PopupFormSize = new Size(1000, 500);
+         repoLookupSQLTypes.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
          grdCreateCriteria.RepositoryItems.Add(repoLookupSQLTypes);
          grdviewCreateCriteria.Columns["CRI_WHERE_FIELD_SQL_TYPE"].ColumnEdit = repoLookupSQLTypes;
          //repoLookupSQLTypes.EndInit();
@@ -182,6 +183,9 @@ namespace QToolbar.Forms
                DataSet dataset = new DataSet();
                adapter.FillSchema(dataset, SchemaType.Source);
                adapter.Fill(dataset);
+               
+
+               
                e.Result = dataset;
             }
          }
@@ -213,6 +217,10 @@ namespace QToolbar.Forms
                      {
                         _CreateData.Tables.Add(_SelectData.Tables[CREATE_CRITERIA].Clone());
                         grdCreateCriteria.DataSource = _CreateData.Tables[0];
+                        //DataTable errorsTb = _CreateData.Tables.Add("ERRORS");
+                        //errorsTb.Columns.Add("CRI_CODE", typeof(Int32));
+                        //errorsTb.Columns.Add("ERR_MESSAGE", typeof(string));
+                        //_CreateData.Relations.Add(_CreateData.Tables[0].Columns["CRI_CODE"], errorsTb.Columns["CRI_CODE"]);
                      }
                   }
                   else if (e.Result is Exception)
@@ -267,12 +275,56 @@ namespace QToolbar.Forms
          grdviewCreateCriteria.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.Inplace;
          grdviewCreateCriteria.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
          grdviewCreateCriteria.InitNewRow += GrdviewCreateCriteria_InitNewRow;
+         grdviewCreateCriteria.ValidateRow += GrdviewCreateCriteria_ValidateRow;
 
          barManager1.AllowQuickCustomization = false;
          barManager1.AllowCustomization = false;
          barManager1.AllowMoveBarOnToolbar = false;
          LoadDevDBsMenu();
-         EnableScriptMenu(false);
+
+      }
+
+      private void GrdviewCreateCriteria_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
+      {
+         StringBuilder b = new StringBuilder();
+
+         DataRow row = (DataRow)((DataRowView)e.Row).Row;
+         if (DBNull.Value.Equals(row["CRI_CATEGORY"]))
+         {
+            b.AppendLine("CRI_CATEGORY is Empty");
+         }
+
+         if (DBNull.Value.Equals(row["CRJ_CODE"]))
+         {
+            b.AppendLine("CRJ_CODE is Empty");
+         }
+
+         if (DBNull.Value.Equals(row["CRI_WHERE_TABLE"]))
+         {
+            b.AppendLine("CRI_WHERE_TABLE is Empty");
+         }
+
+         if (DBNull.Value.Equals(row["CRI_WHERE_FIELD_SQL_TYPE"]))
+         {
+            b.AppendLine("CRI_WHERE_FIELD_SQL_TYPE is Empty");
+         }
+
+         if (DBNull.Value.Equals(row["CRI_TYPE"]))
+         {
+            b.AppendLine("CRI_TYPE is Empty");
+         }
+
+         if (DBNull.Value.Equals(row["CRI_DESC"]))
+         {
+            b.AppendLine("CRI_DESC is Empty");
+         }
+
+         if (b.Length>0)
+         {
+            b.AppendLine();
+            e.ErrorText = b.ToString();
+            e.Valid = false;            
+         }
 
       }
 
@@ -313,13 +365,13 @@ namespace QToolbar.Forms
 
 
          //////////////////////////
-         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_DESC"], "Test");
-         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_TYPE"], 430);
-         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_CATEGORY"], 244);
-         view.SetRowCellValue(e.RowHandle, view.Columns["CRJ_CODE"], 1);
+         //view.SetRowCellValue(e.RowHandle, view.Columns["CRI_DESC"], "Test");
+         //view.SetRowCellValue(e.RowHandle, view.Columns["CRI_TYPE"], 430);
+         //view.SetRowCellValue(e.RowHandle, view.Columns["CRI_CATEGORY"], 244);
+         //view.SetRowCellValue(e.RowHandle, view.Columns["CRJ_CODE"], 1);
          
          
-         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_WHERE_TABLE"], "AT_CASE_EXTRA");
+         //view.SetRowCellValue(e.RowHandle, view.Columns["CRI_WHERE_TABLE"], "AT_CASE_EXTRA");
 
 
 
@@ -549,7 +601,6 @@ namespace QToolbar.Forms
          try
          {
             _CreateData.Tables[0].Rows.Add(grdviewSelectCriteria.GetFocusedDataRow().ItemArray);
-            EnableScriptMenu(false);
          }
          catch (ConstraintException exp)
          {
@@ -627,7 +678,7 @@ namespace QToolbar.Forms
          ConnectionInfo destDBInfo = (ConnectionInfo)((BarButtonItem)e.Item).Tag;
          if(destDBInfo != null)
          {
-            
+            EnableScriptMenu(false);
             workerScriptForOtherDB.RunWorkerAsync(new Tuple<DataSet,ConnectionInfo>(_CreateData.Clone(), destDBInfo));
          }
       }
@@ -734,7 +785,6 @@ namespace QToolbar.Forms
             // get table copy
             DataTable otherCreateTable = otherDBDs.Tables[CREATE_CRITERIA];
             DataRow[] lookupRows;
-            DataRow lookupRow;
             String lookupDesc;
 
             // fix criterio category
@@ -800,7 +850,7 @@ namespace QToolbar.Forms
             }
             otherCreateTable.AcceptChanges();
             CreateSQL(otherDBInfo, otherCreateTable, otherDBDs, unresolvedColumns);
-
+            EnableScriptMenu(true);
             if (b.Length > 0)
             {
                txtGeneratedSQL.Text += "\r\n" + b.ToString();
@@ -811,7 +861,6 @@ namespace QToolbar.Forms
 
       private void grdviewCreateCriteria_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
       {
-         EnableScriptMenu(false);
       }
    }
 }

@@ -29,6 +29,7 @@
       private void InitializeComponent()
       {
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+         this.txtDevSQLInstances = new DevExpress.XtraEditors.TextEdit();
          this.chkClearLegalMetadata = new DevExpress.XtraEditors.CheckEdit();
          this.txtInternalBuildsFolder = new DevExpress.XtraEditors.ButtonEdit();
          this.txtEnvironmentsConfiguration = new DevExpress.XtraEditors.ButtonEdit();
@@ -59,6 +60,7 @@
          this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem14 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem15 = new DevExpress.XtraLayout.LayoutControlItem();
+         this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
          this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
          this.layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
          this.tabOptions = new DevExpress.XtraTab.XtraTabControl();
@@ -89,10 +91,9 @@
          this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
          this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-         this.txtDevSQLInstances = new DevExpress.XtraEditors.TextEdit();
-         this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.txtDevSQLInstances.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.chkClearLegalMetadata.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtInternalBuildsFolder.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtEnvironmentsConfiguration.Properties)).BeginInit();
@@ -123,6 +124,7 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).BeginInit();
          this.layoutControl2.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.tabOptions)).BeginInit();
@@ -149,8 +151,6 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.txtDevSQLInstances.Properties)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
          this.SuspendLayout();
          // 
          // layoutControl1
@@ -175,6 +175,15 @@
          this.layoutControl1.Size = new System.Drawing.Size(801, 453);
          this.layoutControl1.TabIndex = 1;
          this.layoutControl1.Text = "layoutControl1";
+         // 
+         // txtDevSQLInstances
+         // 
+         this.txtDevSQLInstances.EditValue = "Q-SRV-DEVEL12,Q-SRV-DEVEL12\\MSSQL2K16";
+         this.txtDevSQLInstances.Location = new System.Drawing.Point(159, 295);
+         this.txtDevSQLInstances.Name = "txtDevSQLInstances";
+         this.txtDevSQLInstances.Size = new System.Drawing.Size(630, 20);
+         this.txtDevSQLInstances.StyleController = this.layoutControl1;
+         this.txtDevSQLInstances.TabIndex = 19;
          // 
          // chkClearLegalMetadata
          // 
@@ -485,6 +494,15 @@
          this.layoutControlItem15.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem15.TextVisible = false;
          // 
+         // layoutControlItem8
+         // 
+         this.layoutControlItem8.Control = this.txtDevSQLInstances;
+         this.layoutControlItem8.Location = new System.Drawing.Point(0, 283);
+         this.layoutControlItem8.Name = "layoutControlItem8";
+         this.layoutControlItem8.Size = new System.Drawing.Size(781, 24);
+         this.layoutControlItem8.Text = "Dev SQL Instances";
+         this.layoutControlItem8.TextSize = new System.Drawing.Size(144, 13);
+         // 
          // btnCancel
          // 
          this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -774,24 +792,6 @@
          this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem3.TextVisible = false;
          // 
-         // txtDevSQLInstances
-         // 
-         this.txtDevSQLInstances.EditValue = "Q-SRV-DEVEL12,Q-SRV-DEVEL12\\MSSQL2K16";
-         this.txtDevSQLInstances.Location = new System.Drawing.Point(159, 295);
-         this.txtDevSQLInstances.Name = "txtDevSQLInstances";
-         this.txtDevSQLInstances.Size = new System.Drawing.Size(630, 20);
-         this.txtDevSQLInstances.StyleController = this.layoutControl1;
-         this.txtDevSQLInstances.TabIndex = 19;
-         // 
-         // layoutControlItem8
-         // 
-         this.layoutControlItem8.Control = this.txtDevSQLInstances;
-         this.layoutControlItem8.Location = new System.Drawing.Point(0, 283);
-         this.layoutControlItem8.Name = "layoutControlItem8";
-         this.layoutControlItem8.Size = new System.Drawing.Size(781, 24);
-         this.layoutControlItem8.Text = "Dev SQL Instances";
-         this.layoutControlItem8.TextSize = new System.Drawing.Size(144, 13);
-         // 
          // Frm_Options
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -806,6 +806,7 @@
          this.Load += new System.EventHandler(this.Frm_Options_Load);
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
          this.layoutControl1.ResumeLayout(false);
+         ((System.ComponentModel.ISupportInitialize)(this.txtDevSQLInstances.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.chkClearLegalMetadata.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtInternalBuildsFolder.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtEnvironmentsConfiguration.Properties)).EndInit();
@@ -836,6 +837,7 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).EndInit();
          this.layoutControl2.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.tabOptions)).EndInit();
@@ -862,8 +864,6 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.txtDevSQLInstances.Properties)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
          this.ResumeLayout(false);
 
       }
