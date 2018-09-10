@@ -254,22 +254,21 @@
          this.treeDatabases.KeyFieldName = "Data.Version";
          this.treeDatabases.Location = new System.Drawing.Point(2, 26);
          this.treeDatabases.Name = "treeDatabases";
-         this.treeDatabases.OptionsBehavior.EnableFiltering = true;
-         this.treeDatabases.OptionsBehavior.ExpandNodesOnFiltering = true;
-         this.treeDatabases.OptionsBehavior.ExpandNodesOnIncrementalSearch = true;
          this.treeDatabases.OptionsFilter.DefaultFilterEditorView = DevExpress.XtraEditors.FilterEditorViewMode.TextAndVisual;
+         this.treeDatabases.OptionsFilter.ExpandNodesOnFiltering = true;
          this.treeDatabases.OptionsFilter.FilterMode = DevExpress.XtraTreeList.FilterMode.Extended;
          this.treeDatabases.OptionsFilter.ShowAllValuesInFilterPopup = true;
+         this.treeDatabases.OptionsFind.ExpandNodesOnIncrementalSearch = true;
          this.treeDatabases.OptionsFind.FindMode = DevExpress.XtraTreeList.FindMode.Always;
          this.treeDatabases.ParentFieldName = "Parent.Version";
          this.treeDatabases.Size = new System.Drawing.Size(332, 445);
          this.treeDatabases.StateImageList = this.imageCollection1;
          this.treeDatabases.TabIndex = 0;
+         this.treeDatabases.FilterNode += new DevExpress.XtraTreeList.FilterNodeEventHandler(this.treeDatabases_FilterNode);
          this.treeDatabases.GetStateImage += new DevExpress.XtraTreeList.GetStateImageEventHandler(this.treeDatabases_GetStateImage);
          this.treeDatabases.PopupMenuShowing += new DevExpress.XtraTreeList.PopupMenuShowingEventHandler(this.treeDatabases_PopupMenuShowing);
          this.treeDatabases.VirtualTreeGetChildNodes += new DevExpress.XtraTreeList.VirtualTreeGetChildNodesEventHandler(this.treeDatabases_VirtualTreeGetChildNodes);
          this.treeDatabases.VirtualTreeGetCellValue += new DevExpress.XtraTreeList.VirtualTreeGetCellValueEventHandler(this.treeDatabases_VirtualTreeGetCellValue);
-         this.treeDatabases.FilterNode += new DevExpress.XtraTreeList.FilterNodeEventHandler(this.treeDatabases_FilterNode);
          // 
          // colName
          // 

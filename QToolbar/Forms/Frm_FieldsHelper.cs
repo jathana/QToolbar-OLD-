@@ -24,6 +24,7 @@ namespace QToolbar.Forms
    {
       private ConnectionInfo _Info;
       private List<ConnectionInfo> _DBs;
+      private Dictionary<string, Tuple<DataTable, string>> _Data = new Dictionary<string, Tuple<DataTable, string>>();
 
       #region public
       public Frm_FieldsHelper()
@@ -100,6 +101,8 @@ namespace QToolbar.Forms
 
          layProgress.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
 
+         btnCompare.Enabled = false;
+
          LoadDevDBs();
 
          workerFetchTables.RunWorkerAsync(_Info);
@@ -125,6 +128,7 @@ namespace QToolbar.Forms
          Tuple<string, string, ConnectionInfo, ConnectionInfo> arg = new Tuple<string, string, ConnectionInfo, ConnectionInfo>(Field, SelectedTable, _Info, SelectedConInfo);
          layProgress.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
          txtGenerateSQL.Text = string.Empty;
+         btnCompare.Enabled = false;
          workerGenerateSQL.RunWorkerAsync(arg);
       }
 
@@ -308,19 +312,19 @@ namespace QToolbar.Forms
                {
                   string tableScript = pair.Value.Item2;
 
-                  var ddd = new Differ();
-                  var d=ddd.CreateCharacterDiffs(tableScript, currentScript, true);
-                  if (d.DiffBlocks.Count > 0)
+                  var differ = new Differ();
+                  var charDiffs=differ.CreateCharacterDiffs(tableScript, currentScript, true);
+                  if (charDiffs.DiffBlocks.Count > 0)
                   {
                      b.AppendLine();
-                     b.AppendLine($"USE[{pair.Key}]");
+                     b.AppendLine($"USE [{pair.Key}]");
                      b.AppendLine("GO");
                      b.AppendLine();
                      b.AppendLine($"ALTER TABLE {table} ADD ");
                   }
                   string blockScript = string.Empty;
                   StringBuilder fb = new StringBuilder(); 
-                  foreach (var db in d.DiffBlocks)
+                  foreach (var db in charDiffs.DiffBlocks)
                   {
                      blockScript = currentScript.Substring(db.InsertStartB, db.InsertCountB);                     
                      fb.Append(blockScript);
@@ -354,31 +358,12 @@ namespace QToolbar.Forms
                      }
                   }
 
-                  if (d.DiffBlocks.Count > 0)
+                  if (charDiffs.DiffBlocks.Count > 0)
                   {
                      b.AppendLine();
                      b.AppendLine("GO");
                      b.AppendLine();
                   }
-                  //b.AppendLine();
-                  //b.AppendLine($"ALTER TABLE {table} ADD ");
-                  //foreach (var line in diff.Lines)
-                  //{
-                  //   switch (line.Type)
-                  //   {
-                  //      case ChangeType.Inserted:
-                  //         //b.Append("+ ");
-                  //         b.AppendLine(line.Text);
-                  //         break;
-                  //      case ChangeType.Deleted:
-                  //         //b.Append("- ");
-                  //         break;
-                  //      default:
-                  //         //b.Append("  ");
-                  //         break;
-                  //   }
-                  //}
-
                }
                else
                {
@@ -390,7 +375,7 @@ namespace QToolbar.Forms
 
             }
 
-            e.Result = b.ToString();
+            e.Result = new Tuple<string,Dictionary<string, Tuple<DataTable, string>>>( b.ToString(),data);
 
          }
          catch (Exception ex)
@@ -406,7 +391,11 @@ namespace QToolbar.Forms
 
       private void workerGenerateSQL_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
       {
-         txtGenerateSQL.Text = e.Result.ToString();
+         Tuple<string, Dictionary<string, Tuple<DataTable, string>>> res = (Tuple<string, Dictionary<string, Tuple<DataTable, string>>>)e.Result;
+
+         txtGenerateSQL.Text = res.Item1;
+         _Data = res.Item2;
+         btnCompare.Enabled = true;
          layProgress.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never; 
          lblProgress.Text = string.Empty;
       }
@@ -458,8 +447,22 @@ namespace QToolbar.Forms
 
 
 
+
       #endregion
 
-      
+      private void btnCompare_Click(object sender, EventArgs e)
+      {
+         try
+         {
+            string textRight = _Data[_Info.Database].Item2;
+            string textLeft = _Data[lkpDatabase.EditValue.ToString()].Item2;
+            Forms.Frm_TxtDiff f = new Frm_TxtDiff();
+            f.Compare(textLeft, textRight);
+         }
+         catch(Exception ex)
+         {
+            MessageBox.Show(ex.Message);
+         }
+      }
    }
 }

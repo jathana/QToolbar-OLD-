@@ -31,6 +31,8 @@
          this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_FieldsHelper));
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+         this.lblProgress = new DevExpress.XtraEditors.LabelControl();
+         this.progressBar = new DevExpress.XtraEditors.MarqueeProgressBarControl();
          this.txtGenerateSQL = new FastColoredTextBoxNS.FastColoredTextBox();
          this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
          this.layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
@@ -44,19 +46,20 @@
          this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
          this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
+         this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
          this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
          this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+         this.layProgress = new DevExpress.XtraLayout.LayoutControlItem();
+         this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
          this.workerFetchTables = new System.ComponentModel.BackgroundWorker();
          this.workerFetchFields = new System.ComponentModel.BackgroundWorker();
          this.workerGenerateSQL = new System.ComponentModel.BackgroundWorker();
-         this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
-         this.progressBar = new DevExpress.XtraEditors.MarqueeProgressBarControl();
-         this.layProgress = new DevExpress.XtraLayout.LayoutControlItem();
-         this.lblProgress = new DevExpress.XtraEditors.LabelControl();
-         this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
+         this.btnCompare = new DevExpress.XtraEditors.SimpleButton();
+         this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.progressBar.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtGenerateSQL)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
          this.panelControl1.SuspendLayout();
@@ -71,13 +74,13 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.progressBar.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layProgress)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
          this.SuspendLayout();
          // 
          // layoutControl1
@@ -94,6 +97,24 @@
          this.layoutControl1.Size = new System.Drawing.Size(790, 559);
          this.layoutControl1.TabIndex = 0;
          this.layoutControl1.Text = "layoutControl1";
+         // 
+         // lblProgress
+         // 
+         this.lblProgress.Location = new System.Drawing.Point(12, 533);
+         this.lblProgress.Name = "lblProgress";
+         this.lblProgress.Size = new System.Drawing.Size(559, 14);
+         this.lblProgress.StyleController = this.layoutControl1;
+         this.lblProgress.TabIndex = 9;
+         this.lblProgress.Text = "labelControl1";
+         // 
+         // progressBar
+         // 
+         this.progressBar.EditValue = 0;
+         this.progressBar.Location = new System.Drawing.Point(575, 533);
+         this.progressBar.Name = "progressBar";
+         this.progressBar.Size = new System.Drawing.Size(203, 14);
+         this.progressBar.StyleController = this.layoutControl1;
+         this.progressBar.TabIndex = 8;
          // 
          // txtGenerateSQL
          // 
@@ -146,6 +167,7 @@
          // 
          // layoutControl2
          // 
+         this.layoutControl2.Controls.Add(this.btnCompare);
          this.layoutControl2.Controls.Add(this.btnGenerateSQL);
          this.layoutControl2.Controls.Add(this.lkpField);
          this.layoutControl2.Controls.Add(this.lkpTable);
@@ -213,7 +235,8 @@
             this.layoutControlItem5,
             this.layoutControlItem6,
             this.emptySpaceItem3,
-            this.emptySpaceItem1});
+            this.emptySpaceItem1,
+            this.layoutControlItem7});
          this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
          this.layoutControlGroup2.Name = "Root";
          this.layoutControlGroup2.Size = new System.Drawing.Size(762, 145);
@@ -269,6 +292,14 @@
          this.emptySpaceItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
          this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
          // 
+         // emptySpaceItem1
+         // 
+         this.emptySpaceItem1.AllowHotTrack = false;
+         this.emptySpaceItem1.Location = new System.Drawing.Point(0, 96);
+         this.emptySpaceItem1.Name = "emptySpaceItem1";
+         this.emptySpaceItem1.Size = new System.Drawing.Size(473, 29);
+         this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
+         // 
          // layoutControlGroup1
          // 
          this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
@@ -304,6 +335,29 @@
          this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem2.TextVisible = false;
          // 
+         // layProgress
+         // 
+         this.layProgress.Control = this.progressBar;
+         this.layProgress.Location = new System.Drawing.Point(563, 521);
+         this.layProgress.MaxSize = new System.Drawing.Size(207, 18);
+         this.layProgress.MinSize = new System.Drawing.Size(207, 18);
+         this.layProgress.Name = "layProgress";
+         this.layProgress.Size = new System.Drawing.Size(207, 18);
+         this.layProgress.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+         this.layProgress.TextSize = new System.Drawing.Size(0, 0);
+         this.layProgress.TextVisible = false;
+         // 
+         // layoutControlItem8
+         // 
+         this.layoutControlItem8.Control = this.lblProgress;
+         this.layoutControlItem8.Location = new System.Drawing.Point(0, 521);
+         this.layoutControlItem8.MinSize = new System.Drawing.Size(67, 17);
+         this.layoutControlItem8.Name = "layoutControlItem8";
+         this.layoutControlItem8.Size = new System.Drawing.Size(563, 18);
+         this.layoutControlItem8.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+         this.layoutControlItem8.TextSize = new System.Drawing.Size(0, 0);
+         this.layoutControlItem8.TextVisible = false;
+         // 
          // workerFetchTables
          // 
          this.workerFetchTables.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerFetchTables_DoWork);
@@ -322,53 +376,27 @@
          this.workerGenerateSQL.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workerGenerateSQL_ProgressChanged);
          this.workerGenerateSQL.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerGenerateSQL_RunWorkerCompleted);
          // 
-         // emptySpaceItem1
+         // btnCompare
          // 
-         this.emptySpaceItem1.AllowHotTrack = false;
-         this.emptySpaceItem1.Location = new System.Drawing.Point(0, 96);
-         this.emptySpaceItem1.Name = "emptySpaceItem1";
-         this.emptySpaceItem1.Size = new System.Drawing.Size(603, 29);
-         this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
+         this.btnCompare.Location = new System.Drawing.Point(485, 108);
+         this.btnCompare.Name = "btnCompare";
+         this.btnCompare.Size = new System.Drawing.Size(126, 25);
+         this.btnCompare.StyleController = this.layoutControl2;
+         this.btnCompare.TabIndex = 8;
+         this.btnCompare.Text = "Compare";
+         this.btnCompare.Click += new System.EventHandler(this.btnCompare_Click);
          // 
-         // progressBar
+         // layoutControlItem7
          // 
-         this.progressBar.Location = new System.Drawing.Point(575, 533);
-         this.progressBar.Name = "progressBar";
-         this.progressBar.Size = new System.Drawing.Size(203, 14);
-         this.progressBar.StyleController = this.layoutControl1;
-         this.progressBar.TabIndex = 8;
-         // 
-         // layProgress
-         // 
-         this.layProgress.Control = this.progressBar;
-         this.layProgress.Location = new System.Drawing.Point(563, 521);
-         this.layProgress.MaxSize = new System.Drawing.Size(207, 18);
-         this.layProgress.MinSize = new System.Drawing.Size(207, 18);
-         this.layProgress.Name = "layProgress";
-         this.layProgress.Size = new System.Drawing.Size(207, 18);
-         this.layProgress.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-         this.layProgress.TextSize = new System.Drawing.Size(0, 0);
-         this.layProgress.TextVisible = false;
-         // 
-         // lblProgress
-         // 
-         this.lblProgress.Location = new System.Drawing.Point(12, 533);
-         this.lblProgress.Name = "lblProgress";
-         this.lblProgress.Size = new System.Drawing.Size(559, 14);
-         this.lblProgress.StyleController = this.layoutControl1;
-         this.lblProgress.TabIndex = 9;
-         this.lblProgress.Text = "labelControl1";
-         // 
-         // layoutControlItem8
-         // 
-         this.layoutControlItem8.Control = this.lblProgress;
-         this.layoutControlItem8.Location = new System.Drawing.Point(0, 521);
-         this.layoutControlItem8.MinSize = new System.Drawing.Size(67, 17);
-         this.layoutControlItem8.Name = "layoutControlItem8";
-         this.layoutControlItem8.Size = new System.Drawing.Size(563, 18);
-         this.layoutControlItem8.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-         this.layoutControlItem8.TextSize = new System.Drawing.Size(0, 0);
-         this.layoutControlItem8.TextVisible = false;
+         this.layoutControlItem7.Control = this.btnCompare;
+         this.layoutControlItem7.Location = new System.Drawing.Point(473, 96);
+         this.layoutControlItem7.MaxSize = new System.Drawing.Size(130, 29);
+         this.layoutControlItem7.MinSize = new System.Drawing.Size(130, 29);
+         this.layoutControlItem7.Name = "layoutControlItem7";
+         this.layoutControlItem7.Size = new System.Drawing.Size(130, 29);
+         this.layoutControlItem7.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+         this.layoutControlItem7.TextSize = new System.Drawing.Size(0, 0);
+         this.layoutControlItem7.TextVisible = false;
          // 
          // Frm_FieldsHelper
          // 
@@ -382,6 +410,7 @@
          this.Load += new System.EventHandler(this.Frm_FieldsHelper_Load);
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
          this.layoutControl1.ResumeLayout(false);
+         ((System.ComponentModel.ISupportInitialize)(this.progressBar.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.txtGenerateSQL)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
          this.panelControl1.ResumeLayout(false);
@@ -396,13 +425,13 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.progressBar.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layProgress)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
          this.ResumeLayout(false);
 
       }
@@ -434,5 +463,7 @@
       private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
       private DevExpress.XtraLayout.LayoutControlItem layProgress;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
+      private DevExpress.XtraEditors.SimpleButton btnCompare;
+      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem7;
    }
 }

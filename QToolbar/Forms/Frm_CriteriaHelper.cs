@@ -341,7 +341,9 @@ namespace QToolbar.Forms
          view.SetRowCellValue(e.RowHandle, view.Columns["ENT_CODE"], 1);
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_TABLE"], "");
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_FIELDS"], "");
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_WHERE"], "");
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_WHERE_SHOW"], "");
+
          view.SetRowCellValue(e.RowHandle, view.Columns["WLT_INTDESC"], "");
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_IS_CUSTOMER_LEVEL"], 0);
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_STRATEGY"], 1);
