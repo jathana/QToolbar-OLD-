@@ -155,21 +155,24 @@ namespace QToolbar
       public static Version GetVersion(string versionStr, string delimiter, int start)
       {
          Version retval = null;
-
-         if (!string.IsNullOrEmpty(versionStr))
+         try
          {
-            string[] splitted = versionStr.Split(new string[] { delimiter }, StringSplitOptions.None);
-            if(splitted.Length==5)
+            if (!string.IsNullOrEmpty(versionStr))
             {
-               StringBuilder b = new StringBuilder(splitted[start]); 
-               for(int i = start+1; i < start + 4; i++)
+               string[] splitted = versionStr.Split(new string[] { delimiter }, StringSplitOptions.None);
+               if (splitted.Length == 5)
                {
-                  b.Append(".");
-                  b.Append(splitted[i]);
+                  StringBuilder b = new StringBuilder(splitted[start]);
+                  for (int i = start + 1; i < start + 4; i++)
+                  {
+                     b.Append(".");
+                     b.Append(splitted[i]);
+                  }
+                  retval = new Version(b.ToString());
                }
-               retval = new Version(b.ToString());
             }
          }
+         catch { }
          return retval;
       }
 
