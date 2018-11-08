@@ -30,6 +30,8 @@
       {
          this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_ScriptCriteria));
+         DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
          this.cboInstallations = new DevExpress.XtraEditors.PopupContainerEdit();
          this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
@@ -55,6 +57,8 @@
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
          this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
          this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
+         this.btnSelectFromFile = new DevExpress.XtraBars.BarButtonItem();
+         this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.cboInstallations.Properties)).BeginInit();
@@ -114,8 +118,9 @@
          this.barManager1.Form = this;
          this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.btnRun,
-            this.btnScript});
-         this.barManager1.MaxItemId = 2;
+            this.btnScript,
+            this.btnSelectFromFile});
+         this.barManager1.MaxItemId = 3;
          this.barManager1.StatusBar = this.bar3;
          // 
          // bar1
@@ -126,7 +131,8 @@
          this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
          this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.btnRun),
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnScript)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnScript),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnSelectFromFile)});
          this.bar1.Text = "Tools";
          // 
          // btnRun
@@ -302,7 +308,7 @@
         '\''};
          this.txtSQL.AutoIndentCharsPatterns = "";
          this.txtSQL.AutoIndentExistingLines = false;
-         this.txtSQL.AutoScrollMinSize = new System.Drawing.Size(513, 15);
+         this.txtSQL.AutoScrollMinSize = new System.Drawing.Size(543, 15);
          this.txtSQL.BackBrush = null;
          this.txtSQL.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.txtSQL.CharHeight = 15;
@@ -349,6 +355,22 @@
          this.splitContainerControl1.Size = new System.Drawing.Size(1049, 515);
          this.splitContainerControl1.TabIndex = 14;
          this.splitContainerControl1.Text = "splitContainerControl1";
+         // 
+         // btnSelectFromFile
+         // 
+         this.btnSelectFromFile.Caption = "Select Criteria From File";
+         this.btnSelectFromFile.Id = 2;
+         this.btnSelectFromFile.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.Image")));
+         this.btnSelectFromFile.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.LargeImage")));
+         this.btnSelectFromFile.Name = "btnSelectFromFile";
+         toolTipTitleItem2.Text = "Select Criteria From File";
+         superToolTip2.Items.Add(toolTipTitleItem2);
+         this.btnSelectFromFile.SuperTip = superToolTip2;
+         this.btnSelectFromFile.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSelectFromFile_ItemClick);
+         // 
+         // openFileDialog1
+         // 
+         this.openFileDialog1.FileName = "openFileDialog1";
          // 
          // Frm_ScriptCriteria
          // 
@@ -415,5 +437,7 @@
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
       private DevExpress.XtraEditors.PopupContainerControl popupContainerControl1;
       private DevExpress.XtraEditors.SplitContainerControl splitContainerControl1;
+      private DevExpress.XtraBars.BarButtonItem btnSelectFromFile;
+      private System.Windows.Forms.OpenFileDialog openFileDialog1;
    }
 }

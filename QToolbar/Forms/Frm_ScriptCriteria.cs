@@ -135,8 +135,11 @@ namespace QToolbar.Tools
                   instBuilder.Append((int)gviewInstallations.GetRowCellValue(instHandle, "INST_CODE"));
                }
                var selRows = gridView1.GetSelectedRows();
+               int criteriaScripted = 0;
+               int criteriaTried = 0;
                foreach (int rowHandle in selRows)
                {
+                  criteriaTried++;
                   // clear messages buffer before criterio scripting
                   connectionMsg.Clear();
 
@@ -151,9 +154,10 @@ namespace QToolbar.Tools
                   string ret = (string)command.ExecuteScalar();
 
                   File.WriteAllText(Path.Combine(txtScriptDirectory.Text, criUniqueId + ".sql"), connectionMsg.ToString(), Encoding.Unicode);
+                  criteriaScripted++;
                }
 
-               XtraMessageBox.Show("Criteria were scripted succesfully!","Info",MessageBoxButtons.OK,MessageBoxIcon.Information);
+               XtraMessageBox.Show($"Criteria were scripted succesfully (tried:{criteriaTried},scripted:{criteriaScripted})!","Info",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
             finally
             {
@@ -259,6 +263,56 @@ namespace QToolbar.Tools
                gviewInstallations.SelectRow(rowHandle);
             }
 
+         }
+      }
+
+      private void btnSelectFromFile_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      {
+         if(openFileDialog1.ShowDialog()==DialogResult.OK)
+         {
+            List<string> lines = File.ReadLines(openFileDialog1.FileName).ToList();
+            int linesMatched = 0;
+            StringBuilder notMatched = new StringBuilder();
+            foreach(var criuniqueid in lines)
+            {
+               if(!string.IsNullOrEmpty(criuniqueid))
+               {
+                  int rowHandle = gridView1.LocateByValue("CRI_UNIQUE_ID", criuniqueid.Trim());
+                  if (rowHandle != DevExpress.Data.DataController.OperationInProgress)
+                  {
+                     gridView1.SelectRow(rowHandle);                     
+                     linesMatched++;
+                  }
+                  else
+                  {
+                     notMatched.Append(criuniqueid);
+                     notMatched.Append(" ");
+                  }
+               }
+            }
+
+            // validate
+            var selRows = gridView1.GetSelectedRows();
+            int criteriaNotSelected = 0;
+            int criteriaChecked = 0;
+            StringBuilder notSelected = new StringBuilder();
+
+            foreach (var criuniqueid in lines)
+            {
+               if(!string.IsNullOrEmpty(criuniqueid))
+               {
+                  int rowHandle = gridView1.LocateByValue("CRI_UNIQUE_ID", criuniqueid);
+                  if (!gridView1.IsRowSelected(rowHandle))
+                  {
+                     notSelected.Append(criuniqueid);
+                     notSelected.Append(" ");
+                     criteriaNotSelected++;
+                  }
+                  criteriaChecked++;
+               }
+            }
+            XtraMessageBox.Show($"Lines read:{lines.Count}, criteria selected: {linesMatched}, checked:{criteriaChecked}, not selected:{criteriaNotSelected} ({notSelected.ToString()}), not matched:{notMatched.ToString()}");
+            
          }
       }
    }
