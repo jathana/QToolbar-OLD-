@@ -135,7 +135,7 @@ namespace QToolbar
          //this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
          Location = Properties.Settings.Default.WindowLocation;         
-         Size = Properties.Settings.Default.WindowSize;
+         //Size = Properties.Settings.Default.WindowSize;
          EnsureVisible(this);
          InitUI();
          CreateMenuItems();

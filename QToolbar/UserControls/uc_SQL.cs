@@ -220,8 +220,17 @@ namespace QToolbar
          gridView.OptionsBehavior.Editable = false;
          gridView.OptionsView.ColumnAutoWidth = false;
          gridView.OptionsView.ShowGroupPanel = false;
+         gridView.IndicatorWidth = 40;
+         
+         gridView.CustomDrawRowIndicator += GridView_CustomDrawRowIndicator;
 
          return retVal;
+      }
+
+      private void GridView_CustomDrawRowIndicator(object sender, RowIndicatorCustomDrawEventArgs e)
+      {
+         if (e.RowHandle >= 0)
+            e.Info.DisplayText = e.RowHandle.ToString();
       }
 
       private void grid_KeyDown(object sender, KeyEventArgs e)
