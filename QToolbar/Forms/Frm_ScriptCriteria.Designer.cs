@@ -30,14 +30,15 @@
       {
          this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_ScriptCriteria));
-         DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
          this.cboInstallations = new DevExpress.XtraEditors.PopupContainerEdit();
          this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
          this.bar1 = new DevExpress.XtraBars.Bar();
          this.btnRun = new DevExpress.XtraBars.BarButtonItem();
          this.btnScript = new DevExpress.XtraBars.BarButtonItem();
+         this.btnSelectFromFile = new DevExpress.XtraBars.BarButtonItem();
          this.bar3 = new DevExpress.XtraBars.Bar();
          this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
@@ -57,7 +58,6 @@
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
          this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
          this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
-         this.btnSelectFromFile = new DevExpress.XtraBars.BarButtonItem();
          this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
@@ -152,6 +152,18 @@
          this.btnScript.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnScript.ImageOptions.LargeImage")));
          this.btnScript.Name = "btnScript";
          this.btnScript.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnScript_ItemClick);
+         // 
+         // btnSelectFromFile
+         // 
+         this.btnSelectFromFile.Caption = "Select Criteria From File";
+         this.btnSelectFromFile.Id = 2;
+         this.btnSelectFromFile.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSelectFromFile.ImageOptions.Image")));
+         this.btnSelectFromFile.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnSelectFromFile.ImageOptions.LargeImage")));
+         this.btnSelectFromFile.Name = "btnSelectFromFile";
+         toolTipTitleItem1.Text = "Select Criteria From File";
+         superToolTip1.Items.Add(toolTipTitleItem1);
+         this.btnSelectFromFile.SuperTip = superToolTip1;
+         this.btnSelectFromFile.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSelectFromFile_ItemClick);
          // 
          // bar3
          // 
@@ -355,18 +367,6 @@
          this.splitContainerControl1.Size = new System.Drawing.Size(1049, 515);
          this.splitContainerControl1.TabIndex = 14;
          this.splitContainerControl1.Text = "splitContainerControl1";
-         // 
-         // btnSelectFromFile
-         // 
-         this.btnSelectFromFile.Caption = "Select Criteria From File";
-         this.btnSelectFromFile.Id = 2;
-         this.btnSelectFromFile.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.Image")));
-         this.btnSelectFromFile.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.LargeImage")));
-         this.btnSelectFromFile.Name = "btnSelectFromFile";
-         toolTipTitleItem2.Text = "Select Criteria From File";
-         superToolTip2.Items.Add(toolTipTitleItem2);
-         this.btnSelectFromFile.SuperTip = superToolTip2;
-         this.btnSelectFromFile.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSelectFromFile_ItemClick);
          // 
          // openFileDialog1
          // 

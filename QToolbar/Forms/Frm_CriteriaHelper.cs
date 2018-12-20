@@ -362,22 +362,8 @@ namespace QToolbar.Forms
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_PROCESS_INSTANCES_FLAG"], 0);
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_DECISION_TREE_ENTRY"], 1);
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_DECISION_TREE"], 1);
-         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_SCORING"], 1);
-
-
-
-         //////////////////////////
-         //view.SetRowCellValue(e.RowHandle, view.Columns["CRI_DESC"], "Test");
-         //view.SetRowCellValue(e.RowHandle, view.Columns["CRI_TYPE"], 430);
-         //view.SetRowCellValue(e.RowHandle, view.Columns["CRI_CATEGORY"], 244);
-         //view.SetRowCellValue(e.RowHandle, view.Columns["CRJ_CODE"], 1);
-         
-         
-         //view.SetRowCellValue(e.RowHandle, view.Columns["CRI_WHERE_TABLE"], "AT_CASE_EXTRA");
-
-
-
-
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_SCORING"], 0);
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_RECOMPILE_FLAG"], 0); 
 
       }
 

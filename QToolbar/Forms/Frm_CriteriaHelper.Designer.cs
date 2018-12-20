@@ -116,7 +116,7 @@
         '\''};
          this.txtGeneratedSQL.AutoIndentCharsPatterns = "";
          this.txtGeneratedSQL.AutoIndentExistingLines = false;
-         this.txtGeneratedSQL.AutoScrollMinSize = new System.Drawing.Size(2, 15);
+         this.txtGeneratedSQL.AutoScrollMinSize = new System.Drawing.Size(32, 15);
          this.txtGeneratedSQL.BackBrush = null;
          this.txtGeneratedSQL.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.txtGeneratedSQL.CharHeight = 15;
@@ -293,7 +293,7 @@
         '\''};
          this.txtSelectSQL.AutoIndentCharsPatterns = "";
          this.txtSelectSQL.AutoIndentExistingLines = false;
-         this.txtSelectSQL.AutoScrollMinSize = new System.Drawing.Size(513, 15);
+         this.txtSelectSQL.AutoScrollMinSize = new System.Drawing.Size(543, 15);
          this.txtSelectSQL.BackBrush = null;
          this.txtSelectSQL.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.txtSelectSQL.CharHeight = 15;

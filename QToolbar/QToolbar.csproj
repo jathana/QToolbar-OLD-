@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\q-wks-jathan\Shared\QToolbar\</InstallUrl>
-    <ApplicationRevision>137</ApplicationRevision>
+    <ApplicationRevision>141</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -53,10 +53,10 @@
     <ApplicationIcon>Analyze.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>84EC52479FAFA43A07C3227318D963580EE6D709</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>E49E21A0C9BA3C039CF3B57FA68AC09DAA3AA2FB</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>QToolbar_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>QToolbar_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -394,6 +394,7 @@
     <None Include="Images\mnuQCSAgent.ImageOptions.LargeImage.png" />
     <None Include="Images\mnuQCSAdmin.ImageOptions.LargeImage.png" />
     <None Include="QToobar.docx" />
+    <None Include="QToolbar_1_TemporaryKey.pfx" />
     <None Include="QToolbar_TemporaryKey.pfx" />
     <None Include="Resources\activity_48.ico" />
   </ItemGroup>

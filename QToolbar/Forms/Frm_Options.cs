@@ -58,9 +58,6 @@ namespace QToolbar
 
          SaveShellCommands();
 
-         // save databases
-         SaveLegalLinks();
-
          // save sql queries
          SaveSQLQueries();
 
@@ -91,7 +88,6 @@ namespace QToolbar
          LoadFolders();
          LoadCheckouts();
          LoadShellCommands();
-         LoadLegalLinks();
          LoadSQLQueries();
          LoadEnvCFs();
       }
@@ -115,12 +111,6 @@ namespace QToolbar
          grdShellCommands.DataSource = shellCommands.Data;
       }
 
-      private void LoadLegalLinks()
-      {
-         ShellCommands legalLinks = new ShellCommands(Properties.Settings.Default.LegalLinks);
-         gridLegalLiks.DataSource = legalLinks.Data;
-      }
-
       private void LoadSQLQueries()
       {
          SQLQueries sqlQueries = new SQLQueries(Properties.Settings.Default.SQLQueries);
@@ -131,12 +121,6 @@ namespace QToolbar
       {
          ShellCommands shellCommands = new ShellCommands((DataTable)grdShellCommands.DataSource);
          Properties.Settings.Default.ShellCommands = shellCommands.ToXml();
-      }
-
-      private void SaveLegalLinks()
-      {
-         ShellCommands legalLinks = new ShellCommands((DataTable)gridLegalLiks.DataSource);
-         Properties.Settings.Default.LegalLinks = legalLinks.ToXml();
       }
 
       private void SaveSQLQueries()

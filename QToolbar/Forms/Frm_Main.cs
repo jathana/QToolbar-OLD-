@@ -87,6 +87,7 @@ namespace QToolbar
       private void CreateMenuItems()
       {
          Text = "QToolbar (Loading...)";
+         ribbonControl1.Enabled = false;
          Task.Run(() =>
          {
             _DatabaseScripterButton.CreateMenuItems();
@@ -110,6 +111,7 @@ namespace QToolbar
             {
 
                Text = "QToolbar (Ready)";
+               ribbonControl1.Enabled = true;
             }, null);
          });
       }
@@ -211,6 +213,11 @@ namespace QToolbar
          {
             openForm.Close();
          }
+      }
+
+      private void ribbonControl1_SizeChanged(object sender, EventArgs e)
+      {
+         this.ClientSize = ribbonControl1.Size;
       }
    }
 }

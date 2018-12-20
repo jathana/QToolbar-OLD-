@@ -28,7 +28,6 @@
       /// </summary>
       private void InitializeComponent()
       {
-         this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_Main));
          DevExpress.Utils.SuperToolTip superToolTip25 = new DevExpress.Utils.SuperToolTip();
          DevExpress.Utils.ToolTipTitleItem toolTipTitleItem34 = new DevExpress.Utils.ToolTipTitleItem();
@@ -52,14 +51,14 @@
          DevExpress.Utils.ToolTipTitleItem toolTipTitleItem43 = new DevExpress.Utils.ToolTipTitleItem();
          DevExpress.Utils.ToolTipItem toolTipItem12 = new DevExpress.Utils.ToolTipItem();
          DevExpress.Utils.ToolTipTitleItem toolTipTitleItem44 = new DevExpress.Utils.ToolTipTitleItem();
-         this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
+         this.barManager1 = new DevExpress.XtraBars.BarManager();
          this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-         this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
+         this.imageCollection1 = new DevExpress.Utils.ImageCollection();
          this.btnOptions = new DevExpress.XtraBars.BarButtonItem();
-         this.toolTipController1 = new DevExpress.Utils.ToolTipController(this.components);
+         this.toolTipController1 = new DevExpress.Utils.ToolTipController();
          this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
          this.mnuDesigners = new DevExpress.XtraBars.BarSubItem();
          this.btnOptions2 = new DevExpress.XtraBars.BarButtonItem();
@@ -82,13 +81,13 @@
          this.mnuDesignersLocal = new DevExpress.XtraBars.BarSubItem();
          this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
+         this.btnCloseAllWindows = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.grpApplications = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpBuilds = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpFiles = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpSQL = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.grpTools = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-         this.btnCloseAllWindows = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -114,15 +113,15 @@
          this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
          this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
          this.barDockControlTop.Manager = this.barManager1;
-         this.barDockControlTop.Size = new System.Drawing.Size(1235, 0);
+         this.barDockControlTop.Size = new System.Drawing.Size(1296, 0);
          // 
          // barDockControlBottom
          // 
          this.barDockControlBottom.CausesValidation = false;
          this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-         this.barDockControlBottom.Location = new System.Drawing.Point(0, 90);
+         this.barDockControlBottom.Location = new System.Drawing.Point(0, 93);
          this.barDockControlBottom.Manager = this.barManager1;
-         this.barDockControlBottom.Size = new System.Drawing.Size(1235, 0);
+         this.barDockControlBottom.Size = new System.Drawing.Size(1296, 0);
          // 
          // barDockControlLeft
          // 
@@ -130,15 +129,15 @@
          this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
          this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
          this.barDockControlLeft.Manager = this.barManager1;
-         this.barDockControlLeft.Size = new System.Drawing.Size(0, 90);
+         this.barDockControlLeft.Size = new System.Drawing.Size(0, 93);
          // 
          // barDockControlRight
          // 
          this.barDockControlRight.CausesValidation = false;
          this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-         this.barDockControlRight.Location = new System.Drawing.Point(1235, 0);
+         this.barDockControlRight.Location = new System.Drawing.Point(1296, 0);
          this.barDockControlRight.Manager = this.barManager1;
-         this.barDockControlRight.Size = new System.Drawing.Size(0, 90);
+         this.barDockControlRight.Size = new System.Drawing.Size(0, 93);
          // 
          // imageCollection1
          // 
@@ -203,9 +202,10 @@
          this.ribbonControl1.ShowExpandCollapseButton = DevExpress.Utils.DefaultBoolean.False;
          this.ribbonControl1.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
          this.ribbonControl1.ShowToolbarCustomizeItem = false;
-         this.ribbonControl1.Size = new System.Drawing.Size(1235, 95);
+         this.ribbonControl1.Size = new System.Drawing.Size(1296, 95);
          this.ribbonControl1.Toolbar.ShowCustomizeItem = false;
          this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
+         this.ribbonControl1.SizeChanged += new System.EventHandler(this.ribbonControl1_SizeChanged);
          // 
          // mnuDesigners
          // 
@@ -420,6 +420,15 @@
          superToolTip32.Items.Add(toolTipTitleItem44);
          this.barButtonItem2.SuperTip = superToolTip32;
          // 
+         // btnCloseAllWindows
+         // 
+         this.btnCloseAllWindows.Caption = "Close All Windows";
+         this.btnCloseAllWindows.Id = 3;
+         this.btnCloseAllWindows.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseAllWindows.ImageOptions.Image")));
+         this.btnCloseAllWindows.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnCloseAllWindows.ImageOptions.LargeImage")));
+         this.btnCloseAllWindows.Name = "btnCloseAllWindows";
+         this.btnCloseAllWindows.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCloseAllWindows_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -476,20 +485,11 @@
          this.grpTools.Name = "grpTools";
          this.grpTools.Text = "Tools";
          // 
-         // btnCloseAllWindows
-         // 
-         this.btnCloseAllWindows.Caption = "Close All Windows";
-         this.btnCloseAllWindows.Id = 3;
-         this.btnCloseAllWindows.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem3.ImageOptions.Image")));
-         this.btnCloseAllWindows.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem3.ImageOptions.LargeImage")));
-         this.btnCloseAllWindows.Name = "btnCloseAllWindows";
-         this.btnCloseAllWindows.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCloseAllWindows_ItemClick);
-         // 
          // Frm_Main
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.ClientSize = new System.Drawing.Size(1235, 90);
+         this.ClientSize = new System.Drawing.Size(1296, 93);
          this.Controls.Add(this.ribbonControl1);
          this.Controls.Add(this.barDockControlLeft);
          this.Controls.Add(this.barDockControlRight);
@@ -497,8 +497,7 @@
          this.Controls.Add(this.barDockControlTop);
          this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
          this.MaximizeBox = false;
-         this.MaximumSize = new System.Drawing.Size(1251, 128);
-         this.MinimumSize = new System.Drawing.Size(1251, 38);
+         this.MaximumSize = new System.Drawing.Size(1312, 131);
          this.Name = "Frm_Main";
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.Text = "QToolbar";

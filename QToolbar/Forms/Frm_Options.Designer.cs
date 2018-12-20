@@ -71,9 +71,6 @@
          this.tabShellCommands = new DevExpress.XtraTab.XtraTabPage();
          this.grdShellCommands = new DevExpress.XtraGrid.GridControl();
          this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
-         this.tabLegalLinks = new DevExpress.XtraTab.XtraTabPage();
-         this.gridLegalLiks = new DevExpress.XtraGrid.GridControl();
-         this.gridView3 = new DevExpress.XtraGrid.Views.Grid.GridView();
          this.tabSQLQueries = new DevExpress.XtraTab.XtraTabPage();
          this.gridSQLQueries = new DevExpress.XtraGrid.GridControl();
          this.gviewSQLQueries = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -136,9 +133,6 @@
          this.tabShellCommands.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.grdShellCommands)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
-         this.tabLegalLinks.SuspendLayout();
-         ((System.ComponentModel.ISupportInitialize)(this.gridLegalLiks)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.gridView3)).BeginInit();
          this.tabSQLQueries.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.gridSQLQueries)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gviewSQLQueries)).BeginInit();
@@ -538,7 +532,6 @@
             this.tabGeneral,
             this.tabCheckouts,
             this.tabShellCommands,
-            this.tabLegalLinks,
             this.tabSQLQueries,
             this.tabEnvCFs});
          // 
@@ -604,34 +597,6 @@
          this.gridView2.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
          this.gridView2.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.Inplace;
          this.gridView2.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
-         // 
-         // tabLegalLinks
-         // 
-         this.tabLegalLinks.Controls.Add(this.gridLegalLiks);
-         this.tabLegalLinks.Name = "tabLegalLinks";
-         this.tabLegalLinks.Size = new System.Drawing.Size(801, 453);
-         this.tabLegalLinks.Text = "Legal Links";
-         // 
-         // gridLegalLiks
-         // 
-         this.gridLegalLiks.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.gridLegalLiks.Location = new System.Drawing.Point(0, 0);
-         this.gridLegalLiks.MainView = this.gridView3;
-         this.gridLegalLiks.Name = "gridLegalLiks";
-         this.gridLegalLiks.Size = new System.Drawing.Size(801, 453);
-         this.gridLegalLiks.TabIndex = 0;
-         this.gridLegalLiks.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView3});
-         this.gridLegalLiks.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.Grid_ProcessGridKey);
-         // 
-         // gridView3
-         // 
-         this.gridView3.GridControl = this.gridLegalLiks;
-         this.gridView3.Name = "gridView3";
-         this.gridView3.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
-         this.gridView3.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
-         this.gridView3.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.Inplace;
-         this.gridView3.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
          // 
          // tabSQLQueries
          // 
@@ -849,9 +814,6 @@
          this.tabShellCommands.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.grdShellCommands)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
-         this.tabLegalLinks.ResumeLayout(false);
-         ((System.ComponentModel.ISupportInitialize)(this.gridLegalLiks)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.gridView3)).EndInit();
          this.tabSQLQueries.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.gridSQLQueries)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.gviewSQLQueries)).EndInit();
@@ -915,9 +877,6 @@
       private DevExpress.XtraTab.XtraTabPage tabShellCommands;
       private DevExpress.XtraGrid.GridControl grdShellCommands;
       private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
-      private DevExpress.XtraTab.XtraTabPage tabLegalLinks;
-      private DevExpress.XtraGrid.GridControl gridLegalLiks;
-      private DevExpress.XtraGrid.Views.Grid.GridView gridView3;
       private DevExpress.XtraTab.XtraTabPage tabSQLQueries;
       private DevExpress.XtraGrid.GridControl gridSQLQueries;
       private DevExpress.XtraGrid.Views.Grid.GridView gviewSQLQueries;

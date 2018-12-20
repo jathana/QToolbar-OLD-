@@ -22,7 +22,7 @@ namespace QToolbar.Buttons
       {
          try
          {
-            XtraMessageBox.Show($"Before use designer {e.Item.Caption} ensure that \"Relative Code Path\" & \"Proteus Relative Code Path\" are set correctly! \r\nTo configure click \"Qualco\" menu.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //XtraMessageBox.Show($"Before use designer {e.Item.Caption} ensure that \"Relative Code Path\" & \"Proteus Relative Code Path\" are set correctly! \r\nTo configure click \"Qualco\" menu.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             string designer = GetItemPath(e.Item.Caption);
             System.Diagnostics.Process.Start(designer);
          }

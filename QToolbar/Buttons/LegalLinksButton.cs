@@ -4,8 +4,10 @@ using QToolbar.Options;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace QToolbar.Buttons
@@ -19,14 +21,95 @@ namespace QToolbar.Buttons
 
       public override void CreateMenuItems()
       {
-        
+
          _Menu.ClearLinks();
          // load legal links
          try
          {
-            foreach (DataRow row in OptionsInstance.LegalLinks.Data.Rows)
+            string devInst = OptionsInstance.DevSQLInstances;
+            if (!string.IsNullOrEmpty(devInst))
             {
-               AddLegalLinksItem(row);
+               List<string> devdbs = new List<string>();
+               SortedList<string, string> menuItems = new SortedList<string, string>();
+
+               string[] devInstArr = devInst.Split(',');
+               Regex reg = new Regex("^QBCollection[_]Plus[_][0-9]+[_][0-9]+$");
+
+               foreach (string sqlInst in devInstArr)
+               {
+                  devdbs.Clear();
+                  menuItems.Clear();
+                  //string connectionString = $"Server={sqlInst};Data Source=.; Integrated Security=SSPI;";
+                  string connectionString = $"Server={sqlInst};Integrated Security=SSPI;";
+                  using (SqlConnection con = new SqlConnection(connectionString))
+                  {
+                     try
+                     {
+                        con.Open();
+                        using (SqlCommand cmd = new SqlCommand("SELECT name from sys.databases", con))
+                        {
+                           try
+                           {
+                              using (SqlDataReader dr = cmd.ExecuteReader())
+                              {
+                                 while (dr.Read())
+                                 {
+                                    if (reg.IsMatch(dr[0].ToString()))
+                                    {
+                                       devdbs.Add(dr[0].ToString());
+                                    }
+                                 }
+                              }
+                           }
+                           catch { }
+                        }
+
+                        foreach (var db in devdbs)
+                        {
+                           string legalUrl = "";
+                           object urlObj = null;
+                           try
+                           {
+                              using (SqlCommand cmd = new SqlCommand($"SELECT SPR_VALUE FROM [{db}].[dbo].AT_SYSTEM_PREF WHERE SPR_TYPE='LEGAL_APP_PROCESS_MAPPING_WS_URL'", con))
+                              {
+
+                                 urlObj = cmd.ExecuteScalar();
+                                 if (urlObj != null)
+                                 {
+                                    string url = cmd.ExecuteScalar().ToString();
+                                    if (!string.IsNullOrEmpty(url))
+                                    {
+                                       Uri uri = new Uri(url.Trim());
+                                       legalUrl = $"{uri.Scheme}://{uri.Host}:{uri.Port}/QCLegalApplicationApp/";
+                                    }
+                                 }
+                              }
+
+                              string dbVer = "";
+                              if (urlObj != null)
+                              {
+                                 using (SqlCommand cmd = new SqlCommand($"SELECT TOP(1)CONVERT(NVARCHAR,MAJOR)+'.'+CONVERT(NVARCHAR,MINOR) VER FROM [{db}].[dbo].TLK_DATABASE_VERSIONS ORDER BY 1 DESC", con))
+                                 {
+                                    dbVer = cmd.ExecuteScalar().ToString().Trim();
+                                 }
+                              }
+
+                              if (!string.IsNullOrEmpty(dbVer) && !string.IsNullOrEmpty(legalUrl))
+                              {
+                                 menuItems.Add(dbVer, legalUrl);
+                              }
+                           }
+                           catch { }
+                        }
+                        con.Close();
+                     }
+                     catch { }
+                  }
+                  foreach (var item in menuItems)
+                  {
+                     AddLegalLinksItem(new Tuple<string, string>(item.Key, item.Value));
+                  }
+               }
             }
          }
          catch (Exception ex)
@@ -35,12 +118,12 @@ namespace QToolbar.Buttons
          }
       }
 
-      private void AddLegalLinksItem(DataRow row)
+      private void AddLegalLinksItem(Tuple<string,string> data)
       {
-         BarButtonItem legalLinkItem = new BarButtonItem(_BarManager, row["Name"].ToString(), 3);
+         BarButtonItem legalLinkItem = new BarButtonItem(_BarManager, data.Item1, 3);
          // legal links are shell commands
          legalLinkItem.ItemClick += MenuItemClick;
-         legalLinkItem.Tag = row;
+         legalLinkItem.Tag = data;         
          _Menu.AddItem(legalLinkItem);
       }
 
@@ -48,17 +131,10 @@ namespace QToolbar.Buttons
       {
          try
          {
-            DataRow row = (DataRow)e.Item.Tag;
+            Tuple<string, string> data= (Tuple<string, string>)e.Item.Tag;
 
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
-            process.StartInfo.FileName = row["Command"].ToString();
-            process.StartInfo.Arguments = row["Arguments"].ToString();
-            process.StartInfo.UseShellExecute = true;
-
-            process.Start();
-
-
+            // only IE is suppoerted by LegalApp
+            System.Diagnostics.Process.Start("IEXPLORE.EXE", data.Item2);
          }
          catch (Exception ex)
          {
