@@ -12,6 +12,7 @@ namespace QToolbar.Helpers
       private ErrorType _ErrorType;
       private string _Message;
       private string _Path;
+      private string _Hint;
       #endregion
 
       #region properties
@@ -50,6 +51,19 @@ namespace QToolbar.Helpers
          set
          {
             _Path = value;
+         }
+      }
+
+      public string Hint
+      {
+         get
+         {
+            return _Hint;
+         }
+
+         set
+         {
+            _Hint = value;
          }
       }
 

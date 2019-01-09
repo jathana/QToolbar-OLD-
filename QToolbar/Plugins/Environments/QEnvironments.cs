@@ -654,7 +654,8 @@ namespace QToolbar.Plugins.Environments
                   // LEGAL_APP_PROCESS_MAPPING_WS_URL
                   if (pathrow["SPR_TYPE"].ToString().Equals("LEGAL_APP_PROCESS_MAPPING_WS_URL"))
                   {
-                     objEnv.Errors.AddInfo($"Check AT_SYSTEM_PREF.SPR_TYPE = LEGAL_APP_PROCESS_MAPPING_WS_URL  ({pathrow["SPR_VALUE"].ToString()}) ", "");
+                     objEnv.Errors.AddInfo($"Check AT_SYSTEM_PREF.SPR_TYPE = LEGAL_APP_PROCESS_MAPPING_WS_URL  ({pathrow["SPR_VALUE"].ToString()}) ", "",
+                        "SELECT * FROM AT_SYSTEM_PREF WHERE SPR_TYPE='LEGAL_APP_PROCESS_MAPPING_WS_URL'");
 
                      // set LegalAppProcessMappingWSUrl & LegalAppProcessMappingWSHost
                      if (!string.IsNullOrEmpty(pathrow["SPR_VALUE"].ToString()))
@@ -673,9 +674,11 @@ namespace QToolbar.Plugins.Environments
                   else if (pathrow["SPR_TYPE"].ToString().Equals("FIELD_AGENT_INTEGRATION_APPLICATION_WS_URL"))
                   {
                      objEnv.AT_SYSTEM_PREF_FIELD_AGENT_INTEGRATION_APPLICATION_URL = pathrow["SPR_VALUE"].ToString();
-                     if (!objEnv.AppWSUrl.ToLower().Equals(pathrow["SPR_VALUE"].ToString().ToLower()))
+                     if (!objEnv.AppWSUrl.RemoveAtEnd("/").ToLower().Equals(pathrow["SPR_VALUE"].ToString().ToLower()))
                      {
-                        objEnv.Errors.AddError($"AT_SYSTEM_PREF.SPR_TYPE = FIELD_AGENT_INTEGRATION_APPLICATION_WS_URL ({pathrow["SPR_VALUE"].ToString()}) not equals to  objEnv.AppWSUrl ({objEnv.AppWSUrl})", "");
+
+                        objEnv.Errors.AddError($"AT_SYSTEM_PREF.SPR_TYPE = FIELD_AGENT_INTEGRATION_APPLICATION_WS_URL ({pathrow["SPR_VALUE"].ToString()}) not equals to  objEnv.AppWSUrl ({objEnv.AppWSUrl})", "",
+                           $"SELECT * FROM AT_SYSTEM_PREF WHERE SPR_TYPE='FIELD_AGENT_INTEGRATION_APPLICATION_WS_URL'\r\n--UPDATE AT_SYSTEM_PREF SET SPR_VALUE='{objEnv.AppWSUrl.RemoveAtEnd("/")}' WHERE SPR_TYPE='FIELD_AGENT_INTEGRATION_APPLICATION_WS_URL'");
                      }
                   }
                   else // shared folders

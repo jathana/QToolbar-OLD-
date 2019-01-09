@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace QToolbar.Plugins.CFsValidator
 {
 
-   //[Plugin(pluginName:"CFs Validator", pluginDesc: @"Check all cfs.")]
+   //[Plugin(pluginName: "CFs Validator", pluginDesc: @"Check all cfs.")]
    //public class CFsValidatorPlugin : QPlugin, IQPlugin
    //{
    //   public CFsValidatorPlugin() { }
@@ -18,7 +18,7 @@ namespace QToolbar.Plugins.CFsValidator
    //   {
    //      bool retVal = true;
 
-   //      PluginAttribute p= (PluginAttribute)this.GetType().GetCustomAttributes(false).Where(t => t is PluginAttribute).FirstOrDefault();
+   //      PluginAttribute p = (PluginAttribute)this.GetType().GetCustomAttributes(false).Where(t => t is PluginAttribute).FirstOrDefault();
    //      var f = new Frm_CFsValidator();
    //      //{
    //      //   Text = p.PluginName,
@@ -26,10 +26,10 @@ namespace QToolbar.Plugins.CFsValidator
    //      //   //Action=InternalRun
    //      //};
    //      f.Show();
-            
+
    //      return retVal;
    //   }
 
-      
+
    //}
 }

@@ -29,7 +29,7 @@
       private void InitializeComponent()
       {
          this.components = new System.ComponentModel.Container();
-         DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
+         DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_Environments));
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
          this.UXGrid = new DevExpress.XtraGrid.GridControl();
@@ -45,6 +45,7 @@
          this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
          this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
          this.popupMenu2 = new DevExpress.XtraBars.PopupMenu(this.components);
+         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.UXGrid)).BeginInit();
@@ -71,9 +72,9 @@
          // 
          // UXGrid
          // 
-         gridLevelNode2.RelationName = "Level1";
+         gridLevelNode1.RelationName = "Level1";
          this.UXGrid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode2});
+            gridLevelNode1});
          this.UXGrid.Location = new System.Drawing.Point(12, 12);
          this.UXGrid.MainView = this.UXGridView;
          this.UXGrid.Name = "UXGrid";
@@ -116,9 +117,10 @@
          this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
             this.mnuEnvironments,
-            this.btnRefresh});
+            this.btnRefresh,
+            this.barButtonItem1});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 15;
+         this.ribbonControl1.MaxItemId = 16;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -183,6 +185,12 @@
          this.popupMenu2.Name = "popupMenu2";
          this.popupMenu2.Ribbon = this.ribbonControl1;
          // 
+         // barButtonItem1
+         // 
+         this.barButtonItem1.Caption = "barButtonItem1";
+         this.barButtonItem1.Id = 15;
+         this.barButtonItem1.Name = "barButtonItem1";
+         // 
          // Frm_Environments
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -227,5 +235,6 @@
       private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit1;
       private DevExpress.XtraBars.PopupMenu popupMenu2;
       private DevExpress.XtraBars.BarButtonItem btnRefresh;
+      private DevExpress.XtraBars.BarButtonItem barButtonItem1;
    }
 }

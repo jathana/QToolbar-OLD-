@@ -29,28 +29,28 @@
       private void InitializeComponent()
       {
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_Main));
-         DevExpress.Utils.SuperToolTip superToolTip25 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem34 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip26 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem35 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip27 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem36 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip28 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem37 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip29 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem38 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip30 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem39 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.ToolTipItem toolTipItem10 = new DevExpress.Utils.ToolTipItem();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem40 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip31 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem41 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.ToolTipItem toolTipItem11 = new DevExpress.Utils.ToolTipItem();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem42 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip32 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem43 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.ToolTipItem toolTipItem12 = new DevExpress.Utils.ToolTipItem();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem44 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip41 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem56 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip42 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem57 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip43 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem58 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip44 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem59 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip45 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem60 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip46 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem61 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.ToolTipItem toolTipItem16 = new DevExpress.Utils.ToolTipItem();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem62 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip47 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem63 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.ToolTipItem toolTipItem17 = new DevExpress.Utils.ToolTipItem();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem64 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip48 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem65 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.ToolTipItem toolTipItem18 = new DevExpress.Utils.ToolTipItem();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem66 = new DevExpress.Utils.ToolTipTitleItem();
          this.barManager1 = new DevExpress.XtraBars.BarManager();
          this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
@@ -214,9 +214,9 @@
          this.mnuDesigners.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuDesigners.ImageOptions.Image")));
          this.mnuDesigners.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuDesigners.ImageOptions.LargeImage")));
          this.mnuDesigners.Name = "mnuDesigners";
-         toolTipTitleItem34.Text = "Opens Designer";
-         superToolTip25.Items.Add(toolTipTitleItem34);
-         this.mnuDesigners.SuperTip = superToolTip25;
+         toolTipTitleItem56.Text = "Opens Designer";
+         superToolTip41.Items.Add(toolTipTitleItem56);
+         this.mnuDesigners.SuperTip = superToolTip41;
          // 
          // btnOptions2
          // 
@@ -225,9 +225,9 @@
          this.btnOptions2.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnOptions2.ImageOptions.Image")));
          this.btnOptions2.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnOptions2.ImageOptions.LargeImage")));
          this.btnOptions2.Name = "btnOptions2";
-         toolTipTitleItem35.Text = "Opens options dialog";
-         superToolTip26.Items.Add(toolTipTitleItem35);
-         this.btnOptions2.SuperTip = superToolTip26;
+         toolTipTitleItem57.Text = "Opens options dialog";
+         superToolTip42.Items.Add(toolTipTitleItem57);
+         this.btnOptions2.SuperTip = superToolTip42;
          this.btnOptions2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnOptions2_ItemClick);
          // 
          // mnuQCSAdminCFs
@@ -237,9 +237,9 @@
          this.mnuQCSAdminCFs.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuQCSAdminCFs.ImageOptions.Image")));
          this.mnuQCSAdminCFs.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuQCSAdminCFs.ImageOptions.LargeImage")));
          this.mnuQCSAdminCFs.Name = "mnuQCSAdminCFs";
-         toolTipTitleItem36.Text = "Opens the latest cf file of the selected version";
-         superToolTip27.Items.Add(toolTipTitleItem36);
-         this.mnuQCSAdminCFs.SuperTip = superToolTip27;
+         toolTipTitleItem58.Text = "Opens the latest cf file of the selected version";
+         superToolTip43.Items.Add(toolTipTitleItem58);
+         this.mnuQCSAdminCFs.SuperTip = superToolTip43;
          // 
          // mnuQCSAdmin
          // 
@@ -248,9 +248,9 @@
          this.mnuQCSAdmin.ImageOptions.Image = global::QToolbar.Properties.Resources.mnuQCSAdmin_ImageOptions_LargeImage;
          this.mnuQCSAdmin.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuQCSAdmin.ImageOptions.LargeImage")));
          this.mnuQCSAdmin.Name = "mnuQCSAdmin";
-         toolTipTitleItem37.Text = "Opens QCS Admin application";
-         superToolTip28.Items.Add(toolTipTitleItem37);
-         this.mnuQCSAdmin.SuperTip = superToolTip28;
+         toolTipTitleItem59.Text = "Opens QCS Admin application";
+         superToolTip44.Items.Add(toolTipTitleItem59);
+         this.mnuQCSAdmin.SuperTip = superToolTip44;
          // 
          // mnuQCSAgent
          // 
@@ -259,9 +259,9 @@
          this.mnuQCSAgent.ImageOptions.Image = global::QToolbar.Properties.Resources.mnuQCSAgent_ImageOptions_LargeImage;
          this.mnuQCSAgent.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuQCSAgent.ImageOptions.LargeImage")));
          this.mnuQCSAgent.Name = "mnuQCSAgent";
-         toolTipTitleItem38.Text = "Opens QCS Agent application";
-         superToolTip29.Items.Add(toolTipTitleItem38);
-         this.mnuQCSAgent.SuperTip = superToolTip29;
+         toolTipTitleItem60.Text = "Opens QCS Agent application";
+         superToolTip45.Items.Add(toolTipTitleItem60);
+         this.mnuQCSAgent.SuperTip = superToolTip45;
          // 
          // mnuLegalLinks
          // 
@@ -383,42 +383,42 @@
          this.barButtonItem1.Caption = "barButtonItem1";
          this.barButtonItem1.Id = 1;
          this.barButtonItem1.Name = "barButtonItem1";
-         toolTipTitleItem39.Text = "G";
-         toolTipItem10.LeftIndent = 6;
-         toolTipItem10.Text = "GGG";
-         toolTipTitleItem40.LeftIndent = 6;
-         toolTipTitleItem40.Text = "GGGGG";
-         superToolTip30.Items.Add(toolTipTitleItem39);
-         superToolTip30.Items.Add(toolTipItem10);
-         superToolTip30.Items.Add(toolTipTitleItem40);
-         this.barButtonItem1.SuperTip = superToolTip30;
+         toolTipTitleItem61.Text = "G";
+         toolTipItem16.LeftIndent = 6;
+         toolTipItem16.Text = "GGG";
+         toolTipTitleItem62.LeftIndent = 6;
+         toolTipTitleItem62.Text = "GGGGG";
+         superToolTip46.Items.Add(toolTipTitleItem61);
+         superToolTip46.Items.Add(toolTipItem16);
+         superToolTip46.Items.Add(toolTipTitleItem62);
+         this.barButtonItem1.SuperTip = superToolTip46;
          // 
          // barButtonItem2
          // 
          this.barButtonItem2.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
          this.barButtonItem2.Caption = "<b>barButtonItem2</b><br>hhhhh";
          this.barButtonItem2.Description = "desc";
-         toolTipTitleItem41.Text = "gfhfgh";
-         toolTipItem11.LeftIndent = 6;
-         toolTipItem11.Text = "fghfg";
-         toolTipTitleItem42.LeftIndent = 6;
-         toolTipTitleItem42.Text = "fghfg";
-         superToolTip31.Items.Add(toolTipTitleItem41);
-         superToolTip31.Items.Add(toolTipItem11);
-         superToolTip31.Items.Add(toolTipTitleItem42);
-         this.barButtonItem2.DropDownSuperTip = superToolTip31;
+         toolTipTitleItem63.Text = "gfhfgh";
+         toolTipItem17.LeftIndent = 6;
+         toolTipItem17.Text = "fghfg";
+         toolTipTitleItem64.LeftIndent = 6;
+         toolTipTitleItem64.Text = "fghfg";
+         superToolTip47.Items.Add(toolTipTitleItem63);
+         superToolTip47.Items.Add(toolTipItem17);
+         superToolTip47.Items.Add(toolTipTitleItem64);
+         this.barButtonItem2.DropDownSuperTip = superToolTip47;
          this.barButtonItem2.Id = 2;
          this.barButtonItem2.ItemAppearance.Hovered.Options.UseTextOptions = true;
          this.barButtonItem2.Name = "barButtonItem2";
-         toolTipTitleItem43.Text = "444";
-         toolTipItem12.LeftIndent = 6;
-         toolTipItem12.Text = "444";
-         toolTipTitleItem44.LeftIndent = 6;
-         toolTipTitleItem44.Text = "444";
-         superToolTip32.Items.Add(toolTipTitleItem43);
-         superToolTip32.Items.Add(toolTipItem12);
-         superToolTip32.Items.Add(toolTipTitleItem44);
-         this.barButtonItem2.SuperTip = superToolTip32;
+         toolTipTitleItem65.Text = "444";
+         toolTipItem18.LeftIndent = 6;
+         toolTipItem18.Text = "444";
+         toolTipTitleItem66.LeftIndent = 6;
+         toolTipTitleItem66.Text = "444";
+         superToolTip48.Items.Add(toolTipTitleItem65);
+         superToolTip48.Items.Add(toolTipItem18);
+         superToolTip48.Items.Add(toolTipTitleItem66);
+         this.barButtonItem2.SuperTip = superToolTip48;
          // 
          // btnCloseAllWindows
          // 
