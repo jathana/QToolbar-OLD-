@@ -93,6 +93,12 @@
     <Setting Name="ClearLegalMetadata" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="QCWebServers" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Q-SRV-SQL2K12</Value>
+    </Setting>
+    <Setting Name="DevSQLInstances" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Q-SRV-DEVEL12,Q-SRV-DEVEL12\MSSQL2K16</Value>
+    </Setting>
     <Setting Name="EnvCFs" Type="System.String" Scope="User">
       <Value Profile="(Default)">&lt;DocumentElement&gt;
   &lt;table&gt;
@@ -144,12 +150,6 @@
     &lt;Path&gt;VS Projects\SCToolkit\SCToolkitWS\qbc.cf&lt;/Path&gt;
   &lt;/table&gt;
 &lt;/DocumentElement&gt;</Value>
-    </Setting>
-    <Setting Name="QCWebServers" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Q-SRV-SQL2K12</Value>
-    </Setting>
-    <Setting Name="DevSQLInstances" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Q-SRV-DEVEL12,Q-SRV-DEVEL12\MSSQL2K16</Value>
     </Setting>
   </Settings>
 </SettingsFile>
