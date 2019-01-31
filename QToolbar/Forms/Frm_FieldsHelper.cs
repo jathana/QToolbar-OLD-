@@ -457,7 +457,7 @@ namespace QToolbar.Forms
             string textRight = _Data[_Info.Database].Item2;
             string textLeft = _Data[lkpDatabase.EditValue.ToString()].Item2;
             Forms.Frm_TxtDiff f = new Frm_TxtDiff();
-            f.Compare(textLeft, textRight);
+            f.CompareText(textLeft, textRight);
          }
          catch(Exception ex)
          {

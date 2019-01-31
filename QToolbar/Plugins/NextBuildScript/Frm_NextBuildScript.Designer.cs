@@ -155,7 +155,6 @@
             this.layoutControlItem5,
             this.emptySpaceItem1,
             this.layoutControlItem6});
-         this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
          this.layoutControlGroup1.Name = "Root";
          this.layoutControlGroup1.Size = new System.Drawing.Size(558, 233);
          this.layoutControlGroup1.TextVisible = false;

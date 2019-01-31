@@ -31,6 +31,7 @@ namespace QToolbar.Tools
       {
          _Info = info;
          SetSQL();
+         Text = $"Criteria Scripter - {_Info.Server} . {_Info.Database}";
          Show();
          btnRun_ItemClick(null,null);
       }

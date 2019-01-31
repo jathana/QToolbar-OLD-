@@ -29,7 +29,7 @@
       private void InitializeComponent()
       {
          this.components = new System.ComponentModel.Container();
-         DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
+         DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_Environments));
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
          this.UXGrid = new DevExpress.XtraGrid.GridControl();
@@ -40,12 +40,12 @@
          this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
          this.mnuEnvironments = new DevExpress.XtraBars.BarSubItem();
          this.btnRefresh = new DevExpress.XtraBars.BarButtonItem();
+         this.btnUpdateCFs = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
          this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
          this.popupMenu2 = new DevExpress.XtraBars.PopupMenu(this.components);
-         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.UXGrid)).BeginInit();
@@ -72,9 +72,9 @@
          // 
          // UXGrid
          // 
-         gridLevelNode1.RelationName = "Level1";
+         gridLevelNode2.RelationName = "Level1";
          this.UXGrid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode1});
+            gridLevelNode2});
          this.UXGrid.Location = new System.Drawing.Point(12, 12);
          this.UXGrid.MainView = this.UXGridView;
          this.UXGrid.Name = "UXGrid";
@@ -96,7 +96,6 @@
          this.layoutControlGroup1.GroupBordersVisible = false;
          this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem1});
-         this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
          this.layoutControlGroup1.Name = "layoutControlGroup1";
          this.layoutControlGroup1.Size = new System.Drawing.Size(932, 437);
          this.layoutControlGroup1.TextVisible = false;
@@ -118,7 +117,7 @@
             this.ribbonControl1.ExpandCollapseItem,
             this.mnuEnvironments,
             this.btnRefresh,
-            this.barButtonItem1});
+            this.btnUpdateCFs});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
          this.ribbonControl1.MaxItemId = 16;
          this.ribbonControl1.Name = "ribbonControl1";
@@ -155,6 +154,16 @@
          this.btnRefresh.Name = "btnRefresh";
          this.btnRefresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRefresh_ItemClick);
          // 
+         // btnUpdateCFs
+         // 
+         this.btnUpdateCFs.Caption = "Update CFs";
+         this.btnUpdateCFs.Id = 15;
+         this.btnUpdateCFs.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateCFs.ImageOptions.Image")));
+         this.btnUpdateCFs.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnUpdateCFs.ImageOptions.LargeImage")));
+         this.btnUpdateCFs.Name = "btnUpdateCFs";
+         this.btnUpdateCFs.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
+         this.btnUpdateCFs.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnUpdateCFs_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -166,6 +175,7 @@
          // 
          this.ribbonPageGroup1.ItemLinks.Add(this.mnuEnvironments);
          this.ribbonPageGroup1.ItemLinks.Add(this.btnRefresh);
+         this.ribbonPageGroup1.ItemLinks.Add(this.btnUpdateCFs);
          this.ribbonPageGroup1.Name = "ribbonPageGroup1";
          this.ribbonPageGroup1.Text = "Environments";
          // 
@@ -184,12 +194,6 @@
          // 
          this.popupMenu2.Name = "popupMenu2";
          this.popupMenu2.Ribbon = this.ribbonControl1;
-         // 
-         // barButtonItem1
-         // 
-         this.barButtonItem1.Caption = "barButtonItem1";
-         this.barButtonItem1.Id = 15;
-         this.barButtonItem1.Name = "barButtonItem1";
          // 
          // Frm_Environments
          // 
@@ -235,6 +239,6 @@
       private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit1;
       private DevExpress.XtraBars.PopupMenu popupMenu2;
       private DevExpress.XtraBars.BarButtonItem btnRefresh;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+      private DevExpress.XtraBars.BarButtonItem btnUpdateCFs;
    }
 }

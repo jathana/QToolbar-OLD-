@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\q-wks-jathan\Shared\QToolbar\</InstallUrl>
-    <ApplicationRevision>84</ApplicationRevision>
+    <ApplicationRevision>143</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -53,7 +53,7 @@
     <ApplicationIcon>Analyze.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>69054EC47883D45E84F53A88CC322E68807C5F65</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>1A9E605F90262AA7AF4B83D2BCFD770DF022BD78</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>QToolbar_TemporaryKey.pfx</ManifestKeyFile>
@@ -64,30 +64,71 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Images.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Utils.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraBars.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Images.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v18.2, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraBars.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraGrid.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraLayout.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraPrinting.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraTreeList.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v18.2, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGrid.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraTreeList.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DiffPlex, Version=1.4.1.0, Culture=neutral, PublicKeyToken=1d35e91d1bd7bc0f, processorArchitecture=MSIL">
+      <HintPath>..\packages\DiffPlex.1.4.1\lib\netstandard1.0\DiffPlex.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FastColoredTextBox, Version=2.16.11.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b, processorArchitecture=MSIL">
       <HintPath>..\packages\FCTB.2.16.11.0\lib\FastColoredTextBox.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=13.100.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SQL Server\130\SDK\Assemblies\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=13.100.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SQL Server\130\SDK\Assemblies\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.SqlServer.Management.SqlParser, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\assembly\GAC_MSIL\Microsoft.SqlServer.Management.SqlParser\13.0.0.0__89845dcd8080cc91\Microsoft.SqlServer.Management.SqlParser.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=13.100.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SQL Server\130\SDK\Assemblies\Microsoft.SqlServer.Smo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.TransactSql.ScriptDom, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.TransactSql.ScriptDom.14.0.3811.1\lib\net40\Microsoft.SqlServer.TransactSql.ScriptDom.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\IIS.Microsoft.Web.Administration.8.5.9600.17042\lib\Microsoft.Web.Administration.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Web.Extensions" />
@@ -108,7 +149,9 @@
     <Compile Include="Builds\AnalyticsBuildChecker.cs" />
     <Compile Include="Builds\BuildChecker.cs" />
     <Compile Include="Builds\BuildCheckerBase.cs" />
+    <Compile Include="Builds\BuildCheckerEventArgs.cs" />
     <Compile Include="Buttons\ClearMetadataButton.cs" />
+    <Compile Include="Buttons\PluginsButton.cs" />
     <Compile Include="Buttons\FoldersButton.cs" />
     <Compile Include="Buttons\DesignersLocalButton.cs" />
     <Compile Include="Buttons\ShellCommandsButton.cs" />
@@ -116,11 +159,49 @@
     <Compile Include="Buttons\InternalBuildsButton.cs" />
     <Compile Include="Buttons\NextBuildButton.cs" />
     <Compile Include="Builds\CheckResult.cs" />
-    <Compile Include="Forms\Frm_EnvironmentsChecker.cs">
+    <Compile Include="Forms\Frm_TxtDiff.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Frm_EnvironmentsChecker.Designer.cs">
-      <DependentUpon>Frm_EnvironmentsChecker.cs</DependentUpon>
+    <Compile Include="Forms\Frm_TxtDiff.designer.cs">
+      <DependentUpon>Frm_TxtDiff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Frm_CriteriaHelper.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Frm_CriteriaHelper.Designer.cs">
+      <DependentUpon>Frm_CriteriaHelper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Frm_FieldsHelper.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Frm_FieldsHelper.Designer.cs">
+      <DependentUpon>Frm_FieldsHelper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\CfFile.cs" />
+    <Compile Include="Helpers\CfValidator.cs" />
+    <Compile Include="Helpers\DBUtils.cs" />
+    <Compile Include="Helpers\Error.cs" />
+    <Compile Include="Helpers\Errors.cs" />
+    <Compile Include="Helpers\ErrorType.cs" />
+    <Compile Include="Helpers\ValidationHelper.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="Options\EnvCFs.cs" />
+    <Compile Include="Plugins\CFsValidator\CfFileValidationEventArgs.cs" />
+    <Compile Include="Plugins\CFsValidator\CFsValidator.cs" />
+    <Compile Include="Plugins\CFsValidator\CFsValidatorPlugin.cs" />
+    <Compile Include="Plugins\CFsValidator\Frm_CFsValidator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Plugins\CFsValidator\Frm_CFsValidator.Designer.cs">
+      <DependentUpon>Frm_CFsValidator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Plugins\Environments\EnvInfoEventArgs.cs" />
+    <Compile Include="Plugins\Environments\EnvironmentsInfoPlugin.cs" />
+    <Compile Include="Plugins\Environments\Frm_Environments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Plugins\Environments\Frm_Environments.Designer.cs">
+      <DependentUpon>Frm_Environments.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ConnectionInfo.cs" />
     <Compile Include="Forms\Frm_InternalBuilds.cs">
@@ -166,6 +247,7 @@
     <Compile Include="Helpers\IniFile2.cs" />
     <Compile Include="Helpers\IState.cs" />
     <Compile Include="Builds\NextBuildFile.cs" />
+    <Compile Include="Helpers\SqlParser.cs" />
     <Compile Include="Options\SQLQueries.cs" />
     <Compile Include="Options\ShellCommands.cs" />
     <Compile Include="Forms\Frm_FileViewer.cs">
@@ -174,14 +256,27 @@
     <Compile Include="Forms\Frm_FileViewer.designer.cs">
       <DependentUpon>Frm_FileViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Plugins\AddEODMetadataInstructionPlugin\AddEODMetadataPlugin.cs" />
-    <Compile Include="Plugins\AddEODMetadataInstructionPlugin\FrmAddEODMetadata.cs">
+    <Compile Include="Plugins\Environments\Frm_UpdateCFs.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Plugins\AddEODMetadataInstructionPlugin\FrmAddEODMetadata.Designer.cs">
-      <DependentUpon>FrmAddEODMetadata.cs</DependentUpon>
+    <Compile Include="Plugins\Environments\Frm_UpdateCFs.Designer.cs">
+      <DependentUpon>Frm_UpdateCFs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Plugins\Environments\QEnvironment.cs" />
+    <Compile Include="Plugins\Environments\EnvironmentConsts.cs" />
+    <Compile Include="Plugins\Environments\QEnvironments.cs" />
+    <Compile Include="Plugins\Environments\QEnvironmentsConfiguration.cs" />
+    <Compile Include="Plugins\NextBuildScript\AddFullEODMetadataPlugin.cs" />
+    <Compile Include="Plugins\NextBuildScript\AddEODMetadataPlugin.cs" />
+    <Compile Include="Plugins\NextBuildScript\Frm_NextBuildScript.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Plugins\NextBuildScript\Frm_NextBuildScript.Designer.cs">
+      <DependentUpon>Frm_NextBuildScript.cs</DependentUpon>
     </Compile>
     <Compile Include="Plugins\IQPlugin.cs" />
+    <Compile Include="Plugins\PluginAttribute.cs" />
+    <Compile Include="Plugins\QPlugin.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Options\Checkouts.cs" />
@@ -190,7 +285,6 @@
     <Compile Include="Helpers\StickyWindow.cs" />
     <Compile Include="Options\OptionsInstance.cs" />
     <Compile Include="Helpers\TextEncodingDetect.cs" />
-    <Compile Include="Helpers\TextFileEncodingDetector.cs" />
     <Compile Include="Forms\Frm_CreateEnvironment.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,9 +297,8 @@
     <Compile Include="Forms\Frm_ScriptCriteria.Designer.cs">
       <DependentUpon>Frm_ScriptCriteria.cs</DependentUpon>
     </Compile>
-    <Compile Include="Environments\QEnvironment.cs" />
-    <Compile Include="Environments\QEnvironmentCreator.cs" />
-    <Compile Include="Environments\QEnvironmentValidator.cs" />
+    <Compile Include="Plugins\Environments\QEnvironmentConfiguration.cs" />
+    <Compile Include="Plugins\Environments\QEnvironmentCreator.cs" />
     <Compile Include="Helpers\TreeNode.cs" />
     <Compile Include="Helpers\TreeNodeSerializer.cs" />
     <Compile Include="UserControls\uc_SQL.cs">
@@ -222,8 +315,26 @@
     </Compile>
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Helpers\XmlNodeExtensions.cs" />
-    <EmbeddedResource Include="Forms\Frm_EnvironmentsChecker.resx">
-      <DependentUpon>Frm_EnvironmentsChecker.cs</DependentUpon>
+    <Compile Include="UserControls\uc_TextDiff.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\uc_TextDiff.Designer.cs">
+      <DependentUpon>uc_TextDiff.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Forms\Frm_TxtDiff.resx">
+      <DependentUpon>Frm_TxtDiff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Frm_CriteriaHelper.resx">
+      <DependentUpon>Frm_CriteriaHelper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Frm_FieldsHelper.resx">
+      <DependentUpon>Frm_FieldsHelper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Plugins\CFsValidator\Frm_CFsValidator.resx">
+      <DependentUpon>Frm_CFsValidator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Plugins\Environments\Frm_Environments.resx">
+      <DependentUpon>Frm_Environments.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Frm_InternalBuilds.resx">
       <DependentUpon>Frm_InternalBuilds.cs</DependentUpon>
@@ -243,8 +354,11 @@
     <EmbeddedResource Include="Forms\Frm_FileViewer.resx">
       <DependentUpon>Frm_FileViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Plugins\AddEODMetadataInstructionPlugin\FrmAddEODMetadata.resx">
-      <DependentUpon>FrmAddEODMetadata.cs</DependentUpon>
+    <EmbeddedResource Include="Plugins\Environments\Frm_UpdateCFs.resx">
+      <DependentUpon>Frm_UpdateCFs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Plugins\NextBuildScript\Frm_NextBuildScript.resx">
+      <DependentUpon>Frm_NextBuildScript.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -268,6 +382,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\uc_SQLQueriesEdit.resx">
       <DependentUpon>uc_SQLQueriesEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\uc_TextDiff.resx">
+      <DependentUpon>uc_TextDiff.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -309,6 +426,9 @@
   <ItemGroup>
     <Folder Include="Criteria\" />
     <Folder Include="Database\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

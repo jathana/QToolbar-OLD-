@@ -34,7 +34,7 @@ namespace QToolbar.Helpers
                if (servers.Where(i => i.Item1 == key) == null)
                   retVal.AddError($"Key {key} does not exist in [Servers] section",cfFile);
 
-               // check key existence in dbs
+               // check key existence in passwords
                if (pwds.Where(i => i.Item1 == key) == null)
                   retVal.AddError($"Key {key} does not exist in [Passwords] section",cfFile);
             }

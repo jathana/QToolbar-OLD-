@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-         this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_TxtDiff));
          this.label6 = new System.Windows.Forms.Label();
          this.label7 = new System.Windows.Forms.Label();
@@ -36,6 +35,8 @@
          this.label4 = new System.Windows.Forms.Label();
          this.ofdFile = new System.Windows.Forms.OpenFileDialog();
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+         this.txtRight = new DevExpress.XtraEditors.TextEdit();
+         this.txtLeft = new DevExpress.XtraEditors.TextEdit();
          this.fctb2 = new FastColoredTextBoxNS.FastColoredTextBox();
          this.fctb1 = new FastColoredTextBoxNS.FastColoredTextBox();
          this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -46,10 +47,13 @@
          this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
          this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
          this.splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
+         this.layLeft = new DevExpress.XtraLayout.LayoutControlItem();
+         this.layRight = new DevExpress.XtraLayout.LayoutControlItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.txtRight.Properties)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.txtLeft.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.fctb2)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.fctb1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
@@ -60,8 +64,9 @@
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layLeft)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layRight)).BeginInit();
          this.SuspendLayout();
          // 
          // label6
@@ -104,6 +109,8 @@
          // 
          // layoutControl1
          // 
+         this.layoutControl1.Controls.Add(this.txtRight);
+         this.layoutControl1.Controls.Add(this.txtLeft);
          this.layoutControl1.Controls.Add(this.fctb2);
          this.layoutControl1.Controls.Add(this.fctb1);
          this.layoutControl1.Controls.Add(this.label6);
@@ -113,10 +120,29 @@
          this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
          this.layoutControl1.Location = new System.Drawing.Point(0, 0);
          this.layoutControl1.Name = "layoutControl1";
+         this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(2141, 278, 897, 713);
          this.layoutControl1.Root = this.layoutControlGroup1;
          this.layoutControl1.Size = new System.Drawing.Size(970, 629);
          this.layoutControl1.TabIndex = 29;
          this.layoutControl1.Text = "layoutControl1";
+         // 
+         // txtRight
+         // 
+         this.txtRight.Enabled = false;
+         this.txtRight.Location = new System.Drawing.Point(497, 12);
+         this.txtRight.Name = "txtRight";
+         this.txtRight.Size = new System.Drawing.Size(461, 20);
+         this.txtRight.StyleController = this.layoutControl1;
+         this.txtRight.TabIndex = 28;
+         // 
+         // txtLeft
+         // 
+         this.txtLeft.Enabled = false;
+         this.txtLeft.Location = new System.Drawing.Point(12, 12);
+         this.txtLeft.Name = "txtLeft";
+         this.txtLeft.Size = new System.Drawing.Size(476, 20);
+         this.txtLeft.StyleController = this.layoutControl1;
+         this.txtLeft.TabIndex = 27;
          // 
          // fctb2
          // 
@@ -148,14 +174,15 @@
          this.fctb2.IsReplaceMode = false;
          this.fctb2.Language = FastColoredTextBoxNS.Language.SQL;
          this.fctb2.LeftBracket = '(';
-         this.fctb2.Location = new System.Drawing.Point(492, 12);
+         this.fctb2.Location = new System.Drawing.Point(497, 36);
          this.fctb2.Name = "fctb2";
          this.fctb2.Paddings = new System.Windows.Forms.Padding(0);
+         this.fctb2.ReadOnly = true;
          this.fctb2.ReservedCountOfLineNumberChars = 2;
          this.fctb2.RightBracket = ')';
          this.fctb2.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
          this.fctb2.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("fctb2.ServiceColors")));
-         this.fctb2.Size = new System.Drawing.Size(466, 554);
+         this.fctb2.Size = new System.Drawing.Size(461, 557);
          this.fctb2.TabIndex = 26;
          this.fctb2.Zoom = 100;
          // 
@@ -189,14 +216,15 @@
          this.fctb1.IsReplaceMode = false;
          this.fctb1.Language = FastColoredTextBoxNS.Language.SQL;
          this.fctb1.LeftBracket = '(';
-         this.fctb1.Location = new System.Drawing.Point(12, 12);
+         this.fctb1.Location = new System.Drawing.Point(12, 36);
          this.fctb1.Name = "fctb1";
          this.fctb1.Paddings = new System.Windows.Forms.Padding(0);
+         this.fctb1.ReadOnly = true;
          this.fctb1.ReservedCountOfLineNumberChars = 2;
          this.fctb1.RightBracket = ')';
          this.fctb1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
          this.fctb1.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("fctb1.ServiceColors")));
-         this.fctb1.Size = new System.Drawing.Size(471, 554);
+         this.fctb1.Size = new System.Drawing.Size(476, 557);
          this.fctb1.TabIndex = 25;
          this.fctb1.Zoom = 100;
          // 
@@ -212,9 +240,9 @@
             this.emptySpaceItem1,
             this.layoutControlItem5,
             this.layoutControlItem6,
-            this.emptySpaceItem2,
+            this.layLeft,
+            this.layRight,
             this.splitterItem1});
-         this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
          this.layoutControlGroup1.Name = "Root";
          this.layoutControlGroup1.Size = new System.Drawing.Size(970, 629);
          this.layoutControlGroup1.TextVisible = false;
@@ -281,35 +309,47 @@
          // layoutControlItem5
          // 
          this.layoutControlItem5.Control = this.fctb1;
-         this.layoutControlItem5.Location = new System.Drawing.Point(0, 0);
+         this.layoutControlItem5.Location = new System.Drawing.Point(0, 24);
          this.layoutControlItem5.Name = "layoutControlItem5";
-         this.layoutControlItem5.Size = new System.Drawing.Size(475, 558);
+         this.layoutControlItem5.Size = new System.Drawing.Size(480, 561);
          this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem5.TextVisible = false;
          // 
          // layoutControlItem6
          // 
          this.layoutControlItem6.Control = this.fctb2;
-         this.layoutControlItem6.Location = new System.Drawing.Point(480, 0);
+         this.layoutControlItem6.Location = new System.Drawing.Point(485, 24);
          this.layoutControlItem6.Name = "layoutControlItem6";
-         this.layoutControlItem6.Size = new System.Drawing.Size(470, 558);
+         this.layoutControlItem6.Size = new System.Drawing.Size(465, 561);
          this.layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem6.TextVisible = false;
-         // 
-         // emptySpaceItem2
-         // 
-         this.emptySpaceItem2.AllowHotTrack = false;
-         this.emptySpaceItem2.Location = new System.Drawing.Point(0, 558);
-         this.emptySpaceItem2.Name = "emptySpaceItem2";
-         this.emptySpaceItem2.Size = new System.Drawing.Size(950, 27);
-         this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
          // 
          // splitterItem1
          // 
          this.splitterItem1.AllowHotTrack = true;
-         this.splitterItem1.Location = new System.Drawing.Point(475, 0);
+         this.splitterItem1.Location = new System.Drawing.Point(480, 0);
          this.splitterItem1.Name = "splitterItem1";
-         this.splitterItem1.Size = new System.Drawing.Size(5, 558);
+         this.splitterItem1.Size = new System.Drawing.Size(5, 585);
+         // 
+         // layLeft
+         // 
+         this.layLeft.Control = this.txtLeft;
+         this.layLeft.Location = new System.Drawing.Point(0, 0);
+         this.layLeft.Name = "layLeft";
+         this.layLeft.Size = new System.Drawing.Size(480, 24);
+         this.layLeft.Text = "Left";
+         this.layLeft.TextSize = new System.Drawing.Size(0, 0);
+         this.layLeft.TextVisible = false;
+         // 
+         // layRight
+         // 
+         this.layRight.Control = this.txtRight;
+         this.layRight.Location = new System.Drawing.Point(485, 0);
+         this.layRight.Name = "layRight";
+         this.layRight.Size = new System.Drawing.Size(465, 24);
+         this.layRight.Text = "Right";
+         this.layRight.TextSize = new System.Drawing.Size(0, 0);
+         this.layRight.TextVisible = false;
          // 
          // Frm_TxtDiff
          // 
@@ -321,6 +361,8 @@
          this.Text = "DiffMergeSample";
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
          this.layoutControl1.ResumeLayout(false);
+         ((System.ComponentModel.ISupportInitialize)(this.txtRight.Properties)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.txtLeft.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.fctb2)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.fctb1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
@@ -331,8 +373,9 @@
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layLeft)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layRight)).EndInit();
          this.ResumeLayout(false);
 
         }
@@ -355,7 +398,10 @@
       private FastColoredTextBoxNS.FastColoredTextBox fctb1;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
-      private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem2;
       private DevExpress.XtraLayout.SplitterItem splitterItem1;
+      private DevExpress.XtraEditors.TextEdit txtRight;
+      private DevExpress.XtraEditors.TextEdit txtLeft;
+      private DevExpress.XtraLayout.LayoutControlItem layLeft;
+      private DevExpress.XtraLayout.LayoutControlItem layRight;
    }
 }

@@ -126,10 +126,10 @@ namespace QToolbar.Forms
 
          //repoLookupCriterioTable
          //repoLookupCriterioTable.BeginInit();
-         repoLookupCriterioTable.DataSource = _SelectData.Tables[CRITERIA_TABLES];
-         repoLookupCriterioTable.DisplayMember = "CRI_TABLE";
+         repoLookupCriterioTable.DataSource = _SelectData.Tables[CRITERIA_WHERE_TABLES];
+         repoLookupCriterioTable.DisplayMember = "TABLE_NAME";
          repoLookupCriterioTable.Name = "repoLookupCriterioTable";
-         repoLookupCriterioTable.ValueMember = "CRI_TABLE";
+         repoLookupCriterioTable.ValueMember = "TABLE_NAME";
          repoLookupCriterioTable.PopupFormSize = new Size(1000, 500);
          repoLookupCriterioTable.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
          grdCreateCriteria.RepositoryItems.Add(repoLookupCriterioTable);
@@ -155,13 +155,16 @@ namespace QToolbar.Forms
          repoLookupSQLTypes.ValueMember = "CRI_WHERE_FIELD_SQL_TYPE";
          repoLookupSQLTypes.PopupFormSize = new Size(1000, 500);
          repoLookupSQLTypes.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
+         repoLookupSQLTypes.AcceptEditorTextAsNewValue = DevExpress.Utils.DefaultBoolean.True;
+
+
          grdCreateCriteria.RepositoryItems.Add(repoLookupSQLTypes);
+
          grdviewCreateCriteria.Columns["CRI_WHERE_FIELD_SQL_TYPE"].ColumnEdit = repoLookupSQLTypes;
          //repoLookupSQLTypes.EndInit();
 
 
       }
-
 
       private void btnRun_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
       {
@@ -319,6 +322,8 @@ namespace QToolbar.Forms
             b.AppendLine("CRI_DESC is Empty");
          }
 
+         ValidateCriterioJoin(row, b);
+
          if (b.Length>0)
          {
             b.AppendLine();
@@ -326,6 +331,33 @@ namespace QToolbar.Forms
             e.Valid = false;            
          }
 
+      }
+
+      private void ValidateCriterioJoin(DataRow row, StringBuilder errorBuilder)
+      {
+         try
+         {
+            if(!DBNull.Value.Equals(row["CRJ_CODE"]) && !DBNull.Value.Equals(row["CRI_WHERE_TABLE"]))
+            {
+               int crjCode = (int)row["CRJ_CODE"];
+               string criWhereTable = row["CRI_WHERE_TABLE"].ToString();
+               using (SqlConnection con = new SqlConnection(Utils.GetConnectionString(_Info.Server, _Info.Database)))
+               {
+                  SqlCommand com = new SqlCommand($"IF EXISTS(SELECT 1 FROM AT_CRITERIA_JOINS WHERE CRJ_JOIN LIKE '%{criWhereTable}%'  AND CRJ_CODE={crjCode}) SELECT 1 ELSE SELECT  0", con);
+                  con.Open();
+                  int result = (int)com.ExecuteScalar();
+                  if(result==0)
+                  {
+                     errorBuilder.AppendLine("Not found CRI_WHERE_TABLE in selected criterio join.");
+                  }
+                  con.Close();
+               }
+            }
+         }
+         catch (Exception ex)
+         {
+            errorBuilder.AppendLine($"Error while validating CRJ_CODE ({ex.Message})");
+         }
       }
 
       private void GrdviewCreateCriteria_InitNewRow(object sender, InitNewRowEventArgs e)

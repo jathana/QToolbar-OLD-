@@ -52,7 +52,7 @@ namespace QToolbar.Plugins.Environments
 
       private void _Envs_AllInfoCollected(object sender, EventArgs e)
       {
-         btnRefresh.Enabled = true;
+         EnableButtons(true);
       }
 
       private void UXGridView_RowStyle(object sender, RowStyleEventArgs e)
@@ -179,7 +179,8 @@ namespace QToolbar.Plugins.Environments
             CfFile cf = new CfFile(tag.Item1);
             if ((bool)item.EditValue)
             {
-               btnRefresh.Enabled = false;
+
+               EnableButtons(false);
                _Envs.AddOrUpdate(item.Caption, cf, tag.Item2, tag.Item3);
             }
             else
@@ -278,7 +279,7 @@ namespace QToolbar.Plugins.Environments
       {
          if (_Envs.Data.Count > 0)
          {
-            btnRefresh.Enabled = false;
+            EnableButtons(false);
             UXGridView.CollapseAllDetails();
             _Envs.Refresh();
             UXGridView.RefreshData();
@@ -294,6 +295,26 @@ namespace QToolbar.Plugins.Environments
             e.Handled = true;
          }
       }
-      
+
+      private void btnUpdateCFs_ItemClick(object sender, ItemClickEventArgs e)
+      {
+
+         int[] selectedRows = UXGridView.GetSelectedRows();
+         if (selectedRows.Length > 0)
+         {
+            QEnvironment qenv = ((QEnvironment)UXGridView.GetRow(selectedRows[0]));
+            Frm_UpdateCFs f = new Frm_UpdateCFs();
+            f.Show(qenv);
+         }
+         else
+            XtraMessageBox.Show($"You have to select an environment first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      }
+
+
+      private void EnableButtons(bool enabled)
+      {
+         btnRefresh.Enabled = enabled;
+         btnUpdateCFs.Enabled = enabled;
+      }
    }
 }
