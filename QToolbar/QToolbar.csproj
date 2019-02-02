@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\q-wks-jathan\Shared\QToolbar\</InstallUrl>
-    <ApplicationRevision>147</ApplicationRevision>
+    <ApplicationRevision>150</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -300,6 +300,7 @@
     <Compile Include="Plugins\Environments\QEnvironmentCreator.cs" />
     <Compile Include="Helpers\TreeNode.cs" />
     <Compile Include="Helpers\TreeNodeSerializer.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="UserControls\uc_SQL.cs">
       <SubType>UserControl</SubType>
     </Compile>

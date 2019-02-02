@@ -16,6 +16,7 @@ using System.Xml;
 using QToolbar.Options;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
+using System.Diagnostics;
 
 namespace QToolbar
 {
@@ -252,6 +253,25 @@ namespace QToolbar
       private void gviewSQLQueries_EditFormPrepared(object sender, EditFormPreparedEventArgs e)
       {
          e.Panel.Controls[0].Controls[0].Dock = DockStyle.Fill;
+      }
+
+      private void btnOpenSettingsFileLocation_Click(object sender, EventArgs e)
+      {
+         Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+
+         string file = config.FilePath;
+
+         if (File.Exists(file))
+         {
+            Process.Start("explorer.exe", "/select, " + file);
+         }
+         else
+         {
+            XtraMessageBox.Show($"File {file} does not exist!");
+         }
+
+
+
       }
    }
 }
