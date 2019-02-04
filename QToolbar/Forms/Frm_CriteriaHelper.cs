@@ -26,7 +26,7 @@ namespace QToolbar.Forms
       private const int CRITERIA_UNIQUE_IDS = 5;
       private const int CRITERIA_WHERE_TABLES = 6;
       private const int CRITERIA_TABLES = 7;
-      private const int CRITERIA_SQL_TYPES = 8;
+      private const int CRITERIA_SQL_TYPES = 8;      
 
 
       private ConnectionInfo _Info;
@@ -307,6 +307,11 @@ namespace QToolbar.Forms
             b.AppendLine("CRI_WHERE_TABLE is Empty");
          }
 
+         if (DBNull.Value.Equals(row["CRI_WHERE_FIELD"]))
+         {
+            b.AppendLine("CRI_WHERE_FIELD is Empty");
+         }
+
          if (DBNull.Value.Equals(row["CRI_WHERE_FIELD_SQL_TYPE"]))
          {
             b.AppendLine("CRI_WHERE_FIELD_SQL_TYPE is Empty");
@@ -322,7 +327,7 @@ namespace QToolbar.Forms
             b.AppendLine("CRI_DESC is Empty");
          }
 
-         ValidateCriterioJoin(row, b);
+         ValidateData(row, b);
 
          if (b.Length>0)
          {
@@ -333,7 +338,28 @@ namespace QToolbar.Forms
 
       }
 
-      private void ValidateCriterioJoin(DataRow row, StringBuilder errorBuilder)
+
+      private void ValidateData(DataRow row, StringBuilder errorBuilder)
+      {
+         using (SqlConnection con = new SqlConnection(Utils.GetConnectionString(_Info.Server, _Info.Database)))
+         {
+            con.Open();
+
+            // validate criteria join
+            ValidateCriterioJoin(con, row, errorBuilder);
+            
+            // validate CRI_WHERE_FIELD_SQL_TYPE
+            Validate_CRI_WHERE_FIELD_SQL_TYPE(con, row, errorBuilder);
+
+            // Validate_CRI_WHERE_FIELD
+            Validate_CRI_WHERE_FIELD(con, row, errorBuilder);
+
+            con.Close();
+         }
+
+      }
+
+      private void ValidateCriterioJoin(SqlConnection con, DataRow row, StringBuilder errorBuilder)
       {
          try
          {
@@ -341,17 +367,13 @@ namespace QToolbar.Forms
             {
                int crjCode = (int)row["CRJ_CODE"];
                string criWhereTable = row["CRI_WHERE_TABLE"].ToString();
-               using (SqlConnection con = new SqlConnection(Utils.GetConnectionString(_Info.Server, _Info.Database)))
+               SqlCommand com = new SqlCommand($"IF EXISTS(SELECT 1 FROM AT_CRITERIA_JOINS WHERE CRJ_JOIN LIKE '%{criWhereTable}%'  AND CRJ_CODE={crjCode}) SELECT 1 ELSE SELECT  0", con);
+               
+               int result = (int)com.ExecuteScalar();
+               if(result==0)
                {
-                  SqlCommand com = new SqlCommand($"IF EXISTS(SELECT 1 FROM AT_CRITERIA_JOINS WHERE CRJ_JOIN LIKE '%{criWhereTable}%'  AND CRJ_CODE={crjCode}) SELECT 1 ELSE SELECT  0", con);
-                  con.Open();
-                  int result = (int)com.ExecuteScalar();
-                  if(result==0)
-                  {
-                     errorBuilder.AppendLine("Not found CRI_WHERE_TABLE in selected criterio join.");
-                  }
-                  con.Close();
-               }
+                  errorBuilder.AppendLine("Not found CRI_WHERE_TABLE in selected criterio join.");
+               }               
             }
          }
          catch (Exception ex)
@@ -359,6 +381,64 @@ namespace QToolbar.Forms
             errorBuilder.AppendLine($"Error while validating CRJ_CODE ({ex.Message})");
          }
       }
+
+      private void Validate_CRI_WHERE_FIELD_SQL_TYPE(SqlConnection con, DataRow row, StringBuilder errorBuilder)
+      {
+         try
+         {
+            if (!DBNull.Value.Equals(row["CRI_WHERE_FIELD_SQL_TYPE"]))
+            {
+               string criSqlType = row["CRI_WHERE_FIELD_SQL_TYPE"].ToString();               
+               SqlCommand com = new SqlCommand($"if exists(select 1 from sys.types where name = '{criSqlType.Split('(')[0]}') select 1 else select 0", con);
+               int result = (int)com.ExecuteScalar();
+               if (result == 0)
+               {
+                  errorBuilder.AppendLine($"CRI_WHERE_FIELD_SQL_TYPE:{criSqlType} is not valid since was not found in sql data types.");
+               }
+               con.Close();
+            }
+         }
+         catch (Exception ex)
+         {
+            errorBuilder.AppendLine($"Error while validating CRI_WHERE_FIELD_SQL_TYPE ({ex.Message})");
+         }
+      }
+
+      private void Validate_CRI_WHERE_FIELD(SqlConnection con, DataRow row, StringBuilder errorBuilder)
+      {
+         try
+         {
+            if (!DBNull.Value.Equals(row["CRI_WHERE_FIELD"]) && !DBNull.Value.Equals(row["CRI_WHERE_TABLE"]))
+            {
+               string criWhereField = row["CRI_WHERE_FIELD"].ToString();
+               string criWhereTable = row["CRI_WHERE_TABLE"].ToString();
+               SqlCommand com = new SqlCommand($"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='{criWhereTable}'", con);
+               SqlDataAdapter adapter = new SqlDataAdapter(com);
+               DataTable table = new DataTable();
+               adapter.Fill(table);
+               bool found = false;
+               foreach(DataRow col in table.Rows)
+               {
+                  if(criWhereField.Contains(col["COLUMN_NAME"].ToString()) && !found)
+                  {
+                     found = true;
+                     break;
+                  }
+               }
+
+               if (!found)
+               {
+                  errorBuilder.AppendLine($"CRI_WHERE_FIELD:{criWhereField} of CRI_WHERE_TABLE:{criWhereTable} does not exist.");
+               }
+               con.Close();
+            }
+         }
+         catch (Exception ex)
+         {
+            errorBuilder.AppendLine($"Error while validating CRI_WHERE_FIELD_SQL_TYPE ({ex.Message})");
+         }
+      }
+
 
       private void GrdviewCreateCriteria_InitNewRow(object sender, InitNewRowEventArgs e)
       {
@@ -776,9 +856,12 @@ namespace QToolbar.Forms
          builder.Append(';');
          builder.Append(@"SELECT 'VW_AT_LST_OF_VAL' AS CRI_TABLE");
 
-         // SQL Types
+         // SQL Types from criteria sql types
          builder.Append(';');
          builder.Append(@"SELECT CRI_WHERE_FIELD_SQL_TYPE  FROM AT_CRITERIA GROUP BY CRI_WHERE_FIELD_SQL_TYPE ORDER BY CRI_WHERE_FIELD_SQL_TYPE");
+
+         
+
          return builder.ToString();
       }
 
@@ -849,6 +932,8 @@ namespace QToolbar.Forms
                   unresolvedColumns[row["CRI_UNIQUE_ID"].ToString()].Add("cri_type");
                   b.AppendLine($"Failed to get criterio type code for criterio {row["CRI_UNIQUE_ID"]}");
                }
+
+              
 
                // get criterio join
                lookupDesc = _SelectData.Tables[CRITERIA_JOINS].Select($"CRJ_CODE={row["CRJ_CODE"]}")[0]["CRJ_JOIN"].ToString();
