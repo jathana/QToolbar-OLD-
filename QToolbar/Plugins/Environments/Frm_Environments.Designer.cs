@@ -29,7 +29,7 @@
       private void InitializeComponent()
       {
          this.components = new System.ComponentModel.Container();
-         DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
+         DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_Environments));
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
          this.UXGrid = new DevExpress.XtraGrid.GridControl();
@@ -46,6 +46,7 @@
          this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
          this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
          this.popupMenu2 = new DevExpress.XtraBars.PopupMenu(this.components);
+         this.btnExcelExport = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.UXGrid)).BeginInit();
@@ -72,9 +73,9 @@
          // 
          // UXGrid
          // 
-         gridLevelNode2.RelationName = "Level1";
+         gridLevelNode1.RelationName = "Level1";
          this.UXGrid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode2});
+            gridLevelNode1});
          this.UXGrid.Location = new System.Drawing.Point(12, 12);
          this.UXGrid.MainView = this.UXGridView;
          this.UXGrid.Name = "UXGrid";
@@ -117,9 +118,10 @@
             this.ribbonControl1.ExpandCollapseItem,
             this.mnuEnvironments,
             this.btnRefresh,
-            this.btnUpdateCFs});
+            this.btnUpdateCFs,
+            this.btnExcelExport});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 16;
+         this.ribbonControl1.MaxItemId = 17;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -176,6 +178,7 @@
          this.ribbonPageGroup1.ItemLinks.Add(this.mnuEnvironments);
          this.ribbonPageGroup1.ItemLinks.Add(this.btnRefresh);
          this.ribbonPageGroup1.ItemLinks.Add(this.btnUpdateCFs);
+         this.ribbonPageGroup1.ItemLinks.Add(this.btnExcelExport);
          this.ribbonPageGroup1.Name = "ribbonPageGroup1";
          this.ribbonPageGroup1.Text = "Environments";
          // 
@@ -194,6 +197,15 @@
          // 
          this.popupMenu2.Name = "popupMenu2";
          this.popupMenu2.Ribbon = this.ribbonControl1;
+         // 
+         // btnExcelExport
+         // 
+         this.btnExcelExport.Caption = "Export (Excel)";
+         this.btnExcelExport.Id = 16;
+         this.btnExcelExport.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.ImageOptions.Image")));
+         this.btnExcelExport.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnExport.ImageOptions.LargeImage")));
+         this.btnExcelExport.Name = "btnExcelExport";
+         this.btnExcelExport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnExcelExport_ItemClick);
          // 
          // Frm_Environments
          // 
@@ -240,5 +252,6 @@
       private DevExpress.XtraBars.PopupMenu popupMenu2;
       private DevExpress.XtraBars.BarButtonItem btnRefresh;
       private DevExpress.XtraBars.BarButtonItem btnUpdateCFs;
+      private DevExpress.XtraBars.BarButtonItem btnExcelExport;
    }
 }

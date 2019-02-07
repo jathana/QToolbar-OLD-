@@ -30,8 +30,8 @@
       {
          this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_ScriptCriteria));
-         DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
          this.cboInstallations = new DevExpress.XtraEditors.PopupContainerEdit();
          this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
@@ -160,9 +160,9 @@
          this.btnSelectFromFile.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSelectFromFile.ImageOptions.Image")));
          this.btnSelectFromFile.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnSelectFromFile.ImageOptions.LargeImage")));
          this.btnSelectFromFile.Name = "btnSelectFromFile";
-         toolTipTitleItem1.Text = "Select Criteria From File";
-         superToolTip1.Items.Add(toolTipTitleItem1);
-         this.btnSelectFromFile.SuperTip = superToolTip1;
+         toolTipTitleItem2.Text = "Select Criteria From File";
+         superToolTip2.Items.Add(toolTipTitleItem2);
+         this.btnSelectFromFile.SuperTip = superToolTip2;
          this.btnSelectFromFile.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSelectFromFile_ItemClick);
          // 
          // bar3
@@ -272,7 +272,6 @@
             this.layoutControlItem2,
             this.layoutControlItem3,
             this.layoutControlItem4});
-         this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
          this.layoutControlGroup1.Name = "Root";
          this.layoutControlGroup1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
          this.layoutControlGroup1.Size = new System.Drawing.Size(1049, 410);
@@ -320,7 +319,7 @@
         '\''};
          this.txtSQL.AutoIndentCharsPatterns = "";
          this.txtSQL.AutoIndentExistingLines = false;
-         this.txtSQL.AutoScrollMinSize = new System.Drawing.Size(543, 15);
+         this.txtSQL.AutoScrollMinSize = new System.Drawing.Size(513, 15);
          this.txtSQL.BackBrush = null;
          this.txtSQL.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.txtSQL.CharHeight = 15;

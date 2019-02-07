@@ -29,6 +29,7 @@
       private void InitializeComponent()
       {
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+         this.btnOpenSettingsFileLocation = new DevExpress.XtraEditors.SimpleButton();
          this.txtDevSQLInstances = new DevExpress.XtraEditors.TextEdit();
          this.chkClearLegalMetadata = new DevExpress.XtraEditors.CheckEdit();
          this.txtInternalBuildsFolder = new DevExpress.XtraEditors.ButtonEdit();
@@ -61,6 +62,7 @@
          this.layoutControlItem14 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem15 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
+         this.layoutControlItem16 = new DevExpress.XtraLayout.LayoutControlItem();
          this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
          this.layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
          this.tabOptions = new DevExpress.XtraTab.XtraTabControl();
@@ -88,8 +90,6 @@
          this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
          this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-         this.btnOpenSettingsFileLocation = new DevExpress.XtraEditors.SimpleButton();
-         this.layoutControlItem16 = new DevExpress.XtraLayout.LayoutControlItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.txtDevSQLInstances.Properties)).BeginInit();
@@ -124,6 +124,7 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).BeginInit();
          this.layoutControl2.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.tabOptions)).BeginInit();
@@ -147,7 +148,6 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).BeginInit();
          this.SuspendLayout();
          // 
          // layoutControl1
@@ -173,6 +173,16 @@
          this.layoutControl1.Size = new System.Drawing.Size(816, 453);
          this.layoutControl1.TabIndex = 1;
          this.layoutControl1.Text = "layoutControl1";
+         // 
+         // btnOpenSettingsFileLocation
+         // 
+         this.btnOpenSettingsFileLocation.Location = new System.Drawing.Point(697, 12);
+         this.btnOpenSettingsFileLocation.Name = "btnOpenSettingsFileLocation";
+         this.btnOpenSettingsFileLocation.Size = new System.Drawing.Size(107, 22);
+         this.btnOpenSettingsFileLocation.StyleController = this.layoutControl1;
+         this.btnOpenSettingsFileLocation.TabIndex = 20;
+         this.btnOpenSettingsFileLocation.Text = "user.config file";
+         this.btnOpenSettingsFileLocation.Click += new System.EventHandler(this.btnOpenSettingsFileLocation_Click);
          // 
          // txtDevSQLInstances
          // 
@@ -501,6 +511,18 @@
          this.layoutControlItem8.Text = "Dev SQL Instances";
          this.layoutControlItem8.TextSize = new System.Drawing.Size(144, 13);
          // 
+         // layoutControlItem16
+         // 
+         this.layoutControlItem16.Control = this.btnOpenSettingsFileLocation;
+         this.layoutControlItem16.Location = new System.Drawing.Point(685, 0);
+         this.layoutControlItem16.MaxSize = new System.Drawing.Size(111, 26);
+         this.layoutControlItem16.MinSize = new System.Drawing.Size(111, 26);
+         this.layoutControlItem16.Name = "layoutControlItem16";
+         this.layoutControlItem16.Size = new System.Drawing.Size(111, 26);
+         this.layoutControlItem16.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+         this.layoutControlItem16.TextSize = new System.Drawing.Size(0, 0);
+         this.layoutControlItem16.TextVisible = false;
+         // 
          // btnCancel
          // 
          this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -550,7 +572,7 @@
          // 
          this.tabCheckouts.Controls.Add(this.gridCheckouts);
          this.tabCheckouts.Name = "tabCheckouts";
-         this.tabCheckouts.Size = new System.Drawing.Size(801, 453);
+         this.tabCheckouts.Size = new System.Drawing.Size(816, 453);
          this.tabCheckouts.Text = "Checkouts";
          // 
          // gridCheckouts
@@ -559,7 +581,7 @@
          this.gridCheckouts.Location = new System.Drawing.Point(0, 0);
          this.gridCheckouts.MainView = this.gridView1;
          this.gridCheckouts.Name = "gridCheckouts";
-         this.gridCheckouts.Size = new System.Drawing.Size(801, 453);
+         this.gridCheckouts.Size = new System.Drawing.Size(816, 453);
          this.gridCheckouts.TabIndex = 0;
          this.gridCheckouts.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -578,7 +600,7 @@
          // 
          this.tabShellCommands.Controls.Add(this.grdShellCommands);
          this.tabShellCommands.Name = "tabShellCommands";
-         this.tabShellCommands.Size = new System.Drawing.Size(801, 453);
+         this.tabShellCommands.Size = new System.Drawing.Size(816, 453);
          this.tabShellCommands.Text = "Shell Commands";
          // 
          // grdShellCommands
@@ -587,7 +609,7 @@
          this.grdShellCommands.Location = new System.Drawing.Point(0, 0);
          this.grdShellCommands.MainView = this.gridView2;
          this.grdShellCommands.Name = "grdShellCommands";
-         this.grdShellCommands.Size = new System.Drawing.Size(801, 453);
+         this.grdShellCommands.Size = new System.Drawing.Size(816, 453);
          this.grdShellCommands.TabIndex = 1;
          this.grdShellCommands.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView2});
@@ -606,7 +628,7 @@
          // 
          this.tabSQLQueries.Controls.Add(this.gridSQLQueries);
          this.tabSQLQueries.Name = "tabSQLQueries";
-         this.tabSQLQueries.Size = new System.Drawing.Size(801, 453);
+         this.tabSQLQueries.Size = new System.Drawing.Size(816, 453);
          this.tabSQLQueries.Text = "SQL Queries";
          // 
          // gridSQLQueries
@@ -617,7 +639,7 @@
          this.gridSQLQueries.Name = "gridSQLQueries";
          this.gridSQLQueries.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemMemoEdit1});
-         this.gridSQLQueries.Size = new System.Drawing.Size(801, 453);
+         this.gridSQLQueries.Size = new System.Drawing.Size(816, 453);
          this.gridSQLQueries.TabIndex = 0;
          this.gridSQLQueries.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gviewSQLQueries});
@@ -671,7 +693,7 @@
          // 
          this.tabEnvCFs.Controls.Add(this.gridEnvCFs);
          this.tabEnvCFs.Name = "tabEnvCFs";
-         this.tabEnvCFs.Size = new System.Drawing.Size(801, 453);
+         this.tabEnvCFs.Size = new System.Drawing.Size(816, 453);
          this.tabEnvCFs.Text = "Environment CFs";
          // 
          // gridEnvCFs
@@ -680,7 +702,7 @@
          this.gridEnvCFs.Location = new System.Drawing.Point(0, 0);
          this.gridEnvCFs.MainView = this.gridView4;
          this.gridEnvCFs.Name = "gridEnvCFs";
-         this.gridEnvCFs.Size = new System.Drawing.Size(801, 453);
+         this.gridEnvCFs.Size = new System.Drawing.Size(816, 453);
          this.gridEnvCFs.TabIndex = 1;
          this.gridEnvCFs.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView4});
@@ -760,28 +782,6 @@
          this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem3.TextVisible = false;
          // 
-         // btnOpenSettingsFileLocation
-         // 
-         this.btnOpenSettingsFileLocation.Location = new System.Drawing.Point(697, 12);
-         this.btnOpenSettingsFileLocation.Name = "btnOpenSettingsFileLocation";
-         this.btnOpenSettingsFileLocation.Size = new System.Drawing.Size(107, 22);
-         this.btnOpenSettingsFileLocation.StyleController = this.layoutControl1;
-         this.btnOpenSettingsFileLocation.TabIndex = 20;
-         this.btnOpenSettingsFileLocation.Text = "user.config file";
-         this.btnOpenSettingsFileLocation.Click += new System.EventHandler(this.btnOpenSettingsFileLocation_Click);
-         // 
-         // layoutControlItem16
-         // 
-         this.layoutControlItem16.Control = this.btnOpenSettingsFileLocation;
-         this.layoutControlItem16.Location = new System.Drawing.Point(685, 0);
-         this.layoutControlItem16.MaxSize = new System.Drawing.Size(111, 26);
-         this.layoutControlItem16.MinSize = new System.Drawing.Size(111, 26);
-         this.layoutControlItem16.Name = "layoutControlItem16";
-         this.layoutControlItem16.Size = new System.Drawing.Size(111, 26);
-         this.layoutControlItem16.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-         this.layoutControlItem16.TextSize = new System.Drawing.Size(0, 0);
-         this.layoutControlItem16.TextVisible = false;
-         // 
          // Frm_Options
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -828,6 +828,7 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).EndInit();
          this.layoutControl2.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.tabOptions)).EndInit();
@@ -851,7 +852,6 @@
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).EndInit();
          this.ResumeLayout(false);
 
       }

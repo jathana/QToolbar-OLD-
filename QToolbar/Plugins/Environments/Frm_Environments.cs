@@ -17,6 +17,9 @@ using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraEditors.Repository;
 using System.Threading;
 using System.Diagnostics;
+using DevExpress.XtraPrinting;
+using System.Xml.Serialization;
+using System.Xml;
 
 namespace QToolbar.Plugins.Environments
 {
@@ -45,6 +48,10 @@ namespace QToolbar.Plugins.Environments
          UXGridView.OptionsBehavior.Editable = false;
          UXGridView.OptionsView.RowAutoHeight = true;
          UXGrid.ViewRegistered += UXGrid_ViewRegistered;
+
+         UXGridView.OptionsPrint.PrintDetails = true;
+         UXGridView.OptionsPrint.ExpandAllDetails = true;
+         UXGridView.OptionsPrint.ExpandAllGroups = true;
 
          UXGridView.RowStyle += UXGridView_RowStyle;
          _SyncContext = SynchronizationContext.Current;
@@ -315,6 +322,60 @@ namespace QToolbar.Plugins.Environments
       {
          btnRefresh.Enabled = enabled;
          btnUpdateCFs.Enabled = enabled;
+      }
+
+      private void btnExcelExport_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+         saveFileDialog1.Filter = "Excel Files|*.*";
+         saveFileDialog1.Title = "Save as Excel File";
+         saveFileDialog1.ShowDialog();
+
+         // If the file name is not an empty string open it for saving.  
+         if (saveFileDialog1.FileName != "")
+         {
+           // UXGrid.ExportToCsv(saveFileDialog1.FileName);
+
+            UXGrid.ExportToHtml(saveFileDialog1.FileName, new HtmlExportOptions()
+            {
+                ExportMode=HtmlExportMode.DifferentFiles
+            });
+            Process.Start(saveFileDialog1.FileName);
+
+            //UXGrid.ExportToXls(saveFileDialog1.FileName, new XlsExportOptionsEx()
+            //{
+            //   ExportType = DevExpress.Export.ExportType.WYSIWYG
+            //});
+            //Process.Start(saveFileDialog1.FileName);
+
+            //Customize export options 
+
+            //(UXGrid.MainView as GridView).OptionsPrint.PrintHeader = true;
+            //XlsxExportOptionsEx advOptions = new XlsxExportOptionsEx();
+            //advOptions.AllowGrouping = DevExpress.Utils.DefaultBoolean.True;
+            //advOptions.ShowTotalSummaries = DevExpress.Utils.DefaultBoolean.True;
+            //advOptions.SheetName = "Exported from Data Grid";
+
+            //UXGrid.ExportToPdf(saveFileDialog1.FileName);
+            //// Open the created XLSX file with the default application. 
+            //Process.Start(saveFileDialog1.FileName);
+
+
+
+            //XmlSerializer xsSubmit = new System.Xml.Serialization.XmlSerializer(typeof(QEnvironments));
+
+            //var xml = "";
+
+            //using (var sww = new StringWriter())
+            //{
+            //   using (XmlWriter writer = XmlWriter.Create(sww))
+            //   {
+            //      xsSubmit.Serialize(writer, _Envs);
+            //      xml = sww.ToString(); // Your XML
+            //   }
+            //}
+
+         }
       }
    }
 }

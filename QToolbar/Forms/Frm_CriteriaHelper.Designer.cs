@@ -30,14 +30,14 @@
       {
          this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_CriteriaHelper));
-         DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
-         DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
-         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip6 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem6 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip7 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem7 = new DevExpress.Utils.ToolTipTitleItem();
+         DevExpress.Utils.SuperToolTip superToolTip8 = new DevExpress.Utils.SuperToolTip();
+         DevExpress.Utils.ToolTipTitleItem toolTipTitleItem8 = new DevExpress.Utils.ToolTipTitleItem();
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
          this.txtGeneratedSQL = new FastColoredTextBoxNS.FastColoredTextBox();
          this.grdCreateCriteria = new DevExpress.XtraGrid.GridControl();
@@ -116,7 +116,7 @@
         '\''};
          this.txtGeneratedSQL.AutoIndentCharsPatterns = "";
          this.txtGeneratedSQL.AutoIndentExistingLines = false;
-         this.txtGeneratedSQL.AutoScrollMinSize = new System.Drawing.Size(32, 15);
+         this.txtGeneratedSQL.AutoScrollMinSize = new System.Drawing.Size(2, 15);
          this.txtGeneratedSQL.BackBrush = null;
          this.txtGeneratedSQL.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.txtGeneratedSQL.CharHeight = 15;
@@ -197,9 +197,9 @@
          this.btnLoadCriteria.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnLoadCriteria.ImageOptions.Image")));
          this.btnLoadCriteria.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnLoadCriteria.ImageOptions.LargeImage")));
          this.btnLoadCriteria.Name = "btnLoadCriteria";
-         toolTipTitleItem1.Text = "Loads Criteria";
-         superToolTip1.Items.Add(toolTipTitleItem1);
-         this.btnLoadCriteria.SuperTip = superToolTip1;
+         toolTipTitleItem5.Text = "Loads Criteria";
+         superToolTip5.Items.Add(toolTipTitleItem5);
+         this.btnLoadCriteria.SuperTip = superToolTip5;
          this.btnLoadCriteria.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnLoadCriteria_ItemClick);
          // 
          // btnCloneCriterio
@@ -209,9 +209,9 @@
          this.btnCloneCriterio.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnCloneCriterio.ImageOptions.Image")));
          this.btnCloneCriterio.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnCloneCriterio.ImageOptions.LargeImage")));
          this.btnCloneCriterio.Name = "btnCloneCriterio";
-         toolTipTitleItem2.Text = "Clone Criterio";
-         superToolTip2.Items.Add(toolTipTitleItem2);
-         this.btnCloneCriterio.SuperTip = superToolTip2;
+         toolTipTitleItem6.Text = "Clone Criterio";
+         superToolTip6.Items.Add(toolTipTitleItem6);
+         this.btnCloneCriterio.SuperTip = superToolTip6;
          this.btnCloneCriterio.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCloneCriterio_ItemClick);
          // 
          // btnDeleteCriterio
@@ -221,9 +221,9 @@
          this.btnDeleteCriterio.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteCriterio.ImageOptions.Image")));
          this.btnDeleteCriterio.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnDeleteCriterio.ImageOptions.LargeImage")));
          this.btnDeleteCriterio.Name = "btnDeleteCriterio";
-         toolTipTitleItem3.Text = "Delete Criterio";
-         superToolTip3.Items.Add(toolTipTitleItem3);
-         this.btnDeleteCriterio.SuperTip = superToolTip3;
+         toolTipTitleItem7.Text = "Delete Criterio";
+         superToolTip7.Items.Add(toolTipTitleItem7);
+         this.btnDeleteCriterio.SuperTip = superToolTip7;
          this.btnDeleteCriterio.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDeleteCriterio_ItemClick);
          // 
          // btnCreateSQL
@@ -242,9 +242,9 @@
          this.mnuDevDBs.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("mnuDevDBs.ImageOptions.LargeImage")));
          this.mnuDevDBs.Name = "mnuDevDBs";
          this.mnuDevDBs.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
-         toolTipTitleItem4.Text = "Create SQL for selected QBCollectionsPlus db";
-         superToolTip4.Items.Add(toolTipTitleItem4);
-         this.mnuDevDBs.SuperTip = superToolTip4;
+         toolTipTitleItem8.Text = "Create SQL for selected QBCollectionsPlus db";
+         superToolTip8.Items.Add(toolTipTitleItem8);
+         this.mnuDevDBs.SuperTip = superToolTip8;
          // 
          // barDockControlTop
          // 
@@ -293,7 +293,7 @@
         '\''};
          this.txtSelectSQL.AutoIndentCharsPatterns = "";
          this.txtSelectSQL.AutoIndentExistingLines = false;
-         this.txtSelectSQL.AutoScrollMinSize = new System.Drawing.Size(543, 15);
+         this.txtSelectSQL.AutoScrollMinSize = new System.Drawing.Size(513, 15);
          this.txtSelectSQL.BackBrush = null;
          this.txtSelectSQL.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.txtSelectSQL.CharHeight = 15;
@@ -348,7 +348,6 @@
             this.splitterItem2,
             this.layoutControlItem5,
             this.splitterItem4});
-         this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
          this.layoutControlGroup1.Name = "Root";
          this.layoutControlGroup1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
          this.layoutControlGroup1.Size = new System.Drawing.Size(1017, 744);

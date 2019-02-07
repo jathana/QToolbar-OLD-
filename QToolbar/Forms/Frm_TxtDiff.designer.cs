@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+         this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_TxtDiff));
          this.label6 = new System.Windows.Forms.Label();
          this.label7 = new System.Windows.Forms.Label();
@@ -47,9 +48,9 @@
          this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
          this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
          this.layLeft = new DevExpress.XtraLayout.LayoutControlItem();
          this.layRight = new DevExpress.XtraLayout.LayoutControlItem();
+         this.splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.txtRight.Properties)).BeginInit();
@@ -64,9 +65,9 @@
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layLeft)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layRight)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).BeginInit();
          this.SuspendLayout();
          // 
          // label6
@@ -159,7 +160,7 @@
         '\''};
          this.fctb2.AutoIndentCharsPatterns = "";
          this.fctb2.AutoIndentExistingLines = false;
-         this.fctb2.AutoScrollMinSize = new System.Drawing.Size(32, 15);
+         this.fctb2.AutoScrollMinSize = new System.Drawing.Size(2, 15);
          this.fctb2.BackBrush = null;
          this.fctb2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.fctb2.CharHeight = 15;
@@ -201,7 +202,7 @@
         '\''};
          this.fctb1.AutoIndentCharsPatterns = "";
          this.fctb1.AutoIndentExistingLines = false;
-         this.fctb1.AutoScrollMinSize = new System.Drawing.Size(32, 15);
+         this.fctb1.AutoScrollMinSize = new System.Drawing.Size(2, 15);
          this.fctb1.BackBrush = null;
          this.fctb1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.fctb1.CharHeight = 15;
@@ -324,13 +325,6 @@
          this.layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem6.TextVisible = false;
          // 
-         // splitterItem1
-         // 
-         this.splitterItem1.AllowHotTrack = true;
-         this.splitterItem1.Location = new System.Drawing.Point(480, 0);
-         this.splitterItem1.Name = "splitterItem1";
-         this.splitterItem1.Size = new System.Drawing.Size(5, 585);
-         // 
          // layLeft
          // 
          this.layLeft.Control = this.txtLeft;
@@ -350,6 +344,13 @@
          this.layRight.Text = "Right";
          this.layRight.TextSize = new System.Drawing.Size(0, 0);
          this.layRight.TextVisible = false;
+         // 
+         // splitterItem1
+         // 
+         this.splitterItem1.AllowHotTrack = true;
+         this.splitterItem1.Location = new System.Drawing.Point(480, 0);
+         this.splitterItem1.Name = "splitterItem1";
+         this.splitterItem1.Size = new System.Drawing.Size(5, 585);
          // 
          // Frm_TxtDiff
          // 
@@ -373,9 +374,9 @@
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layLeft)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layRight)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).EndInit();
          this.ResumeLayout(false);
 
         }
