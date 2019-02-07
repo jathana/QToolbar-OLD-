@@ -778,6 +778,32 @@ namespace QToolbar.Plugins.Environments
          }
       }
 
+      public string OlapServer
+      {
+         get
+         {
+            return _Properties["OlapServer"];
+         }
+
+         set
+         {
+            _Properties["OlapServer"] = value;
+         }
+      }
+
+      public string OlapDatabase
+      {
+         get
+         {
+            return _Properties["OlapDatabase"];
+         }
+
+         set
+         {
+            _Properties["OlapDatabase"] = value;
+         }
+      }
+
       internal Dictionary<string,string> Properties
       {
          get
@@ -837,6 +863,8 @@ namespace QToolbar.Plugins.Environments
          _Properties.Add("DialerDBName", string.Empty);
          _Properties.Add("AppWSUrlPort", string.Empty);
          _Properties.Add("LegalAppWSUrlPort", string.Empty);
+         _Properties.Add("OlapServer", string.Empty);
+         _Properties.Add("OlapDatabase", string.Empty);
          _Properties.Add("AT_SYSTEM_PREF_FIELD_AGENT_INTEGRATION_APPLICATION_URL", string.Empty);
       }
       #endregion

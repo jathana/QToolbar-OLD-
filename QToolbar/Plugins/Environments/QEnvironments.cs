@@ -389,6 +389,9 @@ namespace QToolbar.Plugins.Environments
                // read ApplicationWSURL from OptionsInstance.QCSAdminFolder Folder if it is not in local qbc_admin.cf
                SetWSUrlsFromRemote(objEnv, cancelToken);
 
+               // olap info
+               GetOlapInfo(objEnv, com, cancelToken);
+
                // SetDialerDBNameFromSysPref
                SetDialerDBNameFromSysPref(objEnv, com, cancelToken);
 
@@ -400,6 +403,9 @@ namespace QToolbar.Plugins.Environments
 
                // CheckSystemPrefs
                CheckSystemPrefs(objEnv, com, cancelToken);
+
+               // CheckSystemParams
+               CheckSystemParams(objEnv, com, cancelToken);
 
                // GetFlowsForEodIni
                GetFlowsForEodIni(objEnv, com, eodFlows, cancelToken);
@@ -626,6 +632,124 @@ namespace QToolbar.Plugins.Environments
          }
       }
 
+
+      private void GetOlapInfo(QEnvironment objEnv, SqlCommand com, CancellationToken cancelToken)
+      {
+
+         if (cancelToken.IsCancellationRequested) return;
+         try
+         {
+            com.CommandText = @"-- OLAP DATABASE AND SERVER
+                              SELECT SP.SPAR_VALUE, SLPARAM.SLPAR_DESC
+                              FROM DBO.BI_GLM_FLOW F 
+                              INNER JOIN DBO.BI_GLM_CONTAINER C ON F.FLOW_ID = C.FLOW_ID 
+                              INNER JOIN DBO.BI_GLM_PACKAGE P ON C.CNT_ID = P.CNT_ID 
+                              INNER JOIN DBO.BI_GLM_STEP S ON P.PACK_ID = S.PACK_ID 
+                              INNER JOIN DBO.BI_GLM_STEP_LIB_PARAMS SLPARAM ON SLPARAM.SLIB_ID = S.SLIB_ID
+                              INNER JOIN DBO.BI_GLM_STEP_PARAMETERS SP ON S.STEP_ID = SP.STEP_ID AND SP.SPAR_ORDER = SLPARAM.SLPAR_ORDER
+                              WHERE SLPAR_DESC IN ('@SERVER_ANL', '@DATABASE_ANL')
+                              GROUP BY SP.SPAR_VALUE, SLPARAM.SLPAR_DESC";
+            SqlDataAdapter adapter = new SqlDataAdapter(com);
+            DataTable pathsTable = new DataTable();
+            adapter.Fill(pathsTable);
+            StringBuilder builder = new StringBuilder();
+            StringBuilder locbuilder = new StringBuilder();
+            string spraValue;
+            foreach (DataRow row in pathsTable.Rows)
+            {
+               spraValue = row["SPAR_VALUE"].ToString();
+               switch (row["SLPAR_DESC"].ToString())
+               {
+                  case "@DATABASE_ANL":
+                     objEnv.OlapDatabase = spraValue;
+                     break;
+                  case "@SERVER_ANL":
+                     objEnv.OlapServer = spraValue;
+                     break;                  
+               }
+            }
+         }
+         catch (Exception ex)
+         {
+            objEnv.Errors.AddError($"Error while fetching olap db information ({ex.Message})", "");
+         }
+      }
+
+
+      private void CheckSystemParams(QEnvironment objEnv, SqlCommand com, CancellationToken cancelToken)
+      {
+
+         if (cancelToken.IsCancellationRequested) return;
+         try
+         {
+            com.CommandText = @"SELECT * FROM AT_SYSTEM_PARAMS 
+                                 WHERE SPRA_TYPE IN ('DIALER_DB_NAME', 'QBC_NAME', 'QBC_SERVER', 'QBC_SERVER', 'FILE_SERVER_NAME', 'SPRA_INSTALLATION_CRITERIA_NAME', 'QBA_NAME', 'QBA_SERVER', 'DB_NAME_ANALYTICS', 'PATH_DATA_TRANSFORMATION_EXECUTABLE','DB_OLAP_DB_NAME')";
+            SqlDataAdapter adapter = new SqlDataAdapter(com);
+            DataTable pathsTable = new DataTable();
+            adapter.Fill(pathsTable);
+            StringBuilder builder = new StringBuilder();
+            StringBuilder locbuilder = new StringBuilder();
+            string spraValue;
+            foreach (DataRow row in pathsTable.Rows)
+            {
+               spraValue = row["SPRA_VALUE"].ToString();
+               switch (row["SPRA_TYPE"].ToString())
+               {
+                  case "DB_NAME_ANALYTICS":
+                     if (spraValue != objEnv.AnalyticsDBName)
+                     {
+                        objEnv.Errors.AddError($"AT_SYSTEM_PARAMS.DB_NAME_ANALYTICS {spraValue} not equals to BI_GLM_INSTALLATION.QBA_db_NAME {objEnv.AnalyticsDBName}", "");
+                     }
+                     break;
+                  case "FILE_SERVER_NAME":
+                     break;
+                  case "QBA_NAME":
+                     if (spraValue != objEnv.AnalyticsDBName)
+                     {
+                        objEnv.Errors.AddError($"AT_SYSTEM_PARAMS.QBA_NAME {spraValue} not equals to BI_GLM_INSTALLATION.QBA_db_NAME {objEnv.AnalyticsDBName}", "");
+                     }
+                     break;
+                  case "QBA_SERVER":
+                     if (spraValue != objEnv.AnalyticsServer)
+                     {
+                        objEnv.Errors.AddError($"AT_SYSTEM_PARAMS.QBA_SERVER {spraValue} not equals to BI_GLM_INSTALLATION.QBA_SERVER {objEnv.AnalyticsServer}", "");
+                     }
+                     break;
+                  case "QBC_NAME":
+                     if (spraValue != objEnv.DBCollectionPlusName)
+                     {
+                        objEnv.Errors.AddError($"AT_SYSTEM_PARAMS.QBC_NAME {spraValue} not equals to BI_GLM_INSTALLATION.INST_db_NAME {objEnv.DBCollectionPlusName}", "");
+                     }
+                     break;
+                  case "QBC_SERVER":
+                     if (spraValue != objEnv.DBCollectionPlusServer)
+                     {
+                        objEnv.Errors.AddError($"AT_SYSTEM_PARAMS.QBC_SERVER {spraValue} not equals to BI_GLM_INSTALLATION.INST_SERVER {objEnv.DBCollectionPlusName}", "");
+                     }
+                     break;
+                  case "PATH_DATA_TRANSFORMATION_EXECUTABLE":
+                     break;
+                  case "SPRA_INSTALLATION_CRITERIA_NAME":
+                     break;
+                  case "DIALER_DB_NAME":
+                     break;
+                  case "DB_OLAP_DB_NAME":
+                     if (spraValue != objEnv.OlapDatabase)
+                     {
+                        objEnv.Errors.AddError($"AT_SYSTEM_PARAMS.DB_OLAP_DB_NAME {spraValue} not equals to BI_GLM_STEP_LIB_PARAMS.@DATABASE_ANL {objEnv.OlapDatabase}", "");
+                     }
+                     break;
+               }
+
+            }
+         }
+         catch (Exception ex)
+         {
+            objEnv.Errors.AddError($"Error while fetching information from AT_SYSTEM_PARAMS ({ex.Message})", "");
+         }
+      }
+
+
       private void CheckSystemPrefs(QEnvironment objEnv, SqlCommand com, CancellationToken cancelToken)
       {
 
@@ -734,7 +858,7 @@ namespace QToolbar.Plugins.Environments
          }
          catch (Exception ex)
          {
-            objEnv.Errors.AddError($"Error while fetching shared dirs information ({ex.Message})", "");
+            objEnv.Errors.AddError($"Error while fetching information FROM AT_SYSTEM_PREF ({ex.Message})", "");
          }
       }
 

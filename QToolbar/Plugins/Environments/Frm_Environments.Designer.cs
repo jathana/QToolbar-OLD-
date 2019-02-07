@@ -28,8 +28,7 @@
       /// </summary>
       private void InitializeComponent()
       {
-         this.components = new System.ComponentModel.Container();
-         DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
+         DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_Environments));
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
          this.UXGrid = new DevExpress.XtraGrid.GridControl();
@@ -37,16 +36,16 @@
          this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
          this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
          this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
-         this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
+         this.imageCollection1 = new DevExpress.Utils.ImageCollection();
          this.mnuEnvironments = new DevExpress.XtraBars.BarSubItem();
          this.btnRefresh = new DevExpress.XtraBars.BarButtonItem();
          this.btnUpdateCFs = new DevExpress.XtraBars.BarButtonItem();
+         this.btnExcelExport = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
-         this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
-         this.popupMenu2 = new DevExpress.XtraBars.PopupMenu(this.components);
-         this.btnExcelExport = new DevExpress.XtraBars.BarButtonItem();
+         this.popupMenu1 = new DevExpress.XtraBars.PopupMenu();
+         this.popupMenu2 = new DevExpress.XtraBars.PopupMenu();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.UXGrid)).BeginInit();
@@ -73,9 +72,9 @@
          // 
          // UXGrid
          // 
-         gridLevelNode1.RelationName = "Level1";
+         gridLevelNode2.RelationName = "Level1";
          this.UXGrid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode1});
+            gridLevelNode2});
          this.UXGrid.Location = new System.Drawing.Point(12, 12);
          this.UXGrid.MainView = this.UXGridView;
          this.UXGrid.Name = "UXGrid";
@@ -166,6 +165,15 @@
          this.btnUpdateCFs.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
          this.btnUpdateCFs.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnUpdateCFs_ItemClick);
          // 
+         // btnExcelExport
+         // 
+         this.btnExcelExport.Caption = "Export (Excel)";
+         this.btnExcelExport.Id = 16;
+         this.btnExcelExport.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnExcelExport.ImageOptions.Image")));
+         this.btnExcelExport.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnExcelExport.ImageOptions.LargeImage")));
+         this.btnExcelExport.Name = "btnExcelExport";
+         this.btnExcelExport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnExcelExport_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -197,15 +205,6 @@
          // 
          this.popupMenu2.Name = "popupMenu2";
          this.popupMenu2.Ribbon = this.ribbonControl1;
-         // 
-         // btnExcelExport
-         // 
-         this.btnExcelExport.Caption = "Export (Excel)";
-         this.btnExcelExport.Id = 16;
-         this.btnExcelExport.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.ImageOptions.Image")));
-         this.btnExcelExport.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnExport.ImageOptions.LargeImage")));
-         this.btnExcelExport.Name = "btnExcelExport";
-         this.btnExcelExport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnExcelExport_ItemClick);
          // 
          // Frm_Environments
          // 

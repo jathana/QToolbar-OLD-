@@ -322,31 +322,24 @@ namespace QToolbar.Plugins.Environments
       {
          btnRefresh.Enabled = enabled;
          btnUpdateCFs.Enabled = enabled;
+         btnExcelExport.Enabled = enabled;
       }
 
       private void btnExcelExport_ItemClick(object sender, ItemClickEventArgs e)
       {
          SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-         saveFileDialog1.Filter = "Excel Files|*.*";
+         saveFileDialog1.Filter = "Excel Files|*.xls";
          saveFileDialog1.Title = "Save as Excel File";
          saveFileDialog1.ShowDialog();
 
          // If the file name is not an empty string open it for saving.  
          if (saveFileDialog1.FileName != "")
          {
-           // UXGrid.ExportToCsv(saveFileDialog1.FileName);
-
-            UXGrid.ExportToHtml(saveFileDialog1.FileName, new HtmlExportOptions()
+            UXGrid.ExportToXls(saveFileDialog1.FileName, new XlsExportOptionsEx()
             {
-                ExportMode=HtmlExportMode.DifferentFiles
+               ExportType = DevExpress.Export.ExportType.WYSIWYG
             });
             Process.Start(saveFileDialog1.FileName);
-
-            //UXGrid.ExportToXls(saveFileDialog1.FileName, new XlsExportOptionsEx()
-            //{
-            //   ExportType = DevExpress.Export.ExportType.WYSIWYG
-            //});
-            //Process.Start(saveFileDialog1.FileName);
 
             //Customize export options 
 
