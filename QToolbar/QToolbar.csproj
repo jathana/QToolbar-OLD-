@@ -23,8 +23,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>\\q-wks-jathan\Shared\QToolbar\</InstallUrl>
-    <ApplicationRevision>150</ApplicationRevision>
+    <InstallUrl>\\q-wks-jathanas\Shared\QToolbar\</InstallUrl>
+    <ApplicationRevision>151</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -183,6 +183,7 @@
     <Compile Include="Helpers\Errors.cs" />
     <Compile Include="Helpers\ErrorType.cs" />
     <Compile Include="Helpers\DateTimeExtensions.cs" />
+    <Compile Include="Helpers\MultiSqlExecutor.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Options\EnvCFs.cs" />
@@ -266,6 +267,20 @@
     <Compile Include="Plugins\Environments\EnvironmentConsts.cs" />
     <Compile Include="Plugins\Environments\QEnvironments.cs" />
     <Compile Include="Plugins\Environments\QEnvironmentsConfiguration.cs" />
+    <Compile Include="Plugins\EnvManager\Enums.cs" />
+    <Compile Include="Plugins\EnvManager\QEnv.cs" />
+    <Compile Include="Plugins\EnvManager\QEnvFileProperty.cs" />
+    <Compile Include="Plugins\EnvManager\QEnvFileSystemLoader.cs" />
+    <Compile Include="Plugins\EnvManager\QEnvLoader.cs" />
+    <Compile Include="Plugins\EnvManager\QEnvDatabasesLoader.cs" />
+    <Compile Include="Plugins\EnvManager\QEnvProperty.cs" />
+    <Compile Include="Plugins\EnvManager\QEnvPropertySet.cs" />
+    <Compile Include="Plugins\EnvManager\QEnvServerProperty.cs" />
+    <Compile Include="Plugins\EnvManager\QEnvDatabaseProperty.cs" />
+    <Compile Include="Plugins\EnvManager\QEnvDBUserProperty.cs" />
+    <Compile Include="Plugins\EnvManager\QEnvDBPasswordProperty.cs" />
+    <Compile Include="Plugins\EnvManager\QEnvURLProperty.cs" />
+    <Compile Include="Plugins\EnvManager\QEnvUNCDirProperty.cs" />
     <Compile Include="Plugins\NextBuildScript\AddFullEODMetadataPlugin.cs" />
     <Compile Include="Plugins\NextBuildScript\AddEODMetadataPlugin.cs" />
     <Compile Include="Plugins\NextBuildScript\Frm_NextBuildScript.cs">

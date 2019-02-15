@@ -20,6 +20,7 @@ using System.Diagnostics;
 using DevExpress.XtraPrinting;
 using System.Xml.Serialization;
 using System.Xml;
+using QToolbar.Plugins.EnvManager;
 
 namespace QToolbar.Plugins.Environments
 {
@@ -30,6 +31,8 @@ namespace QToolbar.Plugins.Environments
       private QEnvironments _Envs;
       SynchronizationContext _SyncContext;
 
+      // TEST ENVLOADER
+      private QEnvLoader _EnvLoader;
 
       public Frm_Environments()
       {
@@ -55,6 +58,10 @@ namespace QToolbar.Plugins.Environments
 
          UXGridView.RowStyle += UXGridView_RowStyle;
          _SyncContext = SynchronizationContext.Current;
+
+         // test
+         _EnvLoader = new QEnvLoader();
+
       }
 
       private void _Envs_AllInfoCollected(object sender, EventArgs e)
@@ -189,6 +196,9 @@ namespace QToolbar.Plugins.Environments
 
                EnableButtons(false);
                _Envs.AddOrUpdate(item.Caption, cf, tag.Item2, tag.Item3);
+
+               _EnvLoader.AddOrUpdate(item.Caption, cf, tag.Item2, tag.Item3);
+
             }
             else
             {

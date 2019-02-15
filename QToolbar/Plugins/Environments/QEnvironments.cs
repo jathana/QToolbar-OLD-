@@ -831,7 +831,6 @@ namespace QToolbar.Plugins.Environments
                      {
                         // take a system sub folder that exists and get system folder
                         Uri uri = new Uri(sharedDir.UNC);
-
                         objEnv.SystemFolder = Directory.GetParent($"\\\\{uri.Host}\\{sharedDir.LocalPath.Replace(":", "$")}").FullName;
                      }
                      if (string.IsNullOrEmpty(sharedDir.UNC))

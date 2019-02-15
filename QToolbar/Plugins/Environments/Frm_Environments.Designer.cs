@@ -28,7 +28,7 @@
       /// </summary>
       private void InitializeComponent()
       {
-         DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
+         DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_Environments));
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
          this.UXGrid = new DevExpress.XtraGrid.GridControl();
@@ -72,9 +72,9 @@
          // 
          // UXGrid
          // 
-         gridLevelNode2.RelationName = "Level1";
+         gridLevelNode1.RelationName = "Level1";
          this.UXGrid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode2});
+            gridLevelNode1});
          this.UXGrid.Location = new System.Drawing.Point(12, 12);
          this.UXGrid.MainView = this.UXGridView;
          this.UXGrid.Name = "UXGrid";
@@ -162,7 +162,6 @@
          this.btnUpdateCFs.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateCFs.ImageOptions.Image")));
          this.btnUpdateCFs.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnUpdateCFs.ImageOptions.LargeImage")));
          this.btnUpdateCFs.Name = "btnUpdateCFs";
-         this.btnUpdateCFs.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
          this.btnUpdateCFs.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnUpdateCFs_ItemClick);
          // 
          // btnExcelExport

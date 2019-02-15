@@ -308,6 +308,7 @@
          this.Name = "Frm_UpdateCFs";
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.Text = "Update CFs";
+         this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Frm_UpdateCFs_FormClosing);
          this.Load += new System.EventHandler(this.Frm_UpdateCFs_Load);
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
          this.layoutControl1.ResumeLayout(false);

@@ -16,6 +16,10 @@ namespace QToolbar.Forms
       int updating;
       Style greenStyle;
       Style redStyle;
+      private FastColoredTextBoxNS.Language _Language;
+      private string _LeftPath;
+      private string _RightPath;
+
 
       public Frm_TxtDiff()
       {
@@ -84,15 +88,17 @@ namespace QToolbar.Forms
          updating++;
       }
 
-      private void SetLabelsVisibility(DevExpress.XtraLayout.Utils.LayoutVisibility visibility)
+      private void SetUIVisibility(DevExpress.XtraLayout.Utils.LayoutVisibility visibility)
       {
          layLeft.Visibility = visibility;
          layRight.Visibility = visibility;
+         
+         bar2.Visible = visibility==DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
 
       }
       public void CompareText(string leftText, string rightText)
       {
-         SetLabelsVisibility(DevExpress.XtraLayout.Utils.LayoutVisibility.Never);
+         SetUIVisibility(DevExpress.XtraLayout.Utils.LayoutVisibility.Never);
          Compare(leftText, rightText);
       }
 
@@ -121,10 +127,13 @@ namespace QToolbar.Forms
       }
 
 
-      public void CompareFiles(string leftPath, string rightPath, string leftLabel, string rightLabel)
+      public void CompareFiles(string leftPath, string rightPath, string leftLabel, string rightLabel, FastColoredTextBoxNS.Language lang)
       {
-         SetLabelsVisibility(DevExpress.XtraLayout.Utils.LayoutVisibility.Always);
+         SetUIVisibility(DevExpress.XtraLayout.Utils.LayoutVisibility.Always);
 
+         _Language = lang;
+         _LeftPath = leftPath;
+         _RightPath = rightPath;
          txtLeft.Text = leftLabel;
          txtRight.Text = rightLabel;
          bool leftExists = File.Exists(leftPath);
@@ -171,6 +180,32 @@ namespace QToolbar.Forms
                Process(line.subLines);
          }
       }
+
+      private void btnViewLeftFile_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      {
+         OpenFile(_LeftPath);
+      }
+
+      private void btnViewRightFile_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      {
+         OpenFile(_RightPath);
+      }
+
+      private void OpenFile(string file)
+      {         
+         try
+         {
+            Frm_FileViewer f = new Frm_FileViewer();
+            f.Size = new Size(800, 800);
+
+            f.ViewFile(file, _Language);
+         }
+         catch (Exception ex)
+         {
+            XtraMessageBox.Show($"file: {file}, msg:{ex.Message}, ");
+         }
+      }
+
    }
 
    #region Merge stuffs

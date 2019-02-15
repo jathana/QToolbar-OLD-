@@ -45,6 +45,8 @@ namespace QToolbar.Plugins.Environments
       private string _OLAPServer = "";
       private string _OLAPDatabase = "";
       private string _STDConnector = "";
+      private string _SynchConnectors = "";
+      private string _CloneConnectors = "";
       //
       private string _CheckoutPath = "";
 
@@ -416,6 +418,45 @@ namespace QToolbar.Plugins.Environments
          }
       }
 
+      public string STDConnector
+      {
+         get
+         {
+            return _STDConnector;
+         }
+
+         set
+         {
+            _STDConnector = value;
+         }
+      }
+
+      public string SynchConnectors
+      {
+         get
+         {
+            return _SynchConnectors;
+         }
+
+         set
+         {
+            _SynchConnectors = value;
+         }
+      }
+
+      public string CloneConnectors
+      {
+         get
+         {
+            return _CloneConnectors;
+         }
+
+         set
+         {
+            _CloneConnectors = value;
+         }
+      }
+
       #endregion
 
       #region methods
@@ -455,6 +496,8 @@ namespace QToolbar.Plugins.Environments
             _OLAPServer = node.ReadChildInnerTextString("OLAPServer");
             _OLAPDatabase = node.ReadChildInnerTextString("OLAPDatabase");
             _STDConnector = node.ReadChildInnerTextString("STDConnector");
+            _SynchConnectors = node.ReadChildInnerTextString("SynchConnectors");
+            _CloneConnectors = node.ReadChildInnerTextString("CloneConnectors");
 
          }
          catch(Exception ex)

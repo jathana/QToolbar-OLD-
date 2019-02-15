@@ -100,10 +100,13 @@ namespace QToolbar.Plugins.Environments
          private string _UNC;
          private string _LocalPath;
          private int _Permissions;
-         
          #endregion
 
+         
          #region properties
+
+         public List<string> Test { get; set; }
+
          public string Description
          {
             get
@@ -801,6 +804,14 @@ namespace QToolbar.Plugins.Environments
          set
          {
             _Properties["OlapDatabase"] = value;
+         }
+      }
+
+      public bool IsDevelopmentEnv
+      {
+         get
+         {
+            return Options.OptionsInstance.DevSQLInstances.Contains(DBCollectionPlusServer);
          }
       }
 

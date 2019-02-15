@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-         this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_TxtDiff));
          this.label6 = new System.Windows.Forms.Label();
          this.label7 = new System.Windows.Forms.Label();
@@ -51,6 +50,15 @@
          this.layLeft = new DevExpress.XtraLayout.LayoutControlItem();
          this.layRight = new DevExpress.XtraLayout.LayoutControlItem();
          this.splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
+         this.barManager1 = new DevExpress.XtraBars.BarManager();
+         this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
+         this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
+         this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
+         this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+         this.bar2 = new DevExpress.XtraBars.Bar();
+         this.bar3 = new DevExpress.XtraBars.Bar();
+         this.btnViewLeftFile = new DevExpress.XtraBars.BarButtonItem();
+         this.btnViewRightFile = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
          this.layoutControl1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.txtRight.Properties)).BeginInit();
@@ -68,12 +76,13 @@
          ((System.ComponentModel.ISupportInitialize)(this.layLeft)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layRight)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
          this.SuspendLayout();
          // 
          // label6
          // 
          this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-         this.label6.Location = new System.Drawing.Point(143, 597);
+         this.label6.Location = new System.Drawing.Point(143, 550);
          this.label6.Name = "label6";
          this.label6.Size = new System.Drawing.Size(84, 20);
          this.label6.TabIndex = 24;
@@ -83,7 +92,7 @@
          // 
          this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
          this.label7.BackColor = System.Drawing.Color.Pink;
-         this.label7.Location = new System.Drawing.Point(117, 597);
+         this.label7.Location = new System.Drawing.Point(117, 550);
          this.label7.Name = "label7";
          this.label7.Size = new System.Drawing.Size(22, 20);
          this.label7.TabIndex = 23;
@@ -92,7 +101,7 @@
          // label5
          // 
          this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-         this.label5.Location = new System.Drawing.Point(36, 597);
+         this.label5.Location = new System.Drawing.Point(36, 550);
          this.label5.Name = "label5";
          this.label5.Size = new System.Drawing.Size(77, 20);
          this.label5.TabIndex = 22;
@@ -102,7 +111,7 @@
          // 
          this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
          this.label4.BackColor = System.Drawing.Color.PaleGreen;
-         this.label4.Location = new System.Drawing.Point(12, 597);
+         this.label4.Location = new System.Drawing.Point(12, 550);
          this.label4.Name = "label4";
          this.label4.Size = new System.Drawing.Size(20, 20);
          this.label4.TabIndex = 21;
@@ -119,11 +128,11 @@
          this.layoutControl1.Controls.Add(this.label5);
          this.layoutControl1.Controls.Add(this.label4);
          this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.layoutControl1.Location = new System.Drawing.Point(0, 0);
+         this.layoutControl1.Location = new System.Drawing.Point(0, 24);
          this.layoutControl1.Name = "layoutControl1";
          this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(2141, 278, 897, 713);
          this.layoutControl1.Root = this.layoutControlGroup1;
-         this.layoutControl1.Size = new System.Drawing.Size(970, 629);
+         this.layoutControl1.Size = new System.Drawing.Size(970, 582);
          this.layoutControl1.TabIndex = 29;
          this.layoutControl1.Text = "layoutControl1";
          // 
@@ -160,7 +169,7 @@
         '\''};
          this.fctb2.AutoIndentCharsPatterns = "";
          this.fctb2.AutoIndentExistingLines = false;
-         this.fctb2.AutoScrollMinSize = new System.Drawing.Size(2, 15);
+         this.fctb2.AutoScrollMinSize = new System.Drawing.Size(32, 15);
          this.fctb2.BackBrush = null;
          this.fctb2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.fctb2.CharHeight = 15;
@@ -183,7 +192,7 @@
          this.fctb2.RightBracket = ')';
          this.fctb2.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
          this.fctb2.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("fctb2.ServiceColors")));
-         this.fctb2.Size = new System.Drawing.Size(461, 557);
+         this.fctb2.Size = new System.Drawing.Size(461, 510);
          this.fctb2.TabIndex = 26;
          this.fctb2.Zoom = 100;
          // 
@@ -202,7 +211,7 @@
         '\''};
          this.fctb1.AutoIndentCharsPatterns = "";
          this.fctb1.AutoIndentExistingLines = false;
-         this.fctb1.AutoScrollMinSize = new System.Drawing.Size(2, 15);
+         this.fctb1.AutoScrollMinSize = new System.Drawing.Size(32, 15);
          this.fctb1.BackBrush = null;
          this.fctb1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.fctb1.CharHeight = 15;
@@ -225,7 +234,7 @@
          this.fctb1.RightBracket = ')';
          this.fctb1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
          this.fctb1.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("fctb1.ServiceColors")));
-         this.fctb1.Size = new System.Drawing.Size(476, 557);
+         this.fctb1.Size = new System.Drawing.Size(476, 510);
          this.fctb1.TabIndex = 25;
          this.fctb1.Zoom = 100;
          // 
@@ -245,13 +254,13 @@
             this.layRight,
             this.splitterItem1});
          this.layoutControlGroup1.Name = "Root";
-         this.layoutControlGroup1.Size = new System.Drawing.Size(970, 629);
+         this.layoutControlGroup1.Size = new System.Drawing.Size(970, 582);
          this.layoutControlGroup1.TextVisible = false;
          // 
          // layoutControlItem1
          // 
          this.layoutControlItem1.Control = this.label5;
-         this.layoutControlItem1.Location = new System.Drawing.Point(24, 585);
+         this.layoutControlItem1.Location = new System.Drawing.Point(24, 538);
          this.layoutControlItem1.MaxSize = new System.Drawing.Size(81, 24);
          this.layoutControlItem1.MinSize = new System.Drawing.Size(81, 24);
          this.layoutControlItem1.Name = "layoutControlItem1";
@@ -263,7 +272,7 @@
          // layoutControlItem2
          // 
          this.layoutControlItem2.Control = this.label4;
-         this.layoutControlItem2.Location = new System.Drawing.Point(0, 585);
+         this.layoutControlItem2.Location = new System.Drawing.Point(0, 538);
          this.layoutControlItem2.MaxSize = new System.Drawing.Size(24, 24);
          this.layoutControlItem2.MinSize = new System.Drawing.Size(24, 24);
          this.layoutControlItem2.Name = "layoutControlItem2";
@@ -275,7 +284,7 @@
          // layoutControlItem3
          // 
          this.layoutControlItem3.Control = this.label7;
-         this.layoutControlItem3.Location = new System.Drawing.Point(105, 585);
+         this.layoutControlItem3.Location = new System.Drawing.Point(105, 538);
          this.layoutControlItem3.MaxSize = new System.Drawing.Size(26, 24);
          this.layoutControlItem3.MinSize = new System.Drawing.Size(26, 24);
          this.layoutControlItem3.Name = "layoutControlItem3";
@@ -287,7 +296,7 @@
          // layoutControlItem4
          // 
          this.layoutControlItem4.Control = this.label6;
-         this.layoutControlItem4.Location = new System.Drawing.Point(131, 585);
+         this.layoutControlItem4.Location = new System.Drawing.Point(131, 538);
          this.layoutControlItem4.MaxSize = new System.Drawing.Size(88, 24);
          this.layoutControlItem4.MinSize = new System.Drawing.Size(88, 24);
          this.layoutControlItem4.Name = "layoutControlItem4";
@@ -299,7 +308,7 @@
          // emptySpaceItem1
          // 
          this.emptySpaceItem1.AllowHotTrack = false;
-         this.emptySpaceItem1.Location = new System.Drawing.Point(219, 585);
+         this.emptySpaceItem1.Location = new System.Drawing.Point(219, 538);
          this.emptySpaceItem1.MaxSize = new System.Drawing.Size(0, 24);
          this.emptySpaceItem1.MinSize = new System.Drawing.Size(10, 24);
          this.emptySpaceItem1.Name = "emptySpaceItem1";
@@ -312,7 +321,7 @@
          this.layoutControlItem5.Control = this.fctb1;
          this.layoutControlItem5.Location = new System.Drawing.Point(0, 24);
          this.layoutControlItem5.Name = "layoutControlItem5";
-         this.layoutControlItem5.Size = new System.Drawing.Size(480, 561);
+         this.layoutControlItem5.Size = new System.Drawing.Size(480, 514);
          this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem5.TextVisible = false;
          // 
@@ -321,7 +330,7 @@
          this.layoutControlItem6.Control = this.fctb2;
          this.layoutControlItem6.Location = new System.Drawing.Point(485, 24);
          this.layoutControlItem6.Name = "layoutControlItem6";
-         this.layoutControlItem6.Size = new System.Drawing.Size(465, 561);
+         this.layoutControlItem6.Size = new System.Drawing.Size(465, 514);
          this.layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem6.TextVisible = false;
          // 
@@ -350,7 +359,97 @@
          this.splitterItem1.AllowHotTrack = true;
          this.splitterItem1.Location = new System.Drawing.Point(480, 0);
          this.splitterItem1.Name = "splitterItem1";
-         this.splitterItem1.Size = new System.Drawing.Size(5, 585);
+         this.splitterItem1.Size = new System.Drawing.Size(5, 538);
+         // 
+         // barManager1
+         // 
+         this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
+            this.bar2,
+            this.bar3});
+         this.barManager1.DockControls.Add(this.barDockControlTop);
+         this.barManager1.DockControls.Add(this.barDockControlBottom);
+         this.barManager1.DockControls.Add(this.barDockControlLeft);
+         this.barManager1.DockControls.Add(this.barDockControlRight);
+         this.barManager1.Form = this;
+         this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.btnViewLeftFile,
+            this.btnViewRightFile});
+         this.barManager1.MainMenu = this.bar2;
+         this.barManager1.MaxItemId = 2;
+         this.barManager1.StatusBar = this.bar3;
+         // 
+         // barDockControlTop
+         // 
+         this.barDockControlTop.CausesValidation = false;
+         this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
+         this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
+         this.barDockControlTop.Manager = this.barManager1;
+         this.barDockControlTop.Size = new System.Drawing.Size(970, 24);
+         // 
+         // barDockControlBottom
+         // 
+         this.barDockControlBottom.CausesValidation = false;
+         this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+         this.barDockControlBottom.Location = new System.Drawing.Point(0, 606);
+         this.barDockControlBottom.Manager = this.barManager1;
+         this.barDockControlBottom.Size = new System.Drawing.Size(970, 23);
+         // 
+         // barDockControlLeft
+         // 
+         this.barDockControlLeft.CausesValidation = false;
+         this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
+         this.barDockControlLeft.Location = new System.Drawing.Point(0, 24);
+         this.barDockControlLeft.Manager = this.barManager1;
+         this.barDockControlLeft.Size = new System.Drawing.Size(0, 582);
+         // 
+         // barDockControlRight
+         // 
+         this.barDockControlRight.CausesValidation = false;
+         this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
+         this.barDockControlRight.Location = new System.Drawing.Point(970, 24);
+         this.barDockControlRight.Manager = this.barManager1;
+         this.barDockControlRight.Size = new System.Drawing.Size(0, 582);
+         // 
+         // bar2
+         // 
+         this.bar2.BarName = "Main menu";
+         this.bar2.DockCol = 0;
+         this.bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
+         this.bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnViewLeftFile),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnViewRightFile)});
+         this.bar2.OptionsBar.MultiLine = true;
+         this.bar2.OptionsBar.UseWholeRow = true;
+         this.bar2.Text = "Main menu";
+         // 
+         // bar3
+         // 
+         this.bar3.BarName = "Status bar";
+         this.bar3.CanDockStyle = DevExpress.XtraBars.BarCanDockStyle.Bottom;
+         this.bar3.DockCol = 0;
+         this.bar3.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
+         this.bar3.OptionsBar.AllowQuickCustomization = false;
+         this.bar3.OptionsBar.DrawDragBorder = false;
+         this.bar3.OptionsBar.UseWholeRow = true;
+         this.bar3.Text = "Status bar";
+         // 
+         // btnViewLeftFile
+         // 
+         this.btnViewLeftFile.Caption = "View Left File";
+         this.btnViewLeftFile.Id = 0;
+         this.btnViewLeftFile.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnFileViewer.ImageOptions.Image")));
+         this.btnViewLeftFile.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnFileViewer.ImageOptions.LargeImage")));
+         this.btnViewLeftFile.Name = "btnViewLeftFile";
+         this.btnViewLeftFile.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnViewLeftFile_ItemClick);
+         // 
+         // btnViewRightFile
+         // 
+         this.btnViewRightFile.Caption = "View Right File";
+         this.btnViewRightFile.Id = 1;
+         this.btnViewRightFile.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnViewRightFile.ImageOptions.Image")));
+         this.btnViewRightFile.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnViewRightFile.ImageOptions.LargeImage")));
+         this.btnViewRightFile.Name = "btnViewRightFile";
+         this.btnViewRightFile.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnViewRightFile_ItemClick);
          // 
          // Frm_TxtDiff
          // 
@@ -358,6 +457,10 @@
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(970, 629);
          this.Controls.Add(this.layoutControl1);
+         this.Controls.Add(this.barDockControlLeft);
+         this.Controls.Add(this.barDockControlRight);
+         this.Controls.Add(this.barDockControlBottom);
+         this.Controls.Add(this.barDockControlTop);
          this.Name = "Frm_TxtDiff";
          this.Text = "DiffMergeSample";
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
@@ -377,7 +480,9 @@
          ((System.ComponentModel.ISupportInitialize)(this.layLeft)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layRight)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
          this.ResumeLayout(false);
+         this.PerformLayout();
 
         }
 
@@ -404,5 +509,14 @@
       private DevExpress.XtraEditors.TextEdit txtLeft;
       private DevExpress.XtraLayout.LayoutControlItem layLeft;
       private DevExpress.XtraLayout.LayoutControlItem layRight;
+      private DevExpress.XtraBars.BarManager barManager1;
+      private DevExpress.XtraBars.Bar bar2;
+      private DevExpress.XtraBars.Bar bar3;
+      private DevExpress.XtraBars.BarDockControl barDockControlTop;
+      private DevExpress.XtraBars.BarDockControl barDockControlBottom;
+      private DevExpress.XtraBars.BarDockControl barDockControlLeft;
+      private DevExpress.XtraBars.BarDockControl barDockControlRight;
+      private DevExpress.XtraBars.BarButtonItem btnViewLeftFile;
+      private DevExpress.XtraBars.BarButtonItem btnViewRightFile;
    }
 }

@@ -134,6 +134,8 @@ namespace QToolbar.Plugins.Environments
          UXGridView.BestFitColumns();
       }
 
+      
+
       private void PrepareChangesForPreview()
       {
          _PreviewDir = Path.Combine(AppInstance.CacheDirectory, DateTime.Now.TimeStamp());
@@ -149,7 +151,6 @@ namespace QToolbar.Plugins.Environments
                IniFile2.WriteValue(SERVERS_SECTION, txtKey.Text, txtServer.Text,info.PreviewPath);
                IniFile2.WriteValue(DATABASES_SECTION, txtKey.Text, txtDatabase.Text, info.PreviewPath);
                IniFile2.WriteValue(PASSWORDS_SECTION, txtKey.Text, txtPassword.Text, info.PreviewPath);
-
             }
             UXGridView.BestFitColumns();
          }
@@ -170,10 +171,8 @@ namespace QToolbar.Plugins.Environments
                b.AppendLine($"file:{info.Path}");
 
 
-
             }
-         }
-   //      XtraMessageBox.Show($"Criteria were scripted succesfully (tried:{criteriaTried},scripted:{criteriaScripted})!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+         }   
       }
 
       private string UpdateCf(string cfFile, string section, string key, string server, string database, string password)
@@ -218,22 +217,35 @@ namespace QToolbar.Plugins.Environments
       private void UXGrid_DoubleClick(object sender, EventArgs e)
       {
          string sourceFile = ((CfInfo)UXGridView.GetFocusedRow()).Path;
-         string destFile = ((CfInfo)UXGridView.GetFocusedRow()).BackupPath;
+         string destFile = ((CfInfo)UXGridView.GetFocusedRow()).PreviewPath;
          if (_FrmTxtDiff == null || _FrmTxtDiff.IsDisposed)
          {
             _FrmTxtDiff = new Frm_TxtDiff();
          }
-         _FrmTxtDiff.CompareFiles(sourceFile, destFile, $"Original {sourceFile}", $"Preview changes {sourceFile}");
+         _FrmTxtDiff.CompareFiles(sourceFile, destFile, $"Original {sourceFile}", $"Preview changes {sourceFile}",FastColoredTextBoxNS.Language.CSharp);
       }
 
-      private void btnClose_Click(object sender, EventArgs e)
+      private void CloseForm()
       {
          if (Directory.Exists(_PreviewDir))
          {
             Directory.Delete(_PreviewDir,true);
          }
-         _FrmTxtDiff.Close();
+         if (_FrmTxtDiff != null && !_FrmTxtDiff.IsDisposed)
+         {
+            _FrmTxtDiff.Close();
+         }
          Close();
+      }
+
+      private void btnClose_Click(object sender, EventArgs e)
+      {
+         CloseForm();
+      }
+
+      private void Frm_UpdateCFs_FormClosing(object sender, FormClosingEventArgs e)
+      {
+         CloseForm();
       }
    }
 }
