@@ -268,6 +268,14 @@
     <Compile Include="Plugins\Environments\QEnvironments.cs" />
     <Compile Include="Plugins\Environments\QEnvironmentsConfiguration.cs" />
     <Compile Include="Plugins\EnvManager\Enums.cs" />
+    <Compile Include="Plugins\EnvManager\EnvInfoEventArgs.cs" />
+    <Compile Include="Plugins\EnvManager\EnvironmentsInfoPlugin.cs" />
+    <Compile Include="Plugins\EnvManager\Frm_Environments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Plugins\EnvManager\Frm_Environments.Designer.cs">
+      <DependentUpon>Frm_Environments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Plugins\EnvManager\QEnv.cs" />
     <Compile Include="Plugins\EnvManager\QEnvFileProperty.cs" />
     <Compile Include="Plugins\EnvManager\QEnvFileSystemLoader.cs" />
@@ -372,6 +380,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Plugins\Environments\Frm_UpdateCFs.resx">
       <DependentUpon>Frm_UpdateCFs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Plugins\EnvManager\Frm_Environments.resx">
+      <DependentUpon>Frm_Environments.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Plugins\NextBuildScript\Frm_NextBuildScript.resx">
       <DependentUpon>Frm_NextBuildScript.cs</DependentUpon>

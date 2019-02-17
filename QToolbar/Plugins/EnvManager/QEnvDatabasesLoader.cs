@@ -14,20 +14,20 @@ namespace QToolbar.Plugins.EnvManager
    public class QEnvDatabasesLoader
    {
 
-      public void Load(QEnv objEnv, CancellationToken cancelToken)
-      {
-         LoadFromQBCollectionPlusDB(objEnv, cancelToken);
+      public void Load(QEnv objEnv, List<string> eodFlows, CancellationToken cancelToken)
+      {         
+         LoadFromQBCollectionPlusDB(objEnv, eodFlows, cancelToken);
          LoadFromAnalyticsDB(objEnv, cancelToken);
          LoadFromD3FDB(objEnv, cancelToken);
          LoadFromArchiveDB(objEnv, cancelToken);
       }
 
       #region private  
-      private void LoadFromQBCollectionPlusDB(QEnv objEnv, CancellationToken cancelToken)
+      private void LoadFromQBCollectionPlusDB(QEnv objEnv, List<string> eodFlows, CancellationToken cancelToken)
       {
          if (cancelToken.IsCancellationRequested) return;
 
-         if (objEnv.QCS_CLIENT.QBC_ADMIN.QBC_SERVER.EmptyValue || !objEnv.QCS_CLIENT.QBC_ADMIN.QBC_DB.EmptyValue)
+         if (objEnv.QCS_CLIENT.QBC_ADMIN.QBC_SERVER.EmptyValue || objEnv.QCS_CLIENT.QBC_ADMIN.QBC_DB.EmptyValue)
          {
             objEnv.Errors.AddError("Unable to connect to and retrieve information from QBCollectionPlus db. QBC_NAME or QBC_SERVER is empty in qbc_admin.cf", "");
             return;
@@ -70,6 +70,18 @@ namespace QToolbar.Plugins.EnvManager
 
          // AT_EXTERNAL_COMPANIES
          executor.AddSql("AT_EXTERNAL_COMPANIES", @"SELECT EXTC_IO_DIR, EXTC_NAME, EXTC_INTCODE, * FROM AT_EXTERNAL_COMPANIES");
+
+        // Man Client Flows
+        executor.AddSql("Man_ClientFlows", @"declare @prefix nvarchar(10)
+                                            select @prefix = INST.INST_PREFIX
+                                            from Enterprises ENT
+                                            INNER JOIN AT_INSTALLATIONS INST ON ENT.INST_CODE = INST.INST_CODE
+
+                                            SELECT EOFC_FLOW_NAME
+                                            FROM Man_ClientFlows(@prefix)
+                                            WHERE EOFC_ACTIVE = 1 ORDER BY FLOW_ORDERING");
+
+
          try
          {
             DataSet dataSet = executor.Execute(Utils.GetConnectionString(objEnv.QCS_CLIENT.QBC_ADMIN.QBC_SERVER.Value, objEnv.QCS_CLIENT.QBC_ADMIN.QBC_DB.Value));
@@ -94,6 +106,9 @@ namespace QToolbar.Plugins.EnvManager
 
             // SET SYSTEM_FOLDER
             objEnv.QBC.AT_SYSTEM_PREF.SYSTEM_FOLDER.Value =  GetSystemFolder(objEnv);
+
+                // ManClientFlows
+                eodFlows = GetFlowsForEodIni(dataSet);
          }
          catch (Exception ex)
          {
@@ -137,7 +152,7 @@ namespace QToolbar.Plugins.EnvManager
          executor.AddSql("ADMIN_WRAPPER_SETTINGS", "SELECT * FROM ADMIN_WRAPPER_SETTINGS");
          try
          {
-            DataSet dataSet = executor.Execute(Utils.GetConnectionString(objEnv.QBC.PSet_BI_GLM_INSTALLATION.QD3F_SERVER.Value, objEnv.QBC.PSet_BI_GLM_INSTALLATION.QD3F_db_NAME.Value));
+            DataSet dataSet = executor.Execute(Utils.GetConnectionString(objEnv.QBC.BI_GLM_INSTALLATION.QD3F_SERVER.Value, objEnv.QBC.BI_GLM_INSTALLATION.QD3F_db_NAME.Value));
             SetPropertiesValues(dataSet, objEnv, "ADMIN_WRAPPER_SETTINGS", QEnvPropCategory.QBC_D3F_Intermediate, QEnvPropSubCategory.ADMIN_WRAPPER_SETTINGS);
          }
          catch (Exception ex)
@@ -150,7 +165,7 @@ namespace QToolbar.Plugins.EnvManager
       {
          if (cancelToken.IsCancellationRequested) return;
 
-         if (objEnv.QBC.PSet_AT_SYSTEM_PARAMS.ARCHIVE_SERVER.EmptyValue || objEnv.QBC.PSet_AT_SYSTEM_PARAMS.ARCHIVE_DATABASE.EmptyValue)
+         if (objEnv.QBC.AT_SYSTEM_PARAMS.ARCHIVE_SERVER.EmptyValue || objEnv.QBC.AT_SYSTEM_PARAMS.ARCHIVE_DATABASE.EmptyValue)
          {
             objEnv.Errors.AddWarning("Unable to connect to and retrieve information from QBArchive db. QBCollection_Plus's AT_SYSTEM_PARAMS ARCHIVE_SERVER or ARCHIVE_DATABASE is empty", "");
             return;
@@ -193,12 +208,12 @@ namespace QToolbar.Plugins.EnvManager
       {
          // set properties - QBCollection_Plus - TLK_DATABASE_VERSIONS
          QEnvProperty verProp;
-         foreach (DataColumn col in dataSet.Tables["tableName"].Columns)
+         foreach (DataColumn col in dataSet.Tables[tableName].Columns)
          {
             verProp = objEnv.Properties.FirstOrDefault(p => p.Category == category && p.SubCategory == subCategory && p.Name == col.ColumnName);
             if (verProp != null)
             {
-               verProp.Value = dataSet.Tables["tableName"].Rows[0][col].ToString();
+               verProp.Value = dataSet.Tables[tableName].Rows[0][col].ToString();
             }
          }
       }
@@ -216,9 +231,13 @@ namespace QToolbar.Plugins.EnvManager
       private void SetPropertiesValues(DataSet dataSet, QEnv objEnv, string tableName, QEnvPropCategory category, QEnvPropSubCategory subCategory, string propertyNameField, string propertyValueField)
       {
          // set properties - QBCollection_Plus - AT_SYSTEM_PREF
-         foreach (QEnvProperty prop in objEnv.Properties.Where(p => p.Category == category && p.SubCategory == subCategory))
+         foreach (QEnvProperty prop in objEnv.Properties.Where(p => p.Category == category && p.SubCategory == subCategory).ToList())
          {
-            prop.Value = dataSet.Tables[tableName].Select($"{propertyNameField}='{prop.Name}'")[0][propertyValueField].ToString();
+                DataRow[] result = dataSet.Tables[tableName].Select($"{propertyNameField}='{prop.Name}'");
+                if (result.Length > 0)
+                {
+                    prop.Value = result[0][propertyValueField].ToString();
+                }
          }
       }
 
@@ -263,6 +282,17 @@ namespace QToolbar.Plugins.EnvManager
          return retval;
       }
 
-      #endregion
-   }
+
+        private List<string> GetFlowsForEodIni(DataSet dataSet)
+        {
+            List<string> retval = new List<string>();
+            foreach (DataRow row in dataSet.Tables["Man_ClientFlows"].Rows)
+            {
+                retval.Add(row["EOFC_FLOW_NAME"].ToString());
+            }
+            return retval;
+        }
+
+        #endregion
+    }
 }

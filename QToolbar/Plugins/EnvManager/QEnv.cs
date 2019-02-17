@@ -108,7 +108,10 @@ namespace QToolbar.Plugins.EnvManager
             public QEnvUNCDirProperty INTRADAY_FILE_UPLOAD_DIRECTORY { get; internal set; }
             public QEnvUNCDirProperty SYSTEM_FOLDER { get; internal set; }
             public QEnvProperty REPORT_DATABASE { get; internal set; }
-         }
+            public QEnvUNCDirProperty APPLICATION_UPDATE_DIR { get; internal set; }
+
+
+            }
 
          public class P_AT_SYSTEM_PARAMS
          {
@@ -200,22 +203,21 @@ namespace QToolbar.Plugins.EnvManager
       private QEnvPropertySet _Properties;
       private List<QEnvPropertySet> _Dependencies;
 
-      private string _Name;
       #endregion
 
       #region properties
+      public string Status { get; set; }
       public string Name { get; set; }
       public string CheckoutPath { get; set; }
       public string ProteusCheckoutPath { get; set; }
       public string QBCAdminCfPath { get; set; }
-      public string Status { get; set; }
 
-      public P_QCS_CLIENT QCS_CLIENT { get; internal set; }
-      public P_QBC QBC { get; internal set; }
-      public P_ARCHIVE ARCHIVE { get; internal set; }
-      public P_QBA QBA { get; internal set; }
-      public P_D3F D3F { get; internal set; }
-      public P_ENV_CONF ENV_CONF { get; internal set; }
+      internal P_QCS_CLIENT QCS_CLIENT { get; set; }
+        internal P_QBC QBC { get; set; }
+        internal P_ARCHIVE ARCHIVE { get; set; }
+        internal P_QBA QBA { get; set; }
+        internal P_D3F D3F { get; set; }
+        internal P_ENV_CONF ENV_CONF { get; set; }
       public Errors Errors { get; internal set; }
       public QEnvPropertySet Properties { get { return _Properties; } }
 
@@ -234,7 +236,6 @@ namespace QToolbar.Plugins.EnvManager
 
       public void Validate()
       {
-         Errors.Clear();
 
          // validate properties
          foreach(QEnvProperty property in _Properties)
@@ -257,35 +258,35 @@ namespace QToolbar.Plugins.EnvManager
          {
             ENV = new P_ENV_CONF.P_ENV()
             {
-               Name = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "Name", Required = true }),
-               Server = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "Server", Required = true }),
-               Database = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "Database", Required = true }),
-               Username = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "Username", Required = true }),
-               Password = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "Password", Required = true }),
-               IsWinAuth = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "IsWinAuth", Required = true }),
-               GLMPrefix = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "GLMPrefix", Required = true }),
-               ConnectorRepositoryRoot = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "ConnectorRepositoryRoot", Required = true }),
-               ConnectorBranch = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "ConnectorBranch", Required = true }),
-               EoDMonitorAlerts = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "EoDMonitorAlerts", Required = true }),
-               BatchServiceName = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "BatchServiceName", Required = true }),
-               BatchServicePath = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "BatchServicePath", Required = true }),
-               BatchServiceServer = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "BatchServiceServer", Required = true }),
-               BatchServiceUNCPath = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "BatchServiceUNCPath", Required = true }),
-               EODServiceName = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "EODServiceName", Required = true }),
-               EODServicePath = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "EODServicePath", Required = true }),
-               EODServiceServer = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "EODServiceServer", Required = true }),
-               EODServiceUNCPath = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "EODServiceUNCPath", Required = true }),
-               EnvironmentFlavor = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "EnvironmentFlavor", Required = true }),
-               AnalyticsServer = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "AnalyticsServer", Required = true }),
-               AnalyticsDatabase = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "AnalyticsDatabase", Required = true }),
-               OLAPServer = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "OLAPServer", Required = true }),
-               OLAPDatabase = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "OLAPDatabase", Required = true }),
-               STDConnector = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "STDConnector", Required = true }),
-               SynchConnectors = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "SynchConnectors", Required = true }),
-               CloneConnectors = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "CloneConnectors", Required = true }),
+               Name = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "Name", Required = true }),
+               Server = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "Server", Required = true }),
+               Database = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "Database", Required = true }),
+               Username = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "Username", Required = true }),
+               Password = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "Password", Required = true }),
+               IsWinAuth = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "IsWinAuth", Required = true }),
+               GLMPrefix = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "GLMPrefix", Required = true }),
+               ConnectorRepositoryRoot = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "ConnectorRepositoryRoot", Required = true }),
+               ConnectorBranch = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "ConnectorBranch", Required = true }),
+               EoDMonitorAlerts = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "EoDMonitorAlerts", Required = true }),
+               BatchServiceName = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "BatchServiceName", Required = true }),
+               BatchServicePath = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "BatchServicePath", Required = true }),
+               BatchServiceServer = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "BatchServiceServer", Required = true }),
+               BatchServiceUNCPath = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "BatchServiceUNCPath", Required = true }),
+               EODServiceName = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "EODServiceName", Required = true }),
+               EODServicePath = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "EODServicePath", Required = true }),
+               EODServiceServer = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "EODServiceServer", Required = true }),
+               EODServiceUNCPath = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "EODServiceUNCPath", Required = true }),
+               EnvironmentFlavor = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "EnvironmentFlavor", Required = true }),
+               AnalyticsServer = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "AnalyticsServer", Required = true }),
+               AnalyticsDatabase = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "AnalyticsDatabase", Required = true }),
+               OLAPServer = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "OLAPServer", Required = true }),
+               OLAPDatabase = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "OLAPDatabase", Required = true }),
+               STDConnector = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "STDConnector", Required = true }),
+               SynchConnectors = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "SynchConnectors", Required = true }),
+               CloneConnectors = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "CloneConnectors", Required = true }),
                // computed
-               WinServicesUNC = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "WinServicesUNC", Required = true }),
-               WinServicesPath = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.Files, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "WinServicesPath", Required = true }),
+               WinServicesUNC = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "WinServicesUNC", Required = true }),
+               WinServicesPath = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.XmlFile, SubCategory = QEnvPropSubCategory.EnvironmentsConfiguration, Name = "WinServicesPath", Required = true }),
             }
          };
 
@@ -349,7 +350,9 @@ namespace QToolbar.Plugins.EnvManager
                LEGAL_APP_PROCESS_MAPPING_WS_URL = AddProperty(new QEnvURLProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "LEGAL_APP_PROCESS_MAPPING_WS_URL", Required = true }),
                EXTERNAL_AGENCIES_PERFORMANCE_FILES_PATH = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "EXTERNAL_AGENCIES_PERFORMANCE_FILES_PATH", Required = true }),
                INTRADAY_FILE_UPLOAD_DIRECTORY = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "INTRADAY_FILE_UPLOAD_DIRECTORY", Required = true }),
-               REPORT_DATABASE = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "REPORT_DATABASE", Required = true })
+               SYSTEM_FOLDER = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "SYSTEM_FOLDER", Required = true }),
+               REPORT_DATABASE = AddProperty(new QEnvProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "REPORT_DATABASE", Required = true }),
+               APPLICATION_UPDATE_DIR = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "APPLICATION_UPDATE_DIR", Required = true }),
             },
             // QBCollection_Plus - AT_SYSTEM_PARAMS
             AT_SYSTEM_PARAMS = new P_QBC.P_AT_SYSTEM_PARAMS()
@@ -550,7 +553,19 @@ namespace QToolbar.Plugins.EnvManager
 
       }
 
-       private T AddProperty<T>(T prop) where T: QEnvProperty
+
+        public void Clear()
+        {
+
+            foreach (var prop in _Properties)
+            {
+                prop.Value = string.Empty;
+            }
+
+            Errors.Clear();
+        }
+
+        private T AddProperty<T>(T prop) where T: QEnvProperty
       {
          _Properties.Add(prop);
          return prop;

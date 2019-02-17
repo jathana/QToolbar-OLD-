@@ -47,7 +47,7 @@ namespace QToolbar.Plugins.EnvManager
          CheckSystemFolderSubfoldersAndEodIniFiles(objEnv, eodFlows, cancelToken);
 
          //// Validate cfs
-         //ValidateCFs(objEnv, adminCf, cancelToken);
+         ValidateCFs(objEnv, adminCf, cancelToken);
       }
 
       private void AddCFsFromLocalCheckout(QEnv objEnv, CancellationToken cancelToken)
@@ -64,7 +64,7 @@ namespace QToolbar.Plugins.EnvManager
                {
                   QEnvFileProperty prop = new QEnvFileProperty()
                   {
-                     Category = QEnvPropCategory.Files,
+                     Category = QEnvPropCategory.CFFile,
                      SubCategory = QEnvPropSubCategory.CFFile,
                      Origin = Path.GetFileName(cfRow["Repository"].ToString()),
                   };
@@ -90,7 +90,7 @@ namespace QToolbar.Plugins.EnvManager
 
             try
             {
-               string envNameInWeb = $"QCS_{objEnv.QBC.PSet_TLK_DATABASE_VERSIONS.MAJOR.Value}_{objEnv.QBC.PSet_TLK_DATABASE_VERSIONS.MINOR.Value}";
+               string envNameInWeb = $"QCS_{objEnv.QBC.TLK_DATABASE_VERSIONS.MAJOR.Value}_{objEnv.QBC.TLK_DATABASE_VERSIONS.MINOR.Value}";
 
                // add cfs from web server
 
@@ -113,7 +113,7 @@ namespace QToolbar.Plugins.EnvManager
                                  qcwsPhPath = qcwsVDir.PhysicalPath;
                                  objEnv.Properties.Add(new QEnvFileProperty()
                                  {
-                                    Category = QEnvPropCategory.Files,
+                                    Category = QEnvPropCategory.CFFile,
                                     SubCategory = QEnvPropSubCategory.CFFile,
                                     Name = "qbc.cf",
                                     Origin = "QC",
@@ -128,7 +128,7 @@ namespace QToolbar.Plugins.EnvManager
                                  toolkitPhPath = toolkitVDir.PhysicalPath;
                                  objEnv.Properties.Add(new QEnvFileProperty()
                                  {
-                                    Category = QEnvPropCategory.Files,
+                                    Category = QEnvPropCategory.CFFile,
                                     SubCategory = QEnvPropSubCategory.CFFile,
                                     Name = "qbc.cf",
                                     Origin = "QC",
@@ -159,20 +159,20 @@ namespace QToolbar.Plugins.EnvManager
       {
          if (!cancelToken.IsCancellationRequested)
          {
-            if (!string.IsNullOrEmpty(objEnv.QBC.PSet_AT_SYSTEM_PREF.LEGAL_APP_PROCESS_MAPPING_WS_URL.Host))
+            if (!string.IsNullOrEmpty(objEnv.QBC.AT_SYSTEM_PREF.LEGAL_APP_PROCESS_MAPPING_WS_URL.Host))
             {
                try
                {
-                  string envNameInWeb = $"LegalApp_{objEnv.QBC.PSet_TLK_DATABASE_VERSIONS.MAJOR.Value}_{objEnv.QBC.PSet_TLK_DATABASE_VERSIONS.MINOR.Value}";
+                  string envNameInWeb = $"LegalApp_{objEnv.QBC.TLK_DATABASE_VERSIONS.MAJOR.Value}_{objEnv.QBC.TLK_DATABASE_VERSIONS.MINOR.Value}";
 
                   // add cfs from legal web server
-                  using (ServerManager mgr = ServerManager.OpenRemote(objEnv.QBC.PSet_AT_SYSTEM_PREF.LEGAL_APP_PROCESS_MAPPING_WS_URL.Host))
+                  using (ServerManager mgr = ServerManager.OpenRemote(objEnv.QBC.AT_SYSTEM_PREF.LEGAL_APP_PROCESS_MAPPING_WS_URL.Host))
                   {
                      foreach (var s in mgr.Sites)
                      {
                         try
                         {
-                           if (s.Bindings != null && s.Bindings.Count > 0 && (s.Bindings[0]).EndPoint != null && (s.Bindings[0]).EndPoint.Port.ToString().Equals(objEnv.QBC.PSet_AT_SYSTEM_PREF.LEGAL_APP_PROCESS_MAPPING_WS_URL.Port) && s.Name.StartsWith(envNameInWeb))
+                           if (s.Bindings != null && s.Bindings.Count > 0 && (s.Bindings[0]).EndPoint != null && (s.Bindings[0]).EndPoint.Port.ToString().Equals(objEnv.QBC.AT_SYSTEM_PREF.LEGAL_APP_PROCESS_MAPPING_WS_URL.Port) && s.Name.StartsWith(envNameInWeb))
                            {
                               string wsPhysicalPath = null;
                               foreach (var a in s.Applications)
@@ -183,11 +183,11 @@ namespace QToolbar.Plugins.EnvManager
                                     wsPhysicalPath = qcBackOfficeVDir.PhysicalPath;
                                     objEnv.Properties.Add(new QEnvFileProperty()
                                     {
-                                       Category = QEnvPropCategory.Files,
+                                       Category = QEnvPropCategory.CFFile,
                                        SubCategory = QEnvPropSubCategory.CFFile,
                                        Name = "qbc.cf",
                                        Origin = "PROTEUS",
-                                       Value = $"\\\\{objEnv.QBC.PSet_AT_SYSTEM_PREF.LEGAL_APP_PROCESS_MAPPING_WS_URL.Host}\\{wsPhysicalPath.Replace(":", "$")}\\qbc.cf",
+                                       Value = $"\\\\{objEnv.QBC.AT_SYSTEM_PREF.LEGAL_APP_PROCESS_MAPPING_WS_URL.Host}\\{wsPhysicalPath.Replace(":", "$")}\\qbc.cf",
                                     });
 
                                  }
@@ -198,11 +198,11 @@ namespace QToolbar.Plugins.EnvManager
                                     wsPhysicalPath = qcWebCollectionWSVDir.PhysicalPath;
                                     objEnv.Properties.Add(new QEnvFileProperty()
                                     {
-                                       Category = QEnvPropCategory.Files,
+                                       Category = QEnvPropCategory.CFFile,
                                        SubCategory = QEnvPropSubCategory.CFFile,
                                        Name = "qbc.cf",
                                        Origin = "PROTEUS",
-                                       Value = $"\\\\{objEnv.QBC.PSet_AT_SYSTEM_PREF.LEGAL_APP_PROCESS_MAPPING_WS_URL.Host}\\{wsPhysicalPath.Replace(":", "$")}\\qbc.cf",
+                                       Value = $"\\\\{objEnv.QBC.AT_SYSTEM_PREF.LEGAL_APP_PROCESS_MAPPING_WS_URL.Host}\\{wsPhysicalPath.Replace(":", "$")}\\qbc.cf",
                                     });
                                  }
 
@@ -212,11 +212,11 @@ namespace QToolbar.Plugins.EnvManager
                                     wsPhysicalPath = SCToolkit2WSVDir.PhysicalPath;
                                     objEnv.Properties.Add(new QEnvFileProperty()
                                     {
-                                       Category = QEnvPropCategory.Files,
+                                       Category = QEnvPropCategory.CFFile,
                                        SubCategory = QEnvPropSubCategory.CFFile,
                                        Name = "qbc.cf",
                                        Origin = "PROTEUS",
-                                       Value = $"\\\\{objEnv.QBC.PSet_AT_SYSTEM_PREF.LEGAL_APP_PROCESS_MAPPING_WS_URL.Host}\\{wsPhysicalPath.Replace(":", "$")}\\qbc.cf",
+                                       Value = $"\\\\{objEnv.QBC.AT_SYSTEM_PREF.LEGAL_APP_PROCESS_MAPPING_WS_URL.Host}\\{wsPhysicalPath.Replace(":", "$")}\\qbc.cf",
                                     });
                                  }
 
@@ -295,7 +295,7 @@ namespace QToolbar.Plugins.EnvManager
                   // batch executor qbc.cf
                   objEnv.Properties.Add(new QEnvFileProperty()
                   {
-                     Category=QEnvPropCategory.Files,
+                     Category=QEnvPropCategory.CFFile,
                      SubCategory=QEnvPropSubCategory.CFFile,
                      Name = "qbc.cf",
                      Origin = "QC",
@@ -305,7 +305,7 @@ namespace QToolbar.Plugins.EnvManager
                   // EOD executor
                   objEnv.Properties.Add(new QEnvFileProperty()
                   {
-                     Category = QEnvPropCategory.Files,
+                     Category = QEnvPropCategory.CFFile,
                      SubCategory = QEnvPropSubCategory.CFFile,
                      Name = "qbc.cf",
                      Origin = "QC",
@@ -351,7 +351,7 @@ namespace QToolbar.Plugins.EnvManager
                // add batch service config file
                objEnv.Properties.Add(new QEnvUNCDirProperty()
                {
-                  Category=QEnvPropCategory.Files,
+                  Category=QEnvPropCategory.CFFile,
                   SubCategory=QEnvPropSubCategory.BatchServiceConfig,
                   Name = Path.GetFileName(batchServiceConfig),
                   Value = batchServiceConfig
@@ -389,7 +389,7 @@ namespace QToolbar.Plugins.EnvManager
                // add EODExecutor config file to Other Files
                objEnv.Properties.Add(new QEnvUNCDirProperty()
                {
-                  Category=QEnvPropCategory.Files,
+                  Category=QEnvPropCategory.CFFile,
                   SubCategory=QEnvPropSubCategory.EODServiceConfig,
                   Name = Path.GetFileName(eodServiceConfig),
                   Value = eodServiceConfig
@@ -426,7 +426,7 @@ namespace QToolbar.Plugins.EnvManager
             // add cmd_commands.txt file 
             objEnv.Properties.Add(new QEnvUNCDirProperty()
             {
-               Category=QEnvPropCategory.Files,
+               Category=QEnvPropCategory.CFFile,
                SubCategory = QEnvPropSubCategory.WinServicesCmdCommandsTxt,
                Name = Path.GetFileName(cmdFile),
                Value = cmdFile
@@ -450,9 +450,9 @@ namespace QToolbar.Plugins.EnvManager
         {
             string eodExecutorEodIniFile = string.Empty;
             string applicationUpdateEodIniFile = string.Empty;
-            if (objEnv.QBC.PSet_AT_SYSTEM_PREF.SYSTEM_FOLDER.Resolved)
+            if (objEnv.QBC.AT_SYSTEM_PREF.SYSTEM_FOLDER.Resolved)
             {
-                string[] eodExecutorDirs = Directory.GetDirectories(objEnv.QBC.PSet_AT_SYSTEM_PREF.SYSTEM_FOLDER.Value, "EOD*Executor");
+                string[] eodExecutorDirs = Directory.GetDirectories(objEnv.QBC.AT_SYSTEM_PREF.SYSTEM_FOLDER.Value, "EOD*Executor");
                 string eodExecutorDir = string.Empty;
 
                 // EODExecutor dir
@@ -464,7 +464,7 @@ namespace QToolbar.Plugins.EnvManager
                     {
                         objEnv.Properties.Add(new QEnvFileProperty()
                         {
-                            Category = QEnvPropCategory.Files,
+                            Category = QEnvPropCategory.IniFile,
                             SubCategory = QEnvPropSubCategory.EODExecutorEODIniFile,
                             Name = "EOD Executor eod.ini",
                             Value = eodExecutorEodIniFile
@@ -479,7 +479,7 @@ namespace QToolbar.Plugins.EnvManager
                     {
                         objEnv.Properties.Add(new QEnvFileProperty()
                         {
-                            Category = QEnvPropCategory.Files,
+                            Category = QEnvPropCategory.CFFile,
                             SubCategory = QEnvPropSubCategory.EODExecutorCFFile,
                             Name = "qbc.cf",
                             Origin = "QC",
@@ -489,14 +489,20 @@ namespace QToolbar.Plugins.EnvManager
                     }
                 }
                 else
-                    objEnv.Errors.AddError($"Dir not found \"{objEnv.SystemFolder}\\EOD*Executor\"", objEnv.SystemFolder);
+                    objEnv.Errors.AddError($"Dir not found \"{objEnv.QBC.AT_SYSTEM_PREF.SYSTEM_FOLDER.Value}\\EOD*Executor\"", objEnv.QBC.AT_SYSTEM_PREF.SYSTEM_FOLDER.Value);
 
                 // ApplicationUpdate dir
-                string applicationUpdateDir = Path.Combine(objEnv.SystemFolder, "ApplicationUpdate");
+                string applicationUpdateDir = Path.Combine(objEnv.QBC.AT_SYSTEM_PREF.SYSTEM_FOLDER.Value, "ApplicationUpdate");
                 applicationUpdateEodIniFile = Path.Combine(applicationUpdateDir, "eod.ini");
                 if (File.Exists(applicationUpdateEodIniFile))
                 {
-                    objEnv.OtherFiles.Add(new QEnvironment.OtherFile() { Name = "Application Update eod.ini", Path = applicationUpdateEodIniFile });
+                    objEnv.Properties.Add(new QEnvFileProperty()
+                    {
+                        Category=QEnvPropCategory.IniFile,
+                        SubCategory=QEnvPropSubCategory.ApplicationUpdateEodIniFile,
+                        Name= "Application Update eod.ini",
+                        Value = applicationUpdateEodIniFile
+                    });
                 }
                 else
                 {
@@ -506,21 +512,29 @@ namespace QToolbar.Plugins.EnvManager
                 // add ...QCS_SystemFolders\INST_X_Y\ApplicationUpdate\qbc.cf
                 if (!string.IsNullOrEmpty(applicationUpdateDir))
                 {
-                    QEnvironment.CfInfo applicationUpdateCfInfo = new QEnvironment.CfInfo();
-                    applicationUpdateCfInfo.Name = "qbc.cf";
-                    applicationUpdateCfInfo.Repository = "QC";
-                    applicationUpdateCfInfo.Path = $"{applicationUpdateDir}\\qbc.cf";
-                    objEnv.CFs.Add(applicationUpdateCfInfo);
+
+                    objEnv.Properties.Add(new QEnvFileProperty()
+                    {
+                        Category = QEnvPropCategory.CFFile,
+                        SubCategory = QEnvPropSubCategory.ApplicationUpdateCFFile,
+                        Name = "qbc.cf",
+                        Origin="QC",
+                        Value = $"{applicationUpdateDir}\\qbc.cf"
+                    });
+
                 }
-                CheckFolderExistence(applicationUpdateDir, objEnv);
-                CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Attachments"), objEnv);
-                CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Exports"), objEnv);
-                CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "ExternalAgencies"), objEnv);
-                CheckFolderExistence(Path.Combine(objEnv.SystemFolder, "Templates"), objEnv);
+
+                objEnv.Properties.Add(new QEnvUNCDirProperty()
+                {
+                    Category=QEnvPropCategory.QBCollection_Plus,
+                    SubCategory=QEnvPropSubCategory.AT_SYSTEM_PREF,
+                    Name="Application Update Dir",
+                    Value= applicationUpdateDir
+                });
             }
             else
             {
-                objEnv.Errors.AddError($"System Folder is empty or does not exist ({objEnv.SystemFolder}).", objEnv.SystemFolder);
+                objEnv.Errors.AddError($"System Folder is empty or does not exist ({objEnv.QBC.AT_SYSTEM_PREF.SYSTEM_FOLDER.Value}).", objEnv.QBC.AT_SYSTEM_PREF.SYSTEM_FOLDER.Value);
             }
 
             #region check eod.ini if out of date
@@ -558,36 +572,36 @@ namespace QToolbar.Plugins.EnvManager
             #endregion
         }
 
-        //private void ValidateCFs(QEnvironment objEnv, CfFile adminCf, CancellationToken cancelToken)
-        //{
-        //   CfValidator cfValidator = new CfValidator();
+        private void ValidateCFs(QEnv objEnv, CfFile adminCf, CancellationToken cancelToken)
+        {
+            CfValidator cfValidator = new CfValidator();
 
-        //   // validate against qbc_admin.cf
-        //   List<string> keys = adminCf.GetKeys(objEnv.DBCollectionPlusServer, objEnv.DBCollectionPlusName);
-        //   if (keys.Count == 0)
-        //   {
-        //      objEnv.Errors.AddError($"Info not found {objEnv.DBCollectionPlusServer}.{objEnv.DBCollectionPlusName}", "");
-        //   }
-        //   foreach (QEnvironment.CfInfo cfInfo in objEnv.CFs)
-        //   {
-        //      objEnv.Errors.AddRange(cfValidator.Validate(cfInfo.Path, keys));
-        //   }
-        //   // validate against agent qbc.cf
-        //   // get agent client cf
-        //   string path = objEnv.QBCAdminCfPath.Replace(@"QCS\QCSClient\QBC_Admin.cf", @"CollectionAgentSystem\CollectionAgentSystemClient\QBC.cf");
-        //   CfFile agentCf = new CfFile(path);
-        //   keys = agentCf.GetKeys(objEnv.DBCollectionPlusServer, objEnv.DBCollectionPlusName);
-        //   if (keys.Count == 0)
-        //   {
-        //      objEnv.Errors.AddError($"Info not found {objEnv.DBCollectionPlusServer}.{objEnv.DBCollectionPlusName}", "");
-        //   }
-        //   foreach (QEnvironment.CfInfo cfInfo in objEnv.CFs)
-        //   {
-        //      objEnv.Errors.AddRange(cfValidator.Validate(cfInfo.Path, keys));
-        //   }
+            // validate against qbc_admin.cf
+            List<string> keys = adminCf.GetKeys(objEnv.QBC.BI_GLM_INSTALLATION.INST_SERVER.Value, objEnv.QBC.BI_GLM_INSTALLATION.INST_db_NAME.Value);
+            if (keys.Count == 0)
+            {
+                objEnv.Errors.AddError($"Info not found {objEnv.QBC.BI_GLM_INSTALLATION.INST_SERVER.Value}.{objEnv.QBC.BI_GLM_INSTALLATION.INST_db_NAME.Value}", "");
+            }
+            foreach (QEnvProperty prop in objEnv.Properties.Where(p=>p.Category==QEnvPropCategory.CFFile))
+            {
+                objEnv.Errors.AddRange(cfValidator.Validate(prop.Value, keys));
+            }
+            // validate against agent qbc.cf
+            // get agent client cf
+            string path = objEnv.QBCAdminCfPath.Replace(@"QCS\QCSClient\QBC_Admin.cf", @"CollectionAgentSystem\CollectionAgentSystemClient\QBC.cf");
+            CfFile agentCf = new CfFile(path);
+            keys = agentCf.GetKeys(objEnv.QBC.BI_GLM_INSTALLATION.INST_SERVER.Value, objEnv.QBC.BI_GLM_INSTALLATION.INST_db_NAME.Value);
+            if (keys.Count == 0)
+            {
+                objEnv.Errors.AddError($"Info not found {objEnv.QBC.BI_GLM_INSTALLATION.INST_SERVER.Value}.{objEnv.QBC.BI_GLM_INSTALLATION.INST_db_NAME.Value}", "");
+            }
+            
+            foreach (QEnvProperty prop in objEnv.Properties.Where(p => p.Category == QEnvPropCategory.CFFile))
+            {
+                objEnv.Errors.AddRange(cfValidator.Validate(prop.Value, keys));
+            }
 
-
-        //}
+        }
         #endregion
 
         #region private

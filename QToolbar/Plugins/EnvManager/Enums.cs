@@ -13,8 +13,9 @@ namespace QToolbar.Plugins.EnvManager
       QBAnalytics,
       QBC_D3F_Intermediate,
       QCSClient,
-      Files
-      
+      CFFile,
+      XmlFile,
+      IniFile,
 
    }
 
@@ -36,10 +37,11 @@ namespace QToolbar.Plugins.EnvManager
       WinServicesCmdCommandsTxt,
       EODExecutorEODIniFile,      
       EODExecutorCFFile,
+      ApplicationUpdateEodIniFile,
+      ApplicationUpdateCFFile
 
-  
 
-   }
+    }
    public enum QEnvPropertySetType
    {
       List,

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using QToolbar.Helpers;
+using System.IO;
 
 namespace QToolbar.Plugins.EnvManager
 {
@@ -43,13 +44,18 @@ namespace QToolbar.Plugins.EnvManager
          {
             if (_Permissions != Utils.FILE_PERMISSION_FULL_ACCESS)
             {
-               retval.AddError($"Full Access permission is required \"{Value}\"", Value);
+               retval.AddError($"{ToString()} : Full Access permission is required \"{Value}\"", Value);
             }
             if (!Resolved)
             {
-               retval.AddError($"Unresolved dir {Description} : {Value}.", Value);
+               retval.AddError($"{ToString()} : Unresolved dir {Description} : {Value}.", Value);
             }
          }
+
+            if (!Directory.Exists(Value))
+            {
+                retval.AddError($"{ToString()} : Dir not found \"{Value}\"", Value);
+            }
          return retval;
       }
    }

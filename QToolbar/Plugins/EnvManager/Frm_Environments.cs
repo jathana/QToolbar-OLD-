@@ -22,28 +22,28 @@ using System.Xml.Serialization;
 using System.Xml;
 using QToolbar.Plugins.EnvManager;
 
-namespace QToolbar.Plugins.Environments
+namespace QToolbar.Plugins.EnvManager
 {
    public partial class Frm_Environments : DevExpress.XtraEditors.XtraForm
    {
       private CfFile _QbcAdminCF;
 
-      private QEnvironments _Envs;
       SynchronizationContext _SyncContext;
+
+      private QEnvLoader _EnvLoader;
 
       public Frm_Environments()
       {
          InitializeComponent();
 
-
-
          //UXGridView.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.CellFocus;
          //UXGridView.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CellSelect;
          //UXGridView.OptionsSelection.EnableAppearanceFocusedRow = false;
+         // test
+         _EnvLoader = new QEnvLoader();
+            _EnvLoader.InfoCollected += _EnvLoader_InfoCollected;
+            _EnvLoader.AllInfoCollected += _EnvLoader_AllInfoCollected;
 
-         _Envs = new QEnvironments();
-         _Envs.InfoCollected += _Envs_InfoCollected;
-         _Envs.AllInfoCollected += _Envs_AllInfoCollected;
          UXGridView.OptionsView.ColumnAutoWidth = false;
          UXGridView.OptionsBehavior.Editable = false;
          UXGridView.OptionsView.RowAutoHeight = true;
@@ -72,7 +72,7 @@ namespace QToolbar.Plugins.Environments
                 QEnv env = (input as EnvManager.EnvInfoEventArgs).Environment;
                 if (env != null)
                 {
-                    int rowHandle = UXGridView.LocateByValue("DBCollectionPlusName", env.QCS_CLIENT.QBC_ADMIN.QBC_DB);
+                    int rowHandle = UXGridView.LocateByValue("Name", env.Name);
                     if (rowHandle != DevExpress.XtraGrid.GridControl.InvalidRowHandle)
                     {
                         UXGridView.SetRowCellValue(rowHandle, "Status", $"Ready({env.Errors.GetStrongestDesc()})");
@@ -95,24 +95,6 @@ namespace QToolbar.Plugins.Environments
          //}
       }
 
-      private void _Envs_InfoCollected(object sender, EnvInfoEventArgs e)
-      {
-         _SyncContext.Post((input) =>
-         {
-
-            QEnvironment env = (input as EnvInfoEventArgs).Environment;
-            if (env != null)
-            {
-               int rowHandle = UXGridView.LocateByValue("DBCollectionPlusName", env.DBCollectionPlusName);
-               if (rowHandle != DevExpress.XtraGrid.GridControl.InvalidRowHandle)
-               {
-                  UXGridView.SetRowCellValue(rowHandle,"Status",$"Ready({env.Errors.GetStrongestDesc()})");
-               }
-            }
-            UXGridView.BestFitColumns();
-         }, e);
-      }
-
       private void UXGrid_ViewRegistered(object sender, DevExpress.XtraGrid.ViewOperationEventArgs e)
       {
          e.View.DoubleClick += View_DoubleClick;
@@ -132,7 +114,7 @@ namespace QToolbar.Plugins.Environments
       {
         CreateEnvironmentsMenuItems();
 
-         UXGrid.DataSource = _Envs.Data;
+         UXGrid.DataSource = _EnvLoader.Data;
 
       }
 
@@ -213,11 +195,14 @@ namespace QToolbar.Plugins.Environments
             {
 
                EnableButtons(false);
-               _Envs.AddOrUpdate(item.Caption, cf, tag.Item2, tag.Item3);
+               _EnvLoader.AddOrUpdate(item.Caption, cf, tag.Item2, tag.Item3);
+
+               _EnvLoader.AddOrUpdate(item.Caption, cf, tag.Item2, tag.Item3);
+
             }
             else
             {
-               _Envs.Remove(item.Caption);
+               _EnvLoader.Remove(item.Caption);
             }
             
             UXGridView.BestFitColumns();
@@ -299,7 +284,7 @@ namespace QToolbar.Plugins.Environments
 
       private void btnRemoveEnvsFromCFs_ItemClick(object sender, ItemClickEventArgs e)
       {
-         _Envs.RemoveEnvsFromCFs();
+         //_Env.RemoveEnvsFromCFs();
       }
 
       private void Frm_Environments_FormClosing(object sender, FormClosingEventArgs e)
@@ -309,11 +294,11 @@ namespace QToolbar.Plugins.Environments
 
       private void btnRefresh_ItemClick(object sender, ItemClickEventArgs e)
       {
-         if (_Envs.Data.Count > 0)
+         if (_EnvLoader.Data.Count > 0)
          {
             EnableButtons(false);
             UXGridView.CollapseAllDetails();
-            _Envs.Refresh();
+            _EnvLoader.Refresh();
             UXGridView.RefreshData();
          }
       }
@@ -331,15 +316,15 @@ namespace QToolbar.Plugins.Environments
       private void btnUpdateCFs_ItemClick(object sender, ItemClickEventArgs e)
       {
 
-         int[] selectedRows = UXGridView.GetSelectedRows();
-         if (selectedRows.Length > 0)
-         {
-            QEnvironment qenv = ((QEnvironment)UXGridView.GetRow(selectedRows[0]));
-            Frm_UpdateCFs f = new Frm_UpdateCFs();
-            f.Show(qenv);
-         }
-         else
-            XtraMessageBox.Show($"You have to select an environment first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+         //int[] selectedRows = UXGridView.GetSelectedRows();
+         //if (selectedRows.Length > 0)
+         //{
+         //   QEnvironment qenv = ((QEnvironment)UXGridView.GetRow(selectedRows[0]));
+         //   Frm_UpdateCFs f = new Frm_UpdateCFs();
+         //   f.Show(qenv);
+         //}
+         //else
+         //   XtraMessageBox.Show($"You have to select an environment first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
       }
 
 
