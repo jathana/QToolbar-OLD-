@@ -1,6 +1,7 @@
 ﻿using QToolbar.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace QToolbar.Plugins.EnvManager
 
         public QEnvPropertySet(QEnvPropertySetType setType, string name)
         {
-            SetType = SetType;
+            SetType = setType;
             Name = name;
         }
 
@@ -27,15 +28,15 @@ namespace QToolbar.Plugins.EnvManager
             switch (SetType)
             {
                 case QEnvPropertySetType.List:
-                    Validate_List();
+                    retval.AddRange(Validate_List());
                     break;
 
                 case QEnvPropertySetType.MustHaveSameValue:
-                    Validate_MustHaveSameValue();
+                    retval.AddRange(Validate_MustHaveSameValue());
                     break;
 
                 case QEnvPropertySetType.DataBaseConnection:
-                    Validate_DataBaseConnection();
+                    retval.AddRange(Validate_DataBaseConnection());
                     break;
             }
             return retval;
@@ -44,10 +45,10 @@ namespace QToolbar.Plugins.EnvManager
         private Errors Validate_List()
         {
             Errors retval = new Errors();
-            this.ForEach(delegate (QEnvProperty property)
+            foreach(var property in this.ToList())
             {
                 retval.AddRange(property.Validate());
-            });
+            }
 
             return retval;
         }
@@ -69,6 +70,23 @@ namespace QToolbar.Plugins.EnvManager
         private Errors Validate_DataBaseConnection()
         {
             Errors retval = new Errors();
+
+            string server = this.FirstOrDefault(p => p is QEnvServerProperty).Value;
+            string db = this.FirstOrDefault(p => p is QEnvDatabaseProperty).Value;
+
+            string constr = Utils.GetConnectionString(server, db);
+            try
+            {
+                SqlConnection con = new SqlConnection();
+            }
+            catch(Exception ex)
+            {
+
+            }
+            finally
+            {
+
+            }
             return retval;
         }
 

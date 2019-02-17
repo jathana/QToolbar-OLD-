@@ -475,9 +475,9 @@ namespace QToolbar.Plugins.Environments
             _GLMPrefix = node.ReadChildInnerTextString("GLMPrefix");
             _ConnectorRepositoryRoot = node.ReadChildInnerTextString("ConnectorRepositoryRoot");
             _ConnectorBranch = node.ReadChildInnerTextString("ConnectorBranch");
+                _EoDMonitorAlerts = node.ReadChildInnerTextString("EoDMonitorAlerts");
 
-            
-            _NightlyBuildDBServer = node.ReadChildInnerTextString("NightlyBuildDBServer");
+                _NightlyBuildDBServer = node.ReadChildInnerTextString("NightlyBuildDBServer");
             _NightlyBuildDB = node.ReadChildInnerTextString("NightlyBuildDB");
             _BatchServiceName = node.ReadChildInnerTextString("BatchServiceName");
             _BatchServicePath = node.ReadChildInnerTextString("BatchServicePath");
@@ -488,7 +488,7 @@ namespace QToolbar.Plugins.Environments
             _EODServicePath = node.ReadChildInnerTextString("EODServicePath");
             _EODServiceServer = node.ReadChildInnerTextString("EODServiceServer");
             _EODServiceUNCPath = node.ReadChildInnerTextString("EODServiceUNCPath");
-
+                
             _EnvironmentFlavor = node.ReadChildInnerTextString("EnvironmentFlavor");
             _AnalyticsServer = node.ReadChildInnerTextString("AnalyticsServer");
             _AnalyticsDatabase = node.ReadChildInnerTextString("AnalyticsDatabase");

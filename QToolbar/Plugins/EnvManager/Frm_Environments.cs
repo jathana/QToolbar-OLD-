@@ -196,9 +196,6 @@ namespace QToolbar.Plugins.EnvManager
 
                EnableButtons(false);
                _EnvLoader.AddOrUpdate(item.Caption, cf, tag.Item2, tag.Item3);
-
-               _EnvLoader.AddOrUpdate(item.Caption, cf, tag.Item2, tag.Item3);
-
             }
             else
             {
