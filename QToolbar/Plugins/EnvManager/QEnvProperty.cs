@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace QToolbar.Plugins.EnvManager
@@ -44,8 +45,10 @@ namespace QToolbar.Plugins.EnvManager
         /// if has value then property value must equals this value.
         /// </summary>
         internal string CheckEqualsValue { get; set; }
-
-        
+        /// <summary>
+        /// property value should match regular expression.
+        /// </summary>
+        internal string MatchRegexPattern { get; set; }
       public Errors Errors
         { get; internal set; }
 
@@ -98,6 +101,16 @@ namespace QToolbar.Plugins.EnvManager
                     if (!Value.Equals(CheckEqualsValue))
                     {
                         Errors.AddError($"{ToString()}: Value \"{Value}\"should be equals to \"{CheckEqualsValue}\".", "");
+                    }
+                }
+
+                // should ends with
+                if(!EmptyValue &&  !string.IsNullOrEmpty(MatchRegexPattern))
+                {
+                    Regex reg = new Regex(MatchRegexPattern);
+                    if (!reg.IsMatch(Value))
+                    {
+                        Errors.AddError($"{ToString()}: Value \"{Value}\"should follow patern \"{MatchRegexPattern}\".", "");
                     }
                 }
             }

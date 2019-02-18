@@ -35,7 +35,7 @@ namespace QToolbar.Plugins.EnvManager
 
             MultiSqlExecutor executor = new MultiSqlExecutor();
             // TLK_DATABASE_VERSIONS
-            executor.AddSql("TLK_DATABASE_VERSIONS", "SELECT top(1) MAJOR, MINOR, PATCH, CONVERT(NVARCHAR,MAJOR)+'.' + CONVERT(NVARCHAR,MINOR) AS VERSION FROM TLK_DATABASE_VERSIONS ORDER BY 1 DESC");
+            executor.AddSql("TLK_DATABASE_VERSIONS", "SELECT top(1) ID, MAJOR, MINOR, PATCH, CONVERT(NVARCHAR,MAJOR)+'.' + CONVERT(NVARCHAR,MINOR) AS VERSION FROM TLK_DATABASE_VERSIONS ORDER BY 1 DESC");
 
             // BI_GLM_INSTALLATION
             executor.AddSql("BI_GLM_INSTALLATION", "SELECT * FROM BI_GLM_INSTALLATION");
@@ -109,6 +109,9 @@ namespace QToolbar.Plugins.EnvManager
 
                 // ManClientFlows
                 eodFlows = GetFlowsForEodIni(dataSet);
+
+                // PostSetProperties(QEnv objEnv)
+                PostSetProperties(objEnv);
             }
             catch (Exception ex)
             {
@@ -301,6 +304,17 @@ namespace QToolbar.Plugins.EnvManager
                 retval.Add(row["EOFC_FLOW_NAME"].ToString());
             }
             return retval;
+        }
+
+
+        private void PostSetProperties(QEnv objEnv)
+        {
+            // set CheckRegex to qbc database properties
+            string qbcRegPattern = $"QBCollection[_]Plus[_][A-Z]+[_][{objEnv.QBC.TLK_DATABASE_VERSIONS.MAJOR.Value}][_][{objEnv.QBC.TLK_DATABASE_VERSIONS.MINOR.Value}][_]*[0-9]*[_]*[0-9]*";
+            (objEnv.Dependencies.FirstOrDefault(d => d.Name == "QBCollection_Plus") as QEnvPropertySetSameValue).MatchRegexPattern = qbcRegPattern;
+
+            // 
+
         }
 
         #endregion

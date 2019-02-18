@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace QToolbar.Plugins.EnvManager
 {
-    public class QEnvPropertySet : List<QEnvProperty>
+    public class QEnvPropertySetList : QEnvPropertySet
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
 
-        public virtual Errors Validate()
+        public override Errors Validate()
         {
             Errors retval = new Errors();
-            
+            foreach (var property in this.ToList())
+            {
+                retval.AddRange(property.Validate());
+            }
+
             return retval;
         }
-
-
 
     }
 }

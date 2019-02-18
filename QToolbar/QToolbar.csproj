@@ -282,6 +282,9 @@
     <Compile Include="Plugins\EnvManager\QEnvLoader.cs" />
     <Compile Include="Plugins\EnvManager\QEnvDatabasesLoader.cs" />
     <Compile Include="Plugins\EnvManager\QEnvProperty.cs" />
+    <Compile Include="Plugins\EnvManager\QEnvPropertySetDBConnection.cs" />
+    <Compile Include="Plugins\EnvManager\QEnvPropertySetSameValue.cs" />
+    <Compile Include="Plugins\EnvManager\QEnvPropertySetList.cs" />
     <Compile Include="Plugins\EnvManager\QEnvPropertySet.cs" />
     <Compile Include="Plugins\EnvManager\QEnvServerProperty.cs" />
     <Compile Include="Plugins\EnvManager\QEnvDatabaseProperty.cs" />

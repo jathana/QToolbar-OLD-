@@ -220,13 +220,14 @@ namespace QToolbar.Plugins.EnvManager
         internal P_ENV_CONF ENV_CONF { get; set; }
         public Errors Errors { get; internal set; }
         public QEnvPropertySet Properties { get { return _Properties; } }
+        internal List<QEnvPropertySet> Dependencies {  get { return _Dependencies; } }
 
         #endregion
 
         #region public methods
         public QEnv()
         {
-            _Properties = new EnvManager.QEnvPropertySet(QEnvPropertySetType.List, "Environment properties");
+            _Properties = new EnvManager.QEnvPropertySetList() { Name = "Environment properties" };
             _Dependencies = new List<QEnvPropertySet>();
             Errors = new Errors();
 
@@ -432,7 +433,7 @@ namespace QToolbar.Plugins.EnvManager
         private void Define_Dependencies()
         {
             // QBCollection Server
-            QEnvPropertySet sameValues_QBCServer = new QEnvPropertySet(QEnvPropertySetType.MustHaveSameValue, "QBC_Server");
+            QEnvPropertySet sameValues_QBCServer = new QEnvPropertySetSameValue() { Name = "QBC_Server" };
             sameValues_QBCServer.Add(QBC.BI_GLM_INSTALLATION.INST_SERVER);
             sameValues_QBCServer.Add(QBC.AT_SYSTEM_PARAMS.QBC_SERVER);
             sameValues_QBCServer.Add(ARCHIVE.AT_SYSTEM_PARAMS.QBC_SERVER);
@@ -441,7 +442,7 @@ namespace QToolbar.Plugins.EnvManager
             _Dependencies.Add(sameValues_QBCServer);
 
             // QBCollection_Plus
-            QEnvPropertySet sameValues_QBCPlus = new QEnvPropertySet(QEnvPropertySetType.MustHaveSameValue, "QBCollection_Plus");
+            QEnvPropertySet sameValues_QBCPlus = new QEnvPropertySetSameValue() { Name = "QBCollection_Plus" };
             sameValues_QBCPlus.Add(QBC.BI_GLM_INSTALLATION.INST_db_NAME);
             sameValues_QBCPlus.Add(QBC.AT_SYSTEM_PREF.REPORT_DATABASE);
             sameValues_QBCPlus.Add(QBC.AT_SYSTEM_PARAMS.QBC_NAME);
@@ -451,7 +452,7 @@ namespace QToolbar.Plugins.EnvManager
             _Dependencies.Add(sameValues_QBCPlus);
 
             // Analytics Server
-            QEnvPropertySet sameValues_QBAServer = new QEnvPropertySet(QEnvPropertySetType.MustHaveSameValue, "QBA_Server");
+            QEnvPropertySet sameValues_QBAServer = new QEnvPropertySetSameValue() { Name = "QBA_Server" };
             sameValues_QBAServer.Add(QBC.BI_GLM_INSTALLATION.QBA_SERVER);
             sameValues_QBAServer.Add(QBC.AT_SYSTEM_PARAMS.QBA_SERVER);
             sameValues_QBAServer.Add(QBA.ADMIN_WRAPPER_SETTINGS.QBA_LINKED_SERVER_NAME);
@@ -460,7 +461,7 @@ namespace QToolbar.Plugins.EnvManager
             _Dependencies.Add(sameValues_QBAServer);
 
             // Analytics DB
-            QEnvPropertySet sameValues_QBAnalytics = new QEnvPropertySet(QEnvPropertySetType.MustHaveSameValue, "QBA_Database");
+            QEnvPropertySet sameValues_QBAnalytics = new QEnvPropertySetSameValue() { Name = "QBA_Database" };
             sameValues_QBAnalytics.Add(QBC.BI_GLM_INSTALLATION.QBA_db_NAME);
             sameValues_QBAnalytics.Add(QBC.AT_SYSTEM_PARAMS.QBA_NAME);
             sameValues_QBAnalytics.Add(QBA.ADMIN_WRAPPER_SETTINGS.QBA_LINKED_DB_NAME);
@@ -469,19 +470,19 @@ namespace QToolbar.Plugins.EnvManager
             _Dependencies.Add(sameValues_QBAnalytics);
 
             // QD3F Server
-            QEnvPropertySet sameValues_QD3F_Server = new QEnvPropertySet(QEnvPropertySetType.MustHaveSameValue, "QD3F_Server");
+            QEnvPropertySet sameValues_QD3F_Server = new QEnvPropertySetSameValue() { Name = "QD3F_Server" };
             sameValues_QD3F_Server.Add(QBC.BI_GLM_INSTALLATION.QD3F_SERVER);
             sameValues_QD3F_Server.Add(D3F.ADMIN_WRAPPER_SETTINGS.D3F_LINKED_SERVER_NAME);
             _Dependencies.Add(sameValues_QD3F_Server);
 
             // QD3F Database
-            QEnvPropertySet sameValues_QD3F_Database = new QEnvPropertySet(QEnvPropertySetType.MustHaveSameValue, "QD3F_Database");
+            QEnvPropertySet sameValues_QD3F_Database = new QEnvPropertySetSameValue() { Name = "QD3F_Database" };
             sameValues_QD3F_Database.Add(QBC.BI_GLM_INSTALLATION.QD3F_db_NAME);
             sameValues_QD3F_Database.Add(D3F.ADMIN_WRAPPER_SETTINGS.D3F_LINKED_DB_NAME);
             _Dependencies.Add(sameValues_QD3F_Database);
 
             // qbc_user
-            QEnvPropertySet sameValues_QBCUser = new QEnvPropertySet(QEnvPropertySetType.MustHaveSameValue, "qbc_user");
+            QEnvPropertySet sameValues_QBCUser = new QEnvPropertySetSameValue() { Name = "qbc_user" };
             sameValues_QBCUser.Add(QBC.BI_GLM_INSTALLATION.INST_dbUSER);
             sameValues_QBCUser.Add(QBC.BI_GLM_INSTALLATION.QBA_dbUSER);
             sameValues_QBCUser.Add(QBC.BI_GLM_INSTALLATION.DWH_dbUSER);
@@ -489,7 +490,7 @@ namespace QToolbar.Plugins.EnvManager
             _Dependencies.Add(sameValues_QBCUser);
 
             // qbc_passw
-            QEnvPropertySet sameValues_QBCPassword = new QEnvPropertySet(QEnvPropertySetType.MustHaveSameValue, "qbc_password");
+            QEnvPropertySet sameValues_QBCPassword = new QEnvPropertySetSameValue() { Name = "qbc_password" };
             sameValues_QBCPassword.Add(QBC.BI_GLM_INSTALLATION.INST_dbPASSW);
             sameValues_QBCPassword.Add(QBC.BI_GLM_INSTALLATION.QBA_dbPASSW);
             sameValues_QBCPassword.Add(QBC.BI_GLM_INSTALLATION.DWH_dbPASSW);
@@ -497,27 +498,27 @@ namespace QToolbar.Plugins.EnvManager
             _Dependencies.Add(sameValues_QBCPassword);
 
             // dialer server
-            QEnvPropertySet sameValues_DialerServer = new QEnvPropertySet(QEnvPropertySetType.MustHaveSameValue, "dialer server");
+            QEnvPropertySet sameValues_DialerServer = new QEnvPropertySetSameValue() { Name = "dialer server" };
             sameValues_DialerServer.Add(QBA.ADMIN_WRAPPER_SETTINGS.DIALER_SERVER_NAME);
             sameValues_DialerServer.Add(D3F.ADMIN_WRAPPER_SETTINGS.DIALER_SERVER_NAME);
             _Dependencies.Add(sameValues_DialerServer);
 
             // dialer database
-            QEnvPropertySet sameValues_DialerDatabase = new QEnvPropertySet(QEnvPropertySetType.MustHaveSameValue, "dialer database");
+            QEnvPropertySet sameValues_DialerDatabase = new QEnvPropertySetSameValue() { Name = "dialer database" };
             sameValues_DialerDatabase.Add(QBC.AT_SYSTEM_PARAMS.DIALER_DB_NAME);
             sameValues_DialerDatabase.Add(QBA.ADMIN_WRAPPER_SETTINGS.DIALER_DB_NAME);
             sameValues_DialerDatabase.Add(D3F.ADMIN_WRAPPER_SETTINGS.DIALER_DB_NAME);
             _Dependencies.Add(sameValues_DialerDatabase);
 
             // PSet_BI_GLM_INSTALLATION.INST_STEM_NAME = EnvironmentsConfiguration.GLMPrefix.
-            QEnvPropertySet sameValues_GLMPrefix = new QEnvPropertySet(QEnvPropertySetType.MustHaveSameValue, "EnvironmentsConfiguration.GLMPrefix");
+            QEnvPropertySet sameValues_GLMPrefix = new QEnvPropertySetSameValue() { Name = "EnvironmentsConfiguration.GLMPrefix" };
             sameValues_GLMPrefix.Add(ENV_CONF.ENV.GLMPrefix);
             sameValues_GLMPrefix.Add(QBC.BI_GLM_INSTALLATION.INST_STEM_NAME);
             _Dependencies.Add(sameValues_GLMPrefix);
 
 
             // BI_GLM_INSTALLATION Collection Plus Connection
-            QEnvPropertySet dbConnection_INST_CollectionPlus = new QEnvPropertySet(QEnvPropertySetType.DataBaseConnection, "BI_GLM_INSTALLATION - QBCollection_Plus connection");
+            QEnvPropertySet dbConnection_INST_CollectionPlus = new QEnvPropertySetDBConnection() { Name = "BI_GLM_INSTALLATION - QBCollection_Plus connection" };
             dbConnection_INST_CollectionPlus.Add(QBC.BI_GLM_INSTALLATION.INST_SERVER);
             dbConnection_INST_CollectionPlus.Add(QBC.BI_GLM_INSTALLATION.INST_db_NAME);
             dbConnection_INST_CollectionPlus.Add(QBC.BI_GLM_INSTALLATION.INST_dbUSER);
@@ -525,7 +526,7 @@ namespace QToolbar.Plugins.EnvManager
             _Dependencies.Add(dbConnection_INST_CollectionPlus);
 
             // BI_GLM_INSTALLATION Analytics Connection
-            QEnvPropertySet dbConnection_INST_Analytics = new QEnvPropertySet(QEnvPropertySetType.DataBaseConnection, "BI_GLM_INSTALLATION - Analytics connection");
+            QEnvPropertySet dbConnection_INST_Analytics = new QEnvPropertySetDBConnection() { Name = "BI_GLM_INSTALLATION - Analytics connection" };
             dbConnection_INST_Analytics.Add(QBC.BI_GLM_INSTALLATION.QBA_SERVER);
             dbConnection_INST_Analytics.Add(QBC.BI_GLM_INSTALLATION.QBA_db_NAME);
             dbConnection_INST_Analytics.Add(QBC.BI_GLM_INSTALLATION.QBA_dbUSER);
@@ -533,7 +534,7 @@ namespace QToolbar.Plugins.EnvManager
             _Dependencies.Add(dbConnection_INST_Analytics);
 
             // BI_GLM_INSTALLATION DWH Connection
-            QEnvPropertySet dbConnection_INST_DWH = new QEnvPropertySet(QEnvPropertySetType.DataBaseConnection, "BI_GLM_INSTALLATION - DWH connection");
+            QEnvPropertySet dbConnection_INST_DWH = new QEnvPropertySetDBConnection() { Name = "BI_GLM_INSTALLATION - DWH connection" };
             dbConnection_INST_DWH.Add(QBC.BI_GLM_INSTALLATION.DWH_SERVER);
             dbConnection_INST_DWH.Add(QBC.BI_GLM_INSTALLATION.DWH_db_NAME);
             dbConnection_INST_DWH.Add(QBC.BI_GLM_INSTALLATION.DWH_dbUSER);
@@ -541,7 +542,7 @@ namespace QToolbar.Plugins.EnvManager
             _Dependencies.Add(dbConnection_INST_DWH);
 
             // BI_GLM_INSTALLATION DWH Connection
-            QEnvPropertySet dbConnection_INST_QD3F = new QEnvPropertySet(QEnvPropertySetType.DataBaseConnection, "BI_GLM_INSTALLATION - QD3F connection");
+            QEnvPropertySet dbConnection_INST_QD3F = new QEnvPropertySetDBConnection() { Name = "BI_GLM_INSTALLATION - QD3F connection" };
             dbConnection_INST_QD3F.Add(QBC.BI_GLM_INSTALLATION.QD3F_SERVER);
             dbConnection_INST_QD3F.Add(QBC.BI_GLM_INSTALLATION.QD3F_db_NAME);
             dbConnection_INST_QD3F.Add(QBC.BI_GLM_INSTALLATION.QD3F_dbUSER);
