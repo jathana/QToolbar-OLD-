@@ -110,8 +110,7 @@ namespace QToolbar.Plugins.EnvManager
                 // ManClientFlows
                 eodFlows = GetFlowsForEodIni(dataSet);
 
-                // PostSetProperties(QEnv objEnv)
-                PostSetProperties(objEnv);
+                
             }
             catch (Exception ex)
             {
@@ -307,15 +306,7 @@ namespace QToolbar.Plugins.EnvManager
         }
 
 
-        private void PostSetProperties(QEnv objEnv)
-        {
-            // set CheckRegex to qbc database properties
-            string qbcRegPattern = $"QBCollection[_]Plus[_][A-Z]+[_][{objEnv.QBC.TLK_DATABASE_VERSIONS.MAJOR.Value}][_][{objEnv.QBC.TLK_DATABASE_VERSIONS.MINOR.Value}][_]*[0-9]*[_]*[0-9]*";
-            (objEnv.Dependencies.FirstOrDefault(d => d.Name == "QBCollection_Plus") as QEnvPropertySetSameValue).MatchRegexPattern = qbcRegPattern;
-
-            // 
-
-        }
+        
 
         #endregion
     }

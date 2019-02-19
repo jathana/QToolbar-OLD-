@@ -10,8 +10,9 @@ namespace QToolbar.Plugins.EnvManager
 {
     public class QEnvPropertySet : List<QEnvProperty>
     {
-        public string Name { get; set; }
         public string Description { get; set; }
+
+        public QEnvPropSetDependency DependencyType { get; set; }
 
         public virtual Errors Validate()
         {

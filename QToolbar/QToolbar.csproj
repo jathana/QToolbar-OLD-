@@ -277,6 +277,7 @@
       <DependentUpon>Frm_Environments.cs</DependentUpon>
     </Compile>
     <Compile Include="Plugins\EnvManager\QEnv.cs" />
+    <Compile Include="Plugins\EnvManager\QEnvDependenciesLoader.cs" />
     <Compile Include="Plugins\EnvManager\QEnvFileProperty.cs" />
     <Compile Include="Plugins\EnvManager\QEnvFileSystemLoader.cs" />
     <Compile Include="Plugins\EnvManager\QEnvLoader.cs" />

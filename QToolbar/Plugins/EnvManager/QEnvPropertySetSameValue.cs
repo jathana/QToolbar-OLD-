@@ -11,6 +11,8 @@ namespace QToolbar.Plugins.EnvManager
 {
     public class QEnvPropertySetSameValue : QEnvPropertySet
     {
+        private string _MatchValue;
+
         private string _MatchRegexPattern;
 
         public string MatchRegexPattern
@@ -26,6 +28,19 @@ namespace QToolbar.Plugins.EnvManager
             }
         }
 
+        public string MatchValue
+        {
+            get
+            {
+                return _MatchValue;
+            }
+
+            set
+            {
+                _MatchValue = value;
+            }
+        }
+
         public Errors Validate()
         {
             Errors retval = new Errors();
@@ -38,11 +53,11 @@ namespace QToolbar.Plugins.EnvManager
             }
 
 
-            // set CheckRegex             
+            // MatchRegexPattern             
             foreach (QEnvProperty property in this)
             {
 
-                // should ends with
+                // // MatchRegexPattern             
                 if (!property.EmptyValue && !string.IsNullOrEmpty(MatchRegexPattern))
                 {
                     Regex reg = new Regex(MatchRegexPattern);
@@ -51,8 +66,22 @@ namespace QToolbar.Plugins.EnvManager
                         retval.AddError($"{property.ToString()}: Value \"{property.Value}\"should follow patern \"{MatchRegexPattern}\".", "");
                     }
                 }
-                
+
+                // match value
+                if(!string.IsNullOrEmpty(MatchValue))
+                {
+                    if(!property.Value.Equals(MatchValue))
+                    {
+                        retval.AddError($"{property.ToString()}: Value \"{property.Value}\"should equals to \"{MatchValue}\".", "");
+                    }
+                }
+
             }
+
+
+
+
+
 
             return retval;
         }

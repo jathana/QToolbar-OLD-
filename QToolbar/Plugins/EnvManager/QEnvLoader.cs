@@ -17,12 +17,12 @@ using System.Xml;
 
 namespace QToolbar.Plugins.EnvManager
 {
-   public class QEnvLoader
-   {
-      #region fields
-      private List<QEnv> _Data = new List<QEnv>();
-      private List<Task> _Tasks = new List<Task>();
-      private Dictionary<string, CancellationTokenSource> _CancellationTokenSourceList = new Dictionary<string, CancellationTokenSource>();
+    public class QEnvLoader
+    {
+        #region fields
+        private List<QEnv> _Data = new List<QEnv>();
+        private List<Task> _Tasks = new List<Task>();
+        private Dictionary<string, CancellationTokenSource> _CancellationTokenSourceList = new Dictionary<string, CancellationTokenSource>();
         #endregion
 
 
@@ -38,56 +38,56 @@ namespace QToolbar.Plugins.EnvManager
             get { return _Data; }
         }
         public void AddOrUpdate(string envName, CfFile qbcAdminCf, string checkoutPath, string proteusCheckoutPath)
-      {
-         QEnv envObj = null;
-         bool adding = false;
-         List<QEnv> envsFound = _Data.FindAll(e => e.Name == envName);
-         if (envsFound.Count == 0)
-         {
-            // add 
-            envObj = new QEnv();
-            adding = true;
-         }
-         else if (envsFound.Count == 1)
-         {
-            // update
-            envObj = envsFound[0];
-         }
-         else if (envsFound.Count > 1)
-         {
-            throw new Exception($"Found environment {envName} multiple times.");
-         }
-         if(envObj != null)
-         {
-            envObj.Status = "Loading...";
-            envObj.Name = envName;
-            envObj.CheckoutPath = checkoutPath;
-            envObj.ProteusCheckoutPath = proteusCheckoutPath;
-            envObj.QCS_CLIENT.QBC_ADMIN.QBC_SERVER.Value = qbcAdminCf.GetServer(envName);
-            envObj.QCS_CLIENT.QBC_ADMIN.QBC_DB.Value = qbcAdminCf.GetDatabase(envName);
-            envObj.QCS_CLIENT.QBC_ADMIN.TOOLKIT_WS_URL.Value = qbcAdminCf.GetValue("General", "ToolkitWSURL");
-            envObj.QCS_CLIENT.QBC_ADMIN.APPLICATION_WS_URL.Value = qbcAdminCf.GetValue("General", "ApplicationWSURL");
-
-            envObj.QBCAdminCfPath = qbcAdminCf.File;
-
-            if (string.IsNullOrEmpty(checkoutPath))
+        {
+            QEnv envObj = null;
+            bool adding = false;
+            List<QEnv> envsFound = _Data.FindAll(e => e.Name == envName);
+            if (envsFound.Count == 0)
             {
-               envObj.Errors.AddError($"Checkout path is empty.", "");
+                // add 
+                envObj = new QEnv();
+                adding = true;
             }
-            if (string.IsNullOrEmpty(proteusCheckoutPath))
+            else if (envsFound.Count == 1)
             {
-               envObj.Errors.AddWarning($"Proteus checkout path is empty.", "");
+                // update
+                envObj = envsFound[0];
+            }
+            else if (envsFound.Count > 1)
+            {
+                throw new Exception($"Found environment {envName} multiple times.");
+            }
+            if (envObj != null)
+            {
+                envObj.Status = "Loading...";
+                envObj.Name = envName;
+                envObj.CheckoutPath = checkoutPath;
+                envObj.ProteusCheckoutPath = proteusCheckoutPath;
+                envObj.QCS_CLIENT.QBC_ADMIN.QBC_SERVER.Value = qbcAdminCf.GetServer(envName);
+                envObj.QCS_CLIENT.QBC_ADMIN.QBC_DB.Value = qbcAdminCf.GetDatabase(envName);
+                envObj.QCS_CLIENT.QBC_ADMIN.TOOLKIT_WS_URL.Value = qbcAdminCf.GetValue("General", "ToolkitWSURL");
+                envObj.QCS_CLIENT.QBC_ADMIN.APPLICATION_WS_URL.Value = qbcAdminCf.GetValue("General", "ApplicationWSURL");
+
+                envObj.QBCAdminCfPath = qbcAdminCf.File;
+
+                if (string.IsNullOrEmpty(checkoutPath))
+                {
+                    envObj.Errors.AddError($"Checkout path is empty.", "");
+                }
+                if (string.IsNullOrEmpty(proteusCheckoutPath))
+                {
+                    envObj.Errors.AddWarning($"Proteus checkout path is empty.", "");
+                }
+
+            }
+            if (adding)
+            {
+                _Data.Add(envObj);
             }
 
-         }
-         if (adding)
-         {
-            _Data.Add(envObj);
-         }
-
-         // collect rest info async
-         CollectEnvInfoAsync(envObj);
-      }
+            // collect rest info async
+            CollectEnvInfoAsync(envObj);
+        }
 
         public void Remove(string envName)
         {
@@ -133,63 +133,67 @@ namespace QToolbar.Plugins.EnvManager
         }
 
         private async void CollectEnvInfoAsync(QEnv env)
-      {
-         CancellationTokenSource tokenSource = null;
+        {
+            CancellationTokenSource tokenSource = null;
 
-         if (!_CancellationTokenSourceList.ContainsKey(env.Name))
-         {
-            tokenSource = new CancellationTokenSource();
-            _CancellationTokenSourceList.Add(env.Name, tokenSource);
-         }
-         else
-         {
-            tokenSource = _CancellationTokenSourceList[env.Name];
-         }
-
-         Task<QEnv> rs = Task<QEnv>.Factory.StartNew(state =>
-         {
-            QEnv objEnv = (QEnv)state;
-
-            CancellationToken cancelToken = tokenSource.Token;
-
-            List<string> eodFlows = new List<string>();
-
-            CfFile adminCf = new CfFile(env.QBCAdminCfPath);
-
-            if (!cancelToken.IsCancellationRequested)
+            if (!_CancellationTokenSourceList.ContainsKey(env.Name))
             {
-               // load parameters from databases
-               QEnvDatabasesLoader dbLoader = new QEnvDatabasesLoader();
-               dbLoader.Load(objEnv, eodFlows, cancelToken);
-
-                 // Check environment's files & folders
-                 QEnvFileSystemLoader fsLoader = new QEnvFileSystemLoader();
-                 fsLoader.Load(objEnv, adminCf, eodFlows, cancelToken);
-
-                 objEnv.Validate();
-            };
-            return objEnv;
-         }, env, tokenSource.Token);
-
-         _Tasks.Add(rs);
-
-         await Task.WhenAll(rs).ContinueWith((t) =>
-         {
-            Dispatcher.CurrentDispatcher.Invoke(() =>
+                tokenSource = new CancellationTokenSource();
+                _CancellationTokenSourceList.Add(env.Name, tokenSource);
+            }
+            else
             {
-               OnInfoCollected(new EnvInfoEventArgs(env));
+                tokenSource = _CancellationTokenSourceList[env.Name];
+            }
+
+            Task<QEnv> rs = Task<QEnv>.Factory.StartNew(state =>
+            {
+                QEnv objEnv = (QEnv)state;
+
+                CancellationToken cancelToken = tokenSource.Token;
+
+                List<string> eodFlows = new List<string>();
+
+                CfFile adminCf = new CfFile(env.QBCAdminCfPath);
+
+                if (!cancelToken.IsCancellationRequested)
+                {
+                    // load parameters from databases
+                    QEnvDatabasesLoader dbLoader = new QEnvDatabasesLoader();
+                    dbLoader.Load(objEnv, eodFlows, cancelToken);
+
+                    // Check environment's files & folders
+                    QEnvFileSystemLoader fsLoader = new QEnvFileSystemLoader();
+                    fsLoader.Load(objEnv, adminCf, eodFlows, cancelToken);
+
+                    // load dependency values
+                    QEnvDependenciesLoader depLoader = new QEnvDependenciesLoader();
+                    depLoader.Load(objEnv);
+
+                    objEnv.Validate();
+                };
+                return objEnv;
+            }, env, tokenSource.Token);
+
+            _Tasks.Add(rs);
+
+            await Task.WhenAll(rs).ContinueWith((t) =>
+            {
+                Dispatcher.CurrentDispatcher.Invoke(() =>
+             {
+                 OnInfoCollected(new EnvInfoEventArgs(env));
+             });
             });
-         });
 
-         // when all tasks are completed raise AllInfoCollected event
-         await Task.Factory.ContinueWhenAll(_Tasks.ToArray(),
-            (z) =>
-            {
-              AllInfoCollected(this, new EventArgs());
-            });
-      }
+            // when all tasks are completed raise AllInfoCollected event
+            await Task.Factory.ContinueWhenAll(_Tasks.ToArray(),
+               (z) =>
+               {
+                   AllInfoCollected(this, new EventArgs());
+               });
+        }
 
-        
+
 
         private void OnInfoCollected(EnvInfoEventArgs args)
         {
