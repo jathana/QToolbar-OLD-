@@ -11,7 +11,7 @@ namespace QToolbar.Plugins.EnvManager
     public class QEnvPropertySetDBConnection : QEnvPropertySet
     {
         
-        public Errors Validate()
+        public override Errors Validate()
         {
             Errors retval = new Errors();
 

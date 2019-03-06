@@ -15,13 +15,19 @@ namespace QToolbar.Plugins.EnvManager
 
       public string LocalPath { get; set; }
       public string AccessRights { get; set; }
-      public bool Resolved { get; set; }
+      public bool Resolved { get; internal set; }
       public bool FullAccessRequired { get; set; }
       public string Host { get; set; }
+
+    /// <summary>
+    /// if true resolves unc and returns LocalPath and AccessRights
+    /// </summary>
+      public bool ResolveUNC { get; set; }
       
 
       protected override void OnValueSet(string oldValue, string newValue)
       {         
+            
          bool unresolved = false;
          LocalPath = Utils.GetPath(newValue, out _Permissions, out unresolved);
 

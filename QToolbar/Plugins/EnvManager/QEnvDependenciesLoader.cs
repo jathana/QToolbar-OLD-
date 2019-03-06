@@ -24,7 +24,7 @@ namespace QToolbar.Plugins.EnvManager
             (objEnv.Dependencies.FirstOrDefault(d => d.DependencyType ==  QEnvPropSetDependency.SameValue_QBA_SERVER) as QEnvPropertySetSameValue).MatchValue = objEnv.QBC.BI_GLM_INSTALLATION.QBA_SERVER.Value;
 
             // set CheckRegex to QBA same value dependency QBAnalytics_MONE_8_4_2
-            regPattern = $"QQBAnalytics[_][A-Z]+[_][{objEnv.QBC.TLK_DATABASE_VERSIONS.MAJOR.Value}][_][{objEnv.QBC.TLK_DATABASE_VERSIONS.MINOR.Value}][_]*[0-9]*[_]*[0-9]*";
+            regPattern = $"QBAnalytics[_][A-Z]+[_][{objEnv.QBC.TLK_DATABASE_VERSIONS.MAJOR.Value}][_][{objEnv.QBC.TLK_DATABASE_VERSIONS.MINOR.Value}][_]*[0-9]*[_]*[0-9]*";
             (objEnv.Dependencies.FirstOrDefault(d => d.DependencyType == QEnvPropSetDependency.SameValue_QBA_DB_NAME) as QEnvPropertySetSameValue).MatchRegexPattern = regPattern;
             (objEnv.Dependencies.FirstOrDefault(d => d.DependencyType == QEnvPropSetDependency.SameValue_QBA_DB_NAME) as QEnvPropertySetSameValue).MatchValue = objEnv.QBC.BI_GLM_INSTALLATION.QBA_db_NAME.Value;
 

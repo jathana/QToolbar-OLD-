@@ -41,7 +41,7 @@ namespace QToolbar.Plugins.EnvManager
             }
         }
 
-        public Errors Validate()
+        public override Errors Validate()
         {
             Errors retval = new Errors();
 

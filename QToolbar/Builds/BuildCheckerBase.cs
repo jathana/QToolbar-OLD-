@@ -414,6 +414,20 @@ namespace QToolbar.Builds
          return retval;
       }
 
+        protected virtual bool CheckFileName(string fileName)
+        {
+            bool retval = true;
+            // ensure that .bd files end with .sql.bd
+            if(fileName.ToLower().EndsWith(".bd"))
+            {
+                if(!fileName.ToLower().EndsWith(".sql.bd"))
+                {
+                    Inform(fileName,  $".bd file \"{fileName}\" should end with .sql.bd", "", CheckResult.Error);
+                    retval = false;
+                }
+            }
+            return retval;
+        }
       #endregion
 
       public virtual void Check()

@@ -7,61 +7,64 @@ using System.Threading.Tasks;
 
 namespace QToolbar.Builds
 {
-   public class AnalyticsBuildChecker:BuildCheckerBase
-   {
-      public AnalyticsBuildChecker() : base()
-      {
+    public class AnalyticsBuildChecker : BuildCheckerBase
+    {
+        public AnalyticsBuildChecker() : base()
+        {
 
-      }
+        }
 
-      public override void Check()
-      {
-         _Errors = false;
+        public override void Check()
+        {
+            _Errors = false;
 
-         base.Check();
+            base.Check();
 
-         if (NextBuildFolderExists(_NextBuildPath))
-         {
-
-            string[] files = Directory.GetFiles(_NextBuildPath, "*.*", SearchOption.AllDirectories);
-            string content = "";
-            string lowerContent = "";
-            bool fileOk = true;
-            foreach (string file in files)
+            if (NextBuildFolderExists(_NextBuildPath))
             {
-               fileOk = true;
-               StreamReader rdr = new StreamReader(file, true);
-               content = rdr.ReadToEnd();
-               lowerContent = content.ToLower();
-               rdr.Close();
-               rdr.Dispose();
 
-               // check unicode
-               fileOk = CheckUnicode(file, content) && fileOk;
+                string[] files = Directory.GetFiles(_NextBuildPath, "*.*", SearchOption.AllDirectories);
+                string content = "";
+                string lowerContent = "";
+                bool fileOk = true;
+                foreach (string file in files)
+                {
+                    fileOk = true;
+                    StreamReader rdr = new StreamReader(file, true);
+                    content = rdr.ReadToEnd();
+                    lowerContent = content.ToLower();
+                    rdr.Close();
+                    rdr.Dispose();
 
-               // scan sql file
-               fileOk = ScanSqlFile(content, file) && fileOk;
+                    // check unicode
+                    fileOk = CheckUnicode(file, content) && fileOk;
 
-               // parse sql file
-               fileOk = ParseSqlFile(content, file) && fileOk;
+                    // scan sql file
+                    fileOk = ScanSqlFile(content, file) && fileOk;
 
-               if (fileOk) Inform(file, "File passed all checks!", "", CheckResult.OK);
+                    // parse sql file
+                    fileOk = ParseSqlFile(content, file) && fileOk;
+
+                    // check file name
+                    fileOk = CheckFileName(file) && fileOk;
+
+                    if (fileOk) Inform(file, "File passed all checks!", "", CheckResult.OK);
+                }
             }
-         }
-         else
-         {
-            Inform("Next Build folder does not exist.", CheckResult.Warning);
-            _Errors = true;
-         }
-         if (!_Errors && _Table.Rows.Count == 0)
-         {
-            Inform("Everything ok!", CheckResult.OK);
-         }
-         if (!_Errors && _Table.Rows.Count == 0)
-         {
-            Inform("Everything ok!", CheckResult.OK);
-         }
-      }
+            else
+            {
+                Inform("Next Build folder does not exist.", CheckResult.Warning);
+                _Errors = true;
+            }
+            if (!_Errors && _Table.Rows.Count == 0)
+            {
+                Inform("Everything ok!", CheckResult.OK);
+            }
+            if (!_Errors && _Table.Rows.Count == 0)
+            {
+                Inform("Everything ok!", CheckResult.OK);
+            }
+        }
 
-   }
+    }
 }
