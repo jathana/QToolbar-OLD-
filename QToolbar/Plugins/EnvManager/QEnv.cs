@@ -321,7 +321,7 @@ namespace QToolbar.Plugins.EnvManager
                     INST_db_NAME = AddProperty(new QEnvDatabaseProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.BI_GLM_INSTALLATION, Name = "INST_db_NAME", Required = true }),
                     INST_dbUSER = AddProperty(new QEnvDBUserProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.BI_GLM_INSTALLATION, Name = "INST_dbUSER", Required = true }),
                     INST_dbPASSW = AddProperty(new QEnvDBPasswordProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.BI_GLM_INSTALLATION, Name = "INST_dbPASSW", Required = true }),
-                    INST_ROOT = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.BI_GLM_INSTALLATION, Name = "INST_ROOT", Required = true }),
+                    INST_ROOT = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.BI_GLM_INSTALLATION, Name = "INST_ROOT", Required = true, ResolveUNC = true }),
                     QBA_SERVER = AddProperty(new QEnvServerProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.BI_GLM_INSTALLATION, Name = "QBA_SERVER", Required = true }),
                     QBA_db_NAME = AddProperty(new QEnvDatabaseProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.BI_GLM_INSTALLATION, Name = "QBA_db_NAME", Required = true }),
                     QBA_dbUSER = AddProperty(new QEnvDBUserProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.BI_GLM_INSTALLATION, Name = "QBA_dbUSER", Required = true }),
@@ -340,17 +340,17 @@ namespace QToolbar.Plugins.EnvManager
                 // QBCollection_Plus - AT_SYSTEM_PREF
                 AT_SYSTEM_PREF = new P_QBC.P_AT_SYSTEM_PREF()
                 {
-                    ATTACHMENTS_DIRECTORY = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "ATTACHMENTS_DIRECTORY", Required = true }),
-                    BULK_OUTPUT_EXPORT_DIRECTORY = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "BULK_OUTPUT_EXPORT_DIRECTORY", Required = true }),
-                    CRITERIA_PUBLISHED_PATH = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "CRITERIA_PUBLISHED_PATH", Required = true }),
-                    WORDTEMPLATESFOLDER = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "WORDTEMPLATESFOLDER", Required = true }),
+                    ATTACHMENTS_DIRECTORY = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "ATTACHMENTS_DIRECTORY", Required = true, ResolveUNC = true }),
+                    BULK_OUTPUT_EXPORT_DIRECTORY = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "BULK_OUTPUT_EXPORT_DIRECTORY", Required = true, ResolveUNC = true }),
+                    CRITERIA_PUBLISHED_PATH = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "CRITERIA_PUBLISHED_PATH", Required = true, ResolveUNC = true }),
+                    WORDTEMPLATESFOLDER = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "WORDTEMPLATESFOLDER", Required = true, ResolveUNC = true }),
                     FIELD_AGENT_INTEGRATION_APPLICATION_WS_URL = AddProperty(new QEnvURLProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "FIELD_AGENT_INTEGRATION_APPLICATION_WS_URL", Required = true }),
                     LEGAL_APP_PROCESS_MAPPING_WS_URL = AddProperty(new QEnvURLProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "LEGAL_APP_PROCESS_MAPPING_WS_URL", Required = true }),
-                    EXTERNAL_AGENCIES_PERFORMANCE_FILES_PATH = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "EXTERNAL_AGENCIES_PERFORMANCE_FILES_PATH", Required = true }),
+                    EXTERNAL_AGENCIES_PERFORMANCE_FILES_PATH = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "EXTERNAL_AGENCIES_PERFORMANCE_FILES_PATH", Required = true, ResolveUNC = true }),
                     INTRADAY_FILE_UPLOAD_DIRECTORY = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "INTRADAY_FILE_UPLOAD_DIRECTORY", Required = true }),
-                    SYSTEM_FOLDER = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "SYSTEM_FOLDER", Required = true }),
+                    SYSTEM_FOLDER = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "SYSTEM_FOLDER", Required = true, ResolveUNC = true }),
                     REPORT_DATABASE = AddProperty(new QEnvDatabaseProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "REPORT_DATABASE", Required = true }),
-                    APPLICATION_UPDATE_DIR = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "APPLICATION_UPDATE_DIR", Required = true }),
+                    APPLICATION_UPDATE_DIR = AddProperty(new QEnvUNCDirProperty() { Category = QEnvPropCategory.QBCollection_Plus, SubCategory = QEnvPropSubCategory.AT_SYSTEM_PREF, Name = "APPLICATION_UPDATE_DIR", Required = true, ResolveUNC = true }),
                 },
                 // QBCollection_Plus - AT_SYSTEM_PARAMS
                 AT_SYSTEM_PARAMS = new P_QBC.P_AT_SYSTEM_PARAMS()

@@ -16,6 +16,8 @@ namespace QToolbar.Plugins.EnvManager
         CFFile,
         XmlFile,
         IniFile,
+        File
+        
 
     }
 

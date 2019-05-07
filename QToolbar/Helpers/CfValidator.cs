@@ -27,15 +27,15 @@ namespace QToolbar.Helpers
             foreach(var key in keysToCheck)
             {
                // check key existence in dbs
-               if (dbs.Where(i => i.Item1 == key) == null)
+               if (dbs.Count(i => i.Item1 == key) == 0)
                   retVal.AddError($"Key {key} does not exist in [DatabaseName] section",cfFile );
 
                // check key existence in servers
-               if (servers.Where(i => i.Item1 == key) == null)
+               if (servers.Count(i => i.Item1 == key) == 0)
                   retVal.AddError($"Key {key} does not exist in [Servers] section",cfFile);
 
                // check key existence in passwords
-               if (pwds.Where(i => i.Item1 == key) == null)
+               if (pwds.Count(i => i.Item1 == key) == 0)
                   retVal.AddError($"Key {key} does not exist in [Passwords] section",cfFile);
             }
 

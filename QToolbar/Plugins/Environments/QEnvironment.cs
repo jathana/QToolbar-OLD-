@@ -55,8 +55,13 @@ namespace QToolbar.Plugins.Environments
                _Repository = value;
             }
          }
-         #endregion
-      }
+            #endregion
+
+            public override string ToString()
+            {
+                return $"{_Repository} - {_Name} - {_Path}";
+            }
+        }
 
       public class OtherFile
       {
@@ -807,7 +812,32 @@ namespace QToolbar.Plugins.Environments
          }
       }
 
-      public bool IsDevelopmentEnv
+        public string QCSClientProductName
+        {
+            get
+            {
+                return _Properties["QCSClientProductName"];
+            }
+
+            set
+            {
+                _Properties["QCSClientProductName"] = value;
+            }
+        }
+
+        public string BranchVersion
+        {
+            get
+            {
+                return _Properties["BranchVersion"];
+            }
+
+            set
+            {
+                _Properties["BranchVersion"] = value;
+            }
+        }
+        public bool IsDevelopmentEnv
       {
          get
          {
@@ -877,7 +907,10 @@ namespace QToolbar.Plugins.Environments
          _Properties.Add("OlapServer", string.Empty);
          _Properties.Add("OlapDatabase", string.Empty);
          _Properties.Add("AT_SYSTEM_PREF_FIELD_AGENT_INTEGRATION_APPLICATION_URL", string.Empty);
-      }
+         _Properties.Add("QCSClientProductName", string.Empty);
+         _Properties.Add("BranchVersion", string.Empty);
+
+        }
       #endregion
 
       #region methods

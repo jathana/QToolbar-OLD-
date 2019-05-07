@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 namespace QToolbar.Plugins.Environments
 {
 
-   [Plugin(pluginName:"Environments Information", pluginDesc: @"Environments Information.")]
-   public class EnvironmentsInfoPlugin : QPlugin, IQPlugin
+    [Plugin(pluginName:"Environments Information", pluginDesc: @"Environments Information.")]
+    public class EnvironmentsInfoPlugin : QPlugin, IQPlugin
    {
       public EnvironmentsInfoPlugin() { }
 

@@ -87,28 +87,28 @@ namespace QToolbar.Plugins.EnvManager
                 DataSet dataSet = executor.Execute(Utils.GetConnectionString(objEnv.QCS_CLIENT.QBC_ADMIN.QBC_SERVER.Value, objEnv.QCS_CLIENT.QBC_ADMIN.QBC_DB.Value));
 
                 // set properties - QBCollection_Plus - TLK_DATABASE_VERSIONS
-                SetPropertiesValues(dataSet, objEnv, "TLK_DATABASE_VERSIONS", QEnvPropCategory.QBCollection_Plus, QEnvPropSubCategory.TLK_DATABASE_VERSIONS);
+                SetPropertiesValues(dataSet, objEnv, "TLK_DATABASE_VERSIONS", QEnvPropCategory.QBCollection_Plus, QEnvPropSubCategory.TLK_DATABASE_VERSIONS, cancelToken);
 
                 // set properties - QBCollection_Plus - BI_GLM_INSTALLATION
-                SetPropertiesValues(dataSet, objEnv, "BI_GLM_INSTALLATION", QEnvPropCategory.QBCollection_Plus, QEnvPropSubCategory.BI_GLM_INSTALLATION);
+                SetPropertiesValues(dataSet, objEnv, "BI_GLM_INSTALLATION", QEnvPropCategory.QBCollection_Plus, QEnvPropSubCategory.BI_GLM_INSTALLATION, cancelToken);
 
                 // set properties - QBCollection_Plus - AT_SYSTEM_PREF
-                SetPropertiesValues(dataSet, objEnv, "AT_SYSTEM_PREF", QEnvPropCategory.QBCollection_Plus, QEnvPropSubCategory.AT_SYSTEM_PREF, "SPR_TYPE", "SPR_VALUE");
+                SetPropertiesValues(dataSet, objEnv, "AT_SYSTEM_PREF", QEnvPropCategory.QBCollection_Plus, QEnvPropSubCategory.AT_SYSTEM_PREF, "SPR_TYPE", "SPR_VALUE", cancelToken);
 
                 // set properties - QBCollection_Plus - AT_SYSTEM_PARAMS
-                SetPropertiesValues(dataSet, objEnv, "AT_SYSTEM_PARAMS", QEnvPropCategory.QBCollection_Plus, QEnvPropSubCategory.AT_SYSTEM_PARAMS, "SPRA_TYPE", "SPRA_VALUE");
+                SetPropertiesValues(dataSet, objEnv, "AT_SYSTEM_PARAMS", QEnvPropCategory.QBCollection_Plus, QEnvPropSubCategory.AT_SYSTEM_PARAMS, "SPRA_TYPE", "SPRA_VALUE", cancelToken);
 
                 // set properties - QBCollection_Plus - DialerParams
                 objEnv.QBC.DialerParams.db.Value = dataSet.Tables["DialerParams"].Select("code='db'")[0]["val"].ToString();
 
                 // set properties - QBCollection_Plus - External Companies
-                AddOrUpdateProperties<QEnvUNCDirProperty>(dataSet, objEnv, "AT_EXTERNAL_COMPANIES", QEnvPropCategory.QBCollection_Plus, QEnvPropSubCategory.AT_EXTERNAL_COMPANIES, "EXTC_NAME", "EXTC_IO_DIR");
+                AddOrUpdateProperties<QEnvUNCDirProperty>(dataSet, objEnv, "AT_EXTERNAL_COMPANIES", QEnvPropCategory.QBCollection_Plus, QEnvPropSubCategory.AT_EXTERNAL_COMPANIES, "EXTC_NAME", "EXTC_IO_DIR", cancelToken);
 
                 // SET SYSTEM_FOLDER
                 objEnv.QBC.AT_SYSTEM_PREF.SYSTEM_FOLDER.Value = GetSystemFolder(objEnv);
 
                 // ManClientFlows
-                eodFlows = GetFlowsForEodIni(dataSet);
+                eodFlows = GetFlowsForEodIni(dataSet, cancelToken);
 
                 
             }
@@ -133,7 +133,7 @@ namespace QToolbar.Plugins.EnvManager
             try
             {
                 DataSet dataSet = executor.Execute(Utils.GetConnectionString(objEnv.QBC.BI_GLM_INSTALLATION.QBA_SERVER.Value, objEnv.QBC.BI_GLM_INSTALLATION.QBA_db_NAME.Value));
-                SetPropertiesValues(dataSet, objEnv, "ADMIN_WRAPPER_SETTINGS", QEnvPropCategory.QBAnalytics, QEnvPropSubCategory.ADMIN_WRAPPER_SETTINGS);
+                SetPropertiesValues(dataSet, objEnv, "ADMIN_WRAPPER_SETTINGS", QEnvPropCategory.QBAnalytics, QEnvPropSubCategory.ADMIN_WRAPPER_SETTINGS, cancelToken);
             }
             catch (Exception ex)
             {
@@ -155,7 +155,7 @@ namespace QToolbar.Plugins.EnvManager
             try
             {
                 DataSet dataSet = executor.Execute(Utils.GetConnectionString(objEnv.QBC.BI_GLM_INSTALLATION.QD3F_SERVER.Value, objEnv.QBC.BI_GLM_INSTALLATION.QD3F_db_NAME.Value));
-                SetPropertiesValues(dataSet, objEnv, "ADMIN_WRAPPER_SETTINGS", QEnvPropCategory.QBC_D3F_Intermediate, QEnvPropSubCategory.ADMIN_WRAPPER_SETTINGS);
+                SetPropertiesValues(dataSet, objEnv, "ADMIN_WRAPPER_SETTINGS", QEnvPropCategory.QBC_D3F_Intermediate, QEnvPropSubCategory.ADMIN_WRAPPER_SETTINGS, cancelToken);
             }
             catch (Exception ex)
             {
@@ -185,10 +185,10 @@ namespace QToolbar.Plugins.EnvManager
                 DataSet dataSet = executor.Execute(Utils.GetConnectionString(objEnv.QCS_CLIENT.QBC_ADMIN.QBC_SERVER.Value, objEnv.QCS_CLIENT.QBC_ADMIN.QBC_DB.Value));
 
                 // set properties - QBArchive - BI_GLM_DARC_TEMPLATED_VALUES
-                SetPropertiesValues(dataSet, objEnv, "BI_GLM_DARC_TEMPLATED_VALUES", QEnvPropCategory.QC_Archive, QEnvPropSubCategory.BI_GLM_DARC_TEMPLATED_VALUES);
+                SetPropertiesValues(dataSet, objEnv, "BI_GLM_DARC_TEMPLATED_VALUES", QEnvPropCategory.QC_Archive, QEnvPropSubCategory.BI_GLM_DARC_TEMPLATED_VALUES, cancelToken);
 
                 // set properties - QBArchive - AT_SYSTEM_PARAMS
-                SetPropertiesValues(dataSet, objEnv, "AT_SYSTEM_PARAMS", QEnvPropCategory.QC_Archive, QEnvPropSubCategory.AT_SYSTEM_PARAMS, "SPRA_TYPE", "SPRA_VALUE");
+                SetPropertiesValues(dataSet, objEnv, "AT_SYSTEM_PARAMS", QEnvPropCategory.QC_Archive, QEnvPropSubCategory.AT_SYSTEM_PARAMS, "SPRA_TYPE", "SPRA_VALUE", cancelToken);
 
             }
             catch (Exception ex)
@@ -206,7 +206,7 @@ namespace QToolbar.Plugins.EnvManager
         /// <param name="tableName"></param>
         /// <param name="category"></param>
         /// <param name="subCategory"></param>
-        private void SetPropertiesValues(DataSet dataSet, QEnv objEnv, string tableName, QEnvPropCategory category, QEnvPropSubCategory subCategory)
+        private void SetPropertiesValues(DataSet dataSet, QEnv objEnv, string tableName, QEnvPropCategory category, QEnvPropSubCategory subCategory, CancellationToken cancelToken)
         {
             // set properties - QBCollection_Plus - TLK_DATABASE_VERSIONS
             QEnvProperty verProp;
@@ -217,6 +217,7 @@ namespace QToolbar.Plugins.EnvManager
                 {
                     verProp.Value = dataSet.Tables[tableName].Rows[0][col].ToString();
                 }
+                if (cancelToken.IsCancellationRequested) break;
             }
         }
 
@@ -230,7 +231,7 @@ namespace QToolbar.Plugins.EnvManager
         /// <param name="subCategory"></param>
         /// <param name="propertyNameField"></param>
         /// <param name="propertyValueField"></param>
-        private void SetPropertiesValues(DataSet dataSet, QEnv objEnv, string tableName, QEnvPropCategory category, QEnvPropSubCategory subCategory, string propertyNameField, string propertyValueField)
+        private void SetPropertiesValues(DataSet dataSet, QEnv objEnv, string tableName, QEnvPropCategory category, QEnvPropSubCategory subCategory, string propertyNameField, string propertyValueField, CancellationToken cancelToken)
         {
             // set properties - QBCollection_Plus - AT_SYSTEM_PREF
             foreach (QEnvProperty prop in objEnv.Properties.Where(p => p.Category == category && p.SubCategory == subCategory).ToList())
@@ -240,6 +241,7 @@ namespace QToolbar.Plugins.EnvManager
                 {
                     prop.Value = result[0][propertyValueField].ToString();
                 }
+                if (cancelToken.IsCancellationRequested) break;
             }
         }
 
@@ -253,7 +255,7 @@ namespace QToolbar.Plugins.EnvManager
         /// <param name="subCategory"></param>
         /// <param name="propertyNameField"></param>
         /// <param name="propertyValueField"></param>
-        private void AddOrUpdateProperties<T>(DataSet dataSet, QEnv objEnv, string tableName, QEnvPropCategory category, QEnvPropSubCategory subCategory, string propertyNameField, string propertyValueField) where T : QEnvProperty, new()
+        private void AddOrUpdateProperties<T>(DataSet dataSet, QEnv objEnv, string tableName, QEnvPropCategory category, QEnvPropSubCategory subCategory, string propertyNameField, string propertyValueField, CancellationToken cancelToken) where T : QEnvProperty, new()
         {
             // set properties - QBCollection_Plus - External Companies
             foreach (DataRow row in dataSet.Tables[tableName].Rows)
@@ -270,11 +272,10 @@ namespace QToolbar.Plugins.EnvManager
                     });
                 }
                 else
-                {
-                    prop.Name = row[propertyNameField].ToString();
+                {                    
                     prop.Value = row[propertyValueField].ToString();
-
                 }
+                if (cancelToken.IsCancellationRequested) break;
             }
         }
 
@@ -295,18 +296,16 @@ namespace QToolbar.Plugins.EnvManager
         }
 
 
-        private List<string> GetFlowsForEodIni(DataSet dataSet)
+        private List<string> GetFlowsForEodIni(DataSet dataSet, CancellationToken cancelToken)
         {
             List<string> retval = new List<string>();
             foreach (DataRow row in dataSet.Tables["Man_ClientFlows"].Rows)
             {
                 retval.Add(row["EOFC_FLOW_NAME"].ToString());
+                if (cancelToken.IsCancellationRequested) break;
             }
             return retval;
         }
-
-
-        
 
         #endregion
     }

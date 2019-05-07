@@ -68,6 +68,15 @@ namespace QToolbar.Helpers
          return IniFile2.ReadKeys("Servers", _File).ToList<string>();
       }
 
+      public List<string> GetUniqueKeys()
+        {
+            List<string> ret = new List<string>();
+            ret.AddRange(IniFile2.ReadKeys("Servers", _File).ToList<string>());
+            ret.AddRange(IniFile2.ReadKeys("DatabaseName", _File).ToList<string>());
+            ret.AddRange(IniFile2.ReadKeys("Passwords", _File).ToList<string>());
+            return ret.Distinct().ToList();
+        }
+
       public List<string> GetKeys(string server, string database)
       {
          List<string> retVal = new List<string>();

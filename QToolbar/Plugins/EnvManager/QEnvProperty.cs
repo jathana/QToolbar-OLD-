@@ -34,9 +34,9 @@ namespace QToolbar.Plugins.EnvManager
         }
         public bool Required { get; set; }
         /// <summary>
-        /// If true property is ignored during validation
+        /// If false property is ignored during validation
         /// </summary>
-        internal bool Ignore { get; set; }
+        internal bool Active { get; set; }
         /// <summary>
         /// If true checks value to be nclosed in brackets during validation.
         /// </summary>
@@ -78,7 +78,7 @@ namespace QToolbar.Plugins.EnvManager
         {
             Errors.Clear();
 
-            if (!Ignore)
+            if (Active)
             {
                 // check required
                 if (Required && string.IsNullOrEmpty(Value))

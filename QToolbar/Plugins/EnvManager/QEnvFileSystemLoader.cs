@@ -304,7 +304,7 @@ namespace QToolbar.Plugins.EnvManager
                         objEnv.Errors.AddError($"Service Name was not found in batch executor's config file ({batchServiceConfig})", batchServiceConfig);
 
                     // add batch service config file
-                    QEnvFileProperty prop = objEnv.AddOrUpdateProperty<QEnvFileProperty>(QEnvPropCategory.CFFile, QEnvPropSubCategory.BatchServiceConfig, Path.GetFileName(batchServiceConfig));
+                    QEnvFileProperty prop = objEnv.AddOrUpdateProperty<QEnvFileProperty>(QEnvPropCategory.File, QEnvPropSubCategory.BatchServiceConfig, Path.GetFileName(batchServiceConfig));
                     prop.Value = batchServiceConfig;
                 }
                 else
@@ -337,7 +337,7 @@ namespace QToolbar.Plugins.EnvManager
                         objEnv.Errors.AddError($"Service Name was not found in EOD executor's config file ({eodServiceConfig})", eodServiceConfig);
 
                     // add EODExecutor config file
-                    QEnvFileProperty eodcfg = objEnv.AddOrUpdateProperty<QEnvFileProperty>(QEnvPropCategory.CFFile, QEnvPropSubCategory.EODServiceConfig, Path.GetFileName(eodServiceConfig));
+                    QEnvFileProperty eodcfg = objEnv.AddOrUpdateProperty<QEnvFileProperty>(QEnvPropCategory.File, QEnvPropSubCategory.EODServiceConfig, Path.GetFileName(eodServiceConfig));
                     eodcfg.Value = eodServiceConfig;
                 }
                 else
@@ -368,7 +368,7 @@ namespace QToolbar.Plugins.EnvManager
 
 
                 // add cmd_commands.txt file 
-                QEnvFileProperty file = objEnv.AddOrUpdateProperty<QEnvFileProperty>(QEnvPropCategory.CFFile, QEnvPropSubCategory.WinServicesCmdCommandsTxt, Path.GetFileName(cmdFile));
+                QEnvFileProperty file = objEnv.AddOrUpdateProperty<QEnvFileProperty>(QEnvPropCategory.File, QEnvPropSubCategory.WinServicesCmdCommandsTxt, Path.GetFileName(cmdFile));
                 file.Value = cmdFile;
             }
             else

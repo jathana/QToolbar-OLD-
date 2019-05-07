@@ -1,6 +1,7 @@
 ﻿using DevExpress.XtraEditors;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,17 +17,20 @@ namespace QToolbar.Plugins.EnvManager
 
       public bool Run()
       {
-         bool retVal = true;
 
-         PluginAttribute p= (PluginAttribute)this.GetType().GetCustomAttributes(false).Where(t => t is PluginAttribute).FirstOrDefault();
-         var f = new Frm_Environments()
-         {
-            Text = p.PluginName,
-            //Message = p.PluginDesc,
-            //Action=InternalRun
-         };
-         f.Show();
-            
+         bool retVal = true;
+        // allow only from ide until finish development
+        if (Debugger.IsAttached)
+        {
+            PluginAttribute p = (PluginAttribute)this.GetType().GetCustomAttributes(false).Where(t => t is PluginAttribute).FirstOrDefault();
+            var f = new Frm_Environments()
+            {
+                Text = p.PluginName,
+                //Message = p.PluginDesc,
+                //Action=InternalRun
+            };
+            f.Show();
+        }
          return retVal;
       }
 

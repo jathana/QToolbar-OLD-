@@ -170,6 +170,10 @@ namespace QToolbar.Plugins.EnvManager
                     QEnvDependenciesLoader depLoader = new QEnvDependenciesLoader();
                     depLoader.Load(objEnv);
 
+                    // Deactivate properties not used
+                    QEnvPropertiesProcessor processor = new QEnvPropertiesProcessor();
+                    processor.Process(objEnv);
+
                     objEnv.Validate();
                 };
                 return objEnv;
