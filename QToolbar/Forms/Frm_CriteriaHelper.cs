@@ -219,6 +219,7 @@ namespace QToolbar.Forms
                      if (_CreateData.Tables.Count == 0)
                      {
                         _CreateData.Tables.Add(_SelectData.Tables[CREATE_CRITERIA].Clone());
+                        _CreateData.Tables[0].PrimaryKey = null;
                         grdCreateCriteria.DataSource = _CreateData.Tables[0];
                         //DataTable errorsTb = _CreateData.Tables.Add("ERRORS");
                         //errorsTb.Columns.Add("CRI_CODE", typeof(Int32));
@@ -234,7 +235,7 @@ namespace QToolbar.Forms
                   }
                }
                InitGrid();
-               btnLoadCriteria.Enabled = true;
+               
                grdviewSelectCriteria.BestFitColumns();
                grdviewCreateCriteria.BestFitColumns();
             }
@@ -243,7 +244,7 @@ namespace QToolbar.Forms
                MessageBox.Show(ex.Message);
             }
          }
-         //btnRun.Enabled = true;
+         btnLoadCriteria.Enabled = true;         
       }
 
       private void btnLoadCriteria_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -679,12 +680,13 @@ namespace QToolbar.Forms
                   {
                      _CreateData.Tables[0].Rows[i]["CRI_UNIQUE_ID"] = $"CRITERIO_{newCriUniqueId}";
                      _CreateData.Tables[0].Rows[i]["CRI_SYNC_GUID"] = $"CRITERIO_{newCriUniqueId}";
+                     _CreateData.Tables[0].Rows[i]["CRI_CREATED"] = DateTime.Now;
+                     _CreateData.Tables[0].Rows[i]["CRI_LAST_UPD"] = DateTime.Now;
                      newCriUniqueId++;
                   }
                   _CreateData.Tables[0].AcceptChanges();
                   CreateSQL(_Info, _CreateData.Tables[0], _SelectData, null);
-                  btnCreateSQL.Enabled = true;
-                  EnableScriptMenu(true);
+                  
                }
                else if (e.Result is Exception)
                {
@@ -694,17 +696,23 @@ namespace QToolbar.Forms
                }
             }
          }
+         btnCreateSQL.Enabled = true;
+         EnableScriptMenu(true);
       }
 
       private void btnCloneCriterio_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
       {
          try
          {
-            _CreateData.Tables[0].Rows.Add(grdviewSelectCriteria.GetFocusedDataRow().ItemArray);
+            // copy row but change CRI_CODE to allow copy an existing criterio multiple times
+            object[] copyRow = grdviewSelectCriteria.GetFocusedDataRow().ItemArray;
+            //copyRow[_CreateData.Tables[0].Columns["CRI_CODE"].Ordinal] = _CreateData.Tables[0].Rows.Count + 1;
+            DataRow newRow = _CreateData.Tables[0].Rows.Add(copyRow);
+
          }
          catch (ConstraintException exp)
          {
-            MessageBox.Show("This row is already exists");
+            MessageBox.Show("This row already exists");
          }
       }
 
@@ -955,12 +963,12 @@ namespace QToolbar.Forms
             }
             otherCreateTable.AcceptChanges();
             CreateSQL(otherDBInfo, otherCreateTable, otherDBDs, unresolvedColumns);
-            EnableScriptMenu(true);
             if (b.Length > 0)
             {
                txtGeneratedSQL.Text += "\r\n" + b.ToString();
             }
          }
+         EnableScriptMenu(true);
 
       }
 

@@ -1,0 +1,6 @@
+﻿creation date in copied criteria to be now() done
+να μπορώ να κάνω copy existing criterio πολλες φορές done
+οταν πατήσω το generatesql kai parw exception na gyrizei to koumpi se enabled done
+
+
+albk 19r2 rollout cr analysis
