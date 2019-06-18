@@ -219,12 +219,9 @@ namespace QToolbar.Forms
                      if (_CreateData.Tables.Count == 0)
                      {
                         _CreateData.Tables.Add(_SelectData.Tables[CREATE_CRITERIA].Clone());
-                        _CreateData.Tables[0].PrimaryKey = null;
+                        // change CRI_CODE datatype to string in order to allow multi copies of the same criterio.
+                        _CreateData.Tables[0].Columns["CRI_CODE"].DataType = typeof(string);
                         grdCreateCriteria.DataSource = _CreateData.Tables[0];
-                        //DataTable errorsTb = _CreateData.Tables.Add("ERRORS");
-                        //errorsTb.Columns.Add("CRI_CODE", typeof(Int32));
-                        //errorsTb.Columns.Add("ERR_MESSAGE", typeof(string));
-                        //_CreateData.Relations.Add(_CreateData.Tables[0].Columns["CRI_CODE"], errorsTb.Columns["CRI_CODE"]);
                      }
                   }
                   else if (e.Result is Exception)
@@ -705,8 +702,19 @@ namespace QToolbar.Forms
          try
          {
             // copy row but change CRI_CODE to allow copy an existing criterio multiple times
+            int criCodeOrdinal = _CreateData.Tables[0].Columns["CRI_CODE"].Ordinal;
             object[] copyRow = grdviewSelectCriteria.GetFocusedDataRow().ItemArray;
-            //copyRow[_CreateData.Tables[0].Columns["CRI_CODE"].Ordinal] = _CreateData.Tables[0].Rows.Count + 1;
+            string currentCriCode = copyRow[criCodeOrdinal].ToString();
+            
+            DataRow[] rows = _CreateData.Tables[0].Select($"CRI_CODE LIKE '{currentCriCode}-%'");
+            int index = 1;
+            if (rows.Length > 0)
+            {
+               var max = rows.OrderByDescending(r => r[criCodeOrdinal]).FirstOrDefault().Field<string>("CRI_CODE").Split('-')[1];
+               index = Convert.ToInt32(max) + 1;
+            }
+            // set CRI_CODE
+            copyRow[criCodeOrdinal] = $"{currentCriCode}-{index}";
             DataRow newRow = _CreateData.Tables[0].Rows.Add(copyRow);
 
          }
@@ -734,15 +742,15 @@ namespace QToolbar.Forms
             b.Append($"{ row["CRI_UNIQUE_ID"]} : {Pad(lens, "CRI_DESC", row["CRI_DESC"].ToString())} ");
 
             string categoryDesc = ds.Tables[CRITERIA_CATEGORIES].Select($"LOV_CODE={row["CRI_CATEGORY"]}")[0]["LOV_DESC"].ToString();
-            b.Append($"[Category:{categoryDesc} ");
+            b.Append($"[Category:{categoryDesc}");
 
-            b.Append($"{((bool)row["CRI_STRATEGY"] ? ",Strategies":"")}");
-            b.Append($"{((bool)row["CRI_QUEUE"] ? ",Queues" : "")}");
-            b.Append($"{((bool)row["CRI_DYNAMIC_QUEUE"] ? ",Dynamic Queues" : "")}");
-            b.Append($"{((bool)row["CRI_WORKLIST"] ? ",Worklists" : "")}");
-            b.Append($"{((bool)row["CRI_REVOCATION"] ? ",Revocation" : "")}");
-            b.Append($"{((bool)row["CRI_DECISION_TREE"] ? ",Decision Trees" : "")}");
-            b.Append($"{((bool)row["CRI_DECISION_TREE_ENTRY"] ? ",Decision Trees Entries" : "")}");
+            b.Append($"{((bool)row["CRI_STRATEGY"] ? ", Strategies":"")}");
+            b.Append($"{((bool)row["CRI_QUEUE"] ? ", Queues" : "")}");
+            b.Append($"{((bool)row["CRI_DYNAMIC_QUEUE"] ? ", Dynamic Queues" : "")}");
+            b.Append($"{((bool)row["CRI_WORKLIST"] ? ", Worklists" : "")}");
+            b.Append($"{((bool)row["CRI_REVOCATION"] ? ", Revocation" : "")}");
+            b.Append($"{((bool)row["CRI_DECISION_TREE"] ? ", Decision Trees" : "")}");
+            b.Append($"{((bool)row["CRI_DECISION_TREE_ENTRY"] ? ", Decision Trees Entries" : "")}");
 
             b.Append("]");
          }
