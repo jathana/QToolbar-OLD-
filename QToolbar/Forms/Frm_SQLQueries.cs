@@ -155,7 +155,7 @@ namespace QToolbar
                }
                else
                {
-                  XtraMessageBox.Show("Cannot parse directory name.");
+                  XtraMessageBox.Show($"Cannot parse directory name ({dir}).");
                }
             }
             string file = Path.Combine(destDir, "QBC_Admin.cf.deploy");

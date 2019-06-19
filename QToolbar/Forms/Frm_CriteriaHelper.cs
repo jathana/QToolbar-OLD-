@@ -43,6 +43,18 @@ namespace QToolbar.Forms
 
       DataSet _SelectData = new DataSet();
       DataSet _CreateData = new DataSet();
+      private bool _CreateDataChanged = true;
+
+
+      private bool CreateDataChanged
+      {
+         get { return _CreateDataChanged; }
+         set
+         {
+            _CreateDataChanged = value;
+            CreateDataChangedUI();
+         }
+      }
 
       public Frm_CriteriaHelper()
       {
@@ -54,12 +66,14 @@ namespace QToolbar.Forms
          _Info = info;
          _DBs = dbs;
          Text = $"Criteria Helper - {_Info.Server} . {_Info.Database}";
+         CreateDataChanged = true;
          SetSQL();
          Show();
          btnLoadCriteria_ItemClick(null, null);
          
       }
 
+      
       private void SetSQL()
       {
          txtSelectSQL.Text = "SELECT * FROM AT_CRITERIA WHERE CRI_USER_DEFINED_FLAG=0 ORDER BY CRI_CREATED DESC";
@@ -220,7 +234,12 @@ namespace QToolbar.Forms
                      {
                         _CreateData.Tables.Add(_SelectData.Tables[CREATE_CRITERIA].Clone());
                         // change CRI_CODE datatype to string in order to allow multi copies of the same criterio.
+                        _CreateData.Tables[0].PrimaryKey = null; 
                         _CreateData.Tables[0].Columns["CRI_CODE"].DataType = typeof(string);
+                        _CreateData.Tables[0].Columns["CRI_CODE"].ReadOnly = false;
+                        _CreateData.Tables[0].ColumnChanged += Frm_CriteriaHelper_ColumnChanged;
+                        _CreateData.Tables[0].TableNewRow += Frm_CriteriaHelper_TableNewRow;
+                        _CreateData.Tables[0].RowChanged += Frm_CriteriaHelper_RowChanged;
                         grdCreateCriteria.DataSource = _CreateData.Tables[0];
                      }
                   }
@@ -242,6 +261,27 @@ namespace QToolbar.Forms
             }
          }
          btnLoadCriteria.Enabled = true;         
+      }
+
+      private void Frm_CriteriaHelper_RowChanged(object sender, DataRowChangeEventArgs e)
+      {
+         CreateDataChanged = true;         
+      }
+
+      private void Frm_CriteriaHelper_TableNewRow(object sender, DataTableNewRowEventArgs e)
+      {
+         CreateDataChanged = true;
+      }
+
+      private void Frm_CriteriaHelper_ColumnChanged(object sender, DataColumnChangeEventArgs e)
+      {
+         CreateDataChanged = true;
+      }
+
+
+      private void CreateDataChangedUI()
+      {
+         mnuDevDBs.Enabled = !_CreateDataChanged;               
       }
 
       private void btnLoadCriteria_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -437,11 +477,31 @@ namespace QToolbar.Forms
          }
       }
 
+      private string GetNewCriterioCriCode()
+      {
+                  
+         string ret = "1".PadLeft(3,'0');
 
+         // copy row but change CRI_CODE to allow copy an existing criterio multiple times
+         // CRI_CODE contains the original cri_code and a number denoting the clone number of the same criterio.
+         // E.g. The original CRI_CODE 8859 becomes 8859-1 for the first clone, 8859-2 for the second etc.
+         int criCodeOrdinal = _CreateData.Tables[0].Columns["CRI_CODE"].Ordinal;
+         int val;
+         DataRow[] rows = _CreateData.Tables[0].Rows.Cast<DataRow>().Where(r=> int.TryParse(r["CRI_CODE"].ToString(),out val)).ToArray();
+            
+         if (rows.Length > 0)
+         {
+            // get the max number of 
+            var max = rows.OrderByDescending(r => r[criCodeOrdinal].ToString()).FirstOrDefault().Field<string>("CRI_CODE");
+            ret = Convert.ToString(Convert.ToInt32(max.Trim()) + 1);
+         }
+         return ret.PadLeft(3, '0');
+      }
       private void GrdviewCreateCriteria_InitNewRow(object sender, InitNewRowEventArgs e)
       {
          // DEFAULT VALUES
          GridView view = sender as GridView;
+         view.SetRowCellValue(e.RowHandle, view.Columns["CRI_CODE"], GetNewCriterioCriCode());
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_CREATED"], DateTime.Today);
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_LAST_UPD"], DateTime.Today);
          view.SetRowCellValue(e.RowHandle, view.Columns["CRI_CREATED_BY"], "system");
@@ -683,7 +743,7 @@ namespace QToolbar.Forms
                   }
                   _CreateData.Tables[0].AcceptChanges();
                   CreateSQL(_Info, _CreateData.Tables[0], _SelectData, null);
-                  
+                  CreateDataChanged = false;                  
                }
                else if (e.Result is Exception)
                {
@@ -701,20 +761,24 @@ namespace QToolbar.Forms
       {
          try
          {
+            
             // copy row but change CRI_CODE to allow copy an existing criterio multiple times
+            // CRI_CODE contains the original cri_code and a number denoting the clone number of the same criterio.
+            // E.g. The original CRI_CODE 8859 becomes 8859-1 for the first clone, 8859-2 for the second etc.
             int criCodeOrdinal = _CreateData.Tables[0].Columns["CRI_CODE"].Ordinal;
             object[] copyRow = grdviewSelectCriteria.GetFocusedDataRow().ItemArray;
             string currentCriCode = copyRow[criCodeOrdinal].ToString();
-            
+
             DataRow[] rows = _CreateData.Tables[0].Select($"CRI_CODE LIKE '{currentCriCode}-%'");
             int index = 1;
             if (rows.Length > 0)
             {
+               // get the max number of 
                var max = rows.OrderByDescending(r => r[criCodeOrdinal]).FirstOrDefault().Field<string>("CRI_CODE").Split('-')[1];
                index = Convert.ToInt32(max) + 1;
             }
             // set CRI_CODE
-            copyRow[criCodeOrdinal] = $"{currentCriCode}-{index}";
+            copyRow[criCodeOrdinal] = $"{currentCriCode}-{index.ToString().PadLeft(2,'0')}";
             DataRow newRow = _CreateData.Tables[0].Rows.Add(copyRow);
 
          }
@@ -819,6 +883,7 @@ namespace QToolbar.Forms
                DataSet otherDBDs = new DataSet();
                adapter.FillSchema(otherDBDs, SchemaType.Source);
                adapter.Fill(otherDBDs);
+               otherDBDs.Tables[CREATE_CRITERIA].Columns["CRI_CODE"].DataType = typeof(string);
                e.Result = new Tuple<DataSet, ConnectionInfo>(otherDBDs, info);
             }
          }
