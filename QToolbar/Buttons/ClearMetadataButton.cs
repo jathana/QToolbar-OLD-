@@ -58,7 +58,13 @@ namespace QToolbar.Buttons
                foreach(string metaDir in uiMetadataDirs)
                {
                   builder.AppendLine($"rd /Q /S \"{metaDir}\"");
-               }               
+               }
+               // del all   %userprofile%\\AppData\\Local\\Temp\\QCRWebApi_[0-9]+_[0-9]+_MetaData        
+               string[] apiMetadataDirs = Directory.GetDirectories(Path.GetTempPath(), "QCRWebApi_*_*_MetaData");
+               foreach (string apiDir in apiMetadataDirs)
+               {
+                  builder.AppendLine($"rd /Q /S \"{apiDir}\"");
+               }
                builder.AppendLine("del %TEMP%\\*.metadata");
                builder.AppendLine("del %TEMP%\\*localization.dat");
                builder.AppendLine("taskkill /IM iisexpress.exe");

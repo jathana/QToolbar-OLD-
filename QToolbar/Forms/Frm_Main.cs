@@ -25,6 +25,8 @@ namespace QToolbar
    public partial class Frm_Main : DevExpress.XtraEditors.XtraForm
    {
 
+      List<Task> tasks = new List<Task>();
+
       #region Fields
       private DatabaseScripterButton _DatabaseScripterButton;
       private DesignersButton _DesignersButton;
@@ -115,6 +117,66 @@ namespace QToolbar
             }, null);
          });
       }
+
+      private async void CreateMenuItems2()
+      {
+            mnuDatabaseScripter.Enabled = false;
+            tasks.Add(Task.Run(() => { _DatabaseScripterButton.CreateMenuItems(); }).ContinueWith((x) => { _SyncContext.Post((input) => { mnuDatabaseScripter.Enabled = true; }, null); }));
+
+            mnuDesigners.Enabled = false;
+            tasks.Add(Task.Run(() => { _DesignersButton.CreateMenuItems(); }).ContinueWith((x) => { _SyncContext.Post((input) => { mnuDesigners.Enabled = true; }, null); }));
+
+            mnuEnvironmentsConfiguration.Enabled = false;
+            tasks.Add(Task.Run(() => { _EnvironmentsConfigurationButton.CreateMenuItems(); }).ContinueWith((x) => { _SyncContext.Post((input) => { mnuEnvironmentsConfiguration.Enabled = true; }, null); }));
+
+            mnuExecutorConfiguration.Enabled = false;
+            tasks.Add(Task.Run(() => { _ExecutorConfiguratorButton.CreateMenuItems(); }).ContinueWith((x) => { _SyncContext.Post((input) => { mnuExecutorConfiguration.Enabled = true; }, null); }));
+
+            mnuFieldsExplorer.Enabled = false;
+            tasks.Add(Task.Run(() => { _FieldsExplorerButton.CreateMenuItems(); }).ContinueWith((x) => { _SyncContext.Post((input) => { mnuFieldsExplorer.Enabled = true; }, null); }));
+
+            mnuFolders.Enabled = false;
+            tasks.Add(Task.Run(() => { _FoldersButton.CreateMenuItems(); }).ContinueWith((x) => { _SyncContext.Post((input) => { mnuFolders.Enabled = true; }, null); }));
+
+            mnuInternalBuilds.Enabled = false;
+            tasks.Add(Task.Run(() => { _InternalBuildsButton.CreateMenuItems(); }).ContinueWith((x) => { _SyncContext.Post((input) => { mnuInternalBuilds.Enabled = true; }, null); }));
+
+            mnuLegalLinks.Enabled = false;
+            tasks.Add(Task.Run(() => { _LegalLinksButton.CreateMenuItems(); }).ContinueWith((x) => { _SyncContext.Post((input) => { mnuLegalLinks.Enabled = true; }, null); }));
+
+            mnuShellCommands.Enabled = false;
+            tasks.Add(Task.Run(() => { _ShellCommandsButton.CreateMenuItems(); }).ContinueWith((x) => { _SyncContext.Post((input) => { mnuShellCommands.Enabled = true; }, null); }));
+
+            mnuPlugins.Enabled = false;
+            tasks.Add(Task.Run(() => { _PluginsButton.CreateMenuItems(); }).ContinueWith((x) => { _SyncContext.Post((input) => { mnuPlugins.Enabled = true; }, null); }));
+
+            // those tasks were put together to avoid disposing errors
+            mnuNextBuild.Enabled = false;
+            mnuQCSAdmin.Enabled = false;
+            mnuQCSAdminCFs.Enabled = false;
+            mnuQCSAgent.Enabled = false;
+            mnuDesignersLocal.Enabled = false;
+
+            tasks.Add(Task.Run(() => {
+               _NextBuildButton.CreateMenuItems();
+               _QCSAdminButton.CreateMenuItems();
+               _QCSAdminCFsButton.CreateMenuItems();
+               _QCSAgentButton.CreateMenuItems();
+               _DesignersLocalButton.CreateMenuItems();
+
+            }).ContinueWith((x) => {
+               _SyncContext.Post((input) => {
+                  mnuNextBuild.Enabled = true;
+                  mnuQCSAdmin.Enabled = true;
+                  mnuQCSAdminCFs.Enabled = true;
+                  mnuQCSAgent.Enabled = true;
+                  mnuDesignersLocal.Enabled = true;
+               }, null);
+            }));
+           
+      }
+
+
 
       private void SetRibbonImages()
       {
