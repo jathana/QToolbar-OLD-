@@ -292,7 +292,7 @@ namespace QToolbar
                // create criteria if dev current
                var devDBs = GetDevDBsConnectionInfo();
 
-               if (devDBs.Count>0 && devDBs[0].Database.ToLower().Equals(obj.Data.Database.ToLower()))
+              // if (devDBs.Count>0 && devDBs[0].Database.ToLower().Equals(obj.Data.Database.ToLower()))
                {
                   DevExpress.Utils.Menu.DXMenuItem mnuItemCreateCriteria = new DevExpress.Utils.Menu.DXMenuItem("Create Criteria", createCriteria_ItemClick);
                   mnuItemCreateCriteria.Tag = obj.Data;
