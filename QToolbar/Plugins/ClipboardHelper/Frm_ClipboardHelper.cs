@@ -53,7 +53,7 @@ namespace QToolbar.Plugins.ClipboardHelper
       private void btnClip_Click(object sender, EventArgs e)
       {
          SimpleButton btn = (SimpleButton)sender;
-         int index = GetButtonIndex(btn.Name.Substring(btn.Name.Length - _BtnIndexSize, _BtnIndexSize));
+         int index = GetButtonIndex(btn.Name);
          if (index < _Memory.Count)
          {
             Clipboard.SetText(_Memory[index]);
