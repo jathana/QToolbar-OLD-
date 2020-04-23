@@ -264,7 +264,7 @@ namespace QToolbar.Forms
 
             // dev dbs, including current
             var devdbs = _DBs.Where(d => OptionsInstance.DevSQLInstances.Contains(d.Server) &&
-                                      d.Database.ToLower().StartsWith("qbcollection_plus_")).OrderByDescending(d=>d.Database).ToList();
+                                      d.Database.ToLower().StartsWith("qbcollection_plus_")).OrderByDescending(d=>d.DatabaseSortName).ToList();
 
             Dictionary<string, Tuple<DataTable, string>> data = new Dictionary<string, Tuple<DataTable, string>>();
 

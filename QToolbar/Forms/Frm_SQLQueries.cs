@@ -88,7 +88,10 @@ namespace QToolbar
                   
                   tree = new TreeNode<ConnectionInfo>();
                   List<string> dirs = new List<string>(Directory.EnumerateDirectories(folder));
-                  dirs = dirs.OrderByDescending(s => s).ToList<string>();
+                  List<Tuple<string, string>> x = new List<Tuple<string, string>>();
+                  dirs.ForEach(item => x.Add(new Tuple<string,string>(GetSortName(item, new Char[] { '\\','.', ' ' }, '_', '0', 5,true), item)));
+                  dirs = x.OrderByDescending(item => item.Item1).Select(item => item.Item2).ToList();
+
                   foreach (string dir in dirs)
                   {
                      TreeNode<ConnectionInfo> verNode = new TreeNode<ConnectionInfo>();
@@ -155,7 +158,7 @@ namespace QToolbar
                }
                else
                {
-                  XtraMessageBox.Show($"Cannot parse directory name ({dir}).");
+                  //XtraMessageBox.Show($"Cannot parse directory name ({dir}).");
                }
             }
             string file = Path.Combine(destDir, "QBC_Admin.cf.deploy");
@@ -177,6 +180,7 @@ namespace QToolbar
                         Environment = server.Key,
                         Server = server.Value,
                         Database = dbnames[server.Key],
+                        DatabaseSortName = GetSortName(dbnames[server.Key], new Char[] { '.','_' },'_','0',5),
                         CFPath = destDir
                      };
                      retVal.Add(info);
@@ -191,6 +195,32 @@ namespace QToolbar
          return retVal;
       }
 
+
+      private string GetSortName(string database, char[] delimiters, char joinDelimiter,char padChar,int padLength, bool discardNonNumbers=false)
+      {
+         string result = database;
+         if (!string.IsNullOrEmpty(database))
+         {
+            List<string> db = database.Split(delimiters).ToList();
+            List<string> res = new List<string>();
+            for (int i = 0; i < db.Count; i++)
+            {
+               if (db[i].All(Char.IsDigit))
+               {
+                  res.Add(db[i].PadLeft(padLength, padChar));
+               }
+               else
+               {
+                  if(!discardNonNumbers)
+                  {
+                     res.Add(db[i]);
+                  }
+               }
+            }
+            result = string.Join(joinDelimiter.ToString(), res);
+         }
+         return result;
+      }
 
       private void EnableUI(bool enable)
       {
@@ -292,7 +322,7 @@ namespace QToolbar
                // create criteria if dev current
                var devDBs = GetDevDBsConnectionInfo();
 
-              // if (devDBs.Count>0 && devDBs[0].Database.ToLower().Equals(obj.Data.Database.ToLower()))
+               if (devDBs.Count>0 && devDBs[0].Database.ToLower().Equals(obj.Data.Database.ToLower()))
                {
                   DevExpress.Utils.Menu.DXMenuItem mnuItemCreateCriteria = new DevExpress.Utils.Menu.DXMenuItem("Create Criteria", createCriteria_ItemClick);
                   mnuItemCreateCriteria.Tag = obj.Data;
@@ -323,10 +353,12 @@ namespace QToolbar
       }
 
 
+      
+
       private List<ConnectionInfo> GetDevDBsConnectionInfo()
       {
          return _DBs.Where(d => d.Database.ToLower().StartsWith("qbcollection_plus_") &&
-                                   OptionsInstance.DevSQLInstances.ToLower().Contains(d.Server.ToLower())).OrderByDescending(d => d.Database).ToList();
+                                   OptionsInstance.DevSQLInstances.ToLower().Contains(d.Server.ToLower())).OrderByDescending(d => d.DatabaseSortName).ToList();
       }
 
       private void query_ItemClick(object sender, EventArgs e)

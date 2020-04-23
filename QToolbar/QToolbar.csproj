@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>E:\Shared\QToolbar\</PublishUrl>
+    <PublishUrl>\\qsrvdevfs19\QCS Development and Testing\Tools\QToolbar\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -23,8 +23,9 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>\\q-wks-jathanas\Shared\QToolbar\</InstallUrl>
-    <ApplicationRevision>168</ApplicationRevision>
+    <InstallUrl>\\qsrvdevfs19\QCS Development and Testing\Tools\QToolbar\</InstallUrl>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>170</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>

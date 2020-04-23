@@ -23,6 +23,7 @@ namespace QToolbar
       private string _Environment = "";
       private string _Server = "";
       private string _Database = "";
+      private string _DatabaseSortName = "";
       private InfoType _InfoType = InfoType.None;
 
       public string Version
@@ -92,6 +93,19 @@ namespace QToolbar
          }
       }
 
+      public string DatabaseSortName
+      {
+         get
+         {
+            return _DatabaseSortName;
+         }
+
+         set
+         {
+            _DatabaseSortName = value;
+         }
+      }
+
 
       #region Serialization
       public string SaveState()
@@ -104,6 +118,7 @@ namespace QToolbar
             w.WriteStartElement(GetType().Name);
             w.WriteAttributeString("cfpath", CFPath);
             w.WriteAttributeString("database", Database);
+            w.WriteAttributeString("databasesortname", Database);
             w.WriteAttributeString("server", Server);
             w.WriteAttributeString("environment", Environment);
             w.WriteAttributeString("infotype", InfoType.ToString());
@@ -121,6 +136,7 @@ namespace QToolbar
          {
             CFPath = Node.ReadString("cfpath");
             Database = Node.ReadString("database");
+            DatabaseSortName = Node.ReadString("databasesortname");
             Server = Node.ReadString("server");
             Environment = Node.ReadString("environment");
             InfoType = Node.ReadEnum<InfoType>("infotype");
