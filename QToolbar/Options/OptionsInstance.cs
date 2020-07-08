@@ -147,6 +147,14 @@ namespace QToolbar.Options
          }
       }
 
+      public static int MaxMenuItems
+      {
+         get
+         {
+            return Properties.Settings.Default.MaxMenuItems;
+         }
+      }
+
 
    }
 }

@@ -32,43 +32,38 @@ namespace QToolbar.Buttons
             {
                try
                {
-                  List<string> dirs = Directory.GetDirectories(sqlFolder).ToList<string>();
-                  dirs.Sort();
-                  // add major.minor menus
-                  SortedList<string, List<string>> builds = new SortedList<string, List<string>>();
+                  List<string> dirs = Utils.SortByDirectory(sqlFolder);
+                  List<Tuple<string, List<string>>> builds = new List<Tuple<string, List<string>>>();
                   foreach (string dir in dirs)
                   {
                      string[] majorArr = dir.Split('.');
                      if (majorArr.Length > 1)
                      {
                         string major = $"{majorArr[0]}.{majorArr[1]}";
-                        if (builds.ContainsKey(major))
+                        if (builds.Any(i=>i.Item1==major))
                         {
                            // update
-                           builds[major].Add(dir);
+                           var item = builds.Where(i => i.Item1 == major).ToList();
+                           item[0].Item2.Add(dir);
                         }
                         else
                         {
-                           builds.Add(major, new List<string>() { dir });
+                           builds.Add(new Tuple<string,List<string>>(major, new List<string>() { dir }));
                         }
                      }
                   }
-                  // sort lists
-                  foreach (var item in builds)
-                  {
-                     item.Value.Sort();
-                  }
+                  
                   // add items
                   foreach (var item in builds)
                   {
                      // add major
-                     BarSubItem menuItem = new BarSubItem(_BarManager, Path.GetFileName(item.Key), 0);
+                     BarSubItem menuItem = new BarSubItem(_BarManager, Path.GetFileName(item.Item1), 0);
                      _Menu.AddItem(menuItem);
 
                      // add release folders
-                     List<string> files = Directory.GetFiles(sqlFolder).ToList<string>();
-                     files.Sort();
-                     foreach (string dir in item.Value)
+                     List<string> files = Utils.SortByDirectory(sqlFolder);
+
+                     foreach (string dir in item.Item2)
                      {
                         BarButtonItem subMenuItem = new BarButtonItem(_BarManager, Path.GetFileName(dir), 1);
                         subMenuItem.Tag = dir;

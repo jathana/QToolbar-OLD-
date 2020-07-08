@@ -25,7 +25,7 @@ namespace QToolbar.Buttons
          try
          {
 
-            DataTable sorted = Utils.SortByDirectory(OptionsInstance.Checkouts.Data, "Path");
+            DataTable sorted = Utils.SortByDirectory(OptionsInstance.Checkouts.Data, "Name");
             foreach (DataRow row in sorted.Rows)
             {
                AddNextBuildItem(row);

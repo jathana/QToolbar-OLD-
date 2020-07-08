@@ -20,14 +20,27 @@ namespace QToolbar
       public const int FILE_PERMISSION_FULL_ACCESS = 2032127;
 
       #region String Manipulation
-      public static string GetSortName(string database, char[] delimiters, char joinDelimiter, char padChar, int padLength, bool applyToFirstOnly = false)
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="version">Version that includes at least Major[delimiters]Minor</param>
+      /// <param name="delimiters">delimiters</param>
+      /// <param name="joinDelimiter">What delimiter to use to join value</param>
+      /// <param name="padChar"></param>
+      /// <param name="padLength"></param>
+      /// <param name="cutOffValue">The cut off version where less than this version noted as cutOff. Always as major.minor</param>
+      /// <param name="nonNumericValue">non numeric value handled</param>
+      /// <param name="cutOff">if is cut off value</param>
+      /// <param name="applyToFirstOnly">applies to first only numeric part of version</param>
+      /// <returns></returns>
+      public static string GetSortName(string version, char[] delimiters, char joinDelimiter, char padChar, int padLength, bool applyToFirstOnly = false)
       {
-         string result = database;
+         string result = version;
          bool nonNumericValue = false;
 
-         if (!string.IsNullOrEmpty(database))
+         if (!string.IsNullOrEmpty(version))
          {
-            List<string> db = database.Split(delimiters).ToList();
+            List<string> db = version.Split(delimiters).ToList();
             List<string> res = new List<string>();
             for (int i = 0; i < db.Count; i++)
             {
@@ -40,8 +53,7 @@ namespace QToolbar
                   else
                   {
                      res.Add(db[i]);
-                  }
-                  
+                  }                  
                }
                else
                {
@@ -49,9 +61,9 @@ namespace QToolbar
                   nonNumericValue = true;
                }
             }
-            if (nonNumericValue)
+            if (nonNumericValue)  // sort them beloww all
             {
-               result = $"_______________{string.Join(joinDelimiter.ToString(), res)}";
+               result = $"__________{string.Join(joinDelimiter.ToString(), res)}";
             }
             else
             {
@@ -79,15 +91,13 @@ namespace QToolbar
                x.Add(new Tuple<string, string>(sortName, dir));
             }
          }
-         dirs = x.OrderByDescending(item => item.Item1).Select(item => item.Item2).ToList();
+         var result = x.OrderByDescending(item => item.Item1).Select(item => item.Item2).ToList();
 
-         return dirs;
+         return result;
       }
 
       public static DataTable SortByDirectory(DataTable table, string pathColumn)
       {
-         //List<string> dirs = new List<string>(Directory.EnumerateDirectories(folder));
-
          List<Tuple<string, DataRow>> x = new List<Tuple<string, DataRow>>();
 
          foreach (DataRow row in table.Rows)

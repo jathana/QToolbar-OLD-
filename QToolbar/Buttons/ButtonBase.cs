@@ -42,16 +42,30 @@ namespace QToolbar.Buttons
             {
                try
                {
-                  List<string> dirs = dirs = Utils.SortByDirectory(_Folder);
+                  var  dirs = Utils.SortByDirectory(_Folder);
 
-                  foreach (var dir in dirs)
+                  BarSubItem cutOffMenu = new BarSubItem(_BarManager, "Other", 0);
+                  
+                  for(int i = 0; i < dirs.Count; i++)
                   {
-                     BarButtonItem menuItem = new BarButtonItem(_BarManager, Path.GetFileName(dir));
+
+                     BarButtonItem menuItem = new BarButtonItem(_BarManager, Path.GetFileName(dirs[i]));
                      if (ShouldAddMenuItem(menuItem))
                      {
                         menuItem.ItemClick += MenuItemClick;
-                        _Menu.AddItem(menuItem);
+                        if (i >= Options.OptionsInstance.MaxMenuItems)
+                        {
+                           cutOffMenu.AddItem(menuItem);
+                        }
+                        else
+                        {
+                           _Menu.AddItem(menuItem);
+                        }
                      }
+                  }
+                  if(cutOffMenu.ItemLinks.Count>0)
+                  {
+                     _Menu.AddItem(cutOffMenu);
                   }
                }
                catch (Exception ex)

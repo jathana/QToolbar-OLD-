@@ -51,6 +51,7 @@ namespace QToolbar
          Properties.Settings.Default.InternalBuildsFolder = txtInternalBuildsFolder.Text;
          Properties.Settings.Default.ClearLegalMetadata = chkClearLegalMetadata.Checked;
          Properties.Settings.Default.DevSQLInstances = txtDevSQLInstances.Text;
+         Properties.Settings.Default.MaxMenuItems = Convert.ToInt32(numMaxMenuItems.Value);
 
          // save folders
          SaveFolders();
@@ -82,6 +83,7 @@ namespace QToolbar
          txtInternalBuildsFolder.Text = Properties.Settings.Default.InternalBuildsFolder;
          chkClearLegalMetadata.Checked = Properties.Settings.Default.ClearLegalMetadata;
          txtDevSQLInstances.Text = Properties.Settings.Default.DevSQLInstances;
+         numMaxMenuItems.Value = Properties.Settings.Default.MaxMenuItems;
 
          // custom edit form for sql queries
          gviewSQLQueries.OptionsEditForm.CustomEditFormLayout = new uc_SQLQueriesEdit();
