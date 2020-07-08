@@ -25,7 +25,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\qsrvdevfs19\QCS Development and Testing\Tools\QToolbar\</InstallUrl>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>171</ApplicationRevision>
+    <ApplicationRevision>172</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>

@@ -91,10 +91,6 @@ namespace QToolbar.Buttons
                                         string dbVer = "";
                                         if (urlObj != null)
                                         {
-                                            //using (SqlCommand cmd = new SqlCommand($"SELECT TOP(1)CONVERT(NVARCHAR,MAJOR)+'.'+CONVERT(NVARCHAR,MINOR) VER FROM [{db}].[dbo].TLK_DATABASE_VERSIONS ORDER BY 1 DESC", con))
-                                            //{
-                                            //    dbVer = cmd.ExecuteScalar().ToString().Trim();
-                                            //}
                                             Match verMatchVer = regVer.Match(db);
                                             if (verMatchVer.Success)
                                             {
@@ -102,10 +98,9 @@ namespace QToolbar.Buttons
                                             }
                                         }
 
-
                                         if (!string.IsNullOrEmpty(dbVer) && !string.IsNullOrEmpty(legalUrl))
                                         {
-                                            menuItems.Add(dbVer, legalUrl);
+                                            menuItems.Add(Utils.GetSortName(dbVer, new Char[] {'.'}, '.', ' ', 3,true), legalUrl);
                                         }
                                     }
                                     catch { }
@@ -116,9 +111,10 @@ namespace QToolbar.Buttons
                         }
 
                     }
-                    foreach (var key in menuItems.Keys)
+                    var ordered = menuItems.Reverse();
+                    foreach (var item in ordered)
                     {
-                        AddLegalLinksItem(new Tuple<string, string>(key, menuItems[key]));
+                        AddLegalLinksItem(new Tuple<string, string>(item.Key, item.Value));
                     }
                 }
             }

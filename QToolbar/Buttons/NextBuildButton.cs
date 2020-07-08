@@ -24,7 +24,9 @@ namespace QToolbar.Buttons
          // load custom folders
          try
          {
-            foreach (DataRow row in OptionsInstance.Checkouts.Data.Rows)
+
+            DataTable sorted = Utils.SortByDirectory(OptionsInstance.Checkouts.Data, "Path");
+            foreach (DataRow row in sorted.Rows)
             {
                AddNextBuildItem(row);
             }

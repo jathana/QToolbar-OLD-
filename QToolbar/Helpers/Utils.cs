@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -17,7 +18,91 @@ namespace QToolbar
    {
       private static object _Locker = new object();
       public const int FILE_PERMISSION_FULL_ACCESS = 2032127;
+
+      #region String Manipulation
+      public static string GetSortName(string database, char[] delimiters, char joinDelimiter, char padChar, int padLength, bool applyToFirstOnly = false)
+      {
+         string result = database;
+         bool nonNumericValue = false;
+
+         if (!string.IsNullOrEmpty(database))
+         {
+            List<string> db = database.Split(delimiters).ToList();
+            List<string> res = new List<string>();
+            for (int i = 0; i < db.Count; i++)
+            {
+               if (db[i].All(Char.IsDigit))
+               {
+                  if (!applyToFirstOnly || (applyToFirstOnly && i == 0))
+                  {
+                     res.Add(db[i].PadLeft(padLength, padChar));
+                  }
+                  else
+                  {
+                     res.Add(db[i]);
+                  }
+                  
+               }
+               else
+               {
+                  res.Add(db[i]);
+                  nonNumericValue = true;
+               }
+            }
+            if (nonNumericValue)
+            {
+               result = $"_______________{string.Join(joinDelimiter.ToString(), res)}";
+            }
+            else
+            {
+               result = string.Join(joinDelimiter.ToString(), res);
+            }
+         }
+         return result;
+      }
+
+      #endregion
       #region IO
+
+
+      public static List<string> SortByDirectory(string folder)
+      {
+         List<string> dirs = new List<string>(Directory.EnumerateDirectories(folder));
+         List<Tuple<string, string>> x = new List<Tuple<string, string>>();
+
+         foreach (var dir in dirs)
+         {
+            string dirName = Path.GetFileName(dir);
+            string sortName = GetSortName(dirName, new Char[] { '\\', '.', ' ' }, '_', '0', 5);
+            if(!string.IsNullOrEmpty(sortName))
+            {
+               x.Add(new Tuple<string, string>(sortName, dir));
+            }
+         }
+         dirs = x.OrderByDescending(item => item.Item1).Select(item => item.Item2).ToList();
+
+         return dirs;
+      }
+
+      public static DataTable SortByDirectory(DataTable table, string pathColumn)
+      {
+         //List<string> dirs = new List<string>(Directory.EnumerateDirectories(folder));
+
+         List<Tuple<string, DataRow>> x = new List<Tuple<string, DataRow>>();
+
+         foreach (DataRow row in table.Rows)
+         {
+            x.Add(new Tuple<string, DataRow>(GetSortName(row.Field<string>(pathColumn), new Char[] { '\\', '.', ' ' }, '_', '0', 5), row));
+         }
+
+         DataTable result = table.Clone();
+         var sorted = x.OrderByDescending(item => item.Item1);
+         sorted.AsEnumerable().ToList().ForEach(item=> result.ImportRow(item.Item2));
+
+         return result;
+      }
+            
+
       public static bool EnsureFolder(string dir)
       {
          bool retval = true;
@@ -291,5 +376,7 @@ namespace QToolbar
 
       #endregion
 
+      #region private
+      #endregion
    }
 }

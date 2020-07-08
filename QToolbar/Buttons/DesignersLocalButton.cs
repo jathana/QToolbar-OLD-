@@ -26,7 +26,9 @@ namespace QToolbar.Buttons
          // load custom folders
          try
          {
-            foreach (DataRow row in OptionsInstance.Checkouts.Data.Rows)
+            DataRow[] foundRows = OptionsInstance.Checkouts.Data.Select("","name desc");
+            Utils.SortByDirectory(OptionsInstance.Checkouts.Data, "path");
+            foreach (DataRow row in foundRows)
             {
                AddLocalDesignerItem(row);
             }

@@ -151,5 +151,8 @@
   &lt;/table&gt;
 &lt;/DocumentElement&gt;</Value>
     </Setting>
+    <Setting Name="ExcludeNonNumericVersions" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

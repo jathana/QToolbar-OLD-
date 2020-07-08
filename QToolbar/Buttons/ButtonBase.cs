@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace QToolbar.Buttons
@@ -29,15 +30,11 @@ namespace QToolbar.Buttons
       /// <summary>
       /// The default menu items creation assumes click once applications. 
       /// </summary>
-      /// <param name="folder"></param>
-      /// <param name="barManager"></param>
-      /// <param name="menu"></param>
-      /// <param name="handler"></param>
       public virtual void CreateMenuItems()
       {
          // clear links
          _Menu.ClearLinks();
-
+         
          // add items
          if (!string.IsNullOrWhiteSpace(_Folder))
          {
@@ -45,12 +42,12 @@ namespace QToolbar.Buttons
             {
                try
                {
-                  List<string> dirs = new List<string>(Directory.EnumerateDirectories(_Folder));
-                  dirs = dirs.OrderByDescending(s => s).ToList<string>();
-                  foreach (string dir in dirs)
+                  List<string> dirs = dirs = Utils.SortByDirectory(_Folder);
+
+                  foreach (var dir in dirs)
                   {
                      BarButtonItem menuItem = new BarButtonItem(_BarManager, Path.GetFileName(dir));
-                     if(ShouldAddMenuItem(menuItem))
+                     if (ShouldAddMenuItem(menuItem))
                      {
                         menuItem.ItemClick += MenuItemClick;
                         _Menu.AddItem(menuItem);
@@ -64,6 +61,7 @@ namespace QToolbar.Buttons
             }
          }
       }
+
 
       /// <summary>
       /// Answers if an item should be added to menu.
