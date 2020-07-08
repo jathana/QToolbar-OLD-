@@ -23,7 +23,7 @@ namespace QToolbar
       /// <summary>
       /// 
       /// </summary>
-      /// <param name="version">Version that includes at least Major[delimiters]Minor</param>
+      /// <param name="name">Version that includes at least Major[delimiters]Minor</param>
       /// <param name="delimiters">delimiters</param>
       /// <param name="joinDelimiter">What delimiter to use to join value</param>
       /// <param name="padChar"></param>
@@ -33,14 +33,14 @@ namespace QToolbar
       /// <param name="cutOff">if is cut off value</param>
       /// <param name="applyToFirstOnly">applies to first only numeric part of version</param>
       /// <returns></returns>
-      public static string GetSortName(string version, char[] delimiters, char joinDelimiter, char padChar, int padLength, bool applyToFirstOnly = false)
+      public static string GetSortName(string name, char[] delimiters, char joinDelimiter, char padChar, int padLength, bool applyToFirstOnly = false)
       {
-         string result = version;
+         string result = name;
          bool nonNumericValue = false;
 
-         if (!string.IsNullOrEmpty(version))
+         if (!string.IsNullOrEmpty(name))
          {
-            List<string> db = version.Split(delimiters).ToList();
+            List<string> db = name.Split(delimiters).ToList();
             List<string> res = new List<string>();
             for (int i = 0; i < db.Count; i++)
             {
