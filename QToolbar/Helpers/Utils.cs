@@ -61,7 +61,7 @@ namespace QToolbar
                   nonNumericValue = true;
                }
             }
-            if (nonNumericValue)  // sort them beloww all
+            if (nonNumericValue)  // sort them below all
             {
                result = $"__________{string.Join(joinDelimiter.ToString(), res)}";
             }

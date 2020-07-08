@@ -450,30 +450,26 @@ namespace QToolbar.Forms
             {
                string criWhereField = row["CRI_WHERE_FIELD"].ToString();
                string criWhereTable = row["CRI_WHERE_TABLE"].ToString();
-               SqlCommand com = new SqlCommand($"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='{criWhereTable}'", con);
+               SqlCommand com = new SqlCommand($"SELECT {criWhereField} FROM {criWhereTable} WHERE 1=2", con);
                SqlDataAdapter adapter = new SqlDataAdapter(com);
                DataTable table = new DataTable();
-               adapter.Fill(table);
-               bool found = false;
-               foreach(DataRow col in table.Rows)
+               try
                {
-                  if(criWhereField.Contains(col["COLUMN_NAME"].ToString()) && !found)
-                  {
-                     found = true;
-                     break;
-                  }
+                  adapter.Fill(table);
                }
-
-               if (!found)
+               catch(Exception ex)
                {
-                  errorBuilder.AppendLine($"CRI_WHERE_FIELD:{criWhereField} of CRI_WHERE_TABLE:{criWhereTable} does not exist.");
+                  errorBuilder.AppendLine($"Error while validating CRI_WHERE_FIELD ({ex.Message})");
                }
-               con.Close();
+               finally
+               {
+                  con.Close();
+               }
             }
          }
          catch (Exception ex)
          {
-            errorBuilder.AppendLine($"Error while validating CRI_WHERE_FIELD_SQL_TYPE ({ex.Message})");
+            errorBuilder.AppendLine($"Error while validating CRI_WHERE_FIELD ({ex.Message})");
          }
       }
 
