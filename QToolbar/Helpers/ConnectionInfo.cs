@@ -118,7 +118,7 @@ namespace QToolbar
             w.WriteStartElement(GetType().Name);
             w.WriteAttributeString("cfpath", CFPath);
             w.WriteAttributeString("database", Database);
-            w.WriteAttributeString("databasesortname", Database);
+            w.WriteAttributeString("databasesortname", DatabaseSortName);
             w.WriteAttributeString("server", Server);
             w.WriteAttributeString("environment", Environment);
             w.WriteAttributeString("infotype", InfoType.ToString());

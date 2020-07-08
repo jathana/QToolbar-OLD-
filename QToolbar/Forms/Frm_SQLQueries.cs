@@ -357,8 +357,9 @@ namespace QToolbar
 
       private List<ConnectionInfo> GetDevDBsConnectionInfo()
       {
-         return _DBs.Where(d => d.Database.ToLower().StartsWith("qbcollection_plus_") &&
-                                   OptionsInstance.DevSQLInstances.ToLower().Contains(d.Server.ToLower())).OrderByDescending(d => d.DatabaseSortName).ToList();
+         var result = _DBs.Where(d => d.Database.ToLower().StartsWith("qbcollection_plus_") &&
+                                    OptionsInstance.DevSQLInstances.ToLower().Contains(d.Server.ToLower())).OrderByDescending(d => d.DatabaseSortName).ToList();
+         return result;
       }
 
       private void query_ItemClick(object sender, EventArgs e)
